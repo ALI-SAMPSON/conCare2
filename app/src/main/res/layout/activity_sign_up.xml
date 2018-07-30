@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_ui"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
+    tools:context=".activities.SignUpActivity">
+
+    <!-- Linear Layout for the UI elements -->
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!-- TextInputLayout and AppCompatEdiText for Email -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="0dp"
+            android:textAlignment="center"
+            android:textColorHint="@color/colorWhite">
+            <EditText
+                android:id="@+id/editTextUsername"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:drawableLeft="@drawable/ic_person_white_24dp"
+                android:hint="@string/hint_username"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:inputType="text"
+                android:maxLines="1"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- TextInputLayout and AppCompatEdiText for Password -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="0dp"
+            android:textAlignment="center"
+            android:textColorHint="@color/colorWhite"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorWhite">
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:hint="@string/hint_password"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:inputType="textPassword"
+                android:maxLines="1"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- TextInputLayout and AppCompatEdiText for Confirm Password -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="0dp"
+            android:textAlignment="center"
+            android:textColorHint="@color/colorWhite"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorWhite">
+            <EditText
+                android:id="@+id/editTextConfirmPassword"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:hint="@string/hint_confirm_password"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:inputType="textPassword"
+                android:maxLines="1"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!--TextInputLayout and LinearLayout and spinner View for Voter's Gender-->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="0dp"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="320dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_height="match_parent"
+                android:weightSum="1">
+                <!--TextView View  and Spinner View for Voter's Gender-->
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/textViewGender"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:text="@string/text_gender"
+                    android:textSize="19sp"
+                    android:gravity=""
+                    android:drawableLeft="@drawable/ic_people_black_24dp"
+                    android:textColor="@color/colorWhite"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight="1.11" />
+                <LinearLayout
+                    android:layout_width="200dp"
+                    android:orientation="horizontal"
+                    android:layout_height="40dp"
+                    android:weightSum="1"
+                    android:layout_marginRight="10dp">
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/spinnerGender"
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="58dp"
+                        android:layout_marginRight="10dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- TextInputLayout and AppCompatEdiText for Tel. Number -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutTelNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="0dp"
+            android:textAlignment="center"
+            android:textColorHint="@color/colorWhite">
+            <EditText
+                android:id="@+id/editTextTelephoneNumber"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:hint="@string/hint_tel"
+                android:drawableLeft="@drawable/ic_format_list_numbered_black_24dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:inputType="phone"
+                android:maxLength="15"
+                android:maxLines="1"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- TextInputLayout and AppCompatEdiText for Address -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="0dp"
+            android:textAlignment="center"
+            android:textColorHint="@color/colorWhite">
+            <EditText
+                android:id="@+id/editTextAddress"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:hint="@string/hint_address"
+                android:drawableLeft="@drawable/ic_add_location_black_24dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:inputType="text"
+                android:maxLength="15"
+                android:maxLines="1"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- TextInputLayout and AppCompatEdiText for Campus -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutCampus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="0dp"
+            android:textAlignment="center"
+            android:textColorHint="@color/colorWhite">
+            <EditText
+                android:id="@+id/editTextCampus"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:hint="@string/hint_campus"
+                android:drawableLeft="@drawable/ic_school_black_24dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:inputType="text"
+                android:maxLength="15"
+                android:maxLines="1"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Login Button -->
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/appCompatButtonLogin"
+            android:layout_marginTop="30dp"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_below="@+id/textInputLayoutTelNumber"
+            android:text="@string/signUp"
+            android:textColor="@color/colorVioletDeep"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            android:textAlignment="center"
+            android:background="@drawable/round_corner_button_sign_up"
+            android:onClick="onSignUpButtonClick"/>
+
+        <!-- Link to the Login Page -->
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/appCompatButtonLinkLogin"
+            android:layout_marginTop="30dp"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_below="@+id/textInputLayoutTelNumber"
+            android:text="@string/login_link"
+            android:textColor="@color/colorWhite"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            android:textAlignment="center"
+            android:background="@null"
+            android:onClick="onLoginLinkButtonClick"/>
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+</android.support.v4.widget.NestedScrollView>

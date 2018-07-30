@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
+    tools:context=".activities.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:background="@drawable/sign_up_ui"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/admin_icon_background"/>
+    </LinearLayout>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/login_cardView"
+        android:layout_width="280dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        app:cardBackgroundColor="@color/white_greyish"
+        app:cardCornerRadius="@dimen/round_corner_radius"
+        app:cardElevation="@dimen/activity_horizontal_margin">
+
+        <!-- TextInputLayout and AppCompatEdiText for Username -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutUsername"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:textAlignment="center"
+            android:textColorHint="@color/colorPrimaryDark">
+            <EditText
+                android:id="@+id/editTextUsername"
+                android:layout_width="255dp"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_person_outline_black_24dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textColorHint="@color/colorPrimary"
+                android:hint="@string/hint_username"
+                android:inputType="text"
+                android:maxLines="1"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- TextInputLayout and AppCompatEdiText for Password -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutPassword"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="90dp"
+            android:orientation="vertical"
+            android:textAlignment="center"
+            android:textColorHint="@color/colorPrimaryDark"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorPrimaryDark">
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="255dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:textColorHint="@color/colorPrimary"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:maxLines="1"/>
+        </android.support.design.widget.TextInputLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+    <!--Login Button-->
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/appCompatButtonLogin"
+        android:layout_marginTop="40dp"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:layout_below="@+id/login_cardView"
+        android:text="@string/login"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        android:textAlignment="center"
+        android:background="@drawable/round_corner_button_login"
+        android:onClick="onLoginButtonClick"/>
+
+    <!-- Link to the user sign up page -->
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/appCompatButtonLinkSignUp"
+        android:layout_marginTop="20dp"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:layout_below="@+id/appCompatButtonLogin"
+        android:text="@string/sign_up_link"
+        android:textColor="@color/tart_orange"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:textStyle="normal"
+        android:textAlignment="center"
+        android:background="@null"
+        android:onClick="onSignUpLinkClick"/>
+
+</RelativeLayout>

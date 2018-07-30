@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorBlue">#3F51B5</color>
+    <color name="colorBlueDark">#303F9F</color>
+    <color name="colorPrimaryDark">#FF2081</color>
+    <color name="colorPrimary">#FB4081</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="text_color">#01A9CB</color>
+    <color name="edit_text_color">#1C1C1C</color>
+    <color name="colorText">#FFFFFF</color>
+    <color name="colorTextHint">#51d8c7</color>
+    <color name="colorGray">#2F2F2F</color>
+    <color name="holo_red_light">#c21f16</color>
+    <color name="back_color">#FFF54E4E</color>
+    <color name="colorViolet">#81779D</color>
+    <color name="colorLightBlue">#FF0386DB</color>
+    <color name="colorVioletLight">#A292C7</color>
+    <color name="colorVioletDeep">#6d73c9</color>
+    <color name="colorTransparentWhite">#cccccc</color>
+
+    <color name="raisen_black">#231123</color>
+    <color name="claret">#820933</color>
+    <color name="debian_red">#CF1259</color>
+    <color name="purple">#7D387D</color>
+    <color name="tart_orange">#FE4A49</color>
+    <color name="bondi_blue">#009FB7</color>
+    <color name="pink_ras_berry">#89023E</color>
+    <color name="colorDeepPurple">#7c4dff</color>
+    <color name="materialGreen">#00bfa5</color>
+    <color name="materialYellow">#FFC107</color>
+    <color name="materialDarkYellow">#FFA000</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="background_color">#fcfcfc</color>
+    <color name="lightGrey">#ededed</color>
+    <color name="bg_login">#26ae90</color>
+    <color name="bg_register">#2e3237</color>
+    <color name="bg_main">#428bca</color>
+    <color name="black">#000000</color>
+    <color name="white_greyish">#EEEEEE</color>
+    <color name="button_selector_color">#9E9E9E</color>
+    <color name="light_blue">#00d4ff</color>
+
+</resources>

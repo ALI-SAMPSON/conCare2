@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "873677275264",
+    "firebase_url": "https://concare2-a1dd4.firebaseio.com",
+    "project_id": "concare2-a1dd4",
+    "storage_bucket": "concare2-a1dd4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873677275264:android:1422ac2c3ba99c64",
+        "android_client_info": {
+          "package_name": "com.example.icode.concare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "873677275264-4jamkbac2iiuhied7j5n6j8bbumuh3av.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.icode.concare",
+            "certificate_hash": "cb8c0af6f657780058faa47307fa5bf4e11d4fcd"
+          }
+        },
+        {
+          "client_id": "873677275264-o6tld5riki05u712ilr2em81rldtr30n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1w2F9C8gz-pjkWtVk6HqQW0pJr_E0xxQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "873677275264-o6tld5riki05u712ilr2em81rldtr30n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
