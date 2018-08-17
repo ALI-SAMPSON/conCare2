@@ -16,7 +16,8 @@
         <ImageView
             android:id="@+id/home_imageView"
             android:layout_width="match_parent"
-            android:layout_height="205dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
             android:src="@mipmap/splash_bg"/>
 
         <TextView
@@ -24,12 +25,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/welcome_msg_home"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="75dp"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
             android:textSize="18sp"
+            android:textStyle="bold"
             android:fontFamily="@font/nunito_extrabold"
-            android:padding="1dp"
+            android:padding="0dp"
             android:textColor="@color/colorWhite"/>
 
         <TextView
@@ -37,48 +39,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/welcome_mgs_sub_desc"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="40dp"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
             android:textSize="17sp"
+            android:textStyle="italic"
             android:fontFamily="@font/nunito_extrabold"
             android:padding="5dp"
-            android:textColor="@color/debian_red"/>
-
-        <!-- TextInputLayout and AppCompatEdiText for Address -->
-        <android.support.design.widget.TextInputLayout
-            android:layout_below="@+id/home_imageView"
-            android:id="@+id/textInputLayoutAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_centerInParent="true"
-            android:layout_centerHorizontal="true"
-            android:textAlignment="center"
-            android:textColorHint="@color/colorWhite">
-            <EditText
-                android:id="@+id/editTextAddress"
-                android:layout_width="320dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="0dp"
-                android:hint="@string/hint_address"
-                android:drawableLeft="@drawable/ic_add_location_black_24dp"
-                android:textColor="@color/colorWhite"
-                android:textColorHint="@color/colorLightBlue"
-                android:inputType="text"
-                android:maxLength="15"
-                android:maxLines="1"/>
-        </android.support.design.widget.TextInputLayout>
+            android:textColor="@color/materialYellow"/>
 
         <!-- TextInputLayout and AppCompatEdiText for Tel. Number -->
         <android.support.design.widget.TextInputLayout
-            android:layout_below="@+id/textInputLayoutAddress"
+            android:layout_below="@+id/home_imageView"
             android:id="@+id/textInputLayoutTelNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="0dp"
             android:layout_marginLeft="0dp"
             android:textAlignment="center"
             android:textColorHint="@color/colorWhite">
@@ -93,6 +69,7 @@
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
                 android:inputType="phone"
+                android:fontFamily="@font/nunito_semibold"
                 android:maxLength="15"
                 android:maxLines="1"
                 android:layout_marginStart="0dp"
@@ -106,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="0dp"
             android:layout_marginLeft="0dp"
             android:orientation="horizontal"
             android:layout_marginStart="0dp">
@@ -151,14 +128,118 @@
             </LinearLayout>
         </android.support.design.widget.TextInputLayout>
 
-        <!--TextInputLayout and LinearLayout and spinner View for contraceptive type-->
+        <!--TextInputLayout and LinearLayout and spinner View for user's Location-->
         <android.support.design.widget.TextInputLayout
             android:layout_below="@+id/textInputLayoutCampus"
+            android:id="@+id/textInputLayoutLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="0dp"
+            android:orientation="horizontal"
+            android:layout_marginStart="0dp">
+            <LinearLayout
+                android:layout_width="320dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_height="match_parent"
+                android:weightSum="1">
+                <!--TextView View  and Spinner View for Voter's Gender-->
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/textViewLocation"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:text="@string/location"
+                    android:textSize="19sp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/colorWhite"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight="1.11"
+                    android:drawableLeft="@drawable/ic_location_on_black_24dp"
+                    android:layout_marginStart="1dp" />
+                <LinearLayout
+                    android:layout_width="170dp"
+                    android:orientation="horizontal"
+                    android:layout_height="45dp"
+                    android:weightSum="1"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp">
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/spinnerLocation"
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </android.support.design.widget.TextInputLayout>
+
+        <!--TextInputLayout and LinearLayout and spinner View for user's Location-->
+        <android.support.design.widget.TextInputLayout
+            android:layout_below="@+id/textInputLayoutLocation"
+            android:id="@+id/textInputLayoutResidence"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="0dp"
+            android:orientation="horizontal"
+            android:layout_marginStart="0dp">
+            <LinearLayout
+                android:layout_width="320dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_height="match_parent"
+                android:weightSum="1">
+                <!--TextView View  and Spinner View for Voter's Gender-->
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/textViewResidence"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:text="@string/residence"
+                    android:textSize="19sp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/colorWhite"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight="1.11"
+                    android:drawableLeft="@drawable/ic_my_location_black_24dp"
+                    android:layout_marginStart="1dp" />
+                <LinearLayout
+                    android:layout_width="170dp"
+                    android:orientation="horizontal"
+                    android:layout_height="45dp"
+                    android:weightSum="1"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp">
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/spinnerResidence"
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </android.support.design.widget.TextInputLayout>
+
+        <!--TextInputLayout and LinearLayout and spinner View for contraceptive type-->
+        <android.support.design.widget.TextInputLayout
+            android:layout_below="@+id/textInputLayoutResidence"
             android:id="@+id/textInputLayoutGender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="0dp"
             android:layout_marginLeft="0dp"
             android:orientation="horizontal"
             android:layout_marginStart="0dp">
@@ -173,9 +254,10 @@
                     android:id="@+id/textViewGender"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
-                    android:text="@string/con_gender_type"
+                    android:text="@string/gender"
                     android:textSize="19sp"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_horizontal"
                     android:drawableLeft="@drawable/ic_con_type_black_24dp"
                     android:textColor="@color/colorWhite"
                     android:layout_marginLeft="1dp"
@@ -192,7 +274,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginEnd="10dp">
                     <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/spinnerConType"
+                        android:id="@+id/spinnerGender"
                         android:layout_width="150dp"
                         android:layout_height="40dp"
                         android:layout_marginLeft="16dp"
@@ -204,22 +286,49 @@
         </android.support.design.widget.TextInputLayout>
 
 
+        <!-- TextInputLayout and AppCompatEdiText for Hostel and room number -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_below="@+id/textInputLayoutGender"
+            android:id="@+id/textInputLayoutHostel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="0dp"
+            android:textAlignment="center"
+            android:textColorHint="@color/colorWhite">
+            <EditText
+                android:id="@+id/editTextHostel"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:hint="@string/hostel_n_room_number"
+                android:drawableLeft="@drawable/ic_hotel_black_24dp"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite"
+                android:fontFamily="@font/nunito_semibold"
+                android:inputType="textMultiLine"
+                android:layout_marginStart="0dp"
+                android:drawableStart="@drawable/ic_hotel_black_24dp" />
+        </android.support.design.widget.TextInputLayout>
+
         <!-- Login Button -->
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/appCompatButtonLogin"
-            android:layout_marginTop="20dp"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_width="315dp"
+            android:layout_height="40dp"
             android:gravity="center"
             android:layout_gravity="center_horizontal"
             android:layout_centerInParent="true"
-            android:layout_below="@+id/textInputLayoutGender"
+            android:layout_below="@+id/textInputLayoutHostel"
             android:text="@string/place_order"
-            android:textColor="@color/tart_orange"
+            android:textColor="@color/pink_ras_berry"
+            android:fontFamily="@font/nunito_semibold"
             android:textSize="18sp"
             android:textStyle="normal"
             android:textAlignment="center"
-            android:background="@drawable/round_corner_button_sign_up"
+            android:background="@drawable/round_home_button"
             android:onClick="onPlaceOrderButtonClick" />
 
     </RelativeLayout>

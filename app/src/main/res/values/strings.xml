@@ -22,7 +22,42 @@
     <string name="welcome_msg_home">Welcome to ConCare GH</string>
     <string name="welcome_mgs_sub_desc">...your home of quality and affordable contraceptives</string>
     <string name="place_order">PLACE YOUR ORDER</string>
-    <string name="con_gender_type">Contraceptive Type</string>
+    <string name="gender">Gender</string>
+    <string name="location">Location</string>
+    <string name="residence">Residence</string>
+    <string name="hostel_n_room_number">Hostel name and room number</string>
+
+    <string name="text_about_us">
+        ConCare GH is a unique
+        and nascent business set up to encourage the
+        use of contraceptives over unprotected, unsafe sex,
+        which places high-risk on those involved.
+    </string>
+
+    <string name="hint_overview">Overview</string>
+    <string name="hint_mission">Mission</string>
+    <string name="hint_vision">Vision</string>
+
+    <string name="text_overview">
+        Concare GH seeks to remove shyness,
+        which is evident of their (victims\')
+        reluctance to purchase contraceptives;
+        with our business system and strategy,
+        there is relatively much privacy.
+    </string>
+
+    <string name="text_mission">
+        Providing a more conducive environment
+        for our clients in purchasing contraceptives.
+    </string>
+
+    <string name="text_vision">
+        To be the best and leading contraceptive health
+        provider in Ghana and the world at large, and to
+        also ensure mass participation in contraceptive use.
+    </string>
+
+
 
     <!-- Navigation drawer menu -->
     <string name="edit_profile">Edit Profile</string>

@@ -25,4 +25,19 @@
         <item>KNUST</item>
     </string-array>
 
+
+    <string-array name="location">
+        <item>Ayeduase</item>
+        <item>Ayeduase-Newsite</item>
+        <item>Kotei</item>
+        <item>Campus</item>
+        <item>Bomso</item>
+        <item>Gaza Area</item>
+    </string-array>
+
+    <string-array name="residence">
+        <item>Hostel</item>
+        <item>Homestel</item>
+    </string-array>
+
 </resources>

@@ -34,15 +34,25 @@ public class HomeActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mToggle;
 
     //objects of the View Classes
-    private EditText editTextAddress;
     private EditText editTextTelNumber;
+    private EditText editTextHostel;
+
+    //user's campus spinner view object
+    private AppCompatSpinner spinnerCampus;
+    private ArrayAdapter<CharSequence> arrayAdapterCampus;
+
+    //user's location spinner view object
+    private AppCompatSpinner spinnerLocation;
+    private ArrayAdapter<CharSequence> arrayAdapterLocation;
+
+    //user's residence spinner view object
+    private AppCompatSpinner spinnerResidence;
+    private ArrayAdapter<CharSequence> arrayAdapterResidence;
 
     //spinner for contraceptive type and its arrayAdapter
-    private AppCompatSpinner spinnerConType;
-    private ArrayAdapter<CharSequence> arrayAdapter;
+    private AppCompatSpinner spinnerGender;
+    private ArrayAdapter<CharSequence> arrayAdapterGender;
 
-    private AppCompatSpinner spinnerCampus;
-    private ArrayAdapter<CharSequence> arrayAdapter1;
 
     //objects of the classes
     private CurrentUsers currentUsers;
@@ -71,19 +81,31 @@ public class HomeActivity extends AppCompatActivity {
             getSupportActionBar().setHomeButtonEnabled(true);
         }
 
-        editTextAddress = findViewById(R.id.editTextAddress);
+
         editTextTelNumber = findViewById(R.id.editTextTelNumber);
+        editTextHostel = findViewById(R.id.editTextHostel);
+
+        //spinner view campus
+        spinnerCampus = findViewById(R.id.spinnerCampus);
+        arrayAdapterCampus = ArrayAdapter.createFromResource(this,R.array.campus,R.layout.spinner_item);
+        arrayAdapterCampus.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinnerCampus.setAdapter(arrayAdapterCampus);
+
+        spinnerLocation = findViewById(R.id.spinnerLocation);
+        arrayAdapterLocation = ArrayAdapter.createFromResource(this, R.array.location,R.layout.spinner_item);
+        arrayAdapterLocation.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinnerLocation.setAdapter(arrayAdapterLocation);
+
+        spinnerResidence = findViewById(R.id.spinnerResidence);
+        arrayAdapterResidence = ArrayAdapter.createFromResource(this,R.array.residence,R.layout.spinner_item);
+        arrayAdapterResidence.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinnerResidence.setAdapter(arrayAdapterResidence);
 
         //reference to the spinner view and array adapter
-        spinnerConType = findViewById(R.id.spinnerConType);
-        arrayAdapter = ArrayAdapter.createFromResource(this,R.array.con_type,R.layout.spinner_item);
-        arrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spinnerConType.setAdapter(arrayAdapter);
-
-        spinnerCampus = findViewById(R.id.spinnerCampus);
-        arrayAdapter1 = ArrayAdapter.createFromResource(this,R.array.campus,R.layout.spinner_item);
-        arrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spinnerCampus.setAdapter(arrayAdapter1);
+        spinnerGender = findViewById(R.id.spinnerGender);
+        arrayAdapterGender = ArrayAdapter.createFromResource(this,R.array.con_type,R.layout.spinner_item);
+        arrayAdapterGender.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinnerGender.setAdapter(arrayAdapterGender);
 
         //object initialization
         currentUsers = new CurrentUsers();
@@ -99,19 +121,19 @@ public class HomeActivity extends AppCompatActivity {
     public void onPlaceOrderButtonClick(View view) {
 
         //error text
-        String error_text_address = "address is a required field";
+        String error_text_hostel = "enter your hostel to better locate you";
         String error_text_number = "telephone number is a required field";
 
-        String address = editTextAddress.getText().toString().trim();
+        String hostel = editTextHostel.getText().toString().trim();
         String number = editTextTelNumber.getText().toString().trim();
 
-        if(address.equals("")){
-            editTextAddress.setError(error_text_address);
-            Snackbar.make(mDrawerLayout,error_text_address,Snackbar.LENGTH_SHORT).show();
-        }
-        else if(number.equals("")){
+        if(number.equals("")){
             editTextTelNumber.setError(error_text_number);
             Snackbar.make(mDrawerLayout,error_text_number,Snackbar.LENGTH_SHORT).show();
+        }
+        else if(hostel.equals("")){
+            editTextHostel.setError(error_text_hostel);
+            Snackbar.make(mDrawerLayout,error_text_hostel,Snackbar.LENGTH_SHORT).show();
         }
         else{
             placeOrder();
@@ -125,17 +147,22 @@ public class HomeActivity extends AppCompatActivity {
         progressDialog = ProgressDialog.show(this,"",null,true,true);
         progressDialog.setMessage("please wait...");
 
-        String address = editTextAddress.getText().toString().trim();
+        //getting input from the user
+        String hostel_room_number = editTextHostel.getText().toString().trim();
         String number = editTextTelNumber.getText().toString().trim();
         String campus = spinnerCampus.getSelectedItem().toString().trim();
-        String con_type = spinnerConType.getSelectedItem().toString().trim();
+        String location = spinnerLocation.getSelectedItem().toString().trim();
+        String residence = spinnerResidence.getSelectedItem().toString().trim();
+        String gender = spinnerGender.getSelectedItem().toString().trim();
 
-        orders.setAddress(address);
+        orders.setHostel_room_number(hostel_room_number);
         orders.setTelephone_Number(number);
         orders.setCampus(campus);
-        orders.setCon_type(con_type);
+        orders.setLocation(location);
+        orders.setResidence(residence);
+        orders.setType_of_contraceptive(gender);
 
-        orderRef.child(number).setValue(orders).addOnCompleteListener(new OnCompleteListener<Void>() {
+        orderRef.child(location).setValue(orders).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
@@ -167,8 +194,8 @@ public class HomeActivity extends AppCompatActivity {
 
     //clears the textfields
     public void clearTextFields(){
-        editTextAddress.setText(null);
         editTextTelNumber.setText(null);
+        editTextHostel.setText(null);
     }
 
     @Override

@@ -1,9 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.AboutUsActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/about_us_imageView"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/about_us_bg"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        app:fontFamily="@font/nunito_extrabold"
+        android:textSize="20dp"
+        android:text="WHO WE ARE"
+        android:padding="10dp"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_below="@+id/title"
+        android:id="@+id/sub_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/text_about_us"
+        android:textSize="16sp"
+        android:textColor="@color/colorBlack"
+        app:fontFamily="@font/nunito_semibold"
+        android:padding="15dp"
+        android:layout_centerHorizontal="true"/>
+
+    <RelativeLayout
+        android:layout_below="@+id/about_us_imageView"
+        android:id="@+id/relativeLayout"
+        android:layout_marginTop="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.CardView
+        android:id="@+id/cardViewOverview"
+        android:layout_width="130dp"
+        android:layout_height="80dp"
+        android:layout_margin="0dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="80sp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:layout_alignParentLeft="true"
+        android:elevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:text="@string/hint_overview"
+                android:textSize="18sp"
+                android:textColor="@color/colorRed"
+                app:fontFamily="@font/nunito_extrabold"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorRed"
+                android:padding="10dp" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+        <!-- mission cardView-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardViewMission"
+            android:layout_width="137dp"
+            android:layout_height="80dp"
+            android:layout_margin="0dp"
+            android:layout_marginTop="80dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@+id/cardViewOverview"
+            android:elevation="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:text="@string/hint_mission"
+                    android:textSize="18sp"
+                    android:textColor="@color/materialGreen"
+                    app:fontFamily="@font/nunito_extrabold"
+                    android:textAllCaps="true"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/materialGreen"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardViewVision"
+            android:layout_width="130dp"
+            android:layout_height="80dp"
+            android:layout_margin="0dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginLeft="80sp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:layout_alignParentRight="true"
+            android:elevation="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/hint_vision"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorVioletDeep"
+                    app:fontFamily="@font/nunito_extrabold"
+                    android:textAllCaps="true"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/colorVioletDeep"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="0dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/sub_text_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/text_overview"
+            android:textSize="16sp"
+            android:textColor="@color/colorBlack"
+            app:fontFamily="@font/nunito_semibold"
+            android:padding="20dp"
+            android:layout_centerHorizontal="true"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
