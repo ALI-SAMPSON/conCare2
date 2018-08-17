@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ConCare</string>
+    <string name="app_name">ConCare GH</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="hint_location">Location/Address</string>
@@ -18,4 +18,18 @@
     <string name="signUp">Sign Up</string>
     <string name="splash_text">powered by iCODE Studios</string>
     <string name="sub_text">...a convenient place to purchase all contraceptives</string>
+
+    <string name="welcome_msg_home">Welcome to ConCare GH</string>
+    <string name="welcome_mgs_sub_desc">...your home of quality and affordable contraceptives</string>
+    <string name="place_order">PLACE YOUR ORDER</string>
+    <string name="con_gender_type">Contraceptive Type</string>
+
+    <!-- Navigation drawer menu -->
+    <string name="edit_profile">Edit Profile</string>
+    <string name="address">Address</string>
+    <string name="orders">Orders</string>
+    <string name="sign_out">Signout</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
 </resources>

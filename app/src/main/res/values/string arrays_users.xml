@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--array of gender-->
     <string-array name="gender">
         <item>Male</item>
         <item>Female</item>
     </string-array>
+
+    <!--array of male contraceptives-->
+    <string-array name="con_type">
+        <!--male condom types-->
+        <item>MALE</item>
+        <item>  -- Fiesta</item>
+        <item>  -- Kiss Condom</item>
+        <item>  -- Dragon</item>
+        <!--female contraceptive-->
+        <item>FEMALE</item>
+        <item>  -- Levon 2</item>
+        <item>  -- Postinor 2</item>
+        <item>  -- Lydia postpil</item>
+    </string-array>
+
+    <!--array of Campuses-->
+    <string-array name="campus">
+        <item>KNUST</item>
+    </string-array>
+
 </resources>

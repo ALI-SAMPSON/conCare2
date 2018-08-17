@@ -8,23 +8,19 @@ public class Users {
     private String confirmPassword;
     private String gender;
     private String telephoneNumber;
-    private String address;
-    private String campus;
 
 
     //default constructor
     public Users(){
     }
 
-    //constructor with parameters
-    public Users(String username,String password,String confirmPassword,String gender,String telephoneNumber,String address,String campus){
+    //constructor with one or more parameters
+    public Users(String username,String password,String confirmPassword,String gender,String telephoneNumber){
         this.username = username;
         this.password = password;
         this.confirmPassword = confirmPassword;
         this.gender = gender;
         this.telephoneNumber = telephoneNumber;
-        this.address = address;
-        this.campus = campus;
 
     }
 
@@ -68,25 +64,6 @@ public class Users {
     public String getTelephoneNumber(){
         return telephoneNumber;
     }
-
-    //Getter and Setter Method for Address
-    public void setAddress(String address){
-        this.address = address;
-    }
-    public String getAddress(){
-        return address;
-    }
-
-    //Getter and Setter Method for Campus
-    public void setCampus(String campus){
-        this.campus = campus;
-    }
-
-    public String getCampus(){
-        return campus;
-    }
-
-
 
 
 }

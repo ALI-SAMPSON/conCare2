@@ -15,7 +15,7 @@
 
     <!-- Linear Layout for the UI elements -->
     <android.support.v7.widget.LinearLayoutCompat
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -159,53 +159,6 @@
                 android:maxLines="1"/>
         </android.support.design.widget.TextInputLayout>
 
-        <!-- TextInputLayout and AppCompatEdiText for Address -->
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayoutAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="0dp"
-            android:textAlignment="center"
-            android:textColorHint="@color/colorWhite">
-            <EditText
-                android:id="@+id/editTextAddress"
-                android:layout_width="320dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="0dp"
-                android:hint="@string/hint_address"
-                android:drawableLeft="@drawable/ic_add_location_black_24dp"
-                android:textColor="@color/colorWhite"
-                android:textColorHint="@color/colorWhite"
-                android:inputType="text"
-                android:maxLength="15"
-                android:maxLines="1"/>
-        </android.support.design.widget.TextInputLayout>
-
-        <!-- TextInputLayout and AppCompatEdiText for Campus -->
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayoutCampus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="0dp"
-            android:textAlignment="center"
-            android:textColorHint="@color/colorWhite">
-            <EditText
-                android:id="@+id/editTextCampus"
-                android:layout_width="320dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="0dp"
-                android:hint="@string/hint_campus"
-                android:drawableLeft="@drawable/ic_school_black_24dp"
-                android:textColor="@color/colorWhite"
-                android:textColorHint="@color/colorWhite"
-                android:inputType="text"
-                android:maxLength="15"
-                android:maxLines="1"/>
-        </android.support.design.widget.TextInputLayout>
 
         <!-- Login Button -->
         <android.support.v7.widget.AppCompatButton

@@ -28,8 +28,6 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText editTextPassword;
     private EditText editTextConfirmPassword;
     private EditText editTextTelNumber;
-    private EditText editTextAdress;
-    private EditText editTextCampus;
 
     private AppCompatSpinner spinnerGender;
     private ArrayAdapter<CharSequence> spinnerAdapter;
@@ -50,15 +48,12 @@ public class SignUpActivity extends AppCompatActivity {
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
+        editTextTelNumber = findViewById(R.id.editTextTelephoneNumber);
 
         spinnerGender = findViewById(R.id.spinnerGender);
         spinnerAdapter = ArrayAdapter.createFromResource(this,R.array.gender,R.layout.support_simple_spinner_dropdown_item);
         spinnerAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spinnerGender.setAdapter(spinnerAdapter);
-
-        editTextTelNumber = findViewById(R.id.editTextTelephoneNumber);
-        editTextAdress = findViewById(R.id.editTextAddress);
-        editTextCampus = findViewById(R.id.editTextCampus);
 
         //instantiation of the Firebase classes
         usersdB = FirebaseDatabase.getInstance();
@@ -83,8 +78,6 @@ public class SignUpActivity extends AppCompatActivity {
         String confirm_password = editTextConfirmPassword.getText().toString().trim();
         String gender = spinnerGender.getSelectedItem().toString().trim();
         String telephone = editTextTelNumber.getText().toString().trim();
-        String address = editTextAdress.getText().toString().trim();
-        String campus = editTextCampus.getText().toString().trim();
 
         //checks to make sure the editText fields are not empty
         if(username.equals(null)){
@@ -101,12 +94,6 @@ public class SignUpActivity extends AppCompatActivity {
         }
         else if(telephone.equals(null)){
             editTextTelNumber.setError(error_edit_text);
-        }
-        else if(address.equals(null)){
-            editTextAdress.equals(error_edit_text);
-        }
-        else if(campus.equals(null)){
-            editTextCampus.setError(error_edit_text);
         }
         else if(!confirm_password.equals(password)){
             editTextConfirmPassword.setError("Password does not match!");
@@ -129,8 +116,6 @@ public class SignUpActivity extends AppCompatActivity {
         String confirm_password = editTextConfirmPassword.getText().toString().trim();
         String gender = spinnerGender.getSelectedItem().toString().trim();
         String telephone = editTextTelNumber.getText().toString().trim();
-        String address = editTextAdress.getText().toString().trim();
-        String campus = editTextCampus.getText().toString().trim();
 
         //sets the text gotten to the database fields
         users.setUsername(username);
@@ -138,8 +123,6 @@ public class SignUpActivity extends AppCompatActivity {
         users.setConfirmPassword(confirm_password);
         users.setGender(gender);
         users.setTelephoneNumber(telephone);
-        users.setAddress(address);
-        users.setCampus(campus);
 
         //sets the values to the database
         usersRef.child(username).setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -182,7 +165,5 @@ public class SignUpActivity extends AppCompatActivity {
         editTextPassword.setText(null);
         editTextConfirmPassword.setText(null);
         editTextTelNumber.setText(null);
-        editTextAdress.setText(null);
-        editTextCampus.setText(null);
     }
 }
