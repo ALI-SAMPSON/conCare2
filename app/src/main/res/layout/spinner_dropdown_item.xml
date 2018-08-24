@@ -9,7 +9,7 @@
     style="?android:attr/spinnerDropDownItemStyle"
     android:ellipsize="marquee"
     android:fontFamily="@font/nunito_semibold"
-    android:textColor="@color/tart_orange"
+    android:textColor="@color/accent"
     android:maxLines="1"
     tools:ignore="EllipsizeMaxLines">
 

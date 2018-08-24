@@ -21,27 +21,24 @@
         <activity
             android:name=".activities.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-        </activity>
-
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".activities.SignUpActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-        </activity>
-
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".activities.SplashScreenActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-        </activity>
-
-        <activity android:name=".activities.HomeActivity"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".activities.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme">
-
         </activity>
-
+        <activity android:name=".activities.PlaceOrderActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/homeTheme">
+        </activity>
     </application>
 
 </manifest>

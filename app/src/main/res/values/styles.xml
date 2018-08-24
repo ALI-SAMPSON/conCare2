@@ -3,17 +3,17 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorAccent">@color/claret</item>
-        <item name="colorPrimary">@color/tart_orange</item>
-        <item name="colorPrimaryDark">@color/tart_orange</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorPrimary">@color/colorGray</item>
+        <item name="colorPrimaryDark">@color/background_super_dark</item>
     </style>
 
     <!-- Base application theme. -->
     <style name="homeTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorAccent">@color/colorWhite</item>
-        <item name="colorPrimary">@color/tart_orange</item>
-        <item name="colorPrimaryDark">@color/sunset_orange</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorPrimary">@color/colorGray</item>
+        <item name="colorPrimaryDark">@color/background_super_dark</item>
     </style>
 
 </resources>

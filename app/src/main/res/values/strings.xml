@@ -18,12 +18,18 @@
     <string name="signUp">Sign Up</string>
     <string name="splash_text">powered by iCODE Studios</string>
     <string name="sub_text">...a convenient place to purchase all contraceptives</string>
+    <string name="todo">TODO</string>
 
-    <string name="welcome_msg_home">Welcome to ConCare GH</string>
+    <string name="welcome_msg_home">Welcome To ConCare GH</string>
     <string name="welcome_mgs_sub_desc">...your home of quality and affordable contraceptives</string>
-    <string name="place_order">PLACE YOUR ORDER</string>
+    <string name="select_gender_type">Select gender type for contraceptive</string>
+    <string name="order_now">Order Now!</string>
+    <string name="proceed">PROCEED</string>
+    <string name="place_order">PLACE ORDER</string>
     <string name="gender">Gender</string>
+    <string name="contraceptive">Contraceptive</string>
     <string name="location">Location</string>
+    <string name="other">Other</string>
     <string name="residence">Residence</string>
     <string name="hostel_n_room_number">Hostel name and room number</string>
 
@@ -56,7 +62,6 @@
         provider in Ghana and the world at large, and to
         also ensure mass participation in contraceptive use.
     </string>
-
 
 
     <!-- Navigation drawer menu -->

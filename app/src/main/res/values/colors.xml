@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="primary">#3F51B5</color>
+    <color name="raisen_black">#231123</color>
+    <color name="text_tertiary_dark">#61000000</color> <!-- 38% -->
+    <color name="dark">#000000</color>
+    <color name="accent">#1976D2</color>
+
+    <color name="status_bar_back">#ff676767</color> <!-- this is blended with immersive_bars to produce the desired status bar color i.e. background_super_dark -->
+    <color name="background_super_dark">#ff292929</color>
+
     <color name="colorBlue">#3F51B5</color>
     <color name="colorBlueDark">#303F9F</color>
     <color name="colorPrimaryDark">#FF2081</color>
@@ -19,7 +29,7 @@
     <color name="colorVioletDeep">#6d73c9</color>
     <color name="colorTransparentWhite">#cccccc</color>
 
-    <color name="raisen_black">#231123</color>
+
     <color name="colorRed">#ff0000</color>
     <color name="claret">#820933</color>
     <color name="debian_red">#CF1259</color>

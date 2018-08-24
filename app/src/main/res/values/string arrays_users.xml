@@ -2,22 +2,25 @@
 <resources>
     <!--array of gender-->
     <string-array name="gender">
-        <item>Male</item>
-        <item>Female</item>
+        <item>MALE</item>
+        <item>FEMALE</item>
     </string-array>
 
     <!--array of male contraceptives-->
-    <string-array name="con_type">
+    <string-array name="con_male">
         <!--male condom types-->
-        <item>MALE</item>
-        <item>  -- Fiesta</item>
-        <item>  -- Kiss Condom</item>
-        <item>  -- Dragon</item>
-        <!--female contraceptive-->
-        <item>FEMALE</item>
-        <item>  -- Levon 2</item>
-        <item>  -- Postinor 2</item>
-        <item>  -- Lydia postpil</item>
+        <item> Fiesta </item>
+        <item> Kiss Condom </item>
+        <item> Dragon </item>
+        <item> Other </item>
+    </string-array>
+
+    <!--array of female contraceptives-->
+    <string-array name="con_female">
+    <item> Levon 2 </item>
+    <item> Postinor 2 </item>
+    <item> Lydia postpil </item>
+        <item> Other </item>
     </string-array>
 
     <!--array of Campuses-->
@@ -33,6 +36,7 @@
         <item>Campus</item>
         <item>Bomso</item>
         <item>Gaza Area</item>
+        <item>Other</item>
     </string-array>
 
     <string-array name="residence">
