@@ -326,7 +326,7 @@
             android:layout_marginTop="0dp"
             android:layout_marginLeft="0dp"
             android:textAlignment="center"
-            android:textColorHint="@color/status_bar_back">
+            android:textColorHint="@color/accent">
             <EditText
                 android:id="@+id/editTextHostel"
                 android:layout_width="320dp"
