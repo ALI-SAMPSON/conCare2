@@ -13,15 +13,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="320dp"
-        android:background="@drawable/sign_up_ui"
+        android:layout_height="310dp"
+        android:background="@drawable/login_bg_1"
         android:orientation="vertical">
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginTop="50dp"
-            android:layout_gravity="center"
-            android:src="@mipmap/admin_icon_background"/>
+            android:layout_marginTop="60dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/admin_icon_foreground"/>
     </LinearLayout>
 
     <android.support.v7.widget.CardView
@@ -36,20 +36,25 @@
         <!-- TextInputLayout and AppCompatEdiText for Username -->
         <android.support.design.widget.TextInputLayout
             android:id="@+id/textInputLayoutUsername"
-            android:layout_width="260dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="0dp"
             android:layout_marginTop="20dp"
             android:orientation="vertical"
             android:textAlignment="center"
-            android:textColorHint="@color/colorPrimaryDark">
+            android:textColorHint="@color/status_bar_back">
             <EditText
                 android:id="@+id/editTextUsername"
                 android:layout_width="255dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:drawableLeft="@drawable/ic_person_outline_black_24dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:textColorHint="@color/colorPrimary"
+                android:drawablePadding="@dimen/padding_normal"
+                android:textColor="@color/status_bar_back"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColorHint="@color/background_super_dark"
+                app:fontFamily="@font/nunito_semibold"
+                android:textSize="16sp"
                 android:hint="@string/hint_username"
                 android:inputType="text"
                 android:maxLines="1"/>
@@ -58,23 +63,28 @@
         <!-- TextInputLayout and AppCompatEdiText for Password -->
         <android.support.design.widget.TextInputLayout
             android:id="@+id/textInputLayoutPassword"
-            android:layout_width="260dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="0dp"
             android:layout_marginTop="90dp"
             android:orientation="vertical"
             android:textAlignment="center"
-            android:textColorHint="@color/colorPrimaryDark"
+            android:textColorHint= "@color/status_bar_back"
             app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/colorPrimaryDark">
-            <EditText
+            app:passwordToggleTint="@color/tart_orange">
+            <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextPassword"
                 android:layout_width="255dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryDark"
-                android:textColorHint="@color/colorPrimary"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/status_bar_back"
+                android:textColorHint="@color/background_super_dark"
+                android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:hint="@string/hint_password"
                 android:inputType="textPassword"
+                android:textSize="16sp"
+                app:fontFamily="@font/nunito_semibold"
                 android:maxLines="1"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -102,7 +112,7 @@
     <!-- Link to the user sign up page -->
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/appCompatButtonLinkSignUp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -110,7 +120,8 @@
         android:layout_below="@+id/appCompatButtonLogin"
         android:text="@string/sign_up_link"
         android:textColor="@color/tart_orange"
-        android:textSize="16sp"
+        app:fontFamily="@font/nunito_semibold"
+        android:textSize="18sp"
         android:textAllCaps="false"
         android:textStyle="normal"
         android:textAlignment="center"

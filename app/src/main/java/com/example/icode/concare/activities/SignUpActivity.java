@@ -51,8 +51,8 @@ public class SignUpActivity extends AppCompatActivity {
         editTextTelNumber = findViewById(R.id.editTextTelephoneNumber);
 
         spinnerGender = findViewById(R.id.spinnerGender);
-        spinnerAdapter = ArrayAdapter.createFromResource(this,R.array.gender,R.layout.support_simple_spinner_dropdown_item);
-        spinnerAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinnerAdapter = ArrayAdapter.createFromResource(this,R.array.gender,R.layout.spinner_item_sign_up);
+        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item_sign_up);
         spinnerGender.setAdapter(spinnerAdapter);
 
         //instantiation of the Firebase classes

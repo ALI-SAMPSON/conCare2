@@ -9,6 +9,7 @@
     <!-- Custom Dimensions -->
     <dimen name="activity_left_margin">7dp</dimen>
     <dimen name="activity_right_margin">7dp</dimen>
-    <dimen name="round_corner_radius">15dp</dimen>
+    <dimen name="round_corner_radius">10dp</dimen>
+    <dimen name="padding_normal">16dp</dimen>
 
 </resources>

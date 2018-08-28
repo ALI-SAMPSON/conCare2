@@ -7,8 +7,10 @@ public class Orders {
     private String telephone_Number;
     private String campus;
     private String location;
+    private String other_location;
     private String residence;
-    private String type_of_contraceptive;
+    private String contraceptive;
+    private String other_contraceptive;
     private String hostel_room_number;
 
     //default constructor
@@ -16,13 +18,15 @@ public class Orders {
 
     //constructor with one or more parameters
     public Orders(String telephone_Number,String campus,
-                  String location,String residence,
-                  String type_of_contraceptive, String hostel_room_number){
+                  String location,String other_location,String residence,
+                  String contraceptive,String other_contraceptive, String hostel_room_number){
         this.telephone_Number = telephone_Number;
         this.campus = campus;
         this.location = location;
+        this.other_location = other_location;
         this.residence = residence;
-        this.type_of_contraceptive = type_of_contraceptive;
+        this.contraceptive = contraceptive;
+        this.other_contraceptive = other_contraceptive;
         this.hostel_room_number = hostel_room_number;
     }
 
@@ -50,6 +54,14 @@ public class Orders {
         return location;
     }
 
+    //Getter and Setter Method for other location
+    public void setOther_location(String other_location){
+        this.other_location = other_location;
+    }
+    public String getOther_location(){
+        return other_location;
+    }
+
     //Getter and Setter Method for residence
     public void setResidence(String residence){
         this.residence = residence;
@@ -60,11 +72,19 @@ public class Orders {
     }
 
     //Getter and Setter Method for gender type of contraceptive
-    public void setType_of_contraceptive(String type_of_contraceptive){
-        this.type_of_contraceptive = type_of_contraceptive;
+    public void setContraceptive(String contraceptive){
+        this.contraceptive = contraceptive;
     }
-    public String getType_of_contraceptive(){
-        return type_of_contraceptive;
+    public String getContraceptive(){
+        return contraceptive;
+    }
+
+    //Getter and Setter Method for other contraceptive
+    public void setOther_contraceptive(String other_contraceptive){
+        this.other_contraceptive = other_contraceptive;
+    }
+    public String getOther_contraceptive(){
+        return other_contraceptive;
     }
 
     public void setHostel_room_number(String hostel_room_number){

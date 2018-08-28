@@ -6,7 +6,7 @@
     android:id="@+id/nestedScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_ui"
+    android:background="@drawable/login_bg"
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
@@ -38,6 +38,8 @@
                 android:hint="@string/hint_username"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
+                android:textSize="16sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:inputType="text"
                 android:maxLines="1"/>
         </android.support.design.widget.TextInputLayout>
@@ -62,6 +64,8 @@
                 android:hint="@string/hint_password"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
+                android:textSize="16sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:inputType="textPassword"
                 android:maxLines="1"/>
         </android.support.design.widget.TextInputLayout>
@@ -86,6 +90,8 @@
                 android:hint="@string/hint_confirm_password"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
+                android:textSize="16sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:inputType="textPassword"
                 android:maxLines="1"/>
         </android.support.design.widget.TextInputLayout>
@@ -100,7 +106,7 @@
             android:layout_marginLeft="0dp"
             android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="320dp"
+                android:layout_width="315dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:layout_height="match_parent"
@@ -108,13 +114,14 @@
                 <!--TextView View  and Spinner View for Voter's Gender-->
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/textViewGender"
-                    android:layout_width="80dp"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:text="@string/text_gender"
                     android:textSize="19sp"
-                    android:gravity=""
+                    android:gravity="center_vertical"
                     android:drawableLeft="@drawable/ic_people_black_24dp"
                     android:textColor="@color/colorWhite"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     android:layout_marginLeft="1dp"
                     android:layout_marginTop="4dp"
                     android:layout_weight="1.11" />
@@ -123,7 +130,7 @@
                     android:orientation="horizontal"
                     android:layout_height="40dp"
                     android:weightSum="1"
-                    android:layout_marginRight="10dp">
+                    android:layout_marginRight="15dp">
                     <android.support.v7.widget.AppCompatSpinner
                         android:id="@+id/spinnerGender"
                         android:layout_width="150dp"
@@ -151,9 +158,11 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
                 android:hint="@string/hint_tel"
-                android:drawableLeft="@drawable/ic_format_list_numbered_black_24dp"
+                android:drawableLeft="@drawable/ic_format_list_numbered_white_24dp"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
+                android:textSize="16sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:inputType="phone"
                 android:maxLength="15"
                 android:maxLines="1"/>
@@ -171,10 +180,11 @@
             android:layout_gravity="center_horizontal"
             android:layout_below="@+id/textInputLayoutTelNumber"
             android:text="@string/signUp"
-            android:textColor="@color/colorVioletDeep"
+            android:textColor="@color/colorRed"
             android:textSize="18sp"
             android:textStyle="normal"
             android:textAlignment="center"
+            app:fontFamily="@font/nunito_semibold"
             android:background="@drawable/round_corner_button_sign_up"
             android:onClick="onSignUpButtonClick"/>
 
@@ -193,6 +203,7 @@
             android:textAllCaps="false"
             android:textSize="18sp"
             android:textStyle="normal"
+            app:fontFamily="@font/nunito_semibold"
             android:textAlignment="center"
             android:background="@null"
             android:onClick="onLoginLinkButtonClick"/>

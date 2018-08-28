@@ -35,6 +35,9 @@ public class PlaceOrderActivity extends AppCompatActivity {
     private EditText editTextTelNumber;
     private EditText editTextHostel;
 
+    private EditText editTextOtherLocation;
+    private EditText editTextOtherContraceptive;
+
     //user's campus spinner view object
     private AppCompatSpinner spinnerCampus;
     private ArrayAdapter<CharSequence> arrayAdapterCampus;
@@ -85,6 +88,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         editTextTelNumber = findViewById(R.id.editTextTelNumber);
         editTextHostel = findViewById(R.id.editTextHostel);
+        editTextOtherLocation = findViewById(R.id.editTextOtherLocation);
+        editTextOtherContraceptive = findViewById(R.id.editTextOtherContraceptive);
 
         //spinner view campus
         spinnerCampus = findViewById(R.id.spinnerCampus);
@@ -156,10 +161,11 @@ public class PlaceOrderActivity extends AppCompatActivity {
         String error_text_hostel = "enter your hostel to better locate you";
         String error_text_number = "telephone number is a required field";
 
+        //getting input from the fields
         String hostel = editTextHostel.getText().toString().trim();
-        String number = editTextTelNumber.getText().toString().trim();
+        String tel_number = editTextTelNumber.getText().toString().trim();
 
-        if(number.equals("")){
+        if(tel_number.equals("")){
             editTextTelNumber.setError(error_text_number);
             Snackbar.make(nestedScrollView,error_text_number,Snackbar.LENGTH_SHORT).show();
         }
@@ -180,18 +186,22 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         //getting input from the user
         String hostel_room_number = editTextHostel.getText().toString().trim();
-        String number = editTextTelNumber.getText().toString().trim();
+        String tel_number = editTextTelNumber.getText().toString().trim();
         String campus = spinnerCampus.getSelectedItem().toString().trim();
         String location = spinnerLocation.getSelectedItem().toString().trim();
+        String other_location = editTextOtherLocation.getText().toString().trim();
         String residence = spinnerResidence.getSelectedItem().toString().trim();
-        String gender = spinnerContraceptive.getSelectedItem().toString().trim();
+        String contraceptive = spinnerContraceptive.getSelectedItem().toString().trim();
+        String other_contraceptive = editTextOtherContraceptive.getText().toString().trim();
 
         orders.setHostel_room_number(hostel_room_number);
-        orders.setTelephone_Number(number);
+        orders.setTelephone_Number(tel_number);
         orders.setCampus(campus);
         orders.setLocation(location);
+        orders.setOther_location(other_location);
         orders.setResidence(residence);
-        orders.setType_of_contraceptive(gender);
+        orders.setContraceptive(contraceptive);
+        orders.setOther_contraceptive(other_contraceptive);
 
         orderRef.child(location).setValue(orders).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
