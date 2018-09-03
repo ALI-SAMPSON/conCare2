@@ -2,14 +2,22 @@ package com.example.icode.concare.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.icode.concare.R;
 import com.example.icode.concare.models.Users;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,70 +29,92 @@ import java.util.TimerTask;
 
 public class LoginActivity extends AppCompatActivity {
 
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
 
-    private EditText editTextUsername;
+    private EditText editTextEmail;
     private EditText editTextPassword;
 
-    private Users users;
+    private FirebaseAuth mAuth;
 
     private FirebaseDatabase usersdB;
     private DatabaseReference usersRef;
+
+    private RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        editTextUsername = findViewById(R.id.editTextUsername);
+        // initialization of the objects of the views
+        editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
 
-        users = new Users();
-
-        usersdB = FirebaseDatabase.getInstance();
-        usersRef = usersdB.getReference().child("Users");
+        mAuth = FirebaseAuth.getInstance();
+        relativeLayout = findViewById(R.id.relativeLayout);
 
     }
 
     //onLoginButtonClick method
     public void onLoginButtonClick(View view){
 
-        String error_edit_text = "This is a required field";
-
-        String password_length = "Password length cannot be less than 6";
-
         //gets text from the editTExt fields
-        String username = editTextUsername.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
+        String _email = editTextEmail.getText().toString().trim();
+        String _password = editTextPassword.getText().toString().trim();
 
-        if(username.equals("")){
-            editTextUsername.setError(error_edit_text);
+        if(_email.isEmpty()){
+            editTextEmail.setError(getString(R.string.error_empty_email));
+            return;
         }
-        else if(password.equals("")){
-            editTextPassword.setError(error_edit_text);
+        else if(!Patterns.EMAIL_ADDRESS.matcher(_email).matches()){
+            editTextPassword.setError(getString(R.string.email_invalid));
+            return;
         }
-        else if(password.length() < 6 ){
-            editTextPassword.setError(password_length);
+        else if(_password.isEmpty()){
+           editTextPassword.setError(getString(R.string.error_empty_password));
+           return;
         }
-        else if(username.equals(null) && password.equals(null)){
-            Toast.makeText(this,"Both fields cannot be left empty",Toast.LENGTH_LONG).show();
+        else if(_password.length() < 6 ){
+            editTextPassword.setError(getString(R.string.error_password_length));
         }
         else{
-            onLogin();
+            loginUser();
         }
     }
 
-    //Method to handle login
-    public void onLogin(){
+    //Method to handle user login
+    public void loginUser(){
 
+        // display the progressDialog
         progressDialog = ProgressDialog.show(LoginActivity.this,"",null,true,true);
         progressDialog.setMessage("Please wait...");
 
         //gets text from the editTExt fields
-        final String username = editTextUsername.getText().toString().trim();
-        final String password = editTextPassword.getText().toString().trim();
+        final String _email = editTextEmail.getText().toString().trim();
+        final String _password = editTextPassword.getText().toString().trim();
 
-        usersRef.child(username).addValueEventListener(new ValueEventListener() {
+        mAuth.signInWithEmailAndPassword(_email,_password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                      if(task.isSuccessful()){
+                          // dismiss progress dialog upon a successful login
+                          progressDialog.dismiss();
+                          // display a success message
+                          Snackbar.make(relativeLayout,getString(R.string.login_successful),Snackbar.LENGTH_SHORT).show();
+                          // clears the text fields
+                          clearTextFields();
+                          // starts the home activity
+                          startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+                      }
+                      else{
+                          // display a message if there is an error
+                          Snackbar.make(relativeLayout,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
+                      }
+                    }
+                });
+
+        /*usersRef.child(username).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
@@ -142,6 +172,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this,databaseError.toException().toString(),Toast.LENGTH_LONG).show();
             }
         });
+        */
 
 
     }
@@ -155,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void clearTextFields(){
-        editTextUsername.setText(null);
+        editTextEmail.setText(null);
         editTextPassword.setText(null);
     }
 

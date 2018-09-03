@@ -3,9 +3,7 @@ package com.example.icode.concare.models;
 public class Users {
 
     //field in the database
-    private String username;
-    private String password;
-    private String confirmPassword;
+    private String email;
     private String gender;
     private String telephoneNumber;
 
@@ -15,38 +13,20 @@ public class Users {
     }
 
     //constructor with one or more parameters
-    public Users(String username,String password,String confirmPassword,String gender,String telephoneNumber){
-        this.username = username;
-        this.password = password;
-        this.confirmPassword = confirmPassword;
+    public Users(String email,String gender,String telephoneNumber){
+        this.email = email;
         this.gender = gender;
         this.telephoneNumber = telephoneNumber;
 
     }
 
     //Getter and Setter Method for Username
-    public void setUsername(String username){
-        this.username = username;
+    public void setEmail(String email){
+        this.email = email;
     }
 
-    public String getUsername(){
-        return username;
-    }
-
-    //Getter and Setter Method for Password
-    public void setPassword(String password){
-        this.password = password;
-    }
-    public String getPassword(){
-        return password;
-    }
-
-    //Getter and Setter Method for Confirm Password
-    public void setConfirmPassword(String confirmPassword){
-        this.confirmPassword = confirmPassword;
-    }
-    public String getConfirmPassword(){
-        return confirmPassword;
+    public String getEmail(){
+        return email;
     }
 
     //Getter and Setter Method for Gender

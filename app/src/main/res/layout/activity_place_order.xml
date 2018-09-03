@@ -26,7 +26,7 @@
         <!-- TextInputLayout and AppCompatEdiText for Tel. Number -->
         <android.support.design.widget.TextInputLayout
             android:layout_below="@+id/home_imageView"
-            android:id="@+id/textInputLayoutTelNumber"
+            android:id="@+id/phoneNumber_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
-                android:hint="@string/hint_tel"
+                android:hint="@string/hint_phone"
                 android:drawableLeft="@drawable/ic_format_list_numbered_black_24dp"
                 android:textColor="@color/edit_text_color"
                 android:textColorHint="@color/status_bar_back"
@@ -53,7 +53,7 @@
 
         <!--TextInputLayout and LinearLayout and spinner View for user's Campus-->
         <android.support.design.widget.TextInputLayout
-            android:layout_below="@+id/textInputLayoutTelNumber"
+            android:layout_below="@+id/phoneNumber_container"
             android:id="@+id/textInputLayoutCampus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

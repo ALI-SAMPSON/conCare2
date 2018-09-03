@@ -3,9 +3,12 @@ package com.example.icode.concare.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -16,6 +19,8 @@ import com.example.icode.concare.models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -24,10 +29,10 @@ import java.util.TimerTask;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private EditText editTextUsername;
+    // instance variables
+    private EditText editTextEmail;
     private EditText editTextPassword;
-    private EditText editTextConfirmPassword;
-    private EditText editTextTelNumber;
+    private EditText editTextPhoneNumber;
 
     private AppCompatSpinner spinnerGender;
     private ArrayAdapter<CharSequence> spinnerAdapter;
@@ -35,7 +40,11 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseDatabase usersdB;
     private DatabaseReference usersRef;
 
-    private Users users;
+    private NestedScrollView nestedScrollView;
+
+    //instance of firebase Authentication
+    private FirebaseAuth mAuth;
+
 
     ProgressDialog progressDialog;
 
@@ -45,58 +54,70 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         //initialization of the view objects
-        editTextUsername = findViewById(R.id.editTextUsername);
+        editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
-        editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
-        editTextTelNumber = findViewById(R.id.editTextTelephoneNumber);
+        editTextPhoneNumber = findViewById(R.id.editTextPhoneNumber);
 
         spinnerGender = findViewById(R.id.spinnerGender);
         spinnerAdapter = ArrayAdapter.createFromResource(this,R.array.gender,R.layout.spinner_item_sign_up);
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item_sign_up);
         spinnerGender.setAdapter(spinnerAdapter);
 
+        nestedScrollView = findViewById(R.id.nestedScrollView);
+
+        mAuth = FirebaseAuth.getInstance();
+
         //instantiation of the Firebase classes
-        usersdB = FirebaseDatabase.getInstance();
-        usersRef = usersdB.getReference().child("Users");
+        /*usersdB = FirebaseDatabase.getInstance();
+        usersRef = usersdB.getReference().child("Users");*/
 
         //instance of th Users class
-        users = new Users();
+        //users = new Users();
+    }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        if(mAuth.getCurrentUser() != null){
 
+        }
     }
 
     //Sign Up Button Method
     public void onSignUpButtonClick(View view){
 
-        String error_edit_text = "This is a required field";
-
-        String password_length = "Password length cannot be less than 6";
-
         //gets text from the editTExt fields
-        String username = editTextUsername.getText().toString().trim();
+        String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
-        String confirm_password = editTextConfirmPassword.getText().toString().trim();
         String gender = spinnerGender.getSelectedItem().toString().trim();
-        String telephone = editTextTelNumber.getText().toString().trim();
+        String phone = editTextPhoneNumber.getText().toString().trim();
 
+        /**
+         * Input validation
+         */
         //checks to make sure the editText fields are not empty
-        if(username.equals(null)){
-            editTextUsername.setError(error_edit_text);
+        if(email.isEmpty()){
+            editTextEmail.setError(getString(R.string.error_empty_email));
+            return;
+        }
+        else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            editTextEmail.setError(getString(R.string.email_invalid));
+            return;
+        }
+        else if(password.isEmpty()){
+            editTextPassword.setError(getString(R.string.error_empty_password));
+            return;
         }
         else if(password.length() < 6 ){
-            editTextPassword.setError(password_length);
+            editTextPassword.setError(getString(R.string.error_password_length));
         }
-        else if(password.equals(null)){
-            editTextConfirmPassword.equals(error_edit_text);
+        else if(phone.isEmpty()){
+            editTextPhoneNumber.setError(getString(R.string.error_empty_phone));
+            return;
         }
-        else if(confirm_password.equals(null)){
-            editTextConfirmPassword.setError(error_edit_text);
-        }
-        else if(telephone.equals(null)){
-            editTextTelNumber.setError(error_edit_text);
-        }
-        else if(!confirm_password.equals(password)){
-            editTextConfirmPassword.setError("Password does not match!");
+        else if(phone.length() != 10){
+            editTextPhoneNumber.setError(getString(R.string.phone_invalid));
+            return;
         }
         else{
             signUp();
@@ -111,44 +132,52 @@ public class SignUpActivity extends AppCompatActivity {
         progressDialog.setMessage("Please wait...");
 
         //gets text from the editTExt fields
-        String username = editTextUsername.getText().toString().trim();
+        final String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
-        String confirm_password = editTextConfirmPassword.getText().toString().trim();
-        String gender = spinnerGender.getSelectedItem().toString().trim();
-        String telephone = editTextTelNumber.getText().toString().trim();
+        final String gender = spinnerGender.getSelectedItem().toString().trim();
+        final String phone = editTextPhoneNumber.getText().toString().trim();
 
-        //sets the text gotten to the database fields
-        users.setUsername(username);
-        users.setPassword(password);
-        users.setConfirmPassword(confirm_password);
-        users.setGender(gender);
-        users.setTelephoneNumber(telephone);
+        // register user details into firebase database
+        mAuth.createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        // hides the progressBar
+                        progressDialog.dismiss();
+                        if(task.isSuccessful()){
+                            //initializes the user object
+                            Users users = new Users(email, gender, phone);
+                            FirebaseDatabase.getInstance().getReference("Users")
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        //dismiss progress dialog upon a successful login
+                                        progressDialog.dismiss();
+                                        // display a success message
+                                        Snackbar.make(nestedScrollView,getString(R.string.sign_up_successful),Snackbar.LENGTH_SHORT).show();
+                                    }
+                                    else {
+                                        // display a message if there is an error
+                                        Snackbar.make(nestedScrollView,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
+                                        // clears the fields
+                                        clearTextFields();
+                                    }
+                                }
+                            });
 
-        //sets the values to the database
-        usersRef.child(username).setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    final Timer timer = new Timer();
-                    timer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            progressDialog.dismiss();
-                            timer.cancel();
                         }
-                    },10000);
-                    //create a toast after a successful login
-                    Toast.makeText(SignUpActivity.this,"Sign Up Successful,...", Toast.LENGTH_LONG).show();
-                    clearTextFields();
-                }
+                        else{
+                            // display a message if there is an error
+                            Snackbar.make(nestedScrollView,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
+                            // clears the fields
+                            clearTextFields();
+                        }
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(SignUpActivity.this,e.getStackTrace().toString(), Toast.LENGTH_LONG).show();
-            }
-        });
+                    }
+                });
+
     }
 
     //link from the Sign Up page to the Login Page
@@ -161,9 +190,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     //clears the textfields
     public void clearTextFields(){
-        editTextUsername.setText(null);
+        editTextEmail.setText(null);
         editTextPassword.setText(null);
-        editTextConfirmPassword.setText(null);
-        editTextTelNumber.setText(null);
+        editTextPhoneNumber.setText(null);
     }
 }

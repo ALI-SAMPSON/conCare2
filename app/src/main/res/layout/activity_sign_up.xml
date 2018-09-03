@@ -15,13 +15,14 @@
 
     <!-- Linear Layout for the UI elements -->
     <android.support.v7.widget.LinearLayoutCompat
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="0dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
         android:orientation="vertical">
         <!-- TextInputLayout and AppCompatEdiText for Email -->
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayoutUsername"
+            android:id="@+id/email_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
@@ -29,24 +30,26 @@
             android:textAlignment="center"
             android:textColorHint="@color/colorWhite">
             <EditText
-                android:id="@+id/editTextUsername"
+                android:id="@+id/editTextEmail"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
-                android:drawableLeft="@drawable/ic_person_white_24dp"
-                android:hint="@string/hint_username"
+                android:drawableLeft="@drawable/ic_email"
+                android:drawablePadding="@dimen/spacing_normal"
+                android:hint="@string/hint_email"
                 android:textColor="@color/colorWhite"
+                android:fontFamily="@font/nunito_semibold"
                 android:textColorHint="@color/colorWhite"
                 android:textSize="16sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:maxLines="1"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- TextInputLayout and AppCompatEdiText for Password -->
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayoutPassword"
+            android:id="@+id/password_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -61,35 +64,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
+                android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+                android:drawablePadding="@dimen/spacing_normal"
                 android:hint="@string/hint_password"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
-                android:textSize="16sp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:inputType="textPassword"
-                android:maxLines="1"/>
-        </android.support.design.widget.TextInputLayout>
-
-        <!-- TextInputLayout and AppCompatEdiText for Confirm Password -->
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayoutConfirmPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="0dp"
-            android:textAlignment="center"
-            android:textColorHint="@color/colorWhite"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/colorWhite">
-            <EditText
-                android:id="@+id/editTextConfirmPassword"
-                android:layout_width="320dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="0dp"
-                android:hint="@string/hint_confirm_password"
-                android:textColor="@color/colorWhite"
-                android:textColorHint="@color/colorWhite"
+                android:fontFamily="@font/nunito_semibold"
                 android:textSize="16sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:inputType="textPassword"
@@ -120,6 +100,7 @@
                     android:textSize="19sp"
                     android:gravity="center_vertical"
                     android:drawableLeft="@drawable/ic_people_black_24dp"
+                    android:drawablePadding="@dimen/spacing_normal"
                     android:textColor="@color/colorWhite"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     android:layout_marginLeft="1dp"
@@ -144,7 +125,7 @@
 
         <!-- TextInputLayout and AppCompatEdiText for Tel. Number -->
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayoutTelNumber"
+            android:id="@+id/phoneNumber_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -152,15 +133,17 @@
             android:textAlignment="center"
             android:textColorHint="@color/colorWhite">
             <EditText
-                android:id="@+id/editTextTelephoneNumber"
+                android:id="@+id/editTextPhoneNumber"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
-                android:hint="@string/hint_tel"
-                android:drawableLeft="@drawable/ic_format_list_numbered_white_24dp"
+                android:hint="@string/hint_phone"
+                android:drawableLeft="@drawable/ic_phone"
+                android:drawablePadding="@dimen/spacing_normal"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
+                android:fontFamily="@font/nunito_semibold"
                 android:textSize="16sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:inputType="phone"
