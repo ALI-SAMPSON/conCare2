@@ -3,7 +3,9 @@ package com.example.icode.concare.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,19 +25,22 @@ import com.example.icode.concare.models.Orders;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
 
     private AppCompatSpinner spinnerGender;
     private ArrayAdapter<CharSequence> arrayAdapterGender;
+
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,9 @@ public class HomeActivity extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
 
+        // a call to the navigationViewItemListener
+        setNavigationViewListener();
+
         //checks of there is support actionBar
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -59,8 +67,51 @@ public class HomeActivity extends AppCompatActivity {
             getSupportActionBar().setHomeButtonEnabled(true);
         }
 
+        mAuth = FirebaseAuth.getInstance();
+
     }
 
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        if(mAuth.getCurrentUser() == null){
+            finish();
+            // starts the login activity currently logged in user is null(no logged in user)
+            startActivity(new Intent(this,LoginActivity.class));
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item){
+        // handle navigation item click
+        switch (item.getItemId()){
+            case R.id.edit_profile:
+                //start edit_profile fragment
+                break;
+            case R.id.orders:
+                // start orders fragment
+                break;
+            case R.id.sign_out:
+                // display a progressDialog
+                ProgressDialog progressDialog =
+                        ProgressDialog.show(this,"","sign out...",true,true);
+                mAuth.signOut();
+                progressDialog.dismiss();
+                break;
+                default:
+                    break;
+        }
+
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    // method to set the navigationView Listener
+    private void setNavigationViewListener(){
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){

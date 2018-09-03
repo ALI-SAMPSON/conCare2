@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -75,21 +76,12 @@ public class SignUpActivity extends AppCompatActivity {
         //users = new Users();
     }
 
-    @Override
-    protected void onStart(){
-        super.onStart();
-        if(mAuth.getCurrentUser() != null){
-
-        }
-    }
-
     //Sign Up Button Method
     public void onSignUpButtonClick(View view){
 
         //gets text from the editTExt fields
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
-        String gender = spinnerGender.getSelectedItem().toString().trim();
         String phone = editTextPhoneNumber.getText().toString().trim();
 
         /**
@@ -120,11 +112,13 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
         else{
+            //method call
             signUp();
         }
 
     }
 
+    // signUp method
     public void signUp(){
 
         //displaying the progressDialog when sign Up button is clicked
@@ -148,11 +142,13 @@ public class SignUpActivity extends AppCompatActivity {
                             //initializes the user object
                             Users users = new Users(email, gender, phone);
                             FirebaseDatabase.getInstance().getReference("Users")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .child(mAuth.getCurrentUser().getUid())
                                     .setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
+                                        // avoid going back to the activity
+                                        finish();
                                         //dismiss progress dialog upon a successful login
                                         progressDialog.dismiss();
                                         // display a success message
@@ -161,8 +157,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     else {
                                         // display a message if there is an error
                                         Snackbar.make(nestedScrollView,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
-                                        // clears the fields
-                                        clearTextFields();
+                                        progressDialog.dismiss();
                                     }
                                 }
                             });
@@ -182,10 +177,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     //link from the Sign Up page to the Login Page
     public void onLoginLinkButtonClick(View view){
-        //new instance of the Intent class to open the Login Page
-        Intent intentLogin = new Intent(SignUpActivity.this,LoginActivity.class);
-        intentLogin.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intentLogin);
+        finish();
+        // creates an instance of the intent class and opens the signUpctivity
+        startActivity(new Intent(this,LoginActivity.class));
     }
 
     //clears the textfields
