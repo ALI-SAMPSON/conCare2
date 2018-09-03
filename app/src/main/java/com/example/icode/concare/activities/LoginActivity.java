@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -58,8 +59,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         if(mAuth.getCurrentUser() != null){
             finish();
+            //FirebaseUser user = mAuth.getCurrentUser();
             // starts the home activity if user is already logged in
-            startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+            startActivity(new Intent(LoginActivity.this,HomeActivity.class));
         }
     }
 
@@ -81,10 +83,12 @@ public class LoginActivity extends AppCompatActivity {
         }
         else if(_password.isEmpty()){
            editTextPassword.setError(getString(R.string.error_empty_password));
+           editTextPassword.requestFocus();
            return;
         }
         else if(_password.length() < 6 ){
             editTextPassword.setError(getString(R.string.error_password_length));
+            editTextPassword.requestFocus();
             return;
         }
         else{

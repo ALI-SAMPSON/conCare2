@@ -98,10 +98,12 @@ public class SignUpActivity extends AppCompatActivity {
         }
         else if(password.isEmpty()){
             editTextPassword.setError(getString(R.string.error_empty_password));
+            editTextPassword.requestFocus();
             return;
         }
         else if(password.length() < 6 ){
             editTextPassword.setError(getString(R.string.error_password_length));
+            editTextPassword.requestFocus();
         }
         else if(phone.isEmpty()){
             editTextPhoneNumber.setError(getString(R.string.error_empty_phone));

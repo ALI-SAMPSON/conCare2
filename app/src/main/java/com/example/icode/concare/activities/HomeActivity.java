@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -18,8 +19,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.example.icode.concare.R;
+import com.example.icode.concare.fragements.FragmentEditProfile;
 import com.example.icode.concare.models.CurrentUsers;
 import com.example.icode.concare.models.Orders;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -53,12 +56,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         spinnerGender.setAdapter(arrayAdapterGender);
 
         mDrawerLayout = findViewById(R.id.drawer);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
 
         // a call to the navigationViewItemListener
-        setNavigationViewListener();
+        //setNavigationViewListener();
 
         //checks of there is support actionBar
         if(getSupportActionBar() != null){
@@ -71,6 +78,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    public void editProfileFragment(){
+
+        // an instance of the edit profile fragment class
+        FragmentEditProfile fragmentEditProfile = new FragmentEditProfile();
+
+        // use fragment Manager and transactions to add the fragment to the screen
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        // fragment transaction
+        fragmentManager.beginTransaction()
+                .add(R.id.profile_container,fragmentEditProfile)
+                .commit();
+
+    }
 
     @Override
     protected void onStart(){
@@ -87,17 +108,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // handle navigation item click
         switch (item.getItemId()){
             case R.id.edit_profile:
+                editProfileFragment();
                 //start edit_profile fragment
                 break;
             case R.id.orders:
                 // start orders fragment
                 break;
             case R.id.sign_out:
+                Toast.makeText(getApplicationContext(),"You clicked signout",Toast.LENGTH_LONG).show();
                 // display a progressDialog
-                ProgressDialog progressDialog =
-                        ProgressDialog.show(this,"","sign out...",true,true);
-                mAuth.signOut();
-                progressDialog.dismiss();
+                /*ProgressDialog progressDialog =
+                        ProgressDialog.show(this,"","sign out...",true,true);*/
+                FirebaseAuth.getInstance().signOut();
+                //progressDialog.dismiss();
                 break;
                 default:
                     break;

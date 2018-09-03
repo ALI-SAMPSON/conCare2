@@ -18,10 +18,10 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundImage" value="C:\Users\iCODE\Desktop\con_image.png" />
-                                      <entry key="foregroundImage" value="C:\Users\iCODE\Desktop\con_image.png" />
+                                      <entry key="backgroundImage" value="C:\Users\iCODE\Desktop\android background Images\camera_bg.png" />
+                                      <entry key="foregroundImage" value="C:\Users\iCODE\Desktop\android background Images\camera_bg.png" />
                                       <entry key="legacyIconShape" value="CIRCLE" />
-                                      <entry key="outputName" value="logo" />
+                                      <entry key="outputName" value="image_bg" />
                                       <entry key="previewDensity" value="HIGH" />
                                     </map>
                                   </option>
@@ -53,7 +53,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/communication/ic_phone_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_image_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -64,7 +64,7 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_phone" />
+                            <entry key="outputName" value="ic_image" />
                             <entry key="sourceFile" value="C:\Users\iCODE" />
                           </map>
                         </option>

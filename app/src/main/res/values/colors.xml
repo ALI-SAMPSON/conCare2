@@ -40,6 +40,7 @@
     <color name="pink_ras_berry">#89023E</color>
     <color name="colorDeepPurple">#7c4dff</color>
     <color name="materialGreen">#00bfa5</color>
+    <color name="content_placeholder">#ffe0e0e0</color>
     <color name="materialYellow">#FFC107</color>
     <color name="materialDarkYellow">#FFA000</color>
     <color name="colorAccent">#FF4081</color>
