@@ -3,10 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/about_us"
-        android:title="About Us"
+        android:id="@+id/menu_about"
+        android:title="@string/text_about"
         android:orderInCategory="100"
-        app:showAsAction="always">
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:id="@+id/menu_sign_out"
+        android:title="@string/text_sign_out"
+        android:orderInCategory="200"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:id="@+id/menu_exit"
+        android:title="@string/text_exit"
+        android:orderInCategory="300"
+        app:showAsAction="never">
     </item>
 
 </menu>

@@ -86,6 +86,7 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
+                finish();
                 //starts the home activity
                 startActivity(new Intent(this,HomeActivity.class));
                 break;

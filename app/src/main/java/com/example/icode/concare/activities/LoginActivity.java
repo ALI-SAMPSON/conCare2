@@ -10,6 +10,7 @@ import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -33,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
+    private ProgressBar progressBar;
+
     private EditText editTextEmail;
     private EditText editTextPassword;
 
@@ -49,6 +52,8 @@ public class LoginActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
 
+        progressBar = findViewById(R.id.progressBar);
+
         mAuth = FirebaseAuth.getInstance();
         relativeLayout = findViewById(R.id.relativeLayout);
 
@@ -57,11 +62,15 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
+        // displays the progressBar
+        progressBar.setVisibility(View.VISIBLE);
         if(mAuth.getCurrentUser() != null){
             finish();
             //FirebaseUser user = mAuth.getCurrentUser();
             // starts the home activity if user is already logged in
             startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+            // hides the progressBar
+            progressBar.setVisibility(View.GONE);
         }
     }
 

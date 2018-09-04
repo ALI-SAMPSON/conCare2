@@ -149,12 +149,14 @@ public class SignUpActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
-                                        // avoid going back to the activity
-                                        finish();
-                                        //dismiss progress dialog upon a successful login
+                                        // dismiss progress dialog upon a successful login
                                         progressDialog.dismiss();
                                         // display a success message
                                         Snackbar.make(nestedScrollView,getString(R.string.sign_up_successful),Snackbar.LENGTH_SHORT).show();
+                                        // avoid going back to the activity
+                                        finish();
+                                        // starts the login activity
+                                        startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
                                     }
                                     else {
                                         // display a message if there is an error

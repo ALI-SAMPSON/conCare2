@@ -1,5 +1,6 @@
 package com.example.icode.concare.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.icode.concare.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -42,6 +44,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     ProgressBar progressBar;
 
+    ProgressDialog progressDialog;
+
     LinearLayout linearLayout;
 
     FirebaseAuth mAuth;
@@ -57,7 +61,7 @@ public class EditProfileActivity extends AppCompatActivity {
         username = findViewById(R.id.editTextUsername);
 
         if(getSupportActionBar() != null){
-            getSupportActionBar().setTitle(getString(R.string.title_update_details));
+            getSupportActionBar().setTitle(getString(R.string.title_edit_profile));
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -142,12 +146,12 @@ public class EditProfileActivity extends AppCompatActivity {
 
     }
 
+    // save button listener
     public void onSaveButtonClick(View view) {
-
         saveUserInfo(); // method call
-
     }
 
+    // method to save username and profile image
     private void saveUserInfo(){
 
         String _username = username.getText().toString().trim();
@@ -157,6 +161,9 @@ public class EditProfileActivity extends AppCompatActivity {
             username.requestFocus();
             return;
         }
+
+        progressDialog = ProgressDialog.show(this, getString(R.string.text_uploading_details),
+                getString(R.string.text_please_wait),true,true);
 
         FirebaseUser user = mAuth.getCurrentUser();
 
@@ -172,13 +179,42 @@ public class EditProfileActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
+                                // dismiss progress dialog
+                                progressDialog.dismiss();
+                                // display a success message
                                 Toast.makeText(EditProfileActivity.this,"Profile Updated Successfully",Toast.LENGTH_LONG).show();
                             }
                             else{
+                                // dismiss progress dialog
+                                progressDialog.dismiss();
+                                // display an error message
                                 Snackbar.make(linearLayout,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
                             }
                         }
                     });
+        }
+
+    }
+
+    // method to load user information
+    private void loadUserInfo(){
+
+        FirebaseUser user  = mAuth.getCurrentUser();
+
+        String _photoUrl = user.getPhotoUrl().toString();
+        String _username = user.getDisplayName();
+
+        if(user != null){
+
+            if(user.getPhotoUrl() != null){
+                Glide.with(this)
+                        .load(_photoUrl)
+                        .into(circleImageView);
+            }
+            if(user.getDisplayName() != null){
+                username.setText(_username);
+            }
+
         }
 
     }

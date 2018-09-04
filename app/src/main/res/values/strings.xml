@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ConCare GH</string>
+    <string name="app_name">Con Care GH</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="hint_location">Location/Address</string>
@@ -20,7 +20,7 @@
     <string name="splash_text">powered by iCODE Studios</string>
     <string name="sub_text">...a convenient place to purchase all contraceptives</string>
     <string name="todo">TODO</string>
-    <string name="title_update_details">UPDATE DETAILS</string>
+    <string name="title_edit_profile">EDIT PROFILE</string>
 
     <!--Error Text -->
     <string name="error_empty_email">Email field cannot be left empty</string>
@@ -45,6 +45,15 @@
     <string name="other">Other</string>
     <string name="residence">Residence</string>
     <string name="hostel_n_room_number">Hostel name and room number</string>
+
+    <!-- String progress dialog -->
+    <string name="text_uploading_details">Uploading Details</string>
+    <string name="text_please_wait">Please wait...</string>
+
+    <!-- Home activity menu items -->
+    <string name ="text_about">About</string>
+    <string name ="text_sign_out">Sign out</string>
+    <string name ="text_exit">Exit</string>
 
     <string name="text_about_us">
         ConCare GH is a unique
@@ -78,6 +87,8 @@
 
 
     <!-- Navigation drawer menu -->
+    <string name="dummy_username">Username : username</string>
+    <string name="dummy_email">Email : username@gmail.com </string>
     <string name="edit_profile">Edit Profile</string>
     <string name="address">Address</string>
     <string name="orders">Orders</string>
