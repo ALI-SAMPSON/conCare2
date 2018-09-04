@@ -20,6 +20,7 @@
     <string name="splash_text">powered by iCODE Studios</string>
     <string name="sub_text">...a convenient place to purchase all contraceptives</string>
     <string name="todo">TODO</string>
+    <string name="title_update_details">UPDATE DETAILS</string>
 
     <!--Error Text -->
     <string name="error_empty_email">Email field cannot be left empty</string>
@@ -30,8 +31,7 @@
     <string name="phone_invalid">Enter a valid phone number</string>
     <string name="sign_up_successful">Sign Up Successful</string>
     <string name="login_successful">Login Successful</string>
-
-    String password_length = "Password length cannot be less than 6"
+    <string name="error_empty_field">Field cannot left empty</string>
 
     <string name="welcome_msg_home">Welcome To ConCare GH</string>
     <string name="welcome_mgs_sub_desc">...your home of quality and affordable contraceptives</string>

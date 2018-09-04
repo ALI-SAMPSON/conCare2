@@ -108,7 +108,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // handle navigation item click
         switch (item.getItemId()){
             case R.id.edit_profile:
-                editProfileFragment();
+                startActivity(new Intent(getApplicationContext(),EditProfileActivity.class));
+                //editProfileFragment();
                 //start edit_profile fragment
                 break;
             case R.id.orders:
