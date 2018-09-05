@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="200dp"
     android:padding="20dp"
-    android:background="@drawable/n_drawer_image">
+    android:background="@drawable/nav_header_bg">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circularImageView"

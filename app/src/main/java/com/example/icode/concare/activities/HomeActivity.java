@@ -67,7 +67,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home);
 
         spinnerGender = findViewById(R.id.spinnerGender);
-        arrayAdapterGender = ArrayAdapter.createFromResource(this,R.array.gender,R.layout.spinner_item);
+        arrayAdapterGender = ArrayAdapter.createFromResource(this,R.array.gender,R.layout.spinner_item_home);
         arrayAdapterGender.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinnerGender.setAdapter(arrayAdapterGender);
 
@@ -80,7 +80,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         circleImageView = navigationView.getHeaderView(0).findViewById(R.id.circularImageView);
         username = navigationView.getHeaderView(0).findViewById(R.id.username);
         email = navigationView.getHeaderView(0).findViewById(R.id.email);
-
 
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);

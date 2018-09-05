@@ -9,17 +9,16 @@
     <!--array of male contraceptives-->
     <string-array name="con_male">
         <!--male condom types-->
-        <item> Fiesta </item>
-        <item> Kiss Condom </item>
-        <item> Dragon </item>
+        <item> Fiesta - GHS 5.00 </item>
+        <item> Kiss Condom - GHS 5.00 </item>
         <item> Other </item>
     </string-array>
 
     <!--array of female contraceptives-->
     <string-array name="con_female">
-    <item> Levon 2 </item>
-    <item> Postinor 2 </item>
-    <item> Lydia postpil </item>
+    <item> Levon 2 - GHS 10.00 </item>
+    <item> Lydia postpil - GHS 10.00</item>
+        <item> Postinor 2 - GHS 28.00 </item>
         <item> Other </item>
     </string-array>
 

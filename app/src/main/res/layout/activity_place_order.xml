@@ -6,19 +6,22 @@
     android:id="@+id/nestedScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/order_bg"
     tools:context=".activities.PlaceOrderActivity">
 
     <RelativeLayout
+        android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white_ghost"
         android:layout_marginBottom="30dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/home_imageView"
             android:layout_centerHorizontal="true"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:padding="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:scaleType="centerCrop"
             android:src="@mipmap/splash_bg"
             android:contentDescription="@string/todo" />
@@ -29,10 +32,10 @@
             android:id="@+id/phoneNumber_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="0dp"
             android:textAlignment="center"
-            android:textColorHint="@color/status_bar_back">
+            android:textColorHint="@color/white_snow">
             <EditText
                 android:id="@+id/editTextTelNumber"
                 android:layout_width="320dp"
@@ -42,15 +45,14 @@
                 android:hint="@string/hint_phone"
                 android:drawableLeft="@drawable/ic_phone"
                 android:drawablePadding="@dimen/padding_normal"
-                android:textColor="@color/edit_text_color"
-                android:textColorHint="@color/status_bar_back"
+                android:textColor="@color/white_snow"
+                android:textColorHint="@color/orange_deep"
                 android:inputType="phone"
                 android:textSize="16sp"
                 android:fontFamily="@font/nunito_semibold"
                 android:maxLength="15"
                 android:maxLines="1"
-                android:layout_marginStart="0dp"
-                android:drawableStart="@drawable/ic_phone" />
+                android:layout_marginStart="0dp"/>
         </android.support.design.widget.TextInputLayout>
 
         <!--TextInputLayout and LinearLayout and spinner View for user's Campus-->
@@ -76,10 +78,11 @@
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:text="@string/hint_campus"
-                    android:textSize="19sp"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/nunito_semibold"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_horizontal"
-                    android:textColor="@color/edit_text_color"
+                    android:textColor="@color/white_snow"
                     android:layout_marginLeft="1dp"
                     android:layout_marginTop="4dp"
                     android:layout_weight="1.11"
@@ -132,12 +135,13 @@
                     android:textSize="19sp"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_horizontal"
-                    android:textColor="@color/edit_text_color"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:textColor="@color/white_snow"
                     android:layout_marginLeft="1dp"
                     android:layout_marginTop="4dp"
                     android:layout_weight="1.11"
                     android:drawablePadding="@dimen/padding_normal"
-                    android:drawableLeft="@drawable/ic_location_on_black_24dp"
+                    android:drawableLeft="@drawable/ic_location"
                     android:layout_marginStart="1dp" />
                 <LinearLayout
                     android:layout_width="170dp"
@@ -169,7 +173,7 @@
             android:layout_marginTop="0dp"
             android:layout_marginLeft="0dp"
             android:textAlignment="center"
-            android:textColorHint="@color/status_bar_back"
+            android:textColorHint="@color/orange_light"
             android:visibility="visible">
             <EditText
                 android:id="@+id/editTextOtherLocation"
@@ -178,10 +182,10 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
                 android:hint="@string/other"
-                android:drawableLeft="@drawable/ic_edit_location_black_24dp"
+                android:drawableLeft="@drawable/ic_edit_location"
                 android:drawablePadding="@dimen/padding_normal"
-                android:textColor="@color/edit_text_color"
-                android:textColorHint="@color/status_bar_back"
+                android:textColor="@color/white_snow"
+                android:textColorHint="@color/orange_light"
                 android:textSize="14sp"
                 android:inputType="textMultiLine"
                 android:fontFamily="@font/nunito_semibold"
@@ -212,9 +216,10 @@
                     android:layout_height="45dp"
                     android:text="@string/residence"
                     android:textSize="19sp"
+                    android:fontFamily="@font/nunito_semibold"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_horizontal"
-                    android:textColor="@color/edit_text_color"
+                    android:textColor="@color/white_snow"
                     android:layout_marginLeft="1dp"
                     android:layout_marginTop="4dp"
                     android:layout_weight="1.11"
@@ -265,15 +270,16 @@
                     android:layout_height="45dp"
                     android:text="@string/contraceptive"
                     android:textSize="19sp"
+                    android:fontFamily="@font/nunito_semibold"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_horizontal"
                     android:drawablePadding="@dimen/padding_normal"
-                    android:drawableLeft="@drawable/ic_con_type_black_24dp"
-                    android:textColor="@color/edit_text_color"
+                    android:drawableLeft="@drawable/ic_con_type"
+                    android:textColor="@color/white_snow"
                     android:layout_marginLeft="1dp"
                     android:layout_marginTop="4dp"
                     android:layout_weight="1.11"
-                    android:drawableStart="@drawable/ic_con_type_black_24dp"
+                    android:drawableStart="@drawable/ic_con_type"
                     android:layout_marginStart="1dp" />
                 <LinearLayout
                     android:layout_width="170dp"
@@ -305,7 +311,7 @@
             android:layout_marginTop="0dp"
             android:layout_marginLeft="0dp"
             android:textAlignment="center"
-            android:textColorHint="@color/status_bar_back"
+            android:textColorHint="@color/orange_light"
             android:visibility="visible">
             <EditText
                 android:id="@+id/editTextOtherContraceptive"
@@ -314,10 +320,10 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
                 android:hint="@string/other"
-                android:drawableLeft="@drawable/ic_edit_location_black_24dp"
+                android:drawableLeft="@drawable/ic_edit_location"
                 android:drawablePadding="@dimen/padding_normal"
-                android:textColor="@color/edit_text_color"
-                android:textColorHint="@color/status_bar_back"
+                android:textColor="@color/white_snow"
+                android:textColorHint="@color/orange_light"
                 android:textSize="14sp"
                 android:inputType="textMultiLine"
                 android:fontFamily="@font/nunito_semibold"
@@ -325,7 +331,7 @@
         </android.support.design.widget.TextInputLayout>
 
 
-        <!-- TextInputLayout and AppCompatEdiText for Hostel and room number -->
+        <!-- TextInputLayout and AppCompatEdiText for Hostel name -->
         <android.support.design.widget.TextInputLayout
             android:layout_below="@+id/textInputLayoutOtherContraceptive"
             android:id="@+id/textInputLayoutHostel"
@@ -334,42 +340,70 @@
             android:layout_marginTop="0dp"
             android:layout_marginLeft="0dp"
             android:textAlignment="center"
-            android:textColorHint="@color/orange_light">
+            android:textColorHint="@color/white_snow">
             <EditText
                 android:id="@+id/editTextHostel"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
-                android:hint="@string/hostel_n_room_number"
-                android:drawableLeft="@drawable/ic_hotel_black_24dp"
+                android:hint="@string/hostel_name"
+                android:drawableLeft="@drawable/ic_hostel"
                 android:drawablePadding="@dimen/padding_normal"
-                android:textColor="@color/edit_text_color"
-                android:textColorHint="@color/status_bar_back"
+                android:textColor="@color/white_snow"
+                android:textColorHint="@color/orange_deep"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="16sp"
                 android:inputType="textMultiLine"
                 android:layout_marginStart="0dp"
-                android:drawableStart="@drawable/ic_hotel_black_24dp" />
+                android:drawableStart="@drawable/ic_hostel" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- TextInputLayout and AppCompatEdiText for Hostel and room number -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_below="@+id/textInputLayoutHostel"
+            android:id="@+id/textInputLayoutRoomNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="0dp"
+            android:textAlignment="center"
+            android:textColorHint="@color/white_snow">
+            <EditText
+                android:id="@+id/editTextRoomNumber"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="0dp"
+                android:hint="@string/hint_room_number"
+                android:drawableLeft="@drawable/ic_room_number"
+                android:drawablePadding="@dimen/padding_normal"
+                android:textColor="@color/white_snow"
+                android:textColorHint="@color/orange_deep"
+                android:fontFamily="@font/nunito_semibold"
+                android:textSize="16sp"
+                android:inputType="text"
+                android:layout_marginStart="0dp"
+                android:drawableStart="@drawable/ic_room_number" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Login Button -->
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/appCompatButtonLogin"
-            android:layout_marginTop="5dp"
-            android:layout_width="290dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="320dp"
             android:layout_height="50dp"
             android:gravity="center"
             android:layout_gravity="center_horizontal"
             android:layout_centerInParent="true"
-            android:layout_below="@+id/textInputLayoutHostel"
+            android:layout_below="@+id/textInputLayoutRoomNumber"
             android:text="@string/place_order"
             android:textColor="@color/colorWhite"
             android:fontFamily="@font/nunito_semibold"
             android:textSize="16sp"
             android:textStyle="normal"
             android:textAlignment="center"
-            android:background="@drawable/round_button_green"
+            android:background="@drawable/round_corner_button_save"
             android:onClick="onPlaceOrderButtonClick" />
 
     </RelativeLayout>

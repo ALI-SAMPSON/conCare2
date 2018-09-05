@@ -8,6 +8,7 @@
     <string name="hint_campus">Campus</string>
     <string name="hint_username">Username</string>
     <string name="hint_phone">Phone Number</string>
+    <string name="hint_room_number">Hostel Room Number</string>
     <string name="hint_confirm_password">Confirm Password</string>
     <string name="text_gender">Gender</string>
     <string name="welcome">Welcome!</string>
@@ -32,6 +33,9 @@
     <string name="sign_up_successful">Sign Up Successful</string>
     <string name="login_successful">Login Successful</string>
     <string name="error_empty_field">Field cannot left empty</string>
+    <string name="error_text_hostel">Enter your hostel name to better locate you</string>
+    <string name="error_text_room_number">Enter your room number"</string>
+    <string name="error_text_phone_number">Telephone number is a required field</string>
 
     <string name="welcome_msg_home">Welcome To ConCare GH</string>
     <string name="welcome_mgs_sub_desc">...your home of quality and affordable contraceptives</string>
@@ -44,7 +48,7 @@
     <string name="location">Location</string>
     <string name="other">Other</string>
     <string name="residence">Residence</string>
-    <string name="hostel_n_room_number">Hostel name and room number</string>
+    <string name="hostel_name">Hostel name</string>
 
     <!-- String progress dialog -->
     <string name="text_uploading_details">Uploading Details</string>

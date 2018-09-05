@@ -23,6 +23,8 @@ import com.example.icode.concare.models.Orders;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -33,7 +35,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
     //objects of the View Classes
     private EditText editTextTelNumber;
-    private EditText editTextHostel;
+    private EditText editTextHostelName;
+    private EditText editTextRoomNumber;
 
     private EditText editTextOtherLocation;
     private EditText editTextOtherContraceptive;
@@ -56,16 +59,16 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
 
     //objects of the classes
-    private CurrentUsers currentUsers;
     private Orders orders;
 
     private FirebaseDatabase database;
     private DatabaseReference orderRef;
-    private DatabaseReference currentUsersRef;
 
     private ProgressDialog progressDialog;
 
     private NestedScrollView nestedScrollView;
+
+    FirebaseAuth mAuth;
 
     //textInput layouts
     private TextInputLayout textInputLayoutOtherLocation;
@@ -87,7 +90,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
         nestedScrollView = findViewById(R.id.nestedScrollView);
 
         editTextTelNumber = findViewById(R.id.editTextTelNumber);
-        editTextHostel = findViewById(R.id.editTextHostel);
+        editTextHostelName = findViewById(R.id.editTextHostel);
+        editTextRoomNumber = findViewById(R.id.editTextRoomNumber);
         editTextOtherLocation = findViewById(R.id.editTextOtherLocation);
         editTextOtherContraceptive = findViewById(R.id.editTextOtherContraceptive);
 
@@ -126,12 +130,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
             //do nothing
         }
 
-       /* textInputLayoutOtherLocation = findViewById(R.id.textInputLayoutOtherLocation);
-        textInputLayoutOtherLocation.setVisibility(View.VISIBLE);*/
-
-        //String location = spinnerLocation.getSelectedItem().toString();
-        //String contraceptive = spinnerContraceptive.getSelectedItem().toString();
-
         if(spinnerLocation.getSelectedItem().toString().equals("Other")){
             textInputLayoutOtherLocation = findViewById(R.id.textInputLayoutOtherLocation);
             textInputLayoutOtherLocation.setVisibility(View.VISIBLE);
@@ -145,33 +143,45 @@ public class PlaceOrderActivity extends AppCompatActivity {
         }
 
 
-
         //object initialization
-        currentUsers = new CurrentUsers();
         orders = new Orders();
 
         database = FirebaseDatabase.getInstance();
         orderRef = database.getReference().child("Orders");
-        currentUsersRef = database.getReference().child("CurrentUsers");
+
+        mAuth = FirebaseAuth.getInstance();
 
     }
 
     public void onPlaceOrderButtonClick(View view) {
-        //error text
-        String error_text_hostel = "enter your hostel to better locate you";
-        String error_text_number = "telephone number is a required field";
 
         //getting input from the fields
-        String hostel = editTextHostel.getText().toString().trim();
+        String hostel_name = editTextHostelName.getText().toString().trim();
+        String room_number = editTextRoomNumber.getText().toString().trim();
         String tel_number = editTextTelNumber.getText().toString().trim();
 
-        if(tel_number.equals("")){
-            editTextTelNumber.setError(error_text_number);
-            Snackbar.make(nestedScrollView,error_text_number,Snackbar.LENGTH_SHORT).show();
+        // checks if the fields are not empty
+        if(tel_number.isEmpty()){
+            editTextTelNumber.setError(getString(R.string.error_text_phone_number));
+            editTextTelNumber.requestFocus();
+            //Snackbar.make(nestedScrollView,error_text_number,Snackbar.LENGTH_SHORT).show();
+            return;
         }
-        else if(hostel.equals("")){
-            editTextHostel.setError(error_text_hostel);
-            Snackbar.make(nestedScrollView,error_text_hostel,Snackbar.LENGTH_SHORT).show();
+        else if(tel_number.length() != 10){
+            editTextTelNumber.setError(getString(R.string.phone_invalid));
+            editTextTelNumber.requestFocus();
+            return;
+        }
+        else if(room_number.isEmpty()){
+            editTextRoomNumber.setError(getString(R.string.error_text_room_number));
+            editTextRoomNumber.requestFocus();
+            return;
+        }
+        else if(hostel_name.isEmpty()){
+            editTextHostelName.setError(getString(R.string.error_text_hostel));
+            editTextHostelName.requestFocus();
+            //Snackbar.make(nestedScrollView,error_text_hostel,Snackbar.LENGTH_SHORT).show();
+            return;
         }
         else{
             placeOrder();
@@ -181,11 +191,15 @@ public class PlaceOrderActivity extends AppCompatActivity {
     //method for handling the placing of order
     public void placeOrder(){
 
-        progressDialog = ProgressDialog.show(this,"",null,true,true);
-        progressDialog.setMessage("please wait...");
+        // creates and initialize a progressDialog
+        progressDialog = ProgressDialog.show(this,"Processing","Please wait...",true,true);
+
+        // getting the currently logged in user
+        FirebaseUser user = mAuth.getCurrentUser();
 
         //getting input from the user
-        String hostel_room_number = editTextHostel.getText().toString().trim();
+        String hostel_name = editTextHostelName.getText().toString().trim();
+        String room_number = editTextRoomNumber.getText().toString().trim();
         String tel_number = editTextTelNumber.getText().toString().trim();
         String campus = spinnerCampus.getSelectedItem().toString().trim();
         String location = spinnerLocation.getSelectedItem().toString().trim();
@@ -194,50 +208,64 @@ public class PlaceOrderActivity extends AppCompatActivity {
         String contraceptive = spinnerContraceptive.getSelectedItem().toString().trim();
         String other_contraceptive = editTextOtherContraceptive.getText().toString().trim();
 
-        orders.setHostel_room_number(hostel_room_number);
-        orders.setTelephone_Number(tel_number);
-        orders.setCampus(campus);
-        orders.setLocation(location);
-        orders.setOther_location(other_location);
-        orders.setResidence(residence);
-        orders.setContraceptive(contraceptive);
-        orders.setOther_contraceptive(other_contraceptive);
+        // get currently logged in user email
+        String email = user.getDisplayName();
 
-        orderRef.child(location).setValue(orders).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    final Timer timer = new Timer();
-                    timer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            progressDialog.dismiss();
-                            timer.cancel();
+        // checks if user is not null
+
+            // setting values to setter methods
+            orders.setHostel_name(hostel_name);
+            orders.setRoom_number(room_number);
+            orders.setTelephone_Number(tel_number);
+            orders.setCampus(campus);
+            orders.setLocation(location);
+            orders.setOther_location(other_location);
+            orders.setResidence(residence);
+            orders.setContraceptive(contraceptive);
+            orders.setOther_contraceptive(other_contraceptive);
+
+            // check if user email is not null
+                orderRef.child(tel_number).setValue(orders).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            final Timer timer = new Timer();
+                            timer.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    progressDialog.dismiss();
+                                    timer.cancel();
+                                }
+                            }, 5000);
+                            // display a snackbar after a successful order
+                            Snackbar.make(nestedScrollView,
+                                    "You have successfully made an order.." +
+                                            "One of our agents will deliver it " +
+                                            "to you very soon",
+                                    Snackbar.LENGTH_LONG).show();
+                            //clears the fields after order is placed
+                            clearTextFields();
+                        } else {
+                            // display error message
+                            Snackbar.make(nestedScrollView, task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
                         }
-                    },10000);
-                    //create a snackbar after a successful login
-                    Snackbar.make(nestedScrollView,
-                            "You have successfully made an order.." +
-                                    "One of our agents will deliver it " +
-                                    "to you very soon",
-                            Snackbar.LENGTH_LONG).show();
-                    //clears the fields after order is placed
-                    clearTextFields();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Snackbar.make(nestedScrollView,e.getStackTrace().toString(),Snackbar.LENGTH_LONG).show();
-            }
-        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // display error message
+                        Snackbar.make(nestedScrollView, e.getMessage(), Snackbar.LENGTH_LONG).show();
+                    }
+                });
+
 
     }
 
     //clears the textfields
     public void clearTextFields(){
         editTextTelNumber.setText(null);
-        editTextHostel.setText(null);
+        editTextHostelName.setText(null);
+        editTextRoomNumber.setText(null);
     }
 
     @Override

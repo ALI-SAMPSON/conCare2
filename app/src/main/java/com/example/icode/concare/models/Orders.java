@@ -11,7 +11,8 @@ public class Orders {
     private String residence;
     private String contraceptive;
     private String other_contraceptive;
-    private String hostel_room_number;
+    private String hostel_name;
+    private String room_number;
 
     //default constructor
     public Orders(){ }
@@ -19,7 +20,7 @@ public class Orders {
     //constructor with one or more parameters
     public Orders(String telephone_Number,String campus,
                   String location,String other_location,String residence,
-                  String contraceptive,String other_contraceptive, String hostel_room_number){
+                  String contraceptive,String other_contraceptive, String hostel_name,String room_number){
         this.telephone_Number = telephone_Number;
         this.campus = campus;
         this.location = location;
@@ -27,7 +28,8 @@ public class Orders {
         this.residence = residence;
         this.contraceptive = contraceptive;
         this.other_contraceptive = other_contraceptive;
-        this.hostel_room_number = hostel_room_number;
+        this.hostel_name = hostel_name;
+        this.room_number = room_number;
     }
 
     //Getter and Setter Method for telephone number
@@ -87,12 +89,18 @@ public class Orders {
         return other_contraceptive;
     }
 
-    public void setHostel_room_number(String hostel_room_number){
-        this.hostel_room_number = hostel_room_number;
+    public void setHostel_name(String hostel_name){
+        this.hostel_name = hostel_name;
     }
-    public String getHostel_room_number(){
-        return hostel_room_number;
+    public String getHostel_name(){
+        return hostel_name;
     }
 
+    public void setRoom_number(String room_number){
+        this.room_number = room_number;
+    }
+    public String getRoom_number(){
+        return room_number;
+    }
 
 }
