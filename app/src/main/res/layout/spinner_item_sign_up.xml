@@ -5,6 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     app:fontFamily="@font/nunito_semibold"
-    android:textColor="@color/colorWhite"
+    android:textColor="@color/white_ghost"
     android:textSize="14sp">
 </TextView>

@@ -14,7 +14,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
+import android.widget.Toolbar;
+//import android.support.v7.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.example.icode.concare.R;
@@ -35,6 +38,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditProfileActivity extends AppCompatActivity {
 
+    // class variables
     private CircleImageView circleImageView;
     private EditText username;
 
@@ -46,7 +50,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     ProgressDialog progressDialog;
 
-    LinearLayout linearLayout;
+    RelativeLayout relativeLayout;
 
     FirebaseAuth mAuth;
 
@@ -68,7 +72,7 @@ public class EditProfileActivity extends AppCompatActivity {
         }
 
         progressBar = findViewById(R.id.progressBar);
-        linearLayout = findViewById(R.id.linearLayout);
+        relativeLayout = findViewById(R.id.relativeLayout);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -83,6 +87,7 @@ public class EditProfileActivity extends AppCompatActivity {
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // method to open user's phone gallery
                 openGallery();
             }
         });
@@ -139,7 +144,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     progressBar.setVisibility(View.GONE);
-                    Snackbar.make(linearLayout,e.getMessage(),Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(relativeLayout,e.getMessage(),Snackbar.LENGTH_LONG).show();
                 }
             });
         }
@@ -188,7 +193,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                 // dismiss progress dialog
                                 progressDialog.dismiss();
                                 // display an error message
-                                Snackbar.make(linearLayout,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(relativeLayout,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
                             }
                         }
                     });

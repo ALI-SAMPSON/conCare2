@@ -51,15 +51,16 @@
         <activity
             android:name=".activities.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/homeTheme"></activity>
+            android:theme="@style/homeTheme">
+        </activity>
         <activity
             android:name=".activities.PlaceOrderActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/homeTheme"></activity>
+            android:theme="@style/homeTheme">
+        </activity>
         <activity android:name=".activities.EditProfileActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/homeTheme">
-
+            android:theme="@style/homeTheme.profile">
         </activity>
     </application>
 

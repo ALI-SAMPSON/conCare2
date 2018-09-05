@@ -54,4 +54,22 @@
     <color name="button_selector_color">#9E9E9E</color>
     <color name="light_blue">#00d4ff</color>
 
+    <!-- theme colors -->
+    <color name="orange_princeton">#F28123</color>
+    <color name="orange_ten">#F17300</color>
+
+    <color name="orange_deep">#E64A19</color>
+    <color name="orange_light">#FE5722</color>
+
+    <color name="green_india">#149911</color>
+    <color name="green_napier">#38A700</color>
+
+    <color name="green_forest">#119822</color>
+
+    <color name="green_paris">#58BC82</color>
+
+    <color name="white_ghost">#FAFAFF</color>
+    <color name="white_snow">#FBFAF8</color>
+
+
 </resources>

@@ -169,13 +169,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // handle navigation item click
         switch (item.getItemId()){
-
-            case R.id.circularImageView:
-
-                break;
-
             case R.id.edit_profile:
-                startActivity(new Intent(getApplicationContext(),EditProfileActivity.class));
+                startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
                 //start edit_profile fragment
                 //startEditProfileFragment();
                 break;
