@@ -90,6 +90,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         //checks of there is support actionBar
         if(getSupportActionBar() != null){
+            getSupportActionBar().setTitle(getString(R.string.home));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
@@ -100,6 +101,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // method call
         loadUserInfo();
 
+        onClickImageView();
     }
 
     /* method to load user info from firebase
@@ -150,6 +152,18 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         .replace(R.id.frame_layout,fragmentEditProfile)
                         .addToBackStack(null)
                         .commit();
+
+    }
+
+    // method for handling onClickListener on CircularImageView
+    private void onClickImageView(){
+
+        circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
+            }
+        });
 
     }
 
@@ -229,14 +243,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     //Click Listener for proceed button on homeActivity
     public void onProceedButtonClick(View view) {
 
+        // gets the text from the spinner and passes it to the next activity
         String gender = spinnerGender.getSelectedItem().toString().trim();
 
         Intent intent = new Intent(this,PlaceOrderActivity.class);
         intent.putExtra("gender",gender);
         startActivity(intent);
-
-        /*startActivity(new Intent(this, PlaceOrderActivity.class)
-        .putExtra(KEY_GENDER,gender));*/
 
     }
 }

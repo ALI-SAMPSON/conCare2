@@ -48,6 +48,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     ProgressBar progressBar;
 
+    ProgressBar progressBar1;
+
     ProgressDialog progressDialog;
 
     RelativeLayout relativeLayout;
@@ -72,6 +74,8 @@ public class EditProfileActivity extends AppCompatActivity {
         }
 
         progressBar = findViewById(R.id.progressBar);
+        progressBar1 = findViewById(R.id.progressBar1);
+
         relativeLayout = findViewById(R.id.relativeLayout);
 
         mAuth = FirebaseAuth.getInstance();
@@ -118,7 +122,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 uploadImage();
 
             } catch (IOException e) {
-                e.printStackTrace();
+                Snackbar.make(relativeLayout,e.getMessage(),Snackbar.LENGTH_LONG).show();
+                //e.printStackTrace();
             }
 
             circleImageView.setImageURI(uriProfileImage);
@@ -152,7 +157,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     // save button listener
-    public void onSaveButtonClick(View view) {
+    public void onUpdateButtonClick(View view) {
         saveUserInfo(); // method call
     }
 
@@ -167,8 +172,11 @@ public class EditProfileActivity extends AppCompatActivity {
             return;
         }
 
-        progressDialog = ProgressDialog.show(this, getString(R.string.text_uploading_details),
-                getString(R.string.text_please_wait),true,true);
+        /*progressDialog = ProgressDialog.show(this, getString(R.string.text_uploading_details),
+                getString(R.string.text_please_wait),true,true);*/
+
+        // progressBar for update Button
+        progressBar1.setVisibility(View.VISIBLE);
 
         FirebaseUser user = mAuth.getCurrentUser();
 
@@ -184,8 +192,8 @@ public class EditProfileActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
-                                // dismiss progress dialog
-                                progressDialog.dismiss();
+                                // dismiss progress bar
+                                progressBar1.setVisibility(View.GONE);
                                 // display a success message
                                 Toast.makeText(EditProfileActivity.this,"Profile Updated Successfully",Toast.LENGTH_LONG).show();
                             }

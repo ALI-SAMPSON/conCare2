@@ -52,7 +52,7 @@
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:drawableLeft="@drawable/ic_person_outline_black_24dp"
+                android:drawableLeft="@drawable/ic_person"
                 android:drawablePadding="@dimen/padding_normal"
                 android:textColor="@color/status_bar_back"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"

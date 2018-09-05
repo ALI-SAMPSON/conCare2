@@ -25,7 +25,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="310dp"
-        android:background="@drawable/login_bg_1"
+        android:background="@drawable/order_bg"
         android:orientation="vertical">
         <ImageView
             android:layout_width="100dp"
@@ -59,7 +59,7 @@
                 android:layout_width="255dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:drawableLeft="@drawable/ic_person_outline_black_24dp"
+                android:drawableLeft="@drawable/ic_person"
                 android:drawablePadding="@dimen/padding_normal"
                 android:textColor="@color/status_bar_back"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
@@ -82,7 +82,7 @@
             android:textAlignment="center"
             android:textColorHint= "@color/status_bar_back"
             app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/tart_orange">
+            app:passwordToggleTint="@color/orange_light">
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextPassword"
                 android:layout_width="255dp"
@@ -130,7 +130,7 @@
         android:gravity="center"
         android:layout_below="@+id/appCompatButtonLogin"
         android:text="@string/sign_up_link"
-        android:textColor="@color/tart_orange"
+        android:textColor="@color/orange_light"
         app:fontFamily="@font/nunito_semibold"
         android:textSize="18sp"
         android:textAllCaps="false"

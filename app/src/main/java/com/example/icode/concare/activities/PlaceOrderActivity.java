@@ -1,7 +1,11 @@
 package com.example.icode.concare.activities;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
@@ -16,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.example.icode.concare.R;
 import com.example.icode.concare.models.CurrentUsers;
@@ -65,6 +70,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
     private DatabaseReference orderRef;
 
     private ProgressDialog progressDialog;
+
+    private ProgressBar progressBar;
 
     private NestedScrollView nestedScrollView;
 
@@ -146,13 +153,35 @@ public class PlaceOrderActivity extends AppCompatActivity {
         //object initialization
         orders = new Orders();
 
-        database = FirebaseDatabase.getInstance();
-        orderRef = database.getReference().child("Orders");
+        //database = FirebaseDatabase.getInstance();
+        //orderRef = database.getReference().child("Orders");
 
         mAuth = FirebaseAuth.getInstance();
 
+        progressBar = findViewById(R.id.progressBar);
+
     }
 
+   /* @Override
+    protected void onStart(){
+        super.onStart();
+        // displays progressBar
+        progressBar.setVisibility(View.VISIBLE);
+        if(mAuth.getCurrentUser() != null){
+            //displays the progress bar for 5 seconds
+            final Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    progressBar.setVisibility(View.GONE);
+                    timer.cancel();
+                }
+            },3000);
+
+        }
+    }*/
+
+    // on click listener for placing order
     public void onPlaceOrderButtonClick(View view) {
 
         //getting input from the fields
@@ -191,27 +220,24 @@ public class PlaceOrderActivity extends AppCompatActivity {
     //method for handling the placing of order
     public void placeOrder(){
 
-        // creates and initialize a progressDialog
-        progressDialog = ProgressDialog.show(this,"Processing","Please wait...",true,true);
+            // creates and initialize a progressDialog
+           // progressDialog = ProgressDialog.show(PlaceOrderActivity.this,"Processing",null,true,true);
+           // progressDialog.setMessage("Please wait...");
 
-        // getting the currently logged in user
-        FirebaseUser user = mAuth.getCurrentUser();
 
-        //getting input from the user
-        String hostel_name = editTextHostelName.getText().toString().trim();
-        String room_number = editTextRoomNumber.getText().toString().trim();
-        String tel_number = editTextTelNumber.getText().toString().trim();
-        String campus = spinnerCampus.getSelectedItem().toString().trim();
-        String location = spinnerLocation.getSelectedItem().toString().trim();
-        String other_location = editTextOtherLocation.getText().toString().trim();
-        String residence = spinnerResidence.getSelectedItem().toString().trim();
-        String contraceptive = spinnerContraceptive.getSelectedItem().toString().trim();
-        String other_contraceptive = editTextOtherContraceptive.getText().toString().trim();
 
-        // get currently logged in user email
-        String email = user.getDisplayName();
+            //getting input from the user
+            String tel_number = editTextTelNumber.getText().toString().trim();
+            String campus = spinnerCampus.getSelectedItem().toString().trim();
+            String location = spinnerLocation.getSelectedItem().toString().trim();
+            String other_location = editTextOtherLocation.getText().toString().trim();
+            String residence = spinnerResidence.getSelectedItem().toString().trim();
+            String contraceptive = spinnerContraceptive.getSelectedItem().toString().trim();
+            String other_contraceptive = editTextOtherContraceptive.getText().toString().trim();
+            String hostel_name = editTextHostelName.getText().toString().trim();
+            String room_number = editTextRoomNumber.getText().toString().trim();
 
-        // checks if user is not null
+            // checks if user is not null
 
             // setting values to setter methods
             orders.setHostel_name(hostel_name);
@@ -224,40 +250,61 @@ public class PlaceOrderActivity extends AppCompatActivity {
             orders.setContraceptive(contraceptive);
             orders.setOther_contraceptive(other_contraceptive);
 
-            // check if user email is not null
-                orderRef.child(tel_number).setValue(orders).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            final Timer timer = new Timer();
-                            timer.schedule(new TimerTask() {
-                                @Override
-                                public void run() {
-                                    progressDialog.dismiss();
-                                    timer.cancel();
-                                }
-                            }, 5000);
-                            // display a snackbar after a successful order
-                            Snackbar.make(nestedScrollView,
-                                    "You have successfully made an order.." +
-                                            "One of our agents will deliver it " +
-                                            "to you very soon",
-                                    Snackbar.LENGTH_LONG).show();
-                            //clears the fields after order is placed
-                            clearTextFields();
-                        } else {
-                            // display error message
-                            Snackbar.make(nestedScrollView, task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // display error message
-                        Snackbar.make(nestedScrollView, e.getMessage(), Snackbar.LENGTH_LONG).show();
-                    }
-                });
+           /* Orders orders = new Orders(
+                    tel_number,
+                    campus,
+                    location,
+                    other_location,
+                    residence,
+                    contraceptive,
+                    other_contraceptive,
+                    hostel_name,
+                    room_number
+            );*/
 
+            progressBar.setVisibility(View.VISIBLE);
+
+            FirebaseDatabase.getInstance().getReference("Orders")
+                    .child(mAuth.getCurrentUser().getDisplayName())
+                    .setValue(orders).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        // hides the progressDialog if task is successful
+                        progressBar.setVisibility(View.GONE);
+                        // display a snackbar after a successful order
+                        Snackbar.make(nestedScrollView,
+                                "You have successfully made an order.." +
+                                        "One of our agents will deliver it " +
+                                        "to you very soon",
+                                Snackbar.LENGTH_LONG).show();
+                        //clears the fields after order is placed
+                        clearTextFields();
+
+                        //sends a notification to the user of placing order successfully
+                        Intent intent = new Intent(PlaceOrderActivity.this, HomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        PendingIntent pendingIntent = PendingIntent.getActivity(PlaceOrderActivity.this, 0, intent, 0);
+                        Notification notification = new Notification.Builder(PlaceOrderActivity.this)
+                                .setSmallIcon(R.mipmap.app_icon_round)
+                                .setContentTitle(getString(R.string.app_name))
+                                .setContentText("You have successfully made an order.." +
+                                        "One of our agents will deliver it " +
+                                        "to you very soon")
+                                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+                                .setContentIntent(pendingIntent).getNotification();
+                        notification.flags = Notification.FLAG_AUTO_CANCEL;
+                        NotificationManager nm = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+                        nm.notify(0, notification);
+
+                    } else {
+                        // display error message
+                        Snackbar.make(nestedScrollView, task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
+                    }
+
+                }
+            });
 
     }
 
