@@ -21,6 +21,14 @@
     <!-- Base application theme. -->
     <style name="homeTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="colorAccent">@color/orange_light</item>
+        <item name="colorPrimary">@color/orange_light</item>
+        <item name="colorPrimaryDark">@color/orange_deep</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="homeTheme.order" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
         <item name="colorAccent">@color/white_snow</item>
         <item name="colorPrimary">@color/orange_light</item>
         <item name="colorPrimaryDark">@color/orange_deep</item>

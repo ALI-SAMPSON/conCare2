@@ -61,6 +61,8 @@
     <color name="orange_deep">#E64A19</color>
     <color name="orange_light">#FE5722</color>
 
+    <color name="yellow_light">#ff9933</color>
+
     <color name="green_india">#149911</color>
     <color name="green_napier">#38A700</color>
 
@@ -70,6 +72,14 @@
 
     <color name="white_ghost">#FAFAFF</color>
     <color name="white_snow">#FBFAF8</color>
+
+    <color name="white_grey_dim">#D3D3C9</color>
+
+    <color name="white_grey_light">#DFDED9</color>
+
+    <color name="colorSilver">	#C0C0C0</color>
+
+    <color name="lime">#ffcc99</color>
 
 
 </resources>

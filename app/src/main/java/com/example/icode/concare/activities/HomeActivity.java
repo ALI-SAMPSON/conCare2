@@ -1,8 +1,10 @@
 package com.example.icode.concare.activities;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -61,6 +63,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     TextView username;
     TextView email;
 
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +99,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -191,12 +196,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 // start orders fragment
                 break;
             case R.id.sign_out:
-                Toast.makeText(getApplicationContext(),"You clicked signout",Toast.LENGTH_LONG).show();
-                // display a progressDialog
-                /*ProgressDialog progressDialog =
-                        ProgressDialog.show(this,"","sign out...",true,true);*/
-                FirebaseAuth.getInstance().signOut();
-                //progressDialog.dismiss();
+                // a call to logout method
+               logout();
                 break;
                 default:
                     break;
@@ -228,16 +229,109 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 //starts the about us activity
                 startActivity(new Intent(this,AboutUsActivity.class));
                 break;
-            case R.id.menu_sign_out:
-                // sign user out of the system
-                FirebaseAuth.getInstance().signOut();
-                break;
             case R.id.menu_exit:
                 // close application
+                exitApplication();
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    // method to close the app and kill all process
+    private void exitApplication(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+        builder.setTitle("Exit Application");
+        builder.setMessage("Are you sure you want to exit application?");
+        builder.setCancelable(false);
+
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                moveTaskToBack(true);
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(1);
+            }
+        });
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        // create and displays the alert dialog
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Exit Application?");
+        alertDialogBuilder
+                .setMessage("Are you sure you want to exit application?")
+                .setCancelable(false)
+                .setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                moveTaskToBack(true);
+                                android.os.Process.killProcess(android.os.Process.myPid());
+                                System.exit(1);
+                            }
+                        })
+
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogInterface, int id) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    // method to log user out of the system
+    private void logout(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+        builder.setTitle(getString(R.string.logout));
+        builder.setMessage(getString(R.string.logout_msg));
+
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // progress dialog to be loaded before user logs out
+                progressDialog = ProgressDialog.show(HomeActivity.this,"",null,true,true);
+                progressDialog.setMessage("Please wait...");
+                final Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+                        timer.cancel();
+                    }
+                },10000);
+                // sign user out of the system
+                mAuth.signOut();
+                finish();
+                startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+            }
+        });
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 
     //Click Listener for proceed button on homeActivity

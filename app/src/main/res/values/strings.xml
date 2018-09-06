@@ -98,8 +98,10 @@
     <string name="address">Address</string>
     <string name="orders">Orders</string>
     <string name="home">Home</string>
-    <string name="sign_out">Signout</string>
+    <string name="sign_out">Logout</string>
+    <string name="logout">Logout</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name ="logout_msg">Are you sure you want to logout?</string>
 
 </resources>
