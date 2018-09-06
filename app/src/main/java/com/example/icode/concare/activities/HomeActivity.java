@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -21,7 +22,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -32,6 +32,7 @@ import com.example.icode.concare.R;
 import com.example.icode.concare.fragements.FragmentEditProfile;
 import com.example.icode.concare.models.CurrentUsers;
 import com.example.icode.concare.models.Orders;
+import com.example.icode.concare.models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -54,7 +55,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private AppCompatSpinner spinnerGender;
     private ArrayAdapter<CharSequence> arrayAdapterGender;
 
-
     FirebaseAuth mAuth;
 
     NavigationView navigationView;
@@ -64,6 +64,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     TextView email;
 
     ProgressDialog progressDialog;
+
+    ProgressBar progressBar;
+
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,13 +104,40 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             getSupportActionBar().setHomeButtonEnabled(true);
         }
 
+        progressBar = findViewById(R.id.progressBar);
+
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // gets the text from the spinner and passes it to the next activity
+                String gender = spinnerGender.getSelectedItem().toString().trim();
+
+                Intent intent = new Intent(HomeActivity.this,PlaceOrderActivity.class);
+                intent.putExtra("gender",gender);
+                startActivity(intent);
+            }
+        });
+
+        progressBar.setVisibility(View.VISIBLE);
 
         mAuth = FirebaseAuth.getInstance();
 
         // method call
         loadUserInfo();
 
-        onClickImageView();
+        onClickCircularImageView();
+
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        if(mAuth.getCurrentUser() == null){
+            progressBar.setVisibility(View.GONE);
+            HomeActivity.this.finish();
+            // starts the login activity currently logged in user is null(no logged in user)
+            startActivity(new Intent(this,LoginActivity.class));
+        }
     }
 
     /* method to load user info from firebase
@@ -143,54 +174,31 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    // method to start edit profile fragment
-    public void startEditProfileFragment(){
-
-        // an instance of the edit profile fragment class
-        FragmentEditProfile fragmentEditProfile = new FragmentEditProfile();
-        // use fragment Manager and transactions to add the fragment to the screen
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        // fragment transaction
-
-        //FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.frame_layout,fragmentEditProfile)
-                        .addToBackStack(null)
-                        .commit();
-
-    }
-
-    // method for handling onClickListener on CircularImageView
-    private void onClickImageView(){
+    // Circular ImageView ClickListener
+    private void onClickCircularImageView(){
 
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // start EditProfile activity
                 startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
             }
         });
 
     }
 
-    @Override
-    protected void onStart(){
-        super.onStart();
-        if(mAuth.getCurrentUser() == null){
-            finish();
-            // starts the login activity currently logged in user is null(no logged in user)
-            startActivity(new Intent(this,LoginActivity.class));
-        }
-    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item){
 
         // handle navigation item click
         switch (item.getItemId()){
+            case R.id.home:
+                // do nothing
+                break;
             case R.id.edit_profile:
+                // start EditProfile activity
                 startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
-                //start edit_profile fragment
-                //startEditProfileFragment();
                 break;
             case R.id.orders:
                 // start orders fragment
@@ -205,12 +213,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // closes the navigation drawer to the left of the screen
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    // method to initialize and set the navigationView Listener
-    private void setNavigationViewListener(){
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -296,28 +298,26 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     // method to log user out of the system
     private void logout(){
+        progressBar.setVisibility(View.VISIBLE);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.logout));
         builder.setMessage(getString(R.string.logout_msg));
 
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // progress dialog to be loaded before user logs out
-                progressDialog = ProgressDialog.show(HomeActivity.this,"",null,true,true);
-                progressDialog.setMessage("Please wait...");
                 final Timer timer = new Timer();
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        progressDialog.dismiss();
+                        progressBar.setVisibility(View.GONE);
                         timer.cancel();
                     }
                 },10000);
-                // sign user out of the system
-                mAuth.signOut();
-                finish();
+                // logs current user out of the system
+                FirebaseAuth.getInstance().signOut();
+                HomeActivity.this.finish();
                 startActivity(new Intent(HomeActivity.this,LoginActivity.class));
             }
         });
@@ -329,14 +329,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        AlertDialog alert = builder.create();
-        alert.show();
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
 
     }
 
     //Click Listener for proceed button on homeActivity
     public void onProceedButtonClick(View view) {
-
         // gets the text from the spinner and passes it to the next activity
         String gender = spinnerGender.getSelectedItem().toString().trim();
 

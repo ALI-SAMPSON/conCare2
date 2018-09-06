@@ -65,13 +65,18 @@ public class LoginActivity extends AppCompatActivity {
         // displays the progressBar
         progressBar.setVisibility(View.VISIBLE);
         if(mAuth.getCurrentUser() != null){
-            finish();
-            //FirebaseUser user = mAuth.getCurrentUser();
+            LoginActivity.this.finish();
             // starts the home activity if user is already logged in
             startActivity(new Intent(LoginActivity.this,HomeActivity.class));
             // hides the progressBar
-            progressBar.setVisibility(View.GONE);
+            //progressBar.setVisibility(View.GONE);
         }
+        else if(mAuth.getCurrentUser() == null){
+            // do something
+            progressBar.setVisibility(View.GONE);
+
+        }
+
     }
 
 
@@ -110,8 +115,10 @@ public class LoginActivity extends AppCompatActivity {
     public void loginUser(){
 
         // display the progressDialog
-        progressDialog = ProgressDialog.show(LoginActivity.this,"",null,true,true);
-        progressDialog.setMessage("Please wait...");
+        /*progressDialog = ProgressDialog.show(LoginActivity.this,"",null,true,true);
+        progressDialog.setMessage("Please wait...");*/
+
+        progressBar.setVisibility(View.VISIBLE);
 
         //gets text from the editTExt fields
         final String _email = editTextEmail.getText().toString().trim();
@@ -124,21 +131,23 @@ public class LoginActivity extends AppCompatActivity {
                       if(task.isSuccessful()){
                           finish();
                           // dismiss progress dialog upon a successful login
-                          progressDialog.dismiss();
+                          //progressDialog.dismiss();
+                          progressBar.setVisibility(View.GONE);
                           // clears the text fields
                           clearTextFields();
                           // display a success message
-                          Toast.makeText(getApplicationContext(),getString(R.string.login_successful),Toast.LENGTH_SHORT).show();
+                          Toast.makeText(LoginActivity.this,getString(R.string.login_successful),Toast.LENGTH_SHORT).show();
                           // starts the home activity
-                          Intent  intentHome = new Intent(LoginActivity.this,HomeActivity.class);
+                          /*Intent  intentHome = new Intent(LoginActivity.this,HomeActivity.class);
                           intentHome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                          startActivity(intentHome);
-                          //startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+                          startActivity(intentHome);*/
+                          startActivity(new Intent(LoginActivity.this,HomeActivity.class));
                       }
                       else{
+                          progressBar.setVisibility(View.GONE);
                           // display a message if there is an error
                           Snackbar.make(relativeLayout,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
-                          progressDialog.dismiss();
+                          //progressDialog.dismiss();
                       }
                     }
                 });
@@ -147,7 +156,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //Link to the signUp Interface
     public void onSignUpLinkClick(View view){
-        finish();
+        LoginActivity.this.finish();
         // creates an instance of the intent class and opens the signUpctivity
         startActivity(new Intent(this,SignUpActivity.class));
     }

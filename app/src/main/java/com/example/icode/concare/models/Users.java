@@ -4,6 +4,7 @@ public class Users {
 
     //field in the database
     private String email;
+    private String username;
     private String gender;
     private String telephoneNumber;
 
@@ -13,8 +14,9 @@ public class Users {
     }
 
     //constructor with one or more parameters
-    public Users(String email,String gender,String telephoneNumber){
+    public Users(String email,String username,String gender,String telephoneNumber){
         this.email = email;
+        this.username = username;
         this.gender = gender;
         this.telephoneNumber = telephoneNumber;
 
@@ -27,6 +29,14 @@ public class Users {
 
     public String getEmail(){
         return email;
+    }
+
+    //Getter and Setter Method for Username
+    public void setUsername(String username){
+        this.username = username;
+    }
+    public String getUsername(){
+        return username;
     }
 
     //Getter and Setter Method for Gender

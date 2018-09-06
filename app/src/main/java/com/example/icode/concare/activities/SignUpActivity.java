@@ -2,6 +2,9 @@ package com.example.icode.concare.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
@@ -12,42 +15,61 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.icode.concare.R;
 import com.example.icode.concare.models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SignUpActivity extends AppCompatActivity {
 
     // instance variables
     private EditText editTextEmail;
+    private EditText editTextUsername;
     private EditText editTextPassword;
     private EditText editTextPhoneNumber;
 
     private AppCompatSpinner spinnerGender;
     private ArrayAdapter<CharSequence> spinnerAdapter;
 
-    private FirebaseDatabase usersdB;
-    private DatabaseReference usersRef;
-
     private NestedScrollView nestedScrollView;
 
     //instance of firebase Authentication
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
 
+    // progressBar to load image uploading to database
+    ProgressBar progressBar;
 
-    ProgressDialog progressDialog;
+    // progressBar to load signUp user
+    ProgressBar progressBar1;
+
+    private CircleImageView circleImageView;
+    private EditText username;
+
+    Uri uriProfileImage;
+
+    String profileImageUrl;
+
+    private static final int  REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +78,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         //initialization of the view objects
         editTextEmail = findViewById(R.id.editTextEmail);
+        editTextUsername = findViewById(R.id.editTextUsername);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextPhoneNumber = findViewById(R.id.editTextPhoneNumber);
 
@@ -64,16 +87,18 @@ public class SignUpActivity extends AppCompatActivity {
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item_sign_up);
         spinnerGender.setAdapter(spinnerAdapter);
 
+        circleImageView = findViewById(R.id.circularImageView);
+
         nestedScrollView = findViewById(R.id.nestedScrollView);
+
+        progressBar = findViewById(R.id.progressBar);
+
+        progressBar1 = findViewById(R.id.progressBar1);
 
         mAuth = FirebaseAuth.getInstance();
 
-        //instantiation of the Firebase classes
-        /*usersdB = FirebaseDatabase.getInstance();
-        usersRef = usersdB.getReference().child("Users");*/
-
-        //instance of th Users class
-        //users = new Users();
+        // a method call to the chooseImage method
+        chooseImage();
     }
 
     //Sign Up Button Method
@@ -81,6 +106,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         //gets text from the editTExt fields
         String email = editTextEmail.getText().toString().trim();
+        String username = editTextUsername.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         String phone = editTextPhoneNumber.getText().toString().trim();
 
@@ -96,6 +122,11 @@ public class SignUpActivity extends AppCompatActivity {
             editTextEmail.setError(getString(R.string.email_invalid));
             return;
         }
+        else if(username.isEmpty()) {
+            editTextUsername.setError(getString(R.string.error_empty_username));
+            editTextUsername.requestFocus();
+            return;
+        }
         else if(password.isEmpty()){
             editTextPassword.setError(getString(R.string.error_empty_password));
             editTextPassword.requestFocus();
@@ -104,6 +135,7 @@ public class SignUpActivity extends AppCompatActivity {
         else if(password.length() < 6 ){
             editTextPassword.setError(getString(R.string.error_password_length));
             editTextPassword.requestFocus();
+            return;
         }
         else if(phone.isEmpty()){
             editTextPhoneNumber.setError(getString(R.string.error_empty_phone));
@@ -120,15 +152,125 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
+    // method to select image from gallery
+    public void chooseImage(){
+
+        circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // method to open user's phone gallery
+                openGallery();
+            }
+        });
+
+    }
+
+    // another method to create a gallery intent to choose image from gallery
+    private void openGallery(){
+        // create an intent object to open user gallery for image
+        Intent pickImage = new Intent();
+        pickImage.setType("image/*");
+        pickImage.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(pickImage,"Select Profile Picture"),REQUEST_CODE);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null){
+            uriProfileImage = data.getData();
+
+            try {
+                // sets the picked image to the imageView
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uriProfileImage);
+                circleImageView.setImageBitmap(bitmap);
+                uploadImage();
+
+            } catch (IOException e) {
+                Snackbar.make(nestedScrollView,e.getMessage(),Snackbar.LENGTH_LONG).show();
+            }
+
+            circleImageView.setImageURI(uriProfileImage);
+        }
+
+    }
+
+    private void uploadImage(){
+
+        final StorageReference profileImageRef = FirebaseStorage.getInstance()
+                .getReference("Profile Pic/" + System.currentTimeMillis() + ".jpg");
+
+        if(uriProfileImage != null){
+            // displays the progressBar
+            progressBar.setVisibility(View.VISIBLE);
+            profileImageRef.putFile(uriProfileImage)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressBar.setVisibility(View.GONE);
+                            profileImageUrl = taskSnapshot.getDownloadUrl().toString();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressBar.setVisibility(View.GONE);
+                    Snackbar.make(nestedScrollView,e.getMessage(),Snackbar.LENGTH_LONG).show();
+                }
+            });
+        }
+
+    }
+
+    // method to save username and profile image
+    private void saveUserInfo(){
+
+        String _username = editTextUsername.getText().toString().trim();
+
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        if(user != null && profileImageUrl != null){
+            UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(_username)
+                    .setPhotoUri(Uri.parse(profileImageUrl))
+                    .build();
+
+            // updates user info with the passed username and image
+            user.updateProfile(userProfileChangeRequest)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                // dismiss progress bar
+                                progressBar1.setVisibility(View.GONE);
+                                // display a success message
+                               // Toast.makeText(SignUpActivity.this,"Profile Updated Successfully",Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                // dismiss progress dialog
+                                progressBar1.setVisibility(View.GONE);
+                                // display an error message
+                                Snackbar.make(nestedScrollView,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+        }
+
+    }
+
     // signUp method
     public void signUp(){
 
         //displaying the progressDialog when sign Up button is clicked
-        progressDialog = ProgressDialog.show(SignUpActivity.this,"",null,true,true);
-        progressDialog.setMessage("Please wait...");
+        /*progressDialog = ProgressDialog.show(SignUpActivity.this,"",null,true,true);
+        progressDialog.setMessage("Please wait...");*/
+
+        progressBar1.setVisibility(View.VISIBLE);
 
         //gets text from the editTExt fields
         final String email = editTextEmail.getText().toString().trim();
+        final String username = editTextUsername.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         final String gender = spinnerGender.getSelectedItem().toString().trim();
         final String phone = editTextPhoneNumber.getText().toString().trim();
@@ -138,40 +280,40 @@ public class SignUpActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        // hides the progressBar
-                        progressDialog.dismiss();
                         if(task.isSuccessful()){
                             //initializes the user object
-                            Users users = new Users(email, gender, phone);
+                            Users users = new Users(email, username ,gender, phone);
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(mAuth.getCurrentUser().getUid())
                                     .setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
+                                        // method call
+                                        saveUserInfo();
                                         // dismiss progress dialog upon a successful login
-                                        progressDialog.dismiss();
+                                        progressBar1.setVisibility(View.GONE);
                                         // display a success message
-                                        Snackbar.make(nestedScrollView,getString(R.string.sign_up_successful),Snackbar.LENGTH_SHORT).show();
+                                        Snackbar.make(nestedScrollView,getString(R.string.sign_up_successful),Snackbar.LENGTH_LONG).show();
+                                        clearTextFields();
                                         // avoid going back to the activity
-                                        finish();
+                                        SignUpActivity.this.finish();
                                         // starts the login activity
-                                        startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
+                                        startActivity(new Intent(SignUpActivity.this,HomeActivity.class));
                                     }
                                     else {
+                                        progressBar1.setVisibility(View.GONE);
                                         // display a message if there is an error
                                         Snackbar.make(nestedScrollView,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
-                                        progressDialog.dismiss();
                                     }
                                 }
                             });
 
                         }
                         else{
+                            progressBar1.setVisibility(View.GONE);
                             // display a message if there is an error
                             Snackbar.make(nestedScrollView,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
-                            // clears the fields
-                            clearTextFields();
                         }
 
                     }
@@ -181,7 +323,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     //link from the Sign Up page to the Login Page
     public void onLoginLinkButtonClick(View view){
-        finish();
+        //SignUpActivity.this.finish();
         // creates an instance of the intent class and opens the signUpctivity
         startActivity(new Intent(this,LoginActivity.class));
     }
@@ -189,6 +331,7 @@ public class SignUpActivity extends AppCompatActivity {
     //clears the textfields
     public void clearTextFields(){
         editTextEmail.setText(null);
+        editTextUsername.setText(null);
         editTextPassword.setText(null);
         editTextPhoneNumber.setText(null);
     }

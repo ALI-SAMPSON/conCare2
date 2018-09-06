@@ -2,13 +2,11 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/con_pic"
-    tools:context=".activities.EditProfileActivity">
+    android:background="@drawable/con_pic">
 
 
     <RelativeLayout
@@ -52,7 +50,7 @@
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:drawableLeft="@drawable/ic_person"
+                android:drawableLeft="@drawable/ic_person_white"
                 android:drawablePadding="@dimen/padding_normal"
                 android:textColor="@color/status_bar_back"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
@@ -82,8 +80,7 @@
         android:textSize="16sp"
         android:textStyle="normal"
         android:textAlignment="center"
-        android:background="@drawable/round_corner_button_login"
-        android:onClick="onSaveButtonClick"/>
+        android:background="@drawable/round_corner_button_login" />
 
 
 </LinearLayout>
