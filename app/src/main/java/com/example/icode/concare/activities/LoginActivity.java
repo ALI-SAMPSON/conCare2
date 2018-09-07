@@ -167,4 +167,9 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword.setText(null);
     }
 
+    // forgot password method
+    public void onForgotPasswordClick(View view) {
+        // do nothing for now
+        Toast.makeText(getApplicationContext(),"Forgot Password",Toast.LENGTH_LONG).show();
+    }
 }

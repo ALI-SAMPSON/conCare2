@@ -106,17 +106,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         progressBar = findViewById(R.id.progressBar);
 
-        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // gets the text from the spinner and passes it to the next activity
-                String gender = spinnerGender.getSelectedItem().toString().trim();
-
-                Intent intent = new Intent(HomeActivity.this,PlaceOrderActivity.class);
-                intent.putExtra("gender",gender);
-                startActivity(intent);
-            }
-        });
+        // floating action button onclick Listener and initialization
+        fab = findViewById(R.id.fab);
+        // call to the onclick Listener for floating button
+        onClickFab();
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -138,6 +131,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             // starts the login activity currently logged in user is null(no logged in user)
             startActivity(new Intent(this,LoginActivity.class));
         }
+    }
+
+    // Onclick Listener method for floating button
+    private void onClickFab(){
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // starts the Contact us activity
+                startActivity(new Intent(HomeActivity.this,ContactUsActivity.class));
+            }
+        });
     }
 
     /* method to load user info from firebase
@@ -228,8 +232,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         switch(item.getItemId()){
             case R.id.menu_about:
-                //starts the about us activity
+                // starts the about us activity
                 startActivity(new Intent(this,AboutUsActivity.class));
+                break;
+            case R.id.menu_contact:
+                // starts the Contact us activity
+                startActivity(new Intent(this,ContactUsActivity.class));
                 break;
             case R.id.menu_exit:
                 // close application

@@ -10,9 +10,16 @@
     </item>
 
     <item
+        android:id="@+id/menu_contact"
+        android:title="@string/text_contact"
+        android:orderInCategory="200"
+        app:showAsAction="never">
+    </item>
+
+    <item
         android:id="@+id/menu_exit"
         android:title="@string/text_exit"
-        android:orderInCategory="200"
+        android:orderInCategory="300"
         app:showAsAction="never">
     </item>
 

@@ -44,8 +44,7 @@
         <activity
             android:name=".activities.SignUpActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Sign_up">
-        </activity>
+            android:theme="@style/AppTheme.Sign_up"></activity>
         <activity
             android:name=".activities.SplashScreenActivity"
             android:screenOrientation="portrait"
@@ -53,16 +52,18 @@
         <activity
             android:name=".activities.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/homeTheme">
-        </activity>
+            android:theme="@style/homeTheme"></activity>
         <activity
             android:name=".activities.PlaceOrderActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/homeTheme.order">
-        </activity>
-        <activity android:name=".activities.EditProfileActivity"
+            android:theme="@style/homeTheme.order"></activity>
+        <activity
+            android:name=".activities.EditProfileActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/homeTheme.profile">
+            android:theme="@style/homeTheme.profile"></activity>
+        <activity android:name=".activities.ContactUsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/homeTheme.order">
         </activity>
     </application>
 

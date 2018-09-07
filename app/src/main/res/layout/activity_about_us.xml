@@ -74,7 +74,7 @@
                 android:layout_marginTop="0dp"
                 android:text="@string/hint_overview"
                 android:textSize="18sp"
-                android:textColor="@color/colorRed"
+                android:textColor="@color/orange_light"
                 app:fontFamily="@font/nunito_extrabold"
                 android:textAllCaps="true"
                 android:textStyle="bold" />
@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/colorRed"
+                android:background="@color/orange_light"
                 android:padding="10dp" />
 
         </LinearLayout>
@@ -117,7 +117,7 @@
                     android:gravity="center"
                     android:text="@string/hint_mission"
                     android:textSize="18sp"
-                    android:textColor="@color/materialGreen"
+                    android:textColor="@color/green_forest"
                     app:fontFamily="@font/nunito_extrabold"
                     android:textAllCaps="true"
                     android:textStyle="bold" />
@@ -126,7 +126,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/materialGreen"
+                    android:background="@color/green_forest"
                     android:padding="10dp" />
 
             </LinearLayout>
