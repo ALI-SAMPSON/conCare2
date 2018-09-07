@@ -24,8 +24,10 @@
         android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
+        app:fontFamily="@font/nunito_semibold"
         android:text="@string/dummy_username"
         android:textColor="@color/colorWhite"
         android:textSize="16sp"
@@ -35,11 +37,13 @@
         android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
+        app:fontFamily="@font/nunito_semibold"
         android:text="@string/dummy_email"
         android:textColor="@color/colorWhite"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textStyle="normal"/>
 
 </LinearLayout>

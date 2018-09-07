@@ -29,17 +29,18 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:scaleType="centerCrop"
-            android:src="@drawable/open_gallery_1"
+            android:src="@drawable/open_gallery"
             app:civ_border_width="2dp"
             app:civ_border_color="@color/white_ghost">
         </de.hdodenhof.circleimageview.CircleImageView>
 
+        <!--Progress Bar-->
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_horizontal"
             android:visibility="gone"/>
 
@@ -55,7 +56,7 @@
             android:layout_marginStart="0dp">
             <EditText
                 android:id="@+id/editTextEmail"
-                android:layout_width="320dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
@@ -87,11 +88,11 @@
             android:layout_marginStart="0dp">
             <EditText
                 android:id="@+id/editTextUsername"
-                android:layout_width="320dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:drawableLeft="@drawable/ic_person_white"
-                android:drawablePadding="@dimen/padding_normal"
+                android:drawablePadding="@dimen/spacing_normal"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
                 app:fontFamily="@font/nunito_semibold"
@@ -117,7 +118,7 @@
             android:layout_marginStart="0dp">
             <EditText
                 android:id="@+id/editTextPassword"
-                android:layout_width="320dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
@@ -146,7 +147,7 @@
             android:orientation="horizontal"
             android:layout_marginStart="0dp">
             <LinearLayout
-                android:layout_width="315dp"
+                android:layout_width="300dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:layout_height="match_parent"
@@ -201,7 +202,7 @@
             android:layout_marginStart="0dp">
             <EditText
                 android:id="@+id/editTextPhoneNumber"
-                android:layout_width="320dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
@@ -225,7 +226,7 @@
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/appCompatButtonSignUp"
             android:layout_marginTop="30dp"
-            android:layout_width="320dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
@@ -233,7 +234,7 @@
             android:layout_below="@+id/textInputLayoutTelNumber"
             android:text="@string/signUp"
             android:textColor="@color/orange_deep"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="normal"
             android:textAlignment="center"
             app:fontFamily="@font/nunito_semibold"
@@ -244,8 +245,8 @@
             android:id="@+id/progressBar1"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_horizontal"
             android:visibility="gone"/>
 
@@ -253,7 +254,7 @@
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/appCompatButtonLinkLogin"
             android:layout_marginTop="10dp"
-            android:layout_width="320dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"

@@ -244,8 +244,6 @@ public class SignUpActivity extends AppCompatActivity {
                             if(task.isSuccessful()){
                                 // dismiss progress bar
                                 progressBar1.setVisibility(View.GONE);
-                                // display a success message
-                               // Toast.makeText(SignUpActivity.this,"Profile Updated Successfully",Toast.LENGTH_LONG).show();
                             }
                             else{
                                 // dismiss progress dialog
@@ -261,10 +259,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     // signUp method
     public void signUp(){
-
-        //displaying the progressDialog when sign Up button is clicked
-        /*progressDialog = ProgressDialog.show(SignUpActivity.this,"",null,true,true);
-        progressDialog.setMessage("Please wait...");*/
 
         progressBar1.setVisibility(View.VISIBLE);
 
@@ -296,10 +290,6 @@ public class SignUpActivity extends AppCompatActivity {
                                         // display a success message
                                         Snackbar.make(nestedScrollView,getString(R.string.sign_up_successful),Snackbar.LENGTH_LONG).show();
                                         clearTextFields();
-                                        // avoid going back to the activity
-                                        SignUpActivity.this.finish();
-                                        // starts the login activity
-                                        startActivity(new Intent(SignUpActivity.this,HomeActivity.class));
                                     }
                                     else {
                                         progressBar1.setVisibility(View.GONE);
@@ -323,9 +313,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     //link from the Sign Up page to the Login Page
     public void onLoginLinkButtonClick(View view){
-        //SignUpActivity.this.finish();
+        SignUpActivity.this.finish();
         // creates an instance of the intent class and opens the signUpctivity
-        startActivity(new Intent(this,LoginActivity.class));
+        startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
     }
 
     //clears the textfields

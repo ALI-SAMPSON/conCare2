@@ -54,6 +54,8 @@ public class LoginActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar);
 
+        progressDialog = ProgressDialog.show(this,"","Please wait...",true,true);
+
         mAuth = FirebaseAuth.getInstance();
         relativeLayout = findViewById(R.id.relativeLayout);
 
@@ -62,19 +64,21 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        // displays the progressBar
-        progressBar.setVisibility(View.VISIBLE);
+        // checks if user is currently logged in
         if(mAuth.getCurrentUser() != null){
             LoginActivity.this.finish();
-            // starts the home activity if user is already logged in
             startActivity(new Intent(LoginActivity.this,HomeActivity.class));
-            // hides the progressBar
-            //progressBar.setVisibility(View.GONE);
         }
+        // checks if user is not currently logged in
         else if(mAuth.getCurrentUser() == null){
-            // do something
-            progressBar.setVisibility(View.GONE);
-
+            final Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    progressDialog.dismiss();
+                    timer.cancel();
+                }
+            },2000);
         }
 
     }
@@ -129,19 +133,16 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                       if(task.isSuccessful()){
-                          finish();
-                          // dismiss progress dialog upon a successful login
-                          //progressDialog.dismiss();
+                          // dismiss progress bar upon a successful login
                           progressBar.setVisibility(View.GONE);
                           // clears the text fields
                           clearTextFields();
                           // display a success message
                           Toast.makeText(LoginActivity.this,getString(R.string.login_successful),Toast.LENGTH_SHORT).show();
                           // starts the home activity
-                          /*Intent  intentHome = new Intent(LoginActivity.this,HomeActivity.class);
-                          intentHome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                          startActivity(intentHome);*/
+                          LoginActivity.this.finish();
                           startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+
                       }
                       else{
                           progressBar.setVisibility(View.GONE);
@@ -169,7 +170,9 @@ public class LoginActivity extends AppCompatActivity {
 
     // forgot password method
     public void onForgotPasswordClick(View view) {
+        LoginActivity.this.finish();
+        startActivity(new Intent(LoginActivity.this,ResetPasswordActivity.class));
         // do nothing for now
-        Toast.makeText(getApplicationContext(),"Forgot Password",Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),"Forgot Password",Toast.LENGTH_LONG).show();
     }
 }

@@ -1,19 +1,14 @@
 package com.example.icode.concare.activities;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,24 +17,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.icode.concare.R;
-import com.example.icode.concare.fragements.FragmentEditProfile;
-import com.example.icode.concare.models.CurrentUsers;
-import com.example.icode.concare.models.Orders;
-import com.example.icode.concare.models.Users;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -64,8 +47,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     TextView email;
 
     ProgressDialog progressDialog;
-
-    ProgressBar progressBar;
 
     FloatingActionButton fab;
 
@@ -93,9 +74,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
 
-        // a call to the navigationViewItemListener
-        //setNavigationViewListener();
-
         //checks of there is support actionBar
         if(getSupportActionBar() != null){
             getSupportActionBar().setTitle(getString(R.string.home));
@@ -104,14 +82,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             getSupportActionBar().setHomeButtonEnabled(true);
         }
 
-        progressBar = findViewById(R.id.progressBar);
+        progressDialog = ProgressDialog.show(this,"","Please wait...",true,true);
 
         // floating action button onclick Listener and initialization
         fab = findViewById(R.id.fab);
+
         // call to the onclick Listener for floating button
         onClickFab();
-
-        progressBar.setVisibility(View.VISIBLE);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -126,10 +103,25 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onStart(){
         super.onStart();
         if(mAuth.getCurrentUser() == null){
-            progressBar.setVisibility(View.GONE);
             HomeActivity.this.finish();
             // starts the login activity currently logged in user is null(no logged in user)
             startActivity(new Intent(this,LoginActivity.class));
+        }
+        else if(mAuth.getCurrentUser() != null){
+            // starts the home activity if user is already logged in
+            final Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    // hides the progressBar
+                    progressDialog.dismiss();
+                    timer.cancel();
+                }
+            },2000);
+            // display a welcome message to user
+            /*Toast.makeText(HomeActivity.this,
+                    " Welcome " + mAuth.getCurrentUser().getDisplayName(),
+                    Toast.LENGTH_LONG).show();*/
         }
     }
 
@@ -142,6 +134,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(HomeActivity.this,ContactUsActivity.class));
             }
         });
+
     }
 
     /* method to load user info from firebase
@@ -197,17 +190,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // handle navigation item click
         switch (item.getItemId()){
-            case R.id.home:
+            case R.id.menu_home:
                 // do nothing
                 break;
-            case R.id.edit_profile:
+            case R.id.menu_edit_profile:
                 // start EditProfile activity
                 startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
                 break;
-            case R.id.orders:
+            /*case R.id.orders:
                 // start orders fragment
+                break;*/
+             case R.id.menu_about:
+                // start About Us Activity
+                 startActivity(new Intent(HomeActivity.this,AboutUsActivity.class));
                 break;
-            case R.id.sign_out:
+            case R.id.menu_sign_out:
                 // a call to logout method
                logout();
                 break;
@@ -306,7 +303,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     // method to log user out of the system
     private void logout(){
-        progressBar.setVisibility(View.VISIBLE);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.logout));
@@ -319,7 +315,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        progressBar.setVisibility(View.GONE);
+                        progressDialog.dismiss();
                         timer.cancel();
                     }
                 },10000);

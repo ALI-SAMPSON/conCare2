@@ -13,9 +13,10 @@
     <string name="text_gender">Gender</string>
     <string name="welcome">Welcome!</string>
     <string name="welcome_msg">Hope you enjoy the stay</string>
-    <string name="sign_up_link">Sign up for an account?</string>
-    <string name="login_link">Already a member? Login</string>
+    <string name="sign_up_link">Not yet a user? Sign Up</string>
+    <string name="login_link">Already a user? Sign In</string>
     <string name="login">Login</string>
+    <string name="sign_in">Sign In</string>
     <string name="signUp">Sign Up</string>
     <string name="save">Save</string>
     <string name="update">UPDATE</string>
@@ -24,11 +25,17 @@
     <string name="todo">TODO</string>
     <string name="title_edit_profile">EDIT PROFILE</string>
     <string name="text_forgot_password">Forgot Password?</string>
+    <string name="lbl_forgot_password">Forgot Password?</string>
+    <string name="msg_forgot_password">Please enter your email to reset password</string>
+    <string name="btn_reset_password">Reset Password</string>
+    <string name="btn_back">Go Back</string>
+
 
     <!--Error Text -->
     <string name="error_empty_email">Email field cannot be left empty</string>
     <string name="error_empty_password">Password field cannot be left empty</string>
     <string name="email_invalid">Enter a valid email address</string>
+    <string name="email_registered">Enter your registered email id</string>
     <string name="error_password_length">Password length cannot be less than 6</string>
     <string name="error_empty_phone">Phone Number field cannot be left empty</string>
     <string name="phone_invalid">Enter a valid phone number</string>

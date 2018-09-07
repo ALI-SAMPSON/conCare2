@@ -3,19 +3,15 @@ package com.example.icode.concare.activities;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -23,18 +19,12 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.example.icode.concare.R;
-import com.example.icode.concare.models.CurrentUsers;
 import com.example.icode.concare.models.Orders;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class PlaceOrderActivity extends AppCompatActivity {
 
@@ -68,8 +58,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
     private FirebaseDatabase database;
     private DatabaseReference orderRef;
-
-    private ProgressDialog progressDialog;
 
     private ProgressBar progressBar;
 
@@ -162,24 +150,13 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
     }
 
-   /* @Override
+    @Override
     protected void onStart(){
         super.onStart();
-        // displays progressBar
-        progressBar.setVisibility(View.VISIBLE);
         if(mAuth.getCurrentUser() != null){
-            //displays the progress bar for 5 seconds
-            final Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    progressBar.setVisibility(View.GONE);
-                    timer.cancel();
-                }
-            },3000);
-
+            // do nothing
         }
-    }*/
+    }
 
     // on click listener for placing order
     public void onPlaceOrderButtonClick(View view) {
@@ -225,7 +202,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
            // progressDialog.setMessage("Please wait...");
 
 
-
             //getting input from the user
             String tel_number = editTextTelNumber.getText().toString().trim();
             String campus = spinnerCampus.getSelectedItem().toString().trim();
@@ -249,18 +225,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
             orders.setResidence(residence);
             orders.setContraceptive(contraceptive);
             orders.setOther_contraceptive(other_contraceptive);
-
-           /* Orders orders = new Orders(
-                    tel_number,
-                    campus,
-                    location,
-                    other_location,
-                    residence,
-                    contraceptive,
-                    other_contraceptive,
-                    hostel_name,
-                    room_number
-            );*/
 
             progressBar.setVisibility(View.VISIBLE);
 

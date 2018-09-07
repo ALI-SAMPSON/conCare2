@@ -22,6 +22,7 @@
         android:gravity="center"
         android:layout_gravity="center_horizontal"
         app:fontFamily="@font/nunito_extrabold"
+        android:textColor="@color/orange_light"
         android:textSize="20dp"
         android:text="WHO WE ARE"
         android:padding="10dp"
