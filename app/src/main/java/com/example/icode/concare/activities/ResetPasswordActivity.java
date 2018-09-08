@@ -69,11 +69,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
     }
 
-    // method to send usesr back to login Activity
+    // method to send user back to login Activity
     public void goBackButton(View view) {
-
         ResetPasswordActivity.this.finish();
-        //startActivity(new Intent(ResetPasswordActivity.this,LoginActivity.class));
+        startActivity(new Intent(ResetPasswordActivity.this,LoginActivity.class));
 
     }
 

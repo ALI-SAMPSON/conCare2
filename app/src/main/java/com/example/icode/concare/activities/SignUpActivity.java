@@ -114,7 +114,11 @@ public class SignUpActivity extends AppCompatActivity {
          * Input validation
          */
         //checks to make sure the editText fields are not empty
-        if(email.isEmpty()){
+        if(circleImageView.getDrawable() == null){
+            Toast.makeText(SignUpActivity.this,"Please select an image to continue",Toast.LENGTH_LONG).show();
+            return;
+        }
+        else if(email.isEmpty()){
             editTextEmail.setError(getString(R.string.error_empty_email));
             return;
         }

@@ -5,14 +5,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.icode.concare.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import static java.lang.Thread.sleep;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
     private final int SPLASH_SCREEN_DISPLAY_TIME = 3000;
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,17 +25,24 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        //creates an instance of an actionbar
-       // ActionBar actionBar = getSupportActionBar();
-        //test to see if there is an actionbar
-    /*if(actionBar != null) {
-        actionBar.hide();
-    }*/
-
-        splashScreen(); //call to the splashScreen method
+        // firebase instance
+        mAuth = FirebaseAuth.getInstance();
 
     }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(mAuth.getCurrentUser() != null){
+            SplashScreenActivity.this.finish();
+            startActivity(new Intent(SplashScreenActivity.this,HomeActivity.class));
+        }
+        else{
+            // open splash screen first
+            splashScreen();
+        }
+    }
 
     //class to the handle the splash screen activity
     public void splashScreen() {
@@ -47,11 +58,12 @@ public class SplashScreenActivity extends AppCompatActivity {
                     finish();//this prevents the app from going back to the splash screen
                     super.run();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Toast.makeText(SplashScreenActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
             }
         };
-        timer.start();//starts the timer
+        //starts the timer
+        timer.start();
     }
 
 }
