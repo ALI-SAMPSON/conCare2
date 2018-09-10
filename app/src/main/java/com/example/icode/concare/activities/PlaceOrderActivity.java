@@ -201,7 +201,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
            // progressDialog = ProgressDialog.show(PlaceOrderActivity.this,"Processing",null,true,true);
            // progressDialog.setMessage("Please wait...");
 
-
             //getting input from the user
             String tel_number = editTextTelNumber.getText().toString().trim();
             String campus = spinnerCampus.getSelectedItem().toString().trim();
@@ -212,8 +211,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
             String other_contraceptive = editTextOtherContraceptive.getText().toString().trim();
             String hostel_name = editTextHostelName.getText().toString().trim();
             String room_number = editTextRoomNumber.getText().toString().trim();
-
-            // checks if user is not null
 
             // setting values to setter methods
             orders.setHostel_name(hostel_name);
@@ -253,9 +250,10 @@ public class PlaceOrderActivity extends AppCompatActivity {
                         Notification notification = new Notification.Builder(PlaceOrderActivity.this)
                                 .setSmallIcon(R.mipmap.app_icon_round)
                                 .setContentTitle(getString(R.string.app_name))
-                                .setContentText("You have successfully made an order.." +
-                                        "One of our agents will deliver it " +
-                                        "to you very soon")
+                                .setContentText(" You have successfully made an order for "  +
+                                        orders.getContraceptive() + "." +
+                                        " One of our agents will deliver it " +
+                                        " to you very soon ")
                                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                                 .setContentIntent(pendingIntent).getNotification();
                         notification.flags = Notification.FLAG_AUTO_CANCEL;
