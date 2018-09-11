@@ -100,6 +100,7 @@
                 android:textColor="@color/status_bar_back"
                 android:textColorHint="@color/background_super_dark"
                 android:drawableLeft="@drawable/ic_lock_orange"
+                android:drawableStart="@drawable/ic_lock_orange"
                 android:drawablePadding="@dimen/spacing_normal"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:hint="@string/hint_password"

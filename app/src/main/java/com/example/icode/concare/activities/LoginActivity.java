@@ -150,6 +150,8 @@ public class LoginActivity extends AppCompatActivity {
                           Snackbar.make(relativeLayout,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
                           //progressDialog.dismiss();
                       }
+
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
 
