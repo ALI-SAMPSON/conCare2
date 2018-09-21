@@ -93,7 +93,7 @@
         android:textSize="16sp"
         android:textStyle="normal"
         android:textAlignment="center"
-        android:background="@drawable/round_corner_button_save"
+        android:background="@drawable/nice_design_button_orange"
         android:onClick="onUpdateButtonClick"
         tools:ignore="NotSibling" />
 

@@ -15,6 +15,8 @@
     <string name="welcome_msg">Hope you enjoy the stay</string>
     <string name="sign_up_link">Not yet a user? Sign Up</string>
     <string name="login_link">Already a user? Sign In</string>
+    <string name="text_upload_pic">Upload Profile</string>
+    <string name="text_picture">Picture</string>
     <string name="login">Login</string>
     <string name="sign_in">Sign In</string>
     <string name="signUp">Sign Up</string>
@@ -29,6 +31,7 @@
     <string name="msg_forgot_password">Please enter your email to reset password</string>
     <string name="btn_reset_password">Reset Password</string>
     <string name="btn_back">Go Back</string>
+    <string name="exit_app_message">Please press again to exit</string>
 
 
     <!--Error Text -->
@@ -107,6 +110,15 @@
         also ensure mass participation in contraceptive use.
     </string>
 
+    <string name="welcome_message">
+        Con Care GH has a lot to offer you.
+        Just Open the drawer from the left of
+        the screen to update your profile,
+        read about us and freely place order
+        for any contraceptive of you choice.
+        Enjoy and feel free to contact us if
+        need arises!
+    </string>
 
     <!-- Navigation drawer menu -->
     <string name="dummy_username">Username : username</string>
@@ -120,5 +132,8 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="logout_msg">Are you sure you want to logout?</string>
+
+    <!--Developer-->
+    <string name="watermark">Created by <b>iCODE labs</b> © 2018</string>
 
 </resources>

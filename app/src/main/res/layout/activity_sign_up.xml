@@ -21,15 +21,38 @@
         android:layout_gravity="center_vertical"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/text_upload_pic"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            android:gravity="center_horizontal"
+            android:padding="0dp"
+            app:fontFamily="@font/nunito_semibold"/>
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/text_picture"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp"
+            android:gravity="center_horizontal"
+            android:padding="0dp"
+            app:fontFamily="@font/nunito_semibold"/>
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/circularImageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:scaleType="centerCrop"
-            android:src="@drawable/open_gallery"
+            android:src="@drawable/profile_icon_1"
             app:civ_border_width="2dp"
             app:civ_border_color="@color/white_ghost">
         </de.hdodenhof.circleimageview.CircleImageView>

@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -18,8 +21,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.example.icode.concare.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -50,6 +55,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     FloatingActionButton fab;
 
+    /* boolean variable to launch Alert Dialog
+     upon successful login into the application*/
+    private  static boolean isFirstRun = true;
+
+    // boolean variable to check for doubleBackPress to exit app
+    private boolean doublePressBackToExitApp = false;
+
+    Uri url_no_image;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +76,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         mDrawerLayout = findViewById(R.id.drawer);
 
-        // setNavigationViewListener();
+        // setNavigationViewListener;
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         // getting reference to the navigation drawer view objects in the nav_header
@@ -92,10 +106,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         mAuth = FirebaseAuth.getInstance();
 
+        onClickCircularImageView();
+
+        // Calling method to display a welcome message
+        displayWelcomeMessage();
+
+        //method call
+        //loadUserInfoWithoutImage();
+
         // method call
         loadUserInfo();
-
-        onClickCircularImageView();
 
     }
 
@@ -103,9 +123,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onStart(){
         super.onStart();
         if(mAuth.getCurrentUser() == null){
-            HomeActivity.this.finish();
             // starts the login activity currently logged in user is null(no logged in user)
             startActivity(new Intent(this,LoginActivity.class));
+            finish();
         }
         else if(mAuth.getCurrentUser() != null){
             // starts the home activity if user is already logged in
@@ -118,10 +138,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     timer.cancel();
                 }
             },2000);
-            // display a welcome message to user
-            /*Toast.makeText(HomeActivity.this,
-                    " Welcome " + mAuth.getCurrentUser().getDisplayName(),
-                    Toast.LENGTH_LONG).show();*/
         }
     }
 
@@ -134,6 +150,68 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(HomeActivity.this,ContactUsActivity.class));
             }
         });
+
+    }
+
+    // Method to display a welcome  message to user when he or she logs in
+    private void displayWelcomeMessage() {
+
+        // get current logged in user
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        /* getting username of the currently
+         Logged In user and storing in a string */
+        String username = user.getDisplayName();
+
+        // checks if user is not equal to null
+        if (user != null) {
+
+            if (isFirstRun) {
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                    AlertDialog.Builder builder = new
+                            AlertDialog.Builder(HomeActivity.this,
+                            android.R.style.Theme_Material_Dialog_Alert);
+                    builder.setTitle(" Welcome, " + username);
+                    builder.setMessage(getString(R.string.welcome_message));
+                    builder.setCancelable(false);
+                    builder.setIcon(R.mipmap.app_icon_round);
+
+                    builder.setPositiveButton("DISMISS", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            // closes the Alert dialog
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    // Creates and displays the alert Dialog
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+                    builder.setTitle(" Welcome, " + username);
+                    builder.setMessage(getString(R.string.welcome_message));
+                    builder.setCancelable(false);
+                    builder.setIcon(R.mipmap.app_icon_round);
+
+                    builder.setPositiveButton("DISMISS", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            // closes the Alert dialog
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    // Creates and displays the alert Dialog
+                    AlertDialog alert = builder.create();
+                    //builder.show();
+                    alert.show();
+                }
+            }
+        }
+        // sets it to false
+        isFirstRun = false;
 
     }
 
@@ -154,17 +232,43 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if(user != null){
             // checks if the photo of the current user is not null
             if(user.getPhotoUrl() != null ){
-                Glide.with(this)
+                Glide.with(HomeActivity.this)
                         .load(_photoUrl)
                         .into(circleImageView);
             }
             // checks if the username of the current user is not null
             if(user.getDisplayName() != null){
-                username.setText("Username : " + _username);
+                username.setText(" Username : " + _username);
             }
             // checks if the email of the current user is not null
             if(user.getEmail() != null){
-                email.setText("Email : " + _email);
+                email.setText(" Email : " + _email);
+            }
+
+        }
+
+    }
+
+    private void loadUserInfoWithoutImage(){
+
+        // get current logged in user
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        // getting the username and image of current logged in user
+        String _photoUrl = user.getPhotoUrl().toString();
+        String _username = user.getDisplayName();
+        String _email = user.getEmail();
+
+        if(user != null){
+            // checks if the photeUrl of the current user is null
+            if(_username != null && _email != null && _photoUrl == null){
+                username.setText(" Username : " + _username);
+                email.setText( " Email : " + _email);
+                //Load image for user
+                Glide.with(this)
+                        .asBitmap()
+                        .load(R.drawable.no_image)
+                        .into(circleImageView);
             }
 
         }
@@ -277,52 +381,40 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Exit Application?");
-        alertDialogBuilder
-                .setMessage("Are you sure you want to exit application?")
-                .setCancelable(false)
-                .setPositiveButton("Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                moveTaskToBack(true);
-                                android.os.Process.killProcess(android.os.Process.myPid());
-                                System.exit(1);
-                            }
-                        })
 
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogInterface, int id) {
-                        dialogInterface.dismiss();
-                    }
-                });
+        if(doublePressBackToExitApp){
+            super.onBackPressed();
+            return;
+        }
+        doublePressBackToExitApp = true;
+        // display a toast message to user
+        Toast.makeText(HomeActivity.this,getString(R.string.exit_app_message),Toast.LENGTH_SHORT).show();
 
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                moveTaskToBack(true);
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(1);
+            }
+        },2000);
+
     }
 
     // method to log user out of the system
     private void logout(){
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
         builder.setTitle(getString(R.string.logout));
         builder.setMessage(getString(R.string.logout_msg));
 
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                final Timer timer = new Timer();
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        progressDialog.dismiss();
-                        timer.cancel();
-                    }
-                },10000);
                 // logs current user out of the system
-                FirebaseAuth.getInstance().signOut();
-                HomeActivity.this.finish();
+                mAuth.signOut();
                 startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+                finish();
             }
         });
 

@@ -35,8 +35,8 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if(mAuth.getCurrentUser() != null){
-            SplashScreenActivity.this.finish();
             startActivity(new Intent(SplashScreenActivity.this,HomeActivity.class));
+            finish();
         }
         else{
             // open splash screen first
@@ -58,7 +58,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     finish();//this prevents the app from going back to the splash screen
                     super.run();
                 } catch (InterruptedException e) {
-                    Toast.makeText(SplashScreenActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SplashScreenActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
                 }
             }
         };

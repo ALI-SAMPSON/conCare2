@@ -24,7 +24,7 @@
         app:fontFamily="@font/nunito_extrabold"
         android:textSize="20dp"
         android:text="WHO WE ARE"
-        android:textColor="@color/orange_deep"
+        android:textColor="@color/orange_light"
         android:padding="10dp"
         android:layout_centerHorizontal="true"/>
 
@@ -60,7 +60,7 @@
             android:layout_gravity="center_horizontal"
             android:text="@string/text_contact"
             android:textSize="20sp"
-            android:textColor="@color/orange_deep"
+            android:textColor="@color/orange_light"
             app:fontFamily="@font/nunito_extrabold"
             android:padding="15dp"
             android:layout_centerHorizontal="true"/>

@@ -12,6 +12,7 @@
     <dimen name="round_corner_radius">10dp</dimen>
     <dimen name="padding_normal">5dp</dimen>
     <dimen name="spacing_normal">10dp</dimen>
+    <dimen name="spacing_small">5dp</dimen>
     <dimen name="avatar_radius">48dp</dimen>
 
 </resources>

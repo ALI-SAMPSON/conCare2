@@ -22,28 +22,32 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/app_icon"
+        android:icon="@mipmap/app_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/app_icon_round"
+        android:roundIcon="@mipmap/app_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.LoginActivity"
+            android:configChanges="screenLayout|screenSize|smallestScreenSize"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.Splash">
         </activity>
         <activity
             android:name=".activities.AboutUsActivity"
+            android:configChanges="screenLayout|screenSize|smallestScreenSize"
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme" />
         <activity
             android:name=".activities.SignUpActivity"
+            android:configChanges="screenLayout|screenSize|smallestScreenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Sign_up" />
         <activity
             android:name=".activities.SplashScreenActivity"
+            android:configChanges="screenLayout|screenSize|smallestScreenSize"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -52,22 +56,32 @@
         </activity>
         <activity
             android:name=".activities.HomeActivity"
+            android:configChanges="screenLayout|screenSize|smallestScreenSize"
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme">
         </activity>
         <activity
             android:name=".activities.PlaceOrderActivity"
+            android:configChanges="screenLayout|screenSize|smallestScreenSize"
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme.order" />
         <activity
             android:name=".activities.EditProfileActivity"
+            android:configChanges="screenLayout|screenSize|smallestScreenSize"
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme.profile" />
         <activity
             android:name=".activities.ContactUsActivity"
+            android:configChanges="screenLayout|screenSize|smallestScreenSize"
             android:screenOrientation="portrait"
-            android:theme="@style/homeTheme.order"></activity>
-        <activity android:name=".activities.ResetPasswordActivity"></activity>
+            android:theme="@style/homeTheme.order">
+
+        </activity>
+        <activity android:name=".activities.ResetPasswordActivity"
+            android:configChanges="screenLayout|screenSize|smallestScreenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/homeTheme">
+        </activity>
     </application>
 
 </manifest>

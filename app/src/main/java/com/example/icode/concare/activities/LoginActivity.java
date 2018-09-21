@@ -52,12 +52,12 @@ public class LoginActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
 
+        relativeLayout = findViewById(R.id.relativeLayout);
+
         progressBar = findViewById(R.id.progressBar);
 
-        progressDialog = ProgressDialog.show(this,"","Please wait...",true,true);
-
         mAuth = FirebaseAuth.getInstance();
-        relativeLayout = findViewById(R.id.relativeLayout);
+
 
     }
 
@@ -66,21 +66,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // checks if user is currently logged in
         if(mAuth.getCurrentUser() != null){
-            LoginActivity.this.finish();
             startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+            finish();
         }
-        // checks if user is not currently logged in
-        else if(mAuth.getCurrentUser() == null){
-            final Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    progressDialog.dismiss();
-                    timer.cancel();
-                }
-            },2000);
-        }
-
     }
 
 
@@ -118,10 +106,6 @@ public class LoginActivity extends AppCompatActivity {
     //Method to handle user login
     public void loginUser(){
 
-        // display the progressDialog
-        /*progressDialog = ProgressDialog.show(LoginActivity.this,"",null,true,true);
-        progressDialog.setMessage("Please wait...");*/
-
         progressBar.setVisibility(View.VISIBLE);
 
         //gets text from the editTExt fields
@@ -134,18 +118,18 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                       if(task.isSuccessful()){
                           // dismiss progress bar upon a successful login
-                          progressBar.setVisibility(View.GONE);
+                          //progressBar.setVisibility(View.GONE);
                           // clears the text fields
                           clearTextFields();
                           // display a success message
                           Toast.makeText(LoginActivity.this,getString(R.string.login_successful),Toast.LENGTH_SHORT).show();
                           // starts the home activity
-                          LoginActivity.this.finish();
                           startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                          finish();
 
                       }
                       else{
-                          progressBar.setVisibility(View.GONE);
+                          //progressBar.setVisibility(View.GONE);
                           // display a message if there is an error
                           Snackbar.make(relativeLayout,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
                           //progressDialog.dismiss();
@@ -159,9 +143,9 @@ public class LoginActivity extends AppCompatActivity {
 
     //Link to the signUp Interface
     public void onSignUpLinkClick(View view){
-        LoginActivity.this.finish();
         // creates an instance of the intent class and opens the signUpctivity
         startActivity(new Intent(this,SignUpActivity.class));
+        finish();
     }
 
     //method to clear text fields
@@ -172,9 +156,8 @@ public class LoginActivity extends AppCompatActivity {
 
     // forgot password method
     public void onForgotPasswordClick(View view) {
-        LoginActivity.this.finish();
+        // start the ResetPassword Activity
         startActivity(new Intent(LoginActivity.this,ResetPasswordActivity.class));
-        // do nothing for now
-        //Toast.makeText(getApplicationContext(),"Forgot Password",Toast.LENGTH_LONG).show();
+        finish();
     }
 }

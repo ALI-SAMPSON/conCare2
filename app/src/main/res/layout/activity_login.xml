@@ -6,10 +6,7 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="0dp"
-    android:paddingRight="0dp"
-    android:paddingTop="0dp"
-    android:paddingBottom="0dp"
+    android:background="@color/colorWhite"
     tools:context=".activities.LoginActivity">
 
     <!--Progress Bar-->
@@ -26,14 +23,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="310dp"
+        android:gravity="center_vertical|center_horizontal"
         android:background="@drawable/order_bg"
         android:orientation="vertical">
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginTop="60dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@mipmap/admin_icon_foreground"/>
+            android:layout_marginTop="0dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:foregroundGravity="center"
+            android:src="@drawable/app_logo"/>
     </LinearLayout>
 
     <android.support.v7.widget.CardView
@@ -47,18 +46,13 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="0dp"
-            android:paddingRight="0dp"
-            android:paddingTop="0dp"
-            android:paddingBottom="0dp">
+            android:layout_height="match_parent">
 
         <!-- TextInputLayout and AppCompatEdiText for Username -->
         <android.support.design.widget.TextInputLayout
             android:id="@+id/email_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
             android:layout_marginTop="15dp"
             android:orientation="vertical"
             android:textAlignment="center"
@@ -113,8 +107,9 @@
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/forgot_password"
             android:layout_marginTop="10dp"
-            android:layout_width="260dp"
+            android:layout_width="255dp"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_marginRight="0dp"
             android:layout_marginEnd="0dp"
             android:gravity="end|center"
@@ -124,6 +119,7 @@
             android:textColor="@color/orange_deep"
             app:fontFamily="@font/nunito_semibold"
             android:textSize="16sp"
+            android:textAlignment="center"
             android:textAllCaps="false"
             android:textStyle="normal"
             android:background="@null"
@@ -145,7 +141,7 @@
         android:layout_below="@+id/login_cardView"
         android:text="@string/sign_in"
         android:textColor="@color/colorWhite"
-        android:fontFamily="@font/nunito_semibold"
+        app:fontFamily="@font/nunito_semibold"
         android:textSize="16sp"
         android:textStyle="normal"
         android:textAlignment="center"
@@ -168,7 +164,7 @@
         android:textAllCaps="false"
         android:textStyle="normal"
         android:textAlignment="center"
-        android:background="@null"
+        android:background="@drawable/round_corner_button_with_stroke"
         android:onClick="onSignUpLinkClick"/>
 
 </RelativeLayout>

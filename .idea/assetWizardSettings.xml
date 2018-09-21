@@ -18,10 +18,10 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundImage" value="C:\Users\iCODE\Desktop\android background Images\gallery_icon.png" />
-                                      <entry key="foregroundImage" value="C:\Users\iCODE\Desktop\android background Images\gallery_icon.png" />
+                                      <entry key="backgroundImage" value="C:\Users\iCODE\Desktop\App Images\Con care Gh\error_Image.png" />
+                                      <entry key="foregroundImage" value="C:\Users\iCODE\Desktop\App Images\Con care Gh\error_Image.png" />
                                       <entry key="legacyIconShape" value="CIRCLE" />
-                                      <entry key="outputName" value="open_gallery_2" />
+                                      <entry key="outputName" value="error_image" />
                                       <entry key="previewDensity" value="HIGH" />
                                     </map>
                                   </option>
