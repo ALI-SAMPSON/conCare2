@@ -14,18 +14,19 @@
         android:id="@+id/progressBar"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginBottom="20dp"
         android:layout_gravity="center_horizontal"
         android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="310dp"
+        android:layout_height="300dp"
         android:gravity="center_vertical|center_horizontal"
-        android:background="@drawable/order_bg"
+        android:background="@drawable/login_ui"
         android:orientation="vertical">
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -70,7 +71,8 @@
                 app:fontFamily="@font/nunito_semibold"
                 android:textSize="16sp"
                 android:hint="@string/hint_email"
-                android:inputType="textEmailAddress|textAutoComplete|textAutoCorrect"/>
+                android:inputType="textEmailAddress|textAutoComplete|textAutoCorrect"
+                android:drawableStart="@drawable/ic_email_orange" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- TextInputLayout and AppCompatEdiText for Password -->
@@ -85,7 +87,8 @@
             android:textAlignment="center"
             android:textColorHint= "@color/status_bar_back"
             app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/orange_light">
+            app:passwordToggleTint="@color/orange_light"
+            android:layout_marginStart="0dp">
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editTextPassword"
                 android:layout_width="255dp"

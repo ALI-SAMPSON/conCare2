@@ -253,7 +253,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
                                 .setContentText(" You have successfully made an order for "  +
                                         orders.getContraceptive() + "." +
                                         " One of our agents will deliver it " +
-                                        " to you very soon ")
+                                        " to you very soon. Thank you. ")
                                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                                 .setContentIntent(pendingIntent).getNotification();
                         notification.flags = Notification.FLAG_AUTO_CANCEL;
@@ -290,4 +290,11 @@ public class PlaceOrderActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void onClearButtonClick(View view) {
+        editTextTelNumber.setText(null);
+        editTextOtherLocation.setText(null);
+        editTextOtherContraceptive.setText(null);
+        editTextHostelName.setText(null);
+        editTextRoomNumber.setText(null);
+    }
 }

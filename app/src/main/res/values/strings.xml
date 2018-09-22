@@ -32,6 +32,8 @@
     <string name="btn_reset_password">Reset Password</string>
     <string name="btn_back">Go Back</string>
     <string name="exit_app_message">Please press again to exit</string>
+    <string name="text_order">Order</string>
+    <string name="text_cancel">Cancel</string>
 
 
     <!--Error Text -->
@@ -48,7 +50,7 @@
     <string name="error_empty_username">Username is a required field</string>
     <string name="error_text_hostel">Enter your hostel name to better locate you</string>
     <string name="error_text_room_number">Enter your room number"</string>
-    <string name="error_text_phone_number">Telephone number is a required field</string>
+    <string name="error_text_phone_number">Phone number is a required field</string>
 
     <string name="welcome_msg_home">Welcome To ConCare GH</string>
     <string name="welcome_mgs_sub_desc">...your home of quality and affordable contraceptives</string>

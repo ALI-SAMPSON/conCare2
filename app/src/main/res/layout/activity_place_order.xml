@@ -40,23 +40,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="0dp"
             android:textAlignment="center"
             android:textColorHint="@color/white_snow">
             <EditText
                 android:id="@+id/editTextTelNumber"
-                android:layout_width="320dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
                 android:hint="@string/hint_phone"
                 android:drawableLeft="@drawable/ic_phone"
+                android:drawableStart="@drawable/ic_phone"
                 android:drawablePadding="@dimen/padding_normal"
                 android:textColor="@color/white_snow"
                 android:textColorHint="@color/orange_deep"
                 android:inputType="phone"
                 android:textSize="16sp"
-                android:fontFamily="@font/nunito_semibold"
+                app:fontFamily="@font/nunito_semibold"
                 android:maxLength="15"
                 android:maxLines="1"
                 android:layout_marginStart="0dp"/>
@@ -74,7 +74,7 @@
             android:orientation="horizontal"
             android:layout_marginStart="0dp">
             <LinearLayout
-                android:layout_width="320dp"
+                android:layout_width="300dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:layout_height="match_parent"
@@ -86,7 +86,7 @@
                     android:layout_height="45dp"
                     android:text="@string/hint_campus"
                     android:textSize="16sp"
-                    android:fontFamily="@font/nunito_semibold"
+                    app:fontFamily="@font/nunito_semibold"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_horizontal"
                     android:textColor="@color/white_snow"
@@ -94,6 +94,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_weight="1.11"
                     android:drawableLeft="@drawable/ic_campus"
+                    android:drawableStart="@drawable/ic_campus"
                     android:drawablePadding="@dimen/padding_normal"
                     android:layout_marginStart="1dp" />
                 <LinearLayout
@@ -101,6 +102,7 @@
                     android:orientation="horizontal"
                     android:layout_height="45dp"
                     android:weightSum="1"
+                    android:layout_marginTop="3dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginEnd="10dp">
@@ -123,12 +125,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="0dp"
-            android:layout_marginLeft="0dp"
-            android:orientation="horizontal"
-            android:layout_marginStart="0dp">
+            android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="320dp"
+                android:layout_width="300dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:layout_height="match_parent"
@@ -155,6 +154,7 @@
                     android:orientation="horizontal"
                     android:layout_height="45dp"
                     android:weightSum="1"
+                    android:layout_marginTop="3dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginEnd="10dp">
@@ -184,7 +184,7 @@
             android:visibility="visible">
             <EditText
                 android:id="@+id/editTextOtherLocation"
-                android:layout_width="290dp"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
@@ -206,12 +206,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="0dp"
-            android:layout_marginLeft="0dp"
-            android:orientation="horizontal"
-            android:layout_marginStart="0dp">
+            android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="320dp"
+                android:layout_width="300dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:layout_height="match_parent"
@@ -238,6 +235,7 @@
                     android:orientation="horizontal"
                     android:layout_height="45dp"
                     android:weightSum="1"
+                    android:layout_marginTop="3dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginEnd="10dp">
@@ -265,7 +263,7 @@
             android:orientation="horizontal"
             android:layout_marginStart="0dp">
             <LinearLayout
-                android:layout_width="320dp"
+                android:layout_width="300dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:layout_height="match_parent"
@@ -277,7 +275,7 @@
                     android:layout_height="45dp"
                     android:text="@string/contraceptive"
                     android:textSize="19sp"
-                    android:fontFamily="@font/nunito_semibold"
+                    app:fontFamily="@font/nunito_semibold"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_horizontal"
                     android:drawablePadding="@dimen/padding_normal"
@@ -293,6 +291,7 @@
                     android:orientation="horizontal"
                     android:layout_height="45dp"
                     android:weightSum="1"
+                    android:layout_marginTop="3dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginEnd="10dp">
@@ -315,25 +314,24 @@
             android:id="@+id/textInputLayoutOtherContraceptive"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginLeft="0dp"
             android:textAlignment="center"
             android:textColorHint="@color/orange_light"
             android:visibility="visible">
             <EditText
                 android:id="@+id/editTextOtherContraceptive"
-                android:layout_width="290dp"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
                 android:hint="@string/other"
                 android:drawableLeft="@drawable/ic_edit_location"
+                android:drawableStart="@drawable/ic_edit_location"
                 android:drawablePadding="@dimen/padding_normal"
                 android:textColor="@color/white_snow"
                 android:textColorHint="@color/orange_light"
                 android:textSize="14sp"
                 android:inputType="text"
-                android:fontFamily="@font/nunito_semibold"
+                app:fontFamily="@font/nunito_semibold"
                 android:layout_marginStart="0dp"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -350,7 +348,7 @@
             android:textColorHint="@color/white_snow">
             <EditText
                 android:id="@+id/editTextHostel"
-                android:layout_width="320dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
@@ -359,7 +357,7 @@
                 android:drawablePadding="@dimen/padding_normal"
                 android:textColor="@color/white_snow"
                 android:textColorHint="@color/orange_deep"
-                android:fontFamily="@font/nunito_semibold"
+                app:fontFamily="@font/nunito_semibold"
                 android:textSize="16sp"
                 android:inputType="text"
                 android:layout_marginStart="0dp"
@@ -372,13 +370,11 @@
             android:id="@+id/textInputLayoutRoomNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginLeft="0dp"
             android:textAlignment="center"
             android:textColorHint="@color/white_snow">
             <EditText
                 android:id="@+id/editTextRoomNumber"
-                android:layout_width="320dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
@@ -395,7 +391,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <!-- Login Button -->
-        <android.support.v7.widget.AppCompatButton
+        <!--<android.support.v7.widget.AppCompatButton
             android:id="@+id/appCompatButtonLogin"
             android:layout_marginTop="20dp"
             android:layout_width="320dp"
@@ -411,7 +407,53 @@
             android:textStyle="normal"
             android:textAlignment="center"
             android:background="@drawable/round_corner_button_save"
-            android:onClick="onPlaceOrderButtonClick" />
+            android:onClick="onPlaceOrderButtonClick" /> -->
+
+        <LinearLayout
+            android:layout_below="@+id/textInputLayoutRoomNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:layout_marginTop="30dp"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_horizontal">
+
+            <!-- Make payment Button -->
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/appCompatButtonPayment"
+                android:layout_marginTop="30dp"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/text_order"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                android:textAlignment="center"
+                app:fontFamily="@font/nunito_semibold"
+                android:background="@drawable/circular_end_button_place_order"
+                android:onClick="onPlaceOrderButtonClick"/>
+
+            <!-- Cancel payment Button -->
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/appCompatButtonCancel"
+                android:layout_marginTop="30dp"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/text_cancel"
+                android:textColor="@color/colorWhite"
+                app:fontFamily="@font/nunito_semibold"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                android:textAlignment="center"
+                android:background="@drawable/circular_end_button_cancel_order"
+                android:onClick="onClearButtonClick"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
 

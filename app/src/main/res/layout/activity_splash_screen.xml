@@ -32,19 +32,6 @@
             android:textStyle="bold"
             android:textSize="25sp"/>
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_alignLeft="@+id/splash_screen_text"
-            android:layout_alignStart="@+id/splash_screen_text"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@mipmap/app_logo"/>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_alignEnd="@+id/splash_screen_text"
-            android:layout_alignRight="@+id/splash_screen_text"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@mipmap/app_logo"/>
 
         <TextView
             android:id="@+id/sub_text"
@@ -75,20 +62,5 @@
         android:textStyle="bold"
         android:textSize="18sp"/>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_alignLeft="@+id/water_mark"
-        android:layout_alignStart="@+id/water_mark"
-        android:layout_alignParentBottom="true"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/app_logo"/>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_alignEnd="@+id/water_mark"
-        android:layout_alignRight="@+id/water_mark"
-        android:layout_alignParentBottom="true"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/app_logo"/>
 
 </RelativeLayout>
