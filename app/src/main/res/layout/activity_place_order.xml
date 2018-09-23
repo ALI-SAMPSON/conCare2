@@ -105,14 +105,16 @@
                     android:layout_marginTop="3dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp">
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="0dp">
                     <android.support.v7.widget.AppCompatSpinner
                         android:id="@+id/spinnerCampus"
                         android:layout_width="150dp"
                         android:layout_height="40dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginEnd="10dp" />
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="16dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -148,7 +150,8 @@
                     android:layout_weight="1.11"
                     android:drawablePadding="@dimen/padding_normal"
                     android:drawableLeft="@drawable/ic_location"
-                    android:layout_marginStart="1dp" />
+                    android:layout_marginStart="1dp"
+                    android:drawableStart="@drawable/ic_location" tools:targetApi="jelly_bean" />
                 <LinearLayout
                     android:layout_width="170dp"
                     android:orientation="horizontal"
@@ -157,14 +160,16 @@
                     android:layout_marginTop="3dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp">
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="0dp">
                     <android.support.v7.widget.AppCompatSpinner
                         android:id="@+id/spinnerLocation"
                         android:layout_width="150dp"
                         android:layout_height="40dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginEnd="10dp" />
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="16dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -181,7 +186,8 @@
             android:layout_marginLeft="0dp"
             android:textAlignment="center"
             android:textColorHint="@color/orange_light"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:layout_marginStart="0dp">
             <EditText
                 android:id="@+id/editTextOtherLocation"
                 android:layout_width="280dp"
@@ -196,7 +202,8 @@
                 android:textSize="14sp"
                 android:inputType="text"
                 android:fontFamily="@font/nunito_semibold"
-                android:layout_marginStart="0dp"/>
+                android:layout_marginStart="0dp"
+                android:drawableStart="@drawable/ic_edit_location" tools:targetApi="jelly_bean" />
         </android.support.design.widget.TextInputLayout>
 
         <!--TextInputLayout and LinearLayout and spinner View for user's Location-->
@@ -229,7 +236,8 @@
                     android:layout_weight="1.11"
                     android:drawablePadding="@dimen/padding_normal"
                     android:drawableLeft="@drawable/ic_residence"
-                    android:layout_marginStart="1dp" />
+                    android:layout_marginStart="1dp" tools:targetApi="jelly_bean"
+                    android:drawableStart="@drawable/ic_residence" />
                 <LinearLayout
                     android:layout_width="170dp"
                     android:orientation="horizontal"
@@ -238,14 +246,16 @@
                     android:layout_marginTop="3dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp">
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="0dp">
                     <android.support.v7.widget.AppCompatSpinner
                         android:id="@+id/spinnerResidence"
                         android:layout_width="150dp"
                         android:layout_height="40dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginEnd="10dp" />
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="16dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -294,14 +304,16 @@
                     android:layout_marginTop="3dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp">
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="0dp">
                     <android.support.v7.widget.AppCompatSpinner
                         android:id="@+id/spinnerContraceptive"
                         android:layout_width="150dp"
                         android:layout_height="40dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginEnd="10dp" />
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="16dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -345,7 +357,8 @@
             android:layout_marginTop="0dp"
             android:layout_marginLeft="0dp"
             android:textAlignment="center"
-            android:textColorHint="@color/white_snow">
+            android:textColorHint="@color/white_snow"
+            android:layout_marginStart="0dp">
             <EditText
                 android:id="@+id/editTextHostel"
                 android:layout_width="300dp"
@@ -387,7 +400,7 @@
                 android:textSize="16sp"
                 android:inputType="text"
                 android:layout_marginStart="0dp"
-                android:drawableStart="@drawable/ic_room_number" />
+                android:drawableStart="@drawable/ic_room_number" tools:targetApi="jelly_bean" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Login Button -->

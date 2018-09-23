@@ -12,17 +12,20 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
+import android.telephony.SmsManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.icode.concare.R;
 import com.example.icode.concare.models.Orders;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -186,7 +189,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
         else if(hostel_name.isEmpty()){
             editTextHostelName.setError(getString(R.string.error_text_hostel));
             editTextHostelName.requestFocus();
-            //Snackbar.make(nestedScrollView,error_text_hostel,Snackbar.LENGTH_SHORT).show();
             return;
         }
         else{
@@ -226,7 +228,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
 
             FirebaseDatabase.getInstance().getReference("Orders")
-                    .child(mAuth.getCurrentUser().getDisplayName())
+                    .child(mAuth.getCurrentUser().getUid())
                     .setValue(orders).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
@@ -248,7 +250,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
                                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         PendingIntent pendingIntent = PendingIntent.getActivity(PlaceOrderActivity.this, 0, intent, 0);
                         Notification notification = new Notification.Builder(PlaceOrderActivity.this)
-                                .setSmallIcon(R.mipmap.app_icon_round)
+                                .setSmallIcon(R.mipmap.app_logo_round)
                                 .setContentTitle(getString(R.string.app_name))
                                 .setContentText(" You have successfully made an order for "  +
                                         orders.getContraceptive() + "." +
@@ -260,11 +262,16 @@ public class PlaceOrderActivity extends AppCompatActivity {
                         NotificationManager nm = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
                         nm.notify(0, notification);
 
+                        // Method call to sendSMS to phone number
+                        sendSMSMessage();
+
                     } else {
                         // display error message
                         Snackbar.make(nestedScrollView, task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
                     }
 
+                    // Method call to sendSMS to phone number
+                    sendSMSMessage();
                 }
             });
 
@@ -275,6 +282,48 @@ public class PlaceOrderActivity extends AppCompatActivity {
         editTextTelNumber.setText(null);
         editTextHostelName.setText(null);
         editTextRoomNumber.setText(null);
+    }
+
+    // Method to send message to vendor after user successfully place order
+    private void sendSMSMessage(){
+
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        //getting input from the user
+        String tel_number = editTextTelNumber.getText().toString().trim();
+        String campus = spinnerCampus.getSelectedItem().toString().trim();
+        String location = spinnerLocation.getSelectedItem().toString().trim();
+        String other_location = editTextOtherLocation.getText().toString().trim();
+        String residence = spinnerResidence.getSelectedItem().toString().trim();
+        String contraceptive = spinnerContraceptive.getSelectedItem().toString().trim();
+        String other_contraceptive = editTextOtherContraceptive.getText().toString().trim();
+        String hostel_name = editTextHostelName.getText().toString().trim();
+        String room_number = editTextRoomNumber.getText().toString().trim();
+
+        // Mobile Number to send sms to
+        String mobile_number ="0245134112";
+
+        String message = "Order Placed successfully";
+
+        // Message to send to the mobile number
+        /*String message = " " + user.getDisplayName() +
+                " has successfully made an order for "  +
+                contraceptive + "," + " whose Hostel name is : " +
+                hostel_name + ", Room Number : " +
+                room_number + " and Location is : " +
+                location + ".";*/
+
+        //try {
+
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(mobile_number,null,message,null,null);
+            //Toast.makeText(PlaceOrderActivity.this,"SMS sent successfully",Toast.LENGTH_SHORT).show();
+        //}
+        //catch (Exception e){
+            //Toast.makeText(PlaceOrderActivity.this,"SMS failed, please try again.",Toast.LENGTH_SHORT).show();
+          //  e.printStackTrace();
+        //}
+
     }
 
     @Override
