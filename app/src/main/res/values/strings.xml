@@ -64,6 +64,15 @@
     <string name="other">Other</string>
     <string name="residence">Residence</string>
     <string name="hostel_name">Hostel name</string>
+    <string name="text_sign_up_and_verification_sent">
+        Sign Up Successful!. A verification link has been
+        sent to your mail, please visit your inbox to verify
+        your email address
+    </string>
+    <string name="text_email_not_verified">
+        Email address is not verified,
+        please verify your email from your inbox
+    </string>
 
     <!-- String progress dialog -->
     <string name="text_uploading_details">Uploading Details</string>

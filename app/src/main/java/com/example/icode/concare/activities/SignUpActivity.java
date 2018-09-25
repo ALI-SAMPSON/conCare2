@@ -289,14 +289,17 @@ public class SignUpActivity extends AppCompatActivity {
                                     if(task.isSuccessful()){
                                         // method call
                                         saveUserInfo();
-                                        // dismiss progress dialog upon a successful login
-                                        progressBar1.setVisibility(View.GONE);
-                                        // display a success message
-                                        Snackbar.make(nestedScrollView,getString(R.string.sign_up_successful),Snackbar.LENGTH_LONG).show();
+
+                                        // Method call to sendVerification link to the email address
+                                        sendVerificationEmail();
+
+                                        // display a success message and verification sent
+                                        Snackbar.make(nestedScrollView,getString(R.string.text_sign_up_and_verification_sent),Snackbar.LENGTH_LONG).show();
+
+                                        //clears text Fields
                                         clearTextFields();
                                     }
                                     else {
-                                        progressBar1.setVisibility(View.GONE);
                                         // display a message if there is an error
                                         Snackbar.make(nestedScrollView,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
                                     }
@@ -305,20 +308,42 @@ public class SignUpActivity extends AppCompatActivity {
 
                         }
                         else{
-                            progressBar1.setVisibility(View.GONE);
                             // display a message if there is an error
                             Snackbar.make(nestedScrollView,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
                         }
+
+                        progressBar1.setVisibility(View.GONE);
 
                     }
                 });
 
     }
 
+    // Method to send verification link to email to user after sign Up
+    private void sendVerificationEmail(){
+
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    // sign user out after verification link is sent successfully
+                    mAuth.signOut();
+                }
+                else {
+                    // display error message
+                    Snackbar.make(nestedScrollView,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
+                }
+            }
+        });
+
+    }
+
     //link from the Sign Up page to the Login Page
     public void onLoginLinkButtonClick(View view){
         SignUpActivity.this.finish();
-        // creates an instance of the intent class and opens the signUpctivity
+        // creates an instance of the intent class and opens the signUp activity
         startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
     }
 

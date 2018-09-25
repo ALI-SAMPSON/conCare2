@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    //Method to handle user login
+    // Method to handle user login
     public void loginUser(){
 
         progressBar.setVisibility(View.VISIBLE);
@@ -117,22 +117,14 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                       if(task.isSuccessful()){
-                          // dismiss progress bar upon a successful login
-                          //progressBar.setVisibility(View.GONE);
-                          // clears the text fields
-                          clearTextFields();
-                          // display a success message
-                          Toast.makeText(LoginActivity.this,getString(R.string.login_successful),Toast.LENGTH_SHORT).show();
-                          // starts the home activity
-                          startActivity(new Intent(LoginActivity.this,HomeActivity.class));
-                          finish();
+
+                          // Method to check if email is Verified
+                          checkIfEmailIsVerified();
 
                       }
                       else{
-                          //progressBar.setVisibility(View.GONE);
                           // display a message if there is an error
                           Snackbar.make(relativeLayout,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
-                          //progressDialog.dismiss();
                       }
 
                         progressBar.setVisibility(View.GONE);
@@ -141,20 +133,56 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    //Link to the signUp Interface
+    // Method that checks if the email enter is verified
+    private void checkIfEmailIsVerified(){
+
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        boolean isEmailVerified = user.isEmailVerified();
+
+        // Check is emailVerified is true
+        if(isEmailVerified){
+
+            // display a successful login message
+            Toast.makeText(LoginActivity.this,getString(R.string.login_successful),Toast.LENGTH_SHORT).show();
+
+            // clear the text fields
+            clearTextFields();
+
+            // start the home activity
+            startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+
+            // finishes this activity(prevents user from going back to this activity when back button is pressed)
+            finish();
+
+        }
+        else {
+
+            // display a message to the user to verify email
+            Toast.makeText(LoginActivity.this,getString(R.string.text_email_not_verified),Toast.LENGTH_LONG).show();
+            // signs user out and restarts the Login Activity
+            mAuth.signOut();
+            finish();
+            startActivity(new Intent (LoginActivity.this,LoginActivity.class));
+
+        }
+
+    }
+
+    // Link to the signUp Interface
     public void onSignUpLinkClick(View view){
         // creates an instance of the intent class and opens the signUpctivity
         startActivity(new Intent(this,SignUpActivity.class));
         finish();
     }
 
-    //method to clear text fields
+    // Method to clear text fields
     public void clearTextFields(){
         editTextEmail.setText(null);
         editTextPassword.setText(null);
     }
 
-    // forgot password method
+    // Forgot password method
     public void onForgotPasswordClick(View view) {
         // start the ResetPassword Activity
         startActivity(new Intent(LoginActivity.this,ResetPasswordActivity.class));
