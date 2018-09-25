@@ -111,9 +111,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Calling method to display a welcome message
         displayWelcomeMessage();
 
-        //method call
-        //loadUserInfoWithoutImage();
-
         // method call
         loadUserInfo();
 
@@ -413,8 +410,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(DialogInterface dialogInterface, int i) {
                 // logs current user out of the system
                 mAuth.signOut();
-                startActivity(new Intent(HomeActivity.this,LoginActivity.class));
                 finish();
+                startActivity(new Intent(HomeActivity.this,LoginActivity.class));
             }
         });
 
