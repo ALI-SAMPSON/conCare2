@@ -120,7 +120,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onStart(){
         super.onStart();
         if(mAuth.getCurrentUser() == null){
-            // starts the login activity currently logged in user is null(no logged in user)
+            // starts the login activity currently logged in user is null(login_bg_1 logged in user)
             startActivity(new Intent(this,LoginActivity.class));
             finish();
         }

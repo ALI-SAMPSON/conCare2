@@ -6,7 +6,7 @@
     android:id="@+id/nestedScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/order_bg"
+    android:background="@mipmap/place_order_bg"
     tools:context=".activities.PlaceOrderActivity">
 
     <RelativeLayout
@@ -403,24 +403,6 @@
                 android:drawableStart="@drawable/ic_room_number" tools:targetApi="jelly_bean" />
         </android.support.design.widget.TextInputLayout>
 
-        <!-- Login Button -->
-        <!--<android.support.v7.widget.AppCompatButton
-            android:id="@+id/appCompatButtonLogin"
-            android:layout_marginTop="20dp"
-            android:layout_width="320dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_below="@+id/textInputLayoutRoomNumber"
-            android:text="@string/place_order"
-            android:textColor="@color/colorWhite"
-            android:fontFamily="@font/nunito_semibold"
-            android:textSize="16sp"
-            android:textStyle="normal"
-            android:textAlignment="center"
-            android:background="@drawable/round_corner_button_save"
-            android:onClick="onPlaceOrderButtonClick" /> -->
 
         <LinearLayout
             android:layout_below="@+id/textInputLayoutRoomNumber"
