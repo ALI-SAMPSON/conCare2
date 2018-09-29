@@ -35,6 +35,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import maes.tech.intentanim.CustomIntent;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -238,7 +239,10 @@ public class EditProfileActivity extends AppCompatActivity {
             case android.R.id.home:
                 //start home activity when back button is pressed
                 startActivity(new Intent(this,HomeActivity.class));
+                // finishes the activity
                 finish();
+                // Add a custom animation ot the activity
+                CustomIntent.customType(EditProfileActivity.this,"fadein-to-fadeout");
                 default:
                     break;
         }

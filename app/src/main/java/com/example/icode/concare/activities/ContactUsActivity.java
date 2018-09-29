@@ -7,6 +7,8 @@ import android.view.MenuItem;
 
 import com.example.icode.concare.R;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class ContactUsActivity extends AppCompatActivity {
 
     @Override
@@ -29,12 +31,21 @@ public class ContactUsActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case android.R.id.home:
                 // sends user to Home Activity
-                ContactUsActivity.this.finish();
+                finish();
                 startActivity(new Intent(ContactUsActivity.this,HomeActivity.class));
+                // Add a custom animation ot the activity
+                CustomIntent.customType(ContactUsActivity.this,"fadein-to-fadeout");
                 break;
                 default:
                     break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        // Add a custom animation ot the activity
+        CustomIntent.customType(ContactUsActivity.this,"fadein-to-fadeout");
     }
 }

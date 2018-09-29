@@ -33,6 +33,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import maes.tech.intentanim.CustomIntent;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -96,7 +97,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             getSupportActionBar().setHomeButtonEnabled(true);
         }
 
-        progressDialog = ProgressDialog.show(this,"","Please wait...",true,true);
+        //progressDialog = ProgressDialog.show(this,"","Please wait...",true,true);
 
         // floating action button onclick Listener and initialization
         fab = findViewById(R.id.fab);
@@ -121,10 +122,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onStart();
         if(mAuth.getCurrentUser() == null){
             // starts the login activity currently logged in user is null(login_bg_1 logged in user)
-            startActivity(new Intent(this,LoginActivity.class));
+            startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+            // finishes the activity
             finish();
+            // Add a custom animation ot the activity
+            CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+
         }
-        else if(mAuth.getCurrentUser() != null){
+        /*else if(mAuth.getCurrentUser() != null){
             // starts the home activity if user is already logged in
             final Timer timer = new Timer();
             timer.schedule(new TimerTask() {
@@ -135,7 +140,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     timer.cancel();
                 }
             },2000);
-        }
+
+        }*/
     }
 
     // Onclick Listener method for floating button
@@ -145,6 +151,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
                 // starts the Contact us activity
                 startActivity(new Intent(HomeActivity.this,ContactUsActivity.class));
+                // Add a custom animation ot the activity
+                CustomIntent.customType(HomeActivity.this,"up-to-bottom");
             }
         });
 
@@ -280,6 +288,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
                 // start EditProfile activity
                 startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
+                // Add a custom animation ot the activity
+                CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
             }
         });
 
@@ -297,6 +307,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_edit_profile:
                 // start EditProfile activity
                 startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
+                // Add a custom animation ot the activity
+                CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
                 break;
             /*case R.id.orders:
                 // start orders fragment
@@ -304,6 +316,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
              case R.id.menu_about:
                 // start About Us Activity
                  startActivity(new Intent(HomeActivity.this,AboutUsActivity.class));
+                 // Add a custom animation ot the activity
+                 CustomIntent.customType(HomeActivity.this,"bottom-to-up");
                 break;
             case R.id.menu_sign_out:
                 // a call to logout method
@@ -332,10 +346,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_about:
                 // starts the about us activity
                 startActivity(new Intent(this,AboutUsActivity.class));
+                // Add a custom animation ot the activity
+                CustomIntent.customType(HomeActivity.this,"bottom-to-up");
                 break;
             case R.id.menu_contact:
                 // starts the Contact us activity
                 startActivity(new Intent(this,ContactUsActivity.class));
+                // Add a custom animation ot the activity
+                CustomIntent.customType(HomeActivity.this,"up-to-bottom");
                 break;
             case R.id.menu_exit:
                 // close application
@@ -410,8 +428,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(DialogInterface dialogInterface, int i) {
                 // logs current user out of the system
                 mAuth.signOut();
+                // finishes the activity
                 finish();
+                // starts the activity
                 startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+                // Add a custom animation ot the activity
+                CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
             }
         });
 
@@ -436,6 +458,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = new Intent(this,PlaceOrderActivity.class);
         intent.putExtra("gender",gender);
         startActivity(intent);
+        // Add a custom animation ot the activity
+        CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+    }
 
+    @Override
+    public void finish() {
+        super.finish();
+        // Add a custom animation ot the activity
+        CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
     }
 }

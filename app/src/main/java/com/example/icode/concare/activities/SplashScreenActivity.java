@@ -10,6 +10,8 @@ import android.widget.Toast;
 import com.example.icode.concare.R;
 import com.google.firebase.auth.FirebaseAuth;
 
+import maes.tech.intentanim.CustomIntent;
+
 import static java.lang.Thread.sleep;
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -35,8 +37,12 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if(mAuth.getCurrentUser() != null){
+            // starts the activity
             startActivity(new Intent(SplashScreenActivity.this,HomeActivity.class));
+            // finishes the activity
             finish();
+            // Add a custom animation ot the activity
+            CustomIntent.customType(SplashScreenActivity.this,"fadein-to-fadeout");
         }
         else{
             // open splash screen first
@@ -55,7 +61,10 @@ public class SplashScreenActivity extends AppCompatActivity {
                     //Creates and start the intent of the next activity
                     Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
                     startActivity(intent);
+                    // finishes the activity
                     finish();//this prevents the app from going back to the splash screen
+                    // Add a custom animation ot the activity
+                    CustomIntent.customType(SplashScreenActivity.this,"fadein-to-fadeout");
                     super.run();
                 } catch (InterruptedException e) {
                     Toast.makeText(SplashScreenActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
@@ -66,4 +75,10 @@ public class SplashScreenActivity extends AppCompatActivity {
         timer.start();
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        // Add a custom animation ot the activity
+        CustomIntent.customType(SplashScreenActivity.this,"fadein-to-fadeout");
+    }
 }

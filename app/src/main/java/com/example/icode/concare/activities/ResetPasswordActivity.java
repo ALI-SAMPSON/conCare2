@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class ResetPasswordActivity extends AppCompatActivity {
 
     // class variables
@@ -71,8 +73,12 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
     // method to send user back to login Activity
     public void goBackButton(View view) {
-        ResetPasswordActivity.this.finish();
+        // finish the activity
+        finish();
+        // starts the activity
         startActivity(new Intent(ResetPasswordActivity.this,LoginActivity.class));
+        // Add a custom animation ot the activity
+        CustomIntent.customType(ResetPasswordActivity.this,"fadein-to-fadeout");
 
     }
 
@@ -123,5 +129,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 });
     }
 
-
+    @Override
+    public void finish() {
+        super.finish();
+        // Add a custom animation ot the activity
+        CustomIntent.customType(ResetPasswordActivity.this,"fadein-to-fadeout");
+    }
 }

@@ -39,6 +39,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import maes.tech.intentanim.CustomIntent;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -176,6 +177,8 @@ public class SignUpActivity extends AppCompatActivity {
         pickImage.setType("image/*");
         pickImage.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(pickImage,"Select Profile Picture"),REQUEST_CODE);
+        // Add a custom animation ot the activity
+        CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");
     }
 
 
@@ -345,6 +348,8 @@ public class SignUpActivity extends AppCompatActivity {
         SignUpActivity.this.finish();
         // creates an instance of the intent class and opens the signUp activity
         startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
+        // Add a custom animation ot the activity
+        CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");
     }
 
     //clears the textfields
@@ -353,5 +358,12 @@ public class SignUpActivity extends AppCompatActivity {
         editTextUsername.setText(null);
         editTextPassword.setText(null);
         editTextPhoneNumber.setText(null);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        // Add a custom animation ot the activity
+        CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");
     }
 }

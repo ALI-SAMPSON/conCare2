@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.example.icode.concare.R;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class AboutUsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private CardView overview_CardView;
@@ -86,9 +88,12 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
+                // finishes the activity
                 finish();
                 //starts the home activity
                 startActivity(new Intent(this,HomeActivity.class));
+                // Add a custom animation ot the activity
+                CustomIntent.customType(AboutUsActivity.this,"fadein-to-fadeout");
                 break;
                 default:
                     break;
@@ -96,5 +101,10 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
         return super.onOptionsItemSelected(item);
     }
 
-
+    @Override
+    public void finish() {
+        super.finish();
+        // Add a custom animation ot the activity
+        CustomIntent.customType(AboutUsActivity.this,"fadein-to-fadeout");
+    }
 }

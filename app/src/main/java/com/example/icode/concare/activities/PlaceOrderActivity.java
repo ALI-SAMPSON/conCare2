@@ -29,6 +29,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class PlaceOrderActivity extends AppCompatActivity {
 
     //objects of the View Classes
@@ -263,7 +265,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
                         nm.notify(0, notification);
 
                         // Method call to sendSMS to phone number
-                        sendSMSMessage();
+                        //sendSMSMessage();
 
                     } else {
                         // display error message
@@ -332,6 +334,10 @@ public class PlaceOrderActivity extends AppCompatActivity {
            case android.R.id.home:
                //send user back to home activity
                startActivity(new Intent(this, HomeActivity.class));
+               // finishes this activity
+               finish();
+               // Add a custom animation ot the activity
+               CustomIntent.customType(PlaceOrderActivity.this,"fadein-to-fadeout");
                break;
                default:
                    break;
@@ -345,5 +351,12 @@ public class PlaceOrderActivity extends AppCompatActivity {
         editTextOtherContraceptive.setText(null);
         editTextHostelName.setText(null);
         editTextRoomNumber.setText(null);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        // Add a custom animation ot the activity
+        CustomIntent.customType(PlaceOrderActivity.this,"fadein-to-fadeout");
     }
 }

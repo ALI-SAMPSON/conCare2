@@ -29,6 +29,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import maes.tech.intentanim.CustomIntent;
+
 public class LoginActivity extends AppCompatActivity {
 
 
@@ -64,8 +66,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // checks if user is currently logged in
         if(mAuth.getCurrentUser() != null){
+            // start the activity
             startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+            // finish the activity
             finish();
+            // Add a custom animation ot the activity
+            CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
         }
     }
 
@@ -153,15 +159,26 @@ public class LoginActivity extends AppCompatActivity {
             // finishes this activity(prevents user from going back to this activity when back button is pressed)
             finish();
 
+            // Add a custom animation ot the activity
+            CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
+
         }
         else {
 
             // display a message to the user to verify email
             Toast.makeText(LoginActivity.this,getString(R.string.text_email_not_verified),Toast.LENGTH_LONG).show();
+
             // signs user out and restarts the Login Activity
             mAuth.signOut();
+
+            // finish the activity
             finish();
+
+            // restarts the activity
             startActivity(new Intent (LoginActivity.this,LoginActivity.class));
+
+            // Add a custom animation ot the activity
+            CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
 
         }
 
@@ -171,7 +188,10 @@ public class LoginActivity extends AppCompatActivity {
     public void onSignUpLinkClick(View view){
         // creates an instance of the intent class and opens the signUpctivity
         startActivity(new Intent(this,SignUpActivity.class));
+        // finish the activity
         finish();
+        // Add a custom animation ot the activity
+        CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
     }
 
     // Method to clear text fields
@@ -184,6 +204,16 @@ public class LoginActivity extends AppCompatActivity {
     public void onForgotPasswordClick(View view) {
         // start the ResetPassword Activity
         startActivity(new Intent(LoginActivity.this,ResetPasswordActivity.class));
+        // finish the activity
         finish();
+        // Add a custom animation ot the activity
+        CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        // Add a custom animation ot the activity
+        CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
     }
 }
