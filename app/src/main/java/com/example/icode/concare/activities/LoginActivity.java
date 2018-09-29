@@ -5,9 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
 import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -39,9 +42,13 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextPassword;
 
+    private AppCompatButton appCompatButtonLogin;
+
     FirebaseAuth mAuth;
 
     private RelativeLayout relativeLayout;
+
+    Animation shake;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +59,16 @@ public class LoginActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
 
+        appCompatButtonLogin = findViewById(R.id.appCompatButtonLogin);
+
         relativeLayout = findViewById(R.id.relativeLayout);
 
         progressBar = findViewById(R.id.progressBar);
 
         mAuth = FirebaseAuth.getInstance();
 
+        // animation to shake button
+        shake = AnimationUtils.loadAnimation(this,R.anim.shake);
 
     }
 
@@ -85,19 +96,23 @@ public class LoginActivity extends AppCompatActivity {
 
         if(_email.isEmpty()){
             editTextEmail.setError(getString(R.string.error_empty_email));
+            appCompatButtonLogin.setAnimation(shake);
             return;
         }
         else if(!Patterns.EMAIL_ADDRESS.matcher(_email).matches()){
             editTextEmail.setError(getString(R.string.email_invalid));
+            appCompatButtonLogin.setAnimation(shake);
             return;
         }
         else if(_password.isEmpty()){
            editTextPassword.setError(getString(R.string.error_empty_password));
+            appCompatButtonLogin.setAnimation(shake);
            editTextPassword.requestFocus();
            return;
         }
         else if(_password.length() < 6 ){
             editTextPassword.setError(getString(R.string.error_password_length));
+            appCompatButtonLogin.setAnimation(shake);
             editTextPassword.requestFocus();
             return;
         }
