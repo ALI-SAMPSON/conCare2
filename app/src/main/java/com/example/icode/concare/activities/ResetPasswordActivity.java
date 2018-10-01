@@ -9,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -36,6 +39,12 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
     private EditText editTextEmail;
 
+    // object creation
+    private Animation shake;
+
+    private Button btn_reset_password;
+    private Button btn_back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +55,17 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         editTextEmail = findViewById(R.id.email);
 
+        btn_reset_password = findViewById(R.id.btn_reset_password);
+
+        btn_back = findViewById(R.id.btn_back);
+
         mAuth = FirebaseAuth.getInstance();
 
         progressBar = findViewById(R.id.progressBar);
 
         progressDialog = ProgressDialog.show(this,"","Please wait...",true,true);
+
+        shake = AnimationUtils.loadAnimation(ResetPasswordActivity.this,R.anim.anim_shake);
 
     }
 
@@ -73,6 +88,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
     // method to send user back to login Activity
     public void goBackButton(View view) {
+
+        // add an animation to anim_shake the button
+        btn_back.setAnimation(shake);
         // finish the activity
         finish();
         // starts the activity
@@ -88,16 +106,24 @@ public class ResetPasswordActivity extends AppCompatActivity {
         String email = editTextEmail.getText().toString().trim();
 
         if(email.isEmpty()){
+            // set animation and error
+            editTextEmail.setAnimation(shake);
             editTextEmail.setError(getString(R.string.email_registered));
             editTextEmail.requestFocus();
             return;
         }
         else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            // set animation and error
+            editTextEmail.setAnimation(shake);
             editTextEmail.setError(getString(R.string.email_registered));
             editTextEmail.requestFocus();
             return;
         }
         else{
+
+            // add an animation to anim_shake the button
+            btn_reset_password.setAnimation(shake);
+
             //method call
             resetPassword();
         }
@@ -107,9 +133,12 @@ public class ResetPasswordActivity extends AppCompatActivity {
     // method to reset password
     private void resetPassword(){
 
+
+
         // displays the progressBar
         progressBar.setVisibility(View.VISIBLE);
 
+        // getting text from user
         String email = editTextEmail.getText().toString().trim();
 
         mAuth.sendPasswordResetEmail(email)
@@ -124,6 +153,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                             Snackbar.make(coordinatorLayout,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
                         }
 
+                        // dismiss the progressBar
                         progressBar.setVisibility(View.GONE);
                     }
                 });

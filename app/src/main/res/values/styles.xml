@@ -18,6 +18,14 @@
     </style>
 
     <!-- Base application theme. -->
+    <style name="AppTheme.Reset_Password" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorAccent">@color/orange_deep</item>
+        <item name="colorPrimary">@color/orange_light</item>
+        <item name="colorPrimaryDark">@color/orange_deep</item>
+    </style>
+
+    <!-- Base application theme. -->
     <style name="AppTheme.Sign_up" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorAccent">@color/white_snow</item>

@@ -19,7 +19,10 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +46,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private AppCompatSpinner spinnerGender;
     private ArrayAdapter<CharSequence> arrayAdapterGender;
+
+    private ImageView btn_proceed;
+
+    private Animation shake;
 
     FirebaseAuth mAuth;
 
@@ -96,6 +103,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
+
+        btn_proceed = findViewById(R.id.proceed_Image);
+
+        shake = AnimationUtils.loadAnimation(this,R.anim.anim_scale_out);
 
         //progressDialog = ProgressDialog.show(this,"","Please wait...",true,true);
 
@@ -452,6 +463,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     //Click Listener for proceed button on homeActivity
     public void onProceedButtonClick(View view) {
+
+        // sets animation on the button
+        btn_proceed.clearAnimation();
+        btn_proceed.startAnimation(shake);
         // gets the text from the spinner and passes it to the next activity
         String gender = spinnerGender.getSelectedItem().toString().trim();
 

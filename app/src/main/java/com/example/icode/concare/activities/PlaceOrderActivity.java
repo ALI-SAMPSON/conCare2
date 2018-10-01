@@ -11,12 +11,16 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatSpinner;
 import android.telephony.SmsManager;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -32,6 +36,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import maes.tech.intentanim.CustomIntent;
 
 public class PlaceOrderActivity extends AppCompatActivity {
+
+    // animation class
+    Animation shake;
 
     //objects of the View Classes
     private EditText editTextTelNumber;
@@ -57,6 +64,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
     private AppCompatSpinner spinnerContraceptive;
     private ArrayAdapter<CharSequence> arrayAdapterContraceptive;
 
+    private AppCompatButton make_payment;
+    private AppCompatButton cancel_payment;
 
     //objects of the classes
     private Orders orders;
@@ -67,6 +76,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
     private ProgressBar progressBar;
 
     private NestedScrollView nestedScrollView;
+
+    private LinearLayout button_layout;
 
     FirebaseAuth mAuth;
 
@@ -86,8 +97,11 @@ public class PlaceOrderActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        shake = AnimationUtils.loadAnimation(PlaceOrderActivity.this,R.anim.anim_shake);
 
         nestedScrollView = findViewById(R.id.nestedScrollView);
+
+        button_layout = findViewById(R.id.button_layout);
 
         editTextTelNumber = findViewById(R.id.editTextTelNumber);
         editTextHostelName = findViewById(R.id.editTextHostel);
@@ -142,6 +156,9 @@ public class PlaceOrderActivity extends AppCompatActivity {
             //do nothing
         }
 
+        // getting view to the buttons
+        make_payment = findViewById(R.id.appCompatButtonPayment);
+        cancel_payment = findViewById(R.id.appCompatButtonCancel);
 
         //object initialization
         orders = new Orders();
@@ -153,6 +170,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar);
 
+
     }
 
     @Override
@@ -161,6 +179,13 @@ public class PlaceOrderActivity extends AppCompatActivity {
         if(mAuth.getCurrentUser() != null){
             // do nothing
         }
+    }
+
+    // Adds a sliding animation to the buttons
+    private void slide_button(){
+        Animation slide = AnimationUtils.loadAnimation(this,android.R.anim.bounce_interpolator);
+        button_layout.clearAnimation();
+        button_layout.startAnimation(slide);
     }
 
     // on click listener for placing order
@@ -173,22 +198,33 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         // checks if the fields are not empty
         if(tel_number.isEmpty()){
+            // starts animation on this view
+            editTextTelNumber.clearAnimation();
+            editTextTelNumber.startAnimation(shake);
             editTextTelNumber.setError(getString(R.string.error_text_phone_number));
             editTextTelNumber.requestFocus();
-            //Snackbar.make(nestedScrollView,error_text_number,Snackbar.LENGTH_SHORT).show();
             return;
         }
         else if(tel_number.length() != 10){
+            // starts animation on this view
+            editTextTelNumber.clearAnimation();
+            editTextTelNumber.startAnimation(shake);
             editTextTelNumber.setError(getString(R.string.phone_invalid));
             editTextTelNumber.requestFocus();
             return;
         }
         else if(room_number.isEmpty()){
+            // starts animation on this view
+            editTextRoomNumber.clearAnimation();
+            editTextRoomNumber.startAnimation(shake);
             editTextRoomNumber.setError(getString(R.string.error_text_room_number));
             editTextRoomNumber.requestFocus();
             return;
         }
         else if(hostel_name.isEmpty()){
+            // starts animation on this view
+            editTextHostelName.clearAnimation();
+            editTextHostelName.startAnimation(shake);
             editTextHostelName.setError(getString(R.string.error_text_hostel));
             editTextHostelName.requestFocus();
             return;
@@ -200,6 +236,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
     //method for handling the placing of order
     public void placeOrder(){
+
+
 
             // creates and initialize a progressDialog
            // progressDialog = ProgressDialog.show(PlaceOrderActivity.this,"Processing",null,true,true);

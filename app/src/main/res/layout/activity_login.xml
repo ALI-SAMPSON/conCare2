@@ -27,6 +27,7 @@
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/app_logo"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_marginTop="0dp"
@@ -143,6 +144,7 @@
         android:layout_below="@+id/login_cardView"
         android:text="@string/sign_in"
         android:textColor="@color/colorWhite"
+        android:textAllCaps="false"
         app:fontFamily="@font/nunito_semibold"
         android:textSize="16sp"
         android:textStyle="normal"
@@ -152,7 +154,7 @@
 
     <!-- Link to the user sign up page -->
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/appCompatButtonLinkSignUp"
+        android:id="@+id/appCompatButtonSignUpLink"
         android:layout_marginTop="20dp"
         android:layout_width="280dp"
         android:layout_height="wrap_content"

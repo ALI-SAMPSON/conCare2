@@ -6,8 +6,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.CardView;
 import android.util.Patterns;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -17,49 +17,84 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.icode.concare.R;
-import com.example.icode.concare.models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
+import de.hdodenhof.circleimageview.CircleImageView;
 import maes.tech.intentanim.CustomIntent;
 
 public class LoginActivity extends AppCompatActivity {
-
 
     private ProgressBar progressBar;
 
     private EditText editTextEmail;
     private EditText editTextPassword;
 
+    private AppCompatButton forgot_password;
     private AppCompatButton appCompatButtonLogin;
+    private AppCompatButton appCompatButtonSignUpLink;
+
+    private CardView my_card;
+
+    private CircleImageView app_logo;
+
 
     FirebaseAuth mAuth;
 
     private RelativeLayout relativeLayout;
 
-    Animation shake;
+    private Animation shake;
+
+    private boolean isCircularImageViewClicked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        app_logo = findViewById(R.id.app_logo);
+
+        // scales the image in and out
+        app_logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                /*
+                if(!isCircularImageViewClicked){
+                    // instance of the animation class
+                    Animation zoom_in = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_zoom_in);
+                    app_logo.startAnimation(zoom_in);
+                    isCircularImageViewClicked = !isCircularImageViewClicked;
+                }
+
+                else{
+                    // instance of the animation class
+                    Animation zoom_out = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_zoom_out);
+                    app_logo.startAnimation(zoom_out);
+                    isCircularImageViewClicked = !isCircularImageViewClicked;
+                }
+                */
+
+                // instance of the animation class
+                Animation scale_image = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_scale_imageview);
+                app_logo.clearAnimation();
+                app_logo.startAnimation(scale_image);
+            }
+        });
+
         // initialization of the objects of the views
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
 
+        my_card = findViewById(R.id.login_cardView);
+
+        // getting the ids of the views
+        forgot_password = findViewById(R.id.forgot_password);
         appCompatButtonLogin = findViewById(R.id.appCompatButtonLogin);
+        appCompatButtonSignUpLink = findViewById(R.id.appCompatButtonSignUpLink);
 
         relativeLayout = findViewById(R.id.relativeLayout);
 
@@ -67,8 +102,11 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        // animation to shake button
-        shake = AnimationUtils.loadAnimation(this,R.anim.shake);
+        // animation to anim_shake button
+        shake = AnimationUtils.loadAnimation(LoginActivity.this,R.anim.anim_shake);
+
+        // animation to bounce  App logo on Login screen
+        bounce_views();
 
     }
 
@@ -87,6 +125,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    // method to animate the app logo
+    private void bounce_views(){
+
+        // animation to bounce image
+        Animation bounce = AnimationUtils.loadAnimation(LoginActivity.this,R.anim.anim_bounce);
+        app_logo.clearAnimation();
+        app_logo.startAnimation(bounce);
+
+        // bounce the Login Button
+        Animation bounce_card = AnimationUtils.loadAnimation(LoginActivity.this,R.anim.anim_bounce_card);
+        my_card.clearAnimation();
+        my_card.startAnimation(bounce_card);
+
+    }
+
     //onLoginButtonClick method
     public void onLoginButtonClick(View view){
 
@@ -95,24 +148,28 @@ public class LoginActivity extends AppCompatActivity {
         String _password = editTextPassword.getText().toString().trim();
 
         if(_email.isEmpty()){
+            editTextEmail.clearAnimation();
+            editTextEmail.startAnimation(shake);
             editTextEmail.setError(getString(R.string.error_empty_email));
-            appCompatButtonLogin.setAnimation(shake);
             return;
         }
         else if(!Patterns.EMAIL_ADDRESS.matcher(_email).matches()){
+            editTextEmail.clearAnimation();
+            editTextEmail.startAnimation(shake);
             editTextEmail.setError(getString(R.string.email_invalid));
-            appCompatButtonLogin.setAnimation(shake);
             return;
         }
         else if(_password.isEmpty()){
-           editTextPassword.setError(getString(R.string.error_empty_password));
-            appCompatButtonLogin.setAnimation(shake);
-           editTextPassword.requestFocus();
+            editTextPassword.clearAnimation();
+            editTextPassword.startAnimation(shake);
+            editTextPassword.setError(getString(R.string.error_empty_password));
+            editTextPassword.requestFocus();
            return;
         }
         else if(_password.length() < 6 ){
+            editTextPassword.clearAnimation();
+            editTextPassword.startAnimation(shake);
             editTextPassword.setError(getString(R.string.error_password_length));
-            appCompatButtonLogin.setAnimation(shake);
             editTextPassword.requestFocus();
             return;
         }
@@ -125,6 +182,11 @@ public class LoginActivity extends AppCompatActivity {
     // Method to handle user login
     public void loginUser(){
 
+        // shakes the button
+        appCompatButtonLogin.clearAnimation();
+        appCompatButtonLogin.startAnimation(shake);
+
+        // shows the progressBar
         progressBar.setVisibility(View.VISIBLE);
 
         //gets text from the editTExt fields
@@ -145,7 +207,7 @@ public class LoginActivity extends AppCompatActivity {
                           // display a message if there is an error
                           Snackbar.make(relativeLayout,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
                       }
-
+                        // dismisses the progressBar
                         progressBar.setVisibility(View.GONE);
                     }
                 });
@@ -201,6 +263,11 @@ public class LoginActivity extends AppCompatActivity {
 
     // Link to the signUp Interface
     public void onSignUpLinkClick(View view){
+
+        // shakes the button
+        //appCompatButtonSignUpLink.clearAnimation();
+        //appCompatButtonSignUpLink.startAnimation(shake);
+
         // creates an instance of the intent class and opens the signUpctivity
         startActivity(new Intent(this,SignUpActivity.class));
         // finish the activity
@@ -217,6 +284,10 @@ public class LoginActivity extends AppCompatActivity {
 
     // Forgot password method
     public void onForgotPasswordClick(View view) {
+
+        // shakes the button when clicked
+        //forgot_password.setAnimation(shake);
+
         // start the ResetPassword Activity
         startActivity(new Intent(LoginActivity.this,ResetPasswordActivity.class));
         // finish the activity

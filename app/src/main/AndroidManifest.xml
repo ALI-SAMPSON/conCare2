@@ -85,7 +85,7 @@
         <activity android:name=".activities.ResetPasswordActivity"
             android:configChanges="screenLayout|screenSize|smallestScreenSize"
             android:screenOrientation="portrait"
-            android:theme="@style/homeTheme">
+            android:theme="@style/AppTheme.Reset_Password">
         </activity>
     </application>
 

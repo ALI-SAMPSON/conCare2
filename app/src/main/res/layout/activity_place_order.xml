@@ -405,6 +405,7 @@
 
 
         <LinearLayout
+            android:id="@+id/button_layout"
             android:layout_below="@+id/textInputLayoutRoomNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

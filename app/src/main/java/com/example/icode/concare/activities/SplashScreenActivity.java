@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.icode.concare.R;
@@ -16,7 +19,11 @@ import static java.lang.Thread.sleep;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private final int SPLASH_SCREEN_DISPLAY_TIME = 3000;
+    private TextView app_title;
+
+    private TextView watermark;
+
+    private final int SPLASH_SCREEN_DISPLAY_TIME = 4000;
 
     private FirebaseAuth mAuth;
 
@@ -27,8 +34,14 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        //app_title = findViewById(R.id.splash_screen_text);
+
+        //watermark = findViewById(R.id.water_mark);
+
         // firebase instance
         mAuth = FirebaseAuth.getInstance();
+
+        runAnimation();
 
     }
 
@@ -67,12 +80,32 @@ public class SplashScreenActivity extends AppCompatActivity {
                     CustomIntent.customType(SplashScreenActivity.this,"fadein-to-fadeout");
                     super.run();
                 } catch (InterruptedException e) {
+                    // displays a toast
                     Toast.makeText(SplashScreenActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
                 }
             }
         };
         //starts the timer
         timer.start();
+    }
+
+    // method to set animation on textViews
+    private  void runAnimation(){
+
+        Animation slide_in_left = AnimationUtils.loadAnimation(SplashScreenActivity.this, android.R.anim.fade_in);
+        slide_in_left.reset();
+        // setting animation for the App Title on the splashScreen
+        TextView app_title = findViewById(R.id.splash_screen_text);
+        app_title.clearAnimation();
+        app_title.startAnimation(slide_in_left);
+
+        Animation slide_out_right = AnimationUtils.loadAnimation(SplashScreenActivity.this, android.R.anim.slide_out_right);
+        slide_in_left.reset();
+        // setting animation for the App watermark on the splashScreen
+        TextView watermark = findViewById(R.id.water_mark);
+        watermark.clearAnimation();
+        watermark.startAnimation(slide_out_right);
+
     }
 
     @Override

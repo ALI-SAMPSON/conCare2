@@ -1,6 +1,5 @@
 package com.example.icode.concare.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -10,9 +9,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatSpinner;
 import android.util.Patterns;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -28,15 +30,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import maes.tech.intentanim.CustomIntent;
@@ -49,8 +48,13 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText editTextPassword;
     private EditText editTextPhoneNumber;
 
+    private AppCompatButton appCompatButtonSignUp;
+    private AppCompatButton appCompatButtonLoginLink;
+
     private AppCompatSpinner spinnerGender;
     private ArrayAdapter<CharSequence> spinnerAdapter;
+
+    private Animation shake;
 
     private NestedScrollView nestedScrollView;
 
@@ -83,6 +87,9 @@ public class SignUpActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextPhoneNumber = findViewById(R.id.editTextPhoneNumber);
 
+        appCompatButtonSignUp = findViewById(R.id.appCompatButtonSignUp);
+        appCompatButtonLoginLink = findViewById(R.id.appCompatButtonLoginLink);
+
         spinnerGender = findViewById(R.id.spinnerGender);
         spinnerAdapter = ArrayAdapter.createFromResource(this,R.array.gender,R.layout.spinner_item_sign_up);
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item_sign_up);
@@ -97,6 +104,8 @@ public class SignUpActivity extends AppCompatActivity {
         progressBar1 = findViewById(R.id.progressBar1);
 
         mAuth = FirebaseAuth.getInstance();
+
+        shake = AnimationUtils.loadAnimation(SignUpActivity.this,R.anim.anim_shake);
 
         // a method call to the chooseImage method
         chooseImage();
@@ -116,37 +125,53 @@ public class SignUpActivity extends AppCompatActivity {
          */
         //checks to make sure the editText fields are not empty
         if(circleImageView.getDrawable() == null){
+            circleImageView.clearAnimation();
+            circleImageView.startAnimation(shake);
             Toast.makeText(SignUpActivity.this,"Please select an image to continue",Toast.LENGTH_LONG).show();
             return;
         }
         else if(email.isEmpty()){
+            editTextEmail.clearAnimation();
+            editTextEmail.startAnimation(shake);
             editTextEmail.setError(getString(R.string.error_empty_email));
             return;
         }
         else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            editTextEmail.clearAnimation();
+            editTextEmail.startAnimation(shake);
             editTextEmail.setError(getString(R.string.email_invalid));
             return;
         }
         else if(username.isEmpty()) {
+            editTextUsername.clearAnimation();
+            editTextUsername.startAnimation(shake);
             editTextUsername.setError(getString(R.string.error_empty_username));
             editTextUsername.requestFocus();
             return;
         }
         else if(password.isEmpty()){
+            editTextPassword.clearAnimation();
+            editTextPassword.startAnimation(shake);
             editTextPassword.setError(getString(R.string.error_empty_password));
             editTextPassword.requestFocus();
             return;
         }
         else if(password.length() < 6 ){
+            editTextPassword.clearAnimation();
+            editTextPassword.startAnimation(shake);
             editTextPassword.setError(getString(R.string.error_password_length));
             editTextPassword.requestFocus();
             return;
         }
         else if(phone.isEmpty()){
+            editTextPhoneNumber.clearAnimation();
+            editTextPhoneNumber.startAnimation(shake);
             editTextPhoneNumber.setError(getString(R.string.error_empty_phone));
             return;
         }
         else if(phone.length() != 10){
+            editTextPhoneNumber.clearAnimation();
+            editTextPhoneNumber.startAnimation(shake);
             editTextPhoneNumber.setError(getString(R.string.phone_invalid));
             return;
         }
@@ -163,6 +188,10 @@ public class SignUpActivity extends AppCompatActivity {
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // instance of the animation class
+                Animation scale_image = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_scale_imageview);
+                circleImageView.clearAnimation();
+                circleImageView.startAnimation(scale_image);
                 // method to open user's phone gallery
                 openGallery();
             }
@@ -267,6 +296,10 @@ public class SignUpActivity extends AppCompatActivity {
     // signUp method
     public void signUp(){
 
+        // add an animation to shake button
+        appCompatButtonSignUp.clearAnimation();
+        appCompatButtonSignUp.startAnimation(shake);
+
         progressBar1.setVisibility(View.VISIBLE);
 
         //gets text from the editTExt fields
@@ -315,6 +348,7 @@ public class SignUpActivity extends AppCompatActivity {
                             Snackbar.make(nestedScrollView,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
                         }
 
+                        // dismisses the progressBar
                         progressBar1.setVisibility(View.GONE);
 
                     }
@@ -345,6 +379,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     //link from the Sign Up page to the Login Page
     public void onLoginLinkButtonClick(View view){
+
+        // add an animation to shake button
+        appCompatButtonLoginLink.setAnimation(shake);
+
         SignUpActivity.this.finish();
         // creates an instance of the intent class and opens the signUp activity
         startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
