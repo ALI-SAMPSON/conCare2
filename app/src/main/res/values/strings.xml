@@ -144,6 +144,8 @@
     <string name="close">Close</string>
     <string name="logout_msg">Are you sure you want to logout?</string>
 
+    <string name="default_notification_channel_id">Default Notification Channel Id</string>
+
     <!--Developer-->
     <string name="watermark">Created by <b>iCODE labs</b> © 2018</string>
 

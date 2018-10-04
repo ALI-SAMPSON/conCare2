@@ -1,4 +1,4 @@
-package com.example.icode.concare.activities;
+package io.icode.concaregh.app.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,15 +12,13 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import android.widget.Toolbar;
 //import android.support.v7.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
-import com.example.icode.concare.R;
+import io.icode.concaregh.app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -62,22 +60,22 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
+        setContentView(io.icode.concaregh.app.R.layout.activity_edit_profile);
 
-        circleImageView = findViewById(R.id.circularImageView);
-        username = findViewById(R.id.editTextUsername);
+        circleImageView = findViewById(io.icode.concaregh.app.R.id.circularImageView);
+        username = findViewById(io.icode.concaregh.app.R.id.editTextUsername);
 
         if(getSupportActionBar() != null){
-            getSupportActionBar().setTitle(getString(R.string.title_edit_profile));
+            getSupportActionBar().setTitle(getString(io.icode.concaregh.app.R.string.title_edit_profile));
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        progressBar = findViewById(R.id.progressBar);
-        progressBar1 = findViewById(R.id.progressBar1);
+        progressBar = findViewById(io.icode.concaregh.app.R.id.progressBar);
+        progressBar1 = findViewById(io.icode.concaregh.app.R.id.progressBar1);
 
-        relativeLayout = findViewById(R.id.relativeLayout);
+        relativeLayout = findViewById(io.icode.concaregh.app.R.id.relativeLayout);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -168,7 +166,7 @@ public class EditProfileActivity extends AppCompatActivity {
         String _username = username.getText().toString().trim();
 
         if(_username.isEmpty()) {
-            username.setError(getString(R.string.error_empty_field));
+            username.setError(getString(io.icode.concaregh.app.R.string.error_empty_field));
             username.requestFocus();
             return;
         }

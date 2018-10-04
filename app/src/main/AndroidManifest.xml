@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.icode.concare"
+    package="io.icode.concaregh.app"
     android:installLocation="auto">
 
     <!-- Added permission -->
@@ -87,6 +87,48 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Reset_Password">
         </activity>
+
+         <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
+          See README(https://goo.gl/l4GJaQ) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_stat_ic_notification"/>
+        
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notfication_color"
+            android:resource="@color/orange_light"/>
+
+        <!-- Setting a default notification channel Id -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id"/>
+
+        <!-- Disabling auto-initialization of instance ID-->
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="true"/>
+        <meta-data
+            android:name="firebase.analytics_collection_enabled"
+            android:value="true"/>
+
+         <service
+             android:name=".FirebaseIDService">
+             <intent-filter>
+                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+             </intent-filter>
+         </service>
+
+        <!-- Adding FirebaseMessaging service  -->
+        <service android:name=".MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+
     </application>
+
 
 </manifest>

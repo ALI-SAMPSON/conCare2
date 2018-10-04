@@ -1,16 +1,14 @@
-package com.example.icode.concare.activities;
+package io.icode.concaregh.app.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.icode.concare.R;
+import io.icode.concaregh.app.R;
 
 import maes.tech.intentanim.CustomIntent;
 
@@ -26,7 +24,7 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_us);
+        setContentView(io.icode.concaregh.app.R.layout.activity_about_us);
 
         if(getSupportActionBar() != null){
             getSupportActionBar().setTitle("About Us");
@@ -34,11 +32,11 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        overview_CardView = findViewById(R.id.cardViewOverview);
-        mission_CardView = findViewById(R.id.cardViewMission);
-        vision_CardView = findViewById(R.id.cardViewVision);
+        overview_CardView = findViewById(io.icode.concaregh.app.R.id.cardViewOverview);
+        mission_CardView = findViewById(io.icode.concaregh.app.R.id.cardViewMission);
+        vision_CardView = findViewById(io.icode.concaregh.app.R.id.cardViewVision);
 
-        sub_Text = findViewById(R.id.sub_text_1);
+        sub_Text = findViewById(io.icode.concaregh.app.R.id.sub_text_1);
 
         overview_CardView.setOnClickListener(this);
         mission_CardView.setOnClickListener(this);
@@ -64,13 +62,13 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
                 "        also ensure mass participation in contraceptive use.";
 
         switch (view.getId()){
-            case R.id.cardViewOverview:
+            case io.icode.concaregh.app.R.id.cardViewOverview:
                 sub_Text.setText(text_overview);
                 break;
-            case R.id.cardViewMission:
+            case io.icode.concaregh.app.R.id.cardViewMission:
                 sub_Text.setText(text_mission);
                 break;
-            case R.id.cardViewVision:
+            case io.icode.concaregh.app.R.id.cardViewVision:
                 sub_Text.setText(text_vision);
                 break;
                 default:

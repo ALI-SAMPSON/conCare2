@@ -1,4 +1,4 @@
-package com.example.icode.concare.activities;
+package io.icode.concaregh.app.activities;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -27,13 +27,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.Target;
-import com.example.icode.concare.R;
+import io.icode.concaregh.app.R;
+
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import maes.tech.intentanim.CustomIntent;
@@ -75,43 +73,47 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(io.icode.concaregh.app.R.layout.activity_home);
 
-        spinnerGender = findViewById(R.id.spinnerGender);
-        arrayAdapterGender = ArrayAdapter.createFromResource(this,R.array.gender,R.layout.spinner_item_home);
-        arrayAdapterGender.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinnerGender = findViewById(io.icode.concaregh.app.R.id.spinnerGender);
+        arrayAdapterGender = ArrayAdapter.createFromResource(this, io.icode.concaregh.app.R.array.gender, io.icode.concaregh.app.R.layout.spinner_item_home);
+        arrayAdapterGender.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
         spinnerGender.setAdapter(arrayAdapterGender);
 
-        mDrawerLayout = findViewById(R.id.drawer);
+        mDrawerLayout = findViewById(io.icode.concaregh.app.R.id.drawer);
 
         // setNavigationViewListener;
-        navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(io.icode.concaregh.app.R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         // getting reference to the navigation drawer view objects in the nav_header
-        circleImageView = navigationView.getHeaderView(0).findViewById(R.id.circularImageView);
-        username = navigationView.getHeaderView(0).findViewById(R.id.username);
-        email = navigationView.getHeaderView(0).findViewById(R.id.email);
+        circleImageView = navigationView.getHeaderView(0).findViewById(io.icode.concaregh.app.R.id.circularImageView);
+        username = navigationView.getHeaderView(0).findViewById(io.icode.concaregh.app.R.id.username);
+        email = navigationView.getHeaderView(0).findViewById(io.icode.concaregh.app.R.id.email);
 
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, io.icode.concaregh.app.R.string.open, io.icode.concaregh.app.R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
 
         //checks of there is support actionBar
         if(getSupportActionBar() != null){
-            getSupportActionBar().setTitle(getString(R.string.home));
+            getSupportActionBar().setTitle(getString(io.icode.concaregh.app.R.string.home));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
 
-        btn_proceed = findViewById(R.id.proceed_Image);
 
-        shake = AnimationUtils.loadAnimation(this,R.anim.anim_scale_out);
+        // checks if phone supports Google Play Services
+        GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
+
+        btn_proceed = findViewById(io.icode.concaregh.app.R.id.proceed_Image);
+
+        shake = AnimationUtils.loadAnimation(this, io.icode.concaregh.app.R.anim.anim_scale_out);
 
         //progressDialog = ProgressDialog.show(this,"","Please wait...",true,true);
 
         // floating action button onclick Listener and initialization
-        fab = findViewById(R.id.fab);
+        fab = findViewById(io.icode.concaregh.app.R.id.fab);
 
         // call to the onclick Listener for floating button
         onClickFab();
@@ -190,9 +192,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                             AlertDialog.Builder(HomeActivity.this,
                             android.R.style.Theme_Material_Dialog_Alert);
                     builder.setTitle(" Welcome, " + username);
-                    builder.setMessage(getString(R.string.welcome_message));
+                    builder.setMessage(getString(io.icode.concaregh.app.R.string.welcome_message));
                     builder.setCancelable(false);
-                    builder.setIcon(R.mipmap.app_icon_round);
+                    builder.setIcon(io.icode.concaregh.app.R.mipmap.app_icon_round);
 
                     builder.setPositiveButton("DISMISS", new DialogInterface.OnClickListener() {
                         @Override
@@ -208,9 +210,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
                     builder.setTitle(" Welcome, " + username);
-                    builder.setMessage(getString(R.string.welcome_message));
+                    builder.setMessage(getString(io.icode.concaregh.app.R.string.welcome_message));
                     builder.setCancelable(false);
-                    builder.setIcon(R.mipmap.app_icon_round);
+                    builder.setIcon(io.icode.concaregh.app.R.mipmap.app_icon_round);
 
                     builder.setPositiveButton("DISMISS", new DialogInterface.OnClickListener() {
                         @Override
@@ -283,7 +285,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 //Load image for user
                 Glide.with(this)
                         .asBitmap()
-                        .load(R.drawable.no_image)
+                        .load(io.icode.concaregh.app.R.drawable.no_image)
                         .into(circleImageView);
             }
 
@@ -312,10 +314,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // handle navigation item click
         switch (item.getItemId()){
-            case R.id.menu_home:
+            case io.icode.concaregh.app.R.id.menu_home:
                 // do nothing
                 break;
-            case R.id.menu_edit_profile:
+            case io.icode.concaregh.app.R.id.menu_edit_profile:
                 // start EditProfile activity
                 startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
                 // Add a custom animation ot the activity
@@ -324,13 +326,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             /*case R.id.orders:
                 // start orders fragment
                 break;*/
-             case R.id.menu_about:
+             case io.icode.concaregh.app.R.id.menu_about:
                 // start About Us Activity
                  startActivity(new Intent(HomeActivity.this,AboutUsActivity.class));
                  // Add a custom animation ot the activity
                  CustomIntent.customType(HomeActivity.this,"bottom-to-up");
                 break;
-            case R.id.menu_sign_out:
+            case io.icode.concaregh.app.R.id.menu_sign_out:
                 // a call to logout method
                logout();
                 break;
@@ -344,7 +346,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_user,menu);
+        getMenuInflater().inflate(io.icode.concaregh.app.R.menu.menu_user,menu);
         return true;
     }
 
@@ -354,19 +356,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             return true;
         }
         switch(item.getItemId()){
-            case R.id.menu_about:
+            case io.icode.concaregh.app.R.id.menu_about:
                 // starts the about us activity
                 startActivity(new Intent(this,AboutUsActivity.class));
                 // Add a custom animation ot the activity
                 CustomIntent.customType(HomeActivity.this,"bottom-to-up");
                 break;
-            case R.id.menu_contact:
+            case io.icode.concaregh.app.R.id.menu_contact:
                 // starts the Contact us activity
                 startActivity(new Intent(this,ContactUsActivity.class));
                 // Add a custom animation ot the activity
                 CustomIntent.customType(HomeActivity.this,"up-to-bottom");
                 break;
-            case R.id.menu_exit:
+            case io.icode.concaregh.app.R.id.menu_exit:
                 // close application
                 exitApplication();
             default:
@@ -414,7 +416,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         doublePressBackToExitApp = true;
         // display a toast message to user
-        Toast.makeText(HomeActivity.this,getString(R.string.exit_app_message),Toast.LENGTH_SHORT).show();
+        Toast.makeText(HomeActivity.this,getString(io.icode.concaregh.app.R.string.exit_app_message),Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -431,8 +433,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private void logout(){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-        builder.setTitle(getString(R.string.logout));
-        builder.setMessage(getString(R.string.logout_msg));
+        builder.setTitle(getString(io.icode.concaregh.app.R.string.logout));
+        builder.setMessage(getString(io.icode.concaregh.app.R.string.logout_msg));
 
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override

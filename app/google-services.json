@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:879334319823:android:1422ac2c3ba99c64",
         "android_client_info": {
-          "package_name": "com.example.icode.concare"
+          "package_name": "io.icode.concaregh.app"
         }
       },
       "oauth_client": [

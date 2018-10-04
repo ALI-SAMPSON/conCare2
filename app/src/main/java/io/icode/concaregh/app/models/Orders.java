@@ -1,6 +1,4 @@
-package com.example.icode.concare.models;
-
-import java.security.acl.LastOwnerException;
+package io.icode.concaregh.app.models;
 
 public class Orders {
 

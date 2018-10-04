@@ -1,4 +1,4 @@
-package com.example.icode.concare.activities;
+package io.icode.concaregh.app.activities;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -22,10 +22,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.example.icode.concare.R;
-import com.example.icode.concare.models.Orders;
+import io.icode.concaregh.app.R;
+import io.icode.concaregh.app.models.Orders;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -88,7 +87,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_place_order);
+        setContentView(io.icode.concaregh.app.R.layout.activity_place_order);
 
         if(getSupportActionBar() != null){
             getSupportActionBar().setTitle("Place Order");
@@ -97,47 +96,47 @@ public class PlaceOrderActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        shake = AnimationUtils.loadAnimation(PlaceOrderActivity.this,R.anim.anim_shake);
+        shake = AnimationUtils.loadAnimation(PlaceOrderActivity.this, io.icode.concaregh.app.R.anim.anim_shake);
 
-        nestedScrollView = findViewById(R.id.nestedScrollView);
+        nestedScrollView = findViewById(io.icode.concaregh.app.R.id.nestedScrollView);
 
-        button_layout = findViewById(R.id.button_layout);
+        button_layout = findViewById(io.icode.concaregh.app.R.id.button_layout);
 
-        editTextTelNumber = findViewById(R.id.editTextTelNumber);
-        editTextHostelName = findViewById(R.id.editTextHostel);
-        editTextRoomNumber = findViewById(R.id.editTextRoomNumber);
-        editTextOtherLocation = findViewById(R.id.editTextOtherLocation);
-        editTextOtherContraceptive = findViewById(R.id.editTextOtherContraceptive);
+        editTextTelNumber = findViewById(io.icode.concaregh.app.R.id.editTextTelNumber);
+        editTextHostelName = findViewById(io.icode.concaregh.app.R.id.editTextHostel);
+        editTextRoomNumber = findViewById(io.icode.concaregh.app.R.id.editTextRoomNumber);
+        editTextOtherLocation = findViewById(io.icode.concaregh.app.R.id.editTextOtherLocation);
+        editTextOtherContraceptive = findViewById(io.icode.concaregh.app.R.id.editTextOtherContraceptive);
 
         //spinner view campus
-        spinnerCampus = findViewById(R.id.spinnerCampus);
-        arrayAdapterCampus = ArrayAdapter.createFromResource(this,R.array.campus,R.layout.spinner_item);
-        arrayAdapterCampus.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinnerCampus = findViewById(io.icode.concaregh.app.R.id.spinnerCampus);
+        arrayAdapterCampus = ArrayAdapter.createFromResource(this, io.icode.concaregh.app.R.array.campus, io.icode.concaregh.app.R.layout.spinner_item);
+        arrayAdapterCampus.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
         spinnerCampus.setAdapter(arrayAdapterCampus);
 
-        spinnerLocation = findViewById(R.id.spinnerLocation);
-        arrayAdapterLocation = ArrayAdapter.createFromResource(this, R.array.location,R.layout.spinner_item);
-        arrayAdapterLocation.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinnerLocation = findViewById(io.icode.concaregh.app.R.id.spinnerLocation);
+        arrayAdapterLocation = ArrayAdapter.createFromResource(this, io.icode.concaregh.app.R.array.location, io.icode.concaregh.app.R.layout.spinner_item);
+        arrayAdapterLocation.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
         spinnerLocation.setAdapter(arrayAdapterLocation);
 
-        spinnerResidence = findViewById(R.id.spinnerResidence);
-        arrayAdapterResidence = ArrayAdapter.createFromResource(this,R.array.residence,R.layout.spinner_item);
-        arrayAdapterResidence.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinnerResidence = findViewById(io.icode.concaregh.app.R.id.spinnerResidence);
+        arrayAdapterResidence = ArrayAdapter.createFromResource(this, io.icode.concaregh.app.R.array.residence, io.icode.concaregh.app.R.layout.spinner_item);
+        arrayAdapterResidence.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
         spinnerResidence.setAdapter(arrayAdapterResidence);
 
         //reference to the spinner view and array adapter
-        spinnerContraceptive = findViewById(R.id.spinnerContraceptive);
+        spinnerContraceptive = findViewById(io.icode.concaregh.app.R.id.spinnerContraceptive);
 
         String gender = getIntent().getExtras().get("gender").toString().trim();
 
         if(gender.equals("MALE")){
-            arrayAdapterContraceptive = ArrayAdapter.createFromResource(this,R.array.con_male,R.layout.spinner_item);
-            arrayAdapterContraceptive.setDropDownViewResource(R.layout.spinner_dropdown_item);
+            arrayAdapterContraceptive = ArrayAdapter.createFromResource(this, io.icode.concaregh.app.R.array.con_male, io.icode.concaregh.app.R.layout.spinner_item);
+            arrayAdapterContraceptive.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
             spinnerContraceptive.setAdapter(arrayAdapterContraceptive);
         }
         else if(gender.equals("FEMALE")){
-            arrayAdapterContraceptive = ArrayAdapter.createFromResource(this,R.array.con_female,R.layout.spinner_item);
-            arrayAdapterContraceptive.setDropDownViewResource(R.layout.spinner_dropdown_item);
+            arrayAdapterContraceptive = ArrayAdapter.createFromResource(this, io.icode.concaregh.app.R.array.con_female, io.icode.concaregh.app.R.layout.spinner_item);
+            arrayAdapterContraceptive.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
             spinnerContraceptive.setAdapter(arrayAdapterContraceptive);
         }
         else{
@@ -145,7 +144,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
         }
 
         if(spinnerLocation.getSelectedItem().toString().equals("Other")){
-            textInputLayoutOtherLocation = findViewById(R.id.textInputLayoutOtherLocation);
+            textInputLayoutOtherLocation = findViewById(io.icode.concaregh.app.R.id.textInputLayoutOtherLocation);
             textInputLayoutOtherLocation.setVisibility(View.VISIBLE);
         }
         /*else if(contraceptive.equals("Other")){
@@ -157,8 +156,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
         }
 
         // getting view to the buttons
-        make_payment = findViewById(R.id.appCompatButtonPayment);
-        cancel_payment = findViewById(R.id.appCompatButtonCancel);
+        make_payment = findViewById(io.icode.concaregh.app.R.id.appCompatButtonPayment);
+        cancel_payment = findViewById(io.icode.concaregh.app.R.id.appCompatButtonCancel);
 
         //object initialization
         orders = new Orders();
@@ -168,7 +167,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        progressBar = findViewById(R.id.progressBar);
+        progressBar = findViewById(io.icode.concaregh.app.R.id.progressBar);
 
 
     }
@@ -201,7 +200,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
             // starts animation on this view
             editTextTelNumber.clearAnimation();
             editTextTelNumber.startAnimation(shake);
-            editTextTelNumber.setError(getString(R.string.error_text_phone_number));
+            editTextTelNumber.setError(getString(io.icode.concaregh.app.R.string.error_text_phone_number));
             editTextTelNumber.requestFocus();
             return;
         }
@@ -209,7 +208,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
             // starts animation on this view
             editTextTelNumber.clearAnimation();
             editTextTelNumber.startAnimation(shake);
-            editTextTelNumber.setError(getString(R.string.phone_invalid));
+            editTextTelNumber.setError(getString(io.icode.concaregh.app.R.string.phone_invalid));
             editTextTelNumber.requestFocus();
             return;
         }
@@ -217,7 +216,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
             // starts animation on this view
             editTextRoomNumber.clearAnimation();
             editTextRoomNumber.startAnimation(shake);
-            editTextRoomNumber.setError(getString(R.string.error_text_room_number));
+            editTextRoomNumber.setError(getString(io.icode.concaregh.app.R.string.error_text_room_number));
             editTextRoomNumber.requestFocus();
             return;
         }
@@ -225,7 +224,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
             // starts animation on this view
             editTextHostelName.clearAnimation();
             editTextHostelName.startAnimation(shake);
-            editTextHostelName.setError(getString(R.string.error_text_hostel));
+            editTextHostelName.setError(getString(io.icode.concaregh.app.R.string.error_text_hostel));
             editTextHostelName.requestFocus();
             return;
         }
@@ -290,8 +289,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
                                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         PendingIntent pendingIntent = PendingIntent.getActivity(PlaceOrderActivity.this, 0, intent, 0);
                         Notification notification = new Notification.Builder(PlaceOrderActivity.this)
-                                .setSmallIcon(R.mipmap.app_logo_round)
-                                .setContentTitle(getString(R.string.app_name))
+                                .setSmallIcon(io.icode.concaregh.app.R.mipmap.app_logo_round)
+                                .setContentTitle(getString(io.icode.concaregh.app.R.string.app_name))
                                 .setContentText(" You have successfully made an order for "  +
                                         orders.getContraceptive() + "." +
                                         " One of our agents will deliver it " +

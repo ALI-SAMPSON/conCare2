@@ -1,4 +1,4 @@
-package com.example.icode.concare.activities;
+package io.icode.concaregh.app.activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -16,7 +16,10 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.example.icode.concare.R;
+import io.icode.concaregh.app.R;
+
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -53,9 +56,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(io.icode.concaregh.app.R.layout.activity_login);
 
-        app_logo = findViewById(R.id.app_logo);
+        app_logo = findViewById(io.icode.concaregh.app.R.id.app_logo);
 
         // scales the image in and out
         app_logo.setOnClickListener(new View.OnClickListener() {
@@ -79,31 +82,31 @@ public class LoginActivity extends AppCompatActivity {
                 */
 
                 // instance of the animation class
-                Animation scale_image = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_scale_imageview);
+                Animation scale_image = AnimationUtils.loadAnimation(getApplicationContext(), io.icode.concaregh.app.R.anim.anim_scale_imageview);
                 app_logo.clearAnimation();
                 app_logo.startAnimation(scale_image);
             }
         });
 
         // initialization of the objects of the views
-        editTextEmail = findViewById(R.id.editTextEmail);
-        editTextPassword = findViewById(R.id.editTextPassword);
+        editTextEmail = findViewById(io.icode.concaregh.app.R.id.editTextEmail);
+        editTextPassword = findViewById(io.icode.concaregh.app.R.id.editTextPassword);
 
-        my_card = findViewById(R.id.login_cardView);
+        my_card = findViewById(io.icode.concaregh.app.R.id.login_cardView);
 
         // getting the ids of the views
-        forgot_password = findViewById(R.id.forgot_password);
-        appCompatButtonLogin = findViewById(R.id.appCompatButtonLogin);
-        appCompatButtonSignUpLink = findViewById(R.id.appCompatButtonSignUpLink);
+        forgot_password = findViewById(io.icode.concaregh.app.R.id.forgot_password);
+        appCompatButtonLogin = findViewById(io.icode.concaregh.app.R.id.appCompatButtonLogin);
+        appCompatButtonSignUpLink = findViewById(io.icode.concaregh.app.R.id.appCompatButtonSignUpLink);
 
-        relativeLayout = findViewById(R.id.relativeLayout);
+        relativeLayout = findViewById(io.icode.concaregh.app.R.id.relativeLayout);
 
-        progressBar = findViewById(R.id.progressBar);
+        progressBar = findViewById(io.icode.concaregh.app.R.id.progressBar);
 
         mAuth = FirebaseAuth.getInstance();
 
         // animation to anim_shake button
-        shake = AnimationUtils.loadAnimation(LoginActivity.this,R.anim.anim_shake);
+        shake = AnimationUtils.loadAnimation(LoginActivity.this, io.icode.concaregh.app.R.anim.anim_shake);
 
         // animation to bounce  App logo on Login screen
         bounce_views();
@@ -129,14 +132,12 @@ public class LoginActivity extends AppCompatActivity {
     private void bounce_views(){
 
         // animation to bounce image
-        Animation bounce = AnimationUtils.loadAnimation(LoginActivity.this,R.anim.anim_bounce);
-        app_logo.clearAnimation();
-        app_logo.startAnimation(bounce);
+        //YoYo.with(Techniques.ZoomIn).repeat(2).playOn(app_logo);
 
         // bounce the Login Button
-        Animation bounce_card = AnimationUtils.loadAnimation(LoginActivity.this,R.anim.anim_bounce_card);
-        my_card.clearAnimation();
-        my_card.startAnimation(bounce_card);
+        YoYo.with(Techniques.BounceInDown)
+                .repeat(2).playOn(my_card);
+
 
     }
 
@@ -150,26 +151,26 @@ public class LoginActivity extends AppCompatActivity {
         if(_email.isEmpty()){
             editTextEmail.clearAnimation();
             editTextEmail.startAnimation(shake);
-            editTextEmail.setError(getString(R.string.error_empty_email));
+            editTextEmail.setError(getString(io.icode.concaregh.app.R.string.error_empty_email));
             return;
         }
         else if(!Patterns.EMAIL_ADDRESS.matcher(_email).matches()){
             editTextEmail.clearAnimation();
             editTextEmail.startAnimation(shake);
-            editTextEmail.setError(getString(R.string.email_invalid));
+            editTextEmail.setError(getString(io.icode.concaregh.app.R.string.email_invalid));
             return;
         }
         else if(_password.isEmpty()){
             editTextPassword.clearAnimation();
             editTextPassword.startAnimation(shake);
-            editTextPassword.setError(getString(R.string.error_empty_password));
+            editTextPassword.setError(getString(io.icode.concaregh.app.R.string.error_empty_password));
             editTextPassword.requestFocus();
            return;
         }
         else if(_password.length() < 6 ){
             editTextPassword.clearAnimation();
             editTextPassword.startAnimation(shake);
-            editTextPassword.setError(getString(R.string.error_password_length));
+            editTextPassword.setError(getString(io.icode.concaregh.app.R.string.error_password_length));
             editTextPassword.requestFocus();
             return;
         }
@@ -225,7 +226,7 @@ public class LoginActivity extends AppCompatActivity {
         if(isEmailVerified){
 
             // display a successful login message
-            Toast.makeText(LoginActivity.this,getString(R.string.login_successful),Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this,getString(io.icode.concaregh.app.R.string.login_successful),Toast.LENGTH_SHORT).show();
 
             // clear the text fields
             clearTextFields();
@@ -243,7 +244,7 @@ public class LoginActivity extends AppCompatActivity {
         else {
 
             // display a message to the user to verify email
-            Toast.makeText(LoginActivity.this,getString(R.string.text_email_not_verified),Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivity.this,getString(io.icode.concaregh.app.R.string.text_email_not_verified),Toast.LENGTH_LONG).show();
 
             // signs user out and restarts the Login Activity
             mAuth.signOut();

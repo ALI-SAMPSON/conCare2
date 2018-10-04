@@ -1,4 +1,4 @@
-package com.example.icode.concare.activities;
+package io.icode.concaregh.app.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,8 +20,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.icode.concare.R;
-import com.example.icode.concare.models.Users;
+import io.icode.concaregh.app.R;
+import io.icode.concaregh.app.models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -79,33 +79,33 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(io.icode.concaregh.app.R.layout.activity_sign_up);
 
         //initialization of the view objects
-        editTextEmail = findViewById(R.id.editTextEmail);
-        editTextUsername = findViewById(R.id.editTextUsername);
-        editTextPassword = findViewById(R.id.editTextPassword);
-        editTextPhoneNumber = findViewById(R.id.editTextPhoneNumber);
+        editTextEmail = findViewById(io.icode.concaregh.app.R.id.editTextEmail);
+        editTextUsername = findViewById(io.icode.concaregh.app.R.id.editTextUsername);
+        editTextPassword = findViewById(io.icode.concaregh.app.R.id.editTextPassword);
+        editTextPhoneNumber = findViewById(io.icode.concaregh.app.R.id.editTextPhoneNumber);
 
-        appCompatButtonSignUp = findViewById(R.id.appCompatButtonSignUp);
-        appCompatButtonLoginLink = findViewById(R.id.appCompatButtonLoginLink);
+        appCompatButtonSignUp = findViewById(io.icode.concaregh.app.R.id.appCompatButtonSignUp);
+        appCompatButtonLoginLink = findViewById(io.icode.concaregh.app.R.id.appCompatButtonLoginLink);
 
-        spinnerGender = findViewById(R.id.spinnerGender);
-        spinnerAdapter = ArrayAdapter.createFromResource(this,R.array.gender,R.layout.spinner_item_sign_up);
-        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item_sign_up);
+        spinnerGender = findViewById(io.icode.concaregh.app.R.id.spinnerGender);
+        spinnerAdapter = ArrayAdapter.createFromResource(this, io.icode.concaregh.app.R.array.gender, io.icode.concaregh.app.R.layout.spinner_item_sign_up);
+        spinnerAdapter.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item_sign_up);
         spinnerGender.setAdapter(spinnerAdapter);
 
-        circleImageView = findViewById(R.id.circularImageView);
+        circleImageView = findViewById(io.icode.concaregh.app.R.id.circularImageView);
 
-        nestedScrollView = findViewById(R.id.nestedScrollView);
+        nestedScrollView = findViewById(io.icode.concaregh.app.R.id.nestedScrollView);
 
-        progressBar = findViewById(R.id.progressBar);
+        progressBar = findViewById(io.icode.concaregh.app.R.id.progressBar);
 
-        progressBar1 = findViewById(R.id.progressBar1);
+        progressBar1 = findViewById(io.icode.concaregh.app.R.id.progressBar1);
 
         mAuth = FirebaseAuth.getInstance();
 
-        shake = AnimationUtils.loadAnimation(SignUpActivity.this,R.anim.anim_shake);
+        shake = AnimationUtils.loadAnimation(SignUpActivity.this, io.icode.concaregh.app.R.anim.anim_shake);
 
         // a method call to the chooseImage method
         chooseImage();
@@ -133,46 +133,46 @@ public class SignUpActivity extends AppCompatActivity {
         else if(email.isEmpty()){
             editTextEmail.clearAnimation();
             editTextEmail.startAnimation(shake);
-            editTextEmail.setError(getString(R.string.error_empty_email));
+            editTextEmail.setError(getString(io.icode.concaregh.app.R.string.error_empty_email));
             return;
         }
         else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             editTextEmail.clearAnimation();
             editTextEmail.startAnimation(shake);
-            editTextEmail.setError(getString(R.string.email_invalid));
+            editTextEmail.setError(getString(io.icode.concaregh.app.R.string.email_invalid));
             return;
         }
         else if(username.isEmpty()) {
             editTextUsername.clearAnimation();
             editTextUsername.startAnimation(shake);
-            editTextUsername.setError(getString(R.string.error_empty_username));
+            editTextUsername.setError(getString(io.icode.concaregh.app.R.string.error_empty_username));
             editTextUsername.requestFocus();
             return;
         }
         else if(password.isEmpty()){
             editTextPassword.clearAnimation();
             editTextPassword.startAnimation(shake);
-            editTextPassword.setError(getString(R.string.error_empty_password));
+            editTextPassword.setError(getString(io.icode.concaregh.app.R.string.error_empty_password));
             editTextPassword.requestFocus();
             return;
         }
         else if(password.length() < 6 ){
             editTextPassword.clearAnimation();
             editTextPassword.startAnimation(shake);
-            editTextPassword.setError(getString(R.string.error_password_length));
+            editTextPassword.setError(getString(io.icode.concaregh.app.R.string.error_password_length));
             editTextPassword.requestFocus();
             return;
         }
         else if(phone.isEmpty()){
             editTextPhoneNumber.clearAnimation();
             editTextPhoneNumber.startAnimation(shake);
-            editTextPhoneNumber.setError(getString(R.string.error_empty_phone));
+            editTextPhoneNumber.setError(getString(io.icode.concaregh.app.R.string.error_empty_phone));
             return;
         }
         else if(phone.length() != 10){
             editTextPhoneNumber.clearAnimation();
             editTextPhoneNumber.startAnimation(shake);
-            editTextPhoneNumber.setError(getString(R.string.phone_invalid));
+            editTextPhoneNumber.setError(getString(io.icode.concaregh.app.R.string.phone_invalid));
             return;
         }
         else{
@@ -189,7 +189,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // instance of the animation class
-                Animation scale_image = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_scale_imageview);
+                Animation scale_image = AnimationUtils.loadAnimation(getApplicationContext(), io.icode.concaregh.app.R.anim.anim_scale_imageview);
                 circleImageView.clearAnimation();
                 circleImageView.startAnimation(scale_image);
                 // method to open user's phone gallery
@@ -330,7 +330,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         sendVerificationEmail();
 
                                         // display a success message and verification sent
-                                        Snackbar.make(nestedScrollView,getString(R.string.text_sign_up_and_verification_sent),Snackbar.LENGTH_LONG).show();
+                                        Snackbar.make(nestedScrollView,getString(io.icode.concaregh.app.R.string.text_sign_up_and_verification_sent),Snackbar.LENGTH_LONG).show();
 
                                         //clears text Fields
                                         clearTextFields();

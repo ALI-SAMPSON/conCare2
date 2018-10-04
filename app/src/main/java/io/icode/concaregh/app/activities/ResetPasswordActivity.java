@@ -1,4 +1,4 @@
-package com.example.icode.concare.activities;
+package io.icode.concaregh.app.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.icode.concare.R;
+import io.icode.concaregh.app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,24 +48,24 @@ public class ResetPasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reset_password);
+        setContentView(io.icode.concaregh.app.R.layout.activity_reset_password);
 
         // getting references to the views
-        coordinatorLayout = findViewById(R.id.coordinatorLayout);
+        coordinatorLayout = findViewById(io.icode.concaregh.app.R.id.coordinatorLayout);
 
-        editTextEmail = findViewById(R.id.email);
+        editTextEmail = findViewById(io.icode.concaregh.app.R.id.email);
 
-        btn_reset_password = findViewById(R.id.btn_reset_password);
+        btn_reset_password = findViewById(io.icode.concaregh.app.R.id.btn_reset_password);
 
-        btn_back = findViewById(R.id.btn_back);
+        btn_back = findViewById(io.icode.concaregh.app.R.id.btn_back);
 
         mAuth = FirebaseAuth.getInstance();
 
-        progressBar = findViewById(R.id.progressBar);
+        progressBar = findViewById(io.icode.concaregh.app.R.id.progressBar);
 
         progressDialog = ProgressDialog.show(this,"","Please wait...",true,true);
 
-        shake = AnimationUtils.loadAnimation(ResetPasswordActivity.this,R.anim.anim_shake);
+        shake = AnimationUtils.loadAnimation(ResetPasswordActivity.this, io.icode.concaregh.app.R.anim.anim_shake);
 
     }
 
@@ -108,14 +108,14 @@ public class ResetPasswordActivity extends AppCompatActivity {
         if(email.isEmpty()){
             // set animation and error
             editTextEmail.setAnimation(shake);
-            editTextEmail.setError(getString(R.string.email_registered));
+            editTextEmail.setError(getString(io.icode.concaregh.app.R.string.email_registered));
             editTextEmail.requestFocus();
             return;
         }
         else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             // set animation and error
             editTextEmail.setAnimation(shake);
-            editTextEmail.setError(getString(R.string.email_registered));
+            editTextEmail.setError(getString(io.icode.concaregh.app.R.string.email_registered));
             editTextEmail.requestFocus();
             return;
         }
