@@ -8,6 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 import io.icode.concaregh.app.R;
 
 import maes.tech.intentanim.CustomIntent;
@@ -62,14 +65,30 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
                 "        also ensure mass participation in contraceptive use.";
 
         switch (view.getId()){
-            case io.icode.concaregh.app.R.id.cardViewOverview:
+            case R.id.cardViewOverview:
+
+                // Adds animation to the cardView
+                YoYo.with(Techniques.ZoomInDown).playOn(overview_CardView);
+
+                // sets text to this TextView
                 sub_Text.setText(text_overview);
+
                 break;
-            case io.icode.concaregh.app.R.id.cardViewMission:
+            case R.id.cardViewMission:
+                // Adds animation to the cardView
+                YoYo.with(Techniques.ZoomInUp).playOn(mission_CardView);
+
+                // sets text to this TextView
                 sub_Text.setText(text_mission);
+
                 break;
-            case io.icode.concaregh.app.R.id.cardViewVision:
+            case R.id.cardViewVision:
+                // Adds animation to the cardView
+                YoYo.with(Techniques.ZoomInDown).playOn(vision_CardView);
+
+                // sets text to this TextView
                 sub_Text.setText(text_vision);
+
                 break;
                 default:
                     break;
@@ -104,5 +123,20 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
         super.finish();
         // Add a custom animation ot the activity
         CustomIntent.customType(AboutUsActivity.this,"fadein-to-fadeout");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        // finishes the activity
+        finish();
+
+        // open the LoginActivity
+        startActivity(new Intent(AboutUsActivity.this,HomeActivity.class));
+
+        // Add a custom animation ot the activity
+        CustomIntent.customType(AboutUsActivity.this,"fadein-to-fadeout");
+
     }
 }

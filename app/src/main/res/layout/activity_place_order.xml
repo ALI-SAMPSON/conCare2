@@ -10,9 +10,9 @@
     tools:context=".activities.PlaceOrderActivity">
 
     <RelativeLayout
-        android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center_horizontal|center_vertical"
         android:layout_marginBottom="0dp">
 
         <ProgressBar
@@ -39,6 +39,7 @@
             android:id="@+id/phoneNumber_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:textAlignment="center"
             android:textColorHint="@color/white_snow">
@@ -69,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center_horizontal"
             android:layout_marginTop="0dp"
             android:layout_marginLeft="0dp"
             android:orientation="horizontal"
@@ -126,6 +128,7 @@
             android:id="@+id/textInputLayoutLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:layout_gravity="center"
             android:orientation="horizontal">
             <LinearLayout
@@ -184,6 +187,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="0dp"
             android:layout_marginLeft="0dp"
+            android:gravity="center_horizontal"
             android:textAlignment="center"
             android:textColorHint="@color/orange_light"
             android:visibility="visible"
@@ -212,6 +216,7 @@
             android:id="@+id/textInputLayoutResidence"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:layout_gravity="center"
             android:orientation="horizontal">
             <LinearLayout
@@ -268,6 +273,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center_horizontal"
             android:layout_marginTop="0dp"
             android:layout_marginLeft="0dp"
             android:orientation="horizontal"
@@ -326,6 +332,7 @@
             android:id="@+id/textInputLayoutOtherContraceptive"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:gravity="center_horizontal"
             android:textAlignment="center"
             android:textColorHint="@color/orange_light"
             android:visibility="visible">
@@ -356,6 +363,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
             android:layout_marginLeft="0dp"
+            android:gravity="center_horizontal"
             android:textAlignment="center"
             android:textColorHint="@color/white_snow"
             android:layout_marginStart="0dp">
@@ -383,6 +391,7 @@
             android:id="@+id/textInputLayoutRoomNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:textAlignment="center"
             android:textColorHint="@color/white_snow">
             <EditText
@@ -412,7 +421,7 @@
             android:layout_centerHorizontal="true"
             android:orientation="horizontal"
             android:layout_marginTop="30dp"
-            android:gravity="center_vertical"
+            android:gravity="center_horizontal"
             android:layout_gravity="center_horizontal">
 
             <!-- Make payment Button -->

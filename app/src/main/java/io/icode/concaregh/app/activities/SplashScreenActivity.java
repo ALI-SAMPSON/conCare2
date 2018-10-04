@@ -54,10 +54,13 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if(mAuth.getCurrentUser() != null){
-            // starts the activity
-            startActivity(new Intent(SplashScreenActivity.this,HomeActivity.class));
+
             // finishes the activity
             finish();
+
+            // starts the activity
+            startActivity(new Intent(SplashScreenActivity.this,HomeActivity.class));
+
             // Add a custom animation ot the activity
             CustomIntent.customType(SplashScreenActivity.this,"fadein-to-fadeout");
         }
@@ -75,13 +78,16 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void run() {
                 try {
                     sleep(SPLASH_SCREEN_DISPLAY_TIME);
-                    //Creates and start the intent of the next activity
-                    Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                    startActivity(intent);
+
                     // finishes the activity
-                    finish();//this prevents the app from going back to the splash screen
+                    finish(); // this prevents the app from going back to the splash screen
+
+                    //Creates and start the intent of the next activity
+                    startActivity(new Intent(SplashScreenActivity.this,LoginActivity.class));
+
                     // Add a custom animation ot the activity
                     CustomIntent.customType(SplashScreenActivity.this,"fadein-to-fadeout");
+
                     super.run();
                 } catch (InterruptedException e) {
                     // displays a toast

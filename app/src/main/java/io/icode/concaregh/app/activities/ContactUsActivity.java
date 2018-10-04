@@ -48,4 +48,19 @@ public class ContactUsActivity extends AppCompatActivity {
         // Add a custom animation ot the activity
         CustomIntent.customType(ContactUsActivity.this,"fadein-to-fadeout");
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        // finishes the activity
+        finish();
+
+        // open the LoginActivity
+        startActivity(new Intent(ContactUsActivity.this,HomeActivity.class));
+
+        // Add a custom animation ot the activity
+        CustomIntent.customType(ContactUsActivity.this,"fadein-to-fadeout");
+
+    }
 }

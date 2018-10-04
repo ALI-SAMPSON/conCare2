@@ -29,6 +29,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import io.icode.concaregh.app.R;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -104,7 +106,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
         // checks if phone supports Google Play Services
-        GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
+        //GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
 
         btn_proceed = findViewById(io.icode.concaregh.app.R.id.proceed_Image);
 
@@ -334,7 +336,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case io.icode.concaregh.app.R.id.menu_sign_out:
                 // a call to logout method
-               logout();
+               signOut();
                 break;
                 default:
                     break;
@@ -430,7 +432,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     // method to log user out of the system
-    private void logout(){
+    private void  signOut(){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
         builder.setTitle(getString(io.icode.concaregh.app.R.string.logout));
@@ -467,8 +469,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void onProceedButtonClick(View view) {
 
         // sets animation on the button
-        btn_proceed.clearAnimation();
-        btn_proceed.startAnimation(shake);
+
+        // adds a custom animation
+        YoYo.with(Techniques.FlipInY).playOn(btn_proceed);
+
         // gets the text from the spinner and passes it to the next activity
         String gender = spinnerGender.getSelectedItem().toString().trim();
 

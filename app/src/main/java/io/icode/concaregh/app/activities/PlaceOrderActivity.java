@@ -167,7 +167,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        progressBar = findViewById(io.icode.concaregh.app.R.id.progressBar);
+        progressBar = findViewById(R.id.progressBar);
 
 
     }
@@ -236,8 +236,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
     //method for handling the placing of order
     public void placeOrder(){
 
-
-
             // creates and initialize a progressDialog
            // progressDialog = ProgressDialog.show(PlaceOrderActivity.this,"Processing",null,true,true);
            // progressDialog.setMessage("Please wait...");
@@ -289,8 +287,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
                                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         PendingIntent pendingIntent = PendingIntent.getActivity(PlaceOrderActivity.this, 0, intent, 0);
                         Notification notification = new Notification.Builder(PlaceOrderActivity.this)
-                                .setSmallIcon(io.icode.concaregh.app.R.mipmap.app_logo_round)
-                                .setContentTitle(getString(io.icode.concaregh.app.R.string.app_name))
+                                .setSmallIcon(R.mipmap.app_logo_round)
+                                .setContentTitle(getString(R.string.app_name) + " " + System.currentTimeMillis())
                                 .setContentText(" You have successfully made an order for "  +
                                         orders.getContraceptive() + "." +
                                         " One of our agents will deliver it " +

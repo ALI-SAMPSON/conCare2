@@ -123,10 +123,10 @@
 
     <string name="welcome_message">
         Con Care GH has a lot to offer you.
-        Just Open the drawer from the left of
+        Just Open the drawer on the left of
         the screen to update your profile,
         read about us and freely place order
-        for any contraceptive of you choice.
+        for any contraceptive of your choice.
         Enjoy and feel free to contact us if
         need arises!
     </string>
@@ -139,12 +139,15 @@
     <string name="orders">Orders</string>
     <string name="home">Home</string>
     <string name="sign_out">Sign out</string>
-    <string name="logout">Logout</string>
+    <string name="logout">Sign out</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <string name="logout_msg">Are you sure you want to logout?</string>
+    <string name="logout_msg">Are you sure you want to sign out?</string>
 
     <string name="default_notification_channel_id">Default Notification Channel Id</string>
+
+    <!-- Deep linking intent-filter-->
+    <string name="filter_title_con_care_gh">Con Care GH </string>
 
     <!--Developer-->
     <string name="watermark">Created by <b>iCODE labs</b> © 2018</string>

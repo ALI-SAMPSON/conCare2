@@ -1,9 +1,13 @@
 package io.icode.concaregh.app.activities;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
@@ -22,6 +26,9 @@ import android.widget.Toast;
 
 import io.icode.concaregh.app.R;
 import io.icode.concaregh.app.models.Users;
+
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -79,7 +86,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(io.icode.concaregh.app.R.layout.activity_sign_up);
+        setContentView(R.layout.activity_sign_up);
 
         //initialization of the view objects
         editTextEmail = findViewById(io.icode.concaregh.app.R.id.editTextEmail);
@@ -188,10 +195,10 @@ public class SignUpActivity extends AppCompatActivity {
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // instance of the animation class
-                Animation scale_image = AnimationUtils.loadAnimation(getApplicationContext(), io.icode.concaregh.app.R.anim.anim_scale_imageview);
-                circleImageView.clearAnimation();
-                circleImageView.startAnimation(scale_image);
+
+                // Adds a custom animation to the view using Library
+                YoYo.with(Techniques.FlipInX).playOn(circleImageView);
+
                 // method to open user's phone gallery
                 openGallery();
             }
@@ -334,6 +341,24 @@ public class SignUpActivity extends AppCompatActivity {
 
                                         //clears text Fields
                                         clearTextFields();
+
+                                        //sends a notification to the user of placing order successfully
+                                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                        PendingIntent pendingIntent = PendingIntent.getActivity(SignUpActivity.this, 0, intent, 0);
+                                        Notification notification = new Notification.Builder(SignUpActivity.this)
+                                                .setSmallIcon(R.mipmap.app_logo_round)
+                                                .setContentTitle(getString(R.string.app_name))
+                                                .setContentText("Sign Up Successful. A verification link has been\n" +
+                                                        "        sent to " + mAuth.getCurrentUser().getEmail() + "." + " Please visit your inbox to verify\n" +
+                                                        "        your email address. Thanks for joining us!")
+                                                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+                                                .setContentIntent(pendingIntent).getNotification();
+                                        notification.flags = Notification.FLAG_AUTO_CANCEL;
+                                        NotificationManager nm = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+                                        nm.notify(0, notification);
+
                                     }
                                     else {
                                         // display a message if there is an error
@@ -403,5 +428,20 @@ public class SignUpActivity extends AppCompatActivity {
         super.finish();
         // Add a custom animation ot the activity
         CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        // finishes the activity
+        finish();
+
+        // open the LoginActivity
+        startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
+
+        // Add a custom animation ot the activity
+        CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");
+
     }
 }

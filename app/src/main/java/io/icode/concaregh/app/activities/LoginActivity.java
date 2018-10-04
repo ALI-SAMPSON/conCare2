@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private CircleImageView app_logo;
 
-
     FirebaseAuth mAuth;
 
     private RelativeLayout relativeLayout;

@@ -165,4 +165,19 @@ public class ResetPasswordActivity extends AppCompatActivity {
         // Add a custom animation ot the activity
         CustomIntent.customType(ResetPasswordActivity.this,"fadein-to-fadeout");
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        // finishes the activity
+        finish();
+
+        // open the LoginActivity
+        startActivity(new Intent(ResetPasswordActivity.this,LoginActivity.class));
+
+        // Add a custom animation ot the activity
+        CustomIntent.customType(ResetPasswordActivity.this,"fadein-to-fadeout");
+
+    }
 }
