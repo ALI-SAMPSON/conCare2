@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGray"
+    android:background="@color/colorWhite"
     android:paddingBottom="@dimen/spacing_small"
     android:paddingLeft="@dimen/spacing_small"
     android:paddingRight="@dimen/spacing_small"
@@ -14,53 +14,65 @@
 
 
         <ImageView
+            android:id="@+id/splash_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@mipmap/splash_image"
-            android:scaleType="centerCrop"/>
+            android:src="@drawable/splash_bg"
+            android:layout_centerInParent="true"
+            android:alpha="0.5"
+            android:scaleType="centerInside"
+            android:contentDescription="@string/todo" />
+
+         <!-- <View
+            android:id="@+id/over_lay_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/TransparentWhite"/> -->
 
         <TextView
             android:id="@+id/splash_screen_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/spacing_normal"
+            android:layout_marginTop="10dp"
+            android:padding="@dimen/spacing_small"
             android:gravity="center_horizontal"
+            android:alpha="0.5"
             android:text="@string/app_name"
-            android:textColor="@color/colorWhite"
-            app:fontFamily="@font/nunito_extrabold"
+            android:textColor="@color/status_bar_back"
+            app:fontFamily="@font/lato_bold"
             android:typeface="sans"
             android:textStyle="bold"
-            android:textSize="25sp"/>
+            android:textSize="32sp"/>
 
-
-        <TextView
+        <!--<TextView
             android:id="@+id/sub_text"
             android:layout_below="@+id/splash_screen_text"
-            android:padding="@dimen/spacing_small"
+            android:padding="0dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center_horizontal"
             app:fontFamily="@font/nunito_semibold"
-            android:text="@string/sub_text"
-            android:textColor="@color/colorGray"
+            android:text="@string/welcome_mgs_sub_desc"
+            android:textColor="@color/orange_ten"
             android:textStyle="italic"
-            android:textSize="20sp"/>
+            android:textSize="20sp"/> -->
 
 
     <TextView
         android:id="@+id/water_mark"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        app:fontFamily="@font/nunito_semibold"
+        android:padding="@dimen/padding_large"
+        app:fontFamily="@font/lato_bold"
         android:gravity="center_horizontal"
+        android:alpha="0.5"
         android:text="@string/watermark"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/status_bar_back"
         android:typeface="sans"
         android:textStyle="bold"
-        android:textSize="18sp"/>
-
+        android:textSize="16sp"/>
 
 </RelativeLayout>

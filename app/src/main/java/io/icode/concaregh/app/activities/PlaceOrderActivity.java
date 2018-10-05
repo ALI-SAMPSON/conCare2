@@ -32,6 +32,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import io.icode.concaregh.app.sms.Sender;
 import maes.tech.intentanim.CustomIntent;
 
 public class PlaceOrderActivity extends AppCompatActivity {
@@ -300,7 +301,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
                         nm.notify(0, notification);
 
                         // Method call to sendSMS to phone number
-                        //sendSMSMessage();
+                        sendSMSMessage();
 
                     } else {
                         // display error message
@@ -321,45 +322,57 @@ public class PlaceOrderActivity extends AppCompatActivity {
         editTextRoomNumber.setText(null);
     }
 
-    // Method to send message to vendor after user successfully place order
+    // Method to call the Sender class to
     private void sendSMSMessage(){
 
-        FirebaseUser user = mAuth.getCurrentUser();
+        try {
 
-        //getting input from the user
-        String tel_number = editTextTelNumber.getText().toString().trim();
-        String campus = spinnerCampus.getSelectedItem().toString().trim();
-        String location = spinnerLocation.getSelectedItem().toString().trim();
-        String other_location = editTextOtherLocation.getText().toString().trim();
-        String residence = spinnerResidence.getSelectedItem().toString().trim();
-        String contraceptive = spinnerContraceptive.getSelectedItem().toString().trim();
-        String other_contraceptive = editTextOtherContraceptive.getText().toString().trim();
-        String hostel_name = editTextHostelName.getText().toString().trim();
-        String room_number = editTextRoomNumber.getText().toString().trim();
 
-        // Mobile Number to send sms to
-        String mobile_number ="0245134112";
+            //getting input from the user
+            String tel_number = editTextTelNumber.getText().toString().trim();
+            String campus = spinnerCampus.getSelectedItem().toString().trim();
+            String location = spinnerLocation.getSelectedItem().toString().trim();
+            String other_location = editTextOtherLocation.getText().toString().trim();
+            String residence = spinnerResidence.getSelectedItem().toString().trim();
+            String contraceptive = spinnerContraceptive.getSelectedItem().toString().trim();
+            String other_contraceptive = editTextOtherContraceptive.getText().toString().trim();
+            String hostel_name = editTextHostelName.getText().toString().trim();
+            String room_number = editTextRoomNumber.getText().toString().trim();
 
-        String message = "Order Placed successfully";
+            // receivers mobile number
+            String mobile_number = "0245134112";
 
-        // Message to send to the mobile number
-        /*String message = " " + user.getDisplayName() +
-                " has successfully made an order for "  +
-                contraceptive + "," + " whose Hostel name is : " +
-                hostel_name + ", Room Number : " +
-                room_number + " and Location is : " +
-                location + ".";*/
+            FirebaseUser user = mAuth.getCurrentUser();
 
-        //try {
+            String user_name = user.getDisplayName();
 
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(mobile_number,null,message,null,null);
-            //Toast.makeText(PlaceOrderActivity.this,"SMS sent successfully",Toast.LENGTH_SHORT).show();
-        //}
-        //catch (Exception e){
-            //Toast.makeText(PlaceOrderActivity.this,"SMS failed, please try again.",Toast.LENGTH_SHORT).show();
-          //  e.printStackTrace();
-        //}
+            // variable to hold the message to send
+            String message =  user_name + " has successfully placed an order for " +
+                    contraceptive + "/" + other_contraceptive + "." +
+                    " Mobile Number " + tel_number + "," +
+                    " location " + location + "," +
+                    " Other Location " + other_location + "," +
+                    " Residence " + residence + "," +
+                    " Hostel name " + hostel_name + " and " +
+                    " Room Number " + room_number;
+
+            // Below example is for sending Plain text
+            Sender s = new Sender("rslr.connectbind.com",
+                    2345, "tester909",
+                    "test11",
+                    message,
+                    "1",
+                    "0",
+                    mobile_number,
+                    getString(R.string.app_name));
+
+            // submitmessage using an object of the Sender Class
+            s.submitMessage();
+
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
     }
 

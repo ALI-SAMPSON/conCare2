@@ -110,6 +110,9 @@ public class LoginActivity extends AppCompatActivity {
         // animation to bounce  App logo on Login screen
         bounce_views();
 
+        // method call to add animation to card
+        onCardViewClickAnim();
+
     }
 
     @Override
@@ -117,10 +120,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // checks if user is currently logged in
         if(mAuth.getCurrentUser() != null){
-            // start the activity
-            startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+
             // finish the activity
             finish();
+
+            // start the activity
+            startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+
             // Add a custom animation ot the activity
             CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
         }
@@ -134,9 +140,23 @@ public class LoginActivity extends AppCompatActivity {
         //YoYo.with(Techniques.ZoomIn).repeat(2).playOn(app_logo);
 
         // bounce the Login Button
-        YoYo.with(Techniques.BounceInDown)
-                .repeat(2).playOn(my_card);
+        YoYo.with(Techniques.Shake)
+                .repeat(1).playOn(my_card);
 
+    }
+
+    // animation loaded when cardView is clicked
+    private void onCardViewClickAnim(){
+
+        my_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // adds a waving animation to card
+                YoYo.with(Techniques.Wave).playOn(my_card);
+
+            }
+        });
 
     }
 
@@ -301,5 +321,16 @@ public class LoginActivity extends AppCompatActivity {
         super.finish();
         // Add a custom animation ot the activity
         CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        // finishes the activity
+        finish();
+
+        // Add a custom animation ot the activity
+        //CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
     }
 }

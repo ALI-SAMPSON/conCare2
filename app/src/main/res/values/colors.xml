@@ -79,9 +79,15 @@
 
     <color name="white_grey_light">#DFDED9</color>
 
-    <color name="colorSilver">	#C0C0C0</color>
+    <color name="colorSilver">#C0C0C0</color>
 
     <color name="lime">#ffcc99</color>
+
+    <!-- Transparent Colors -->
+    <color name="TransparentWhite">#A6FAFAFF</color>
+    <color name="TransparentOrange">#8CFE5722</color>
+    <color name="TransparentDark">#CCff6767</color>
+
 
 
 </resources>

@@ -104,18 +104,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             getSupportActionBar().setHomeButtonEnabled(true);
         }
 
-
         // checks if phone supports Google Play Services
         //GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
 
-        btn_proceed = findViewById(io.icode.concaregh.app.R.id.proceed_Image);
+        btn_proceed = findViewById(R.id.proceed_Image);
 
-        shake = AnimationUtils.loadAnimation(this, io.icode.concaregh.app.R.anim.anim_scale_out);
+        shake = AnimationUtils.loadAnimation(this, R.anim.anim_scale_out);
 
         //progressDialog = ProgressDialog.show(this,"","Please wait...",true,true);
 
         // floating action button onclick Listener and initialization
-        fab = findViewById(io.icode.concaregh.app.R.id.fab);
+        fab = findViewById(R.id.fab);
 
         // call to the onclick Listener for floating button
         onClickFab();
@@ -136,10 +135,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onStart(){
         super.onStart();
         if(mAuth.getCurrentUser() == null){
-            // starts the login activity currently logged in user is null(login_bg_1 logged in user)
-            startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+
             // finishes the activity
             finish();
+
+            // starts the login activity currently logged in user is null(login_bg_1 logged in user)
+            startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+
             // Add a custom animation ot the activity
             CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
 
@@ -164,8 +166,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 // starts the Contact us activity
                 startActivity(new Intent(HomeActivity.this,ContactUsActivity.class));
+
                 // Add a custom animation ot the activity
                 CustomIntent.customType(HomeActivity.this,"up-to-bottom");
             }
@@ -194,7 +198,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                             AlertDialog.Builder(HomeActivity.this,
                             android.R.style.Theme_Material_Dialog_Alert);
                     builder.setTitle(" Welcome, " + username);
-                    builder.setMessage(getString(io.icode.concaregh.app.R.string.welcome_message));
+                    builder.setMessage(getString(R.string.welcome_message));
                     builder.setCancelable(false);
                     builder.setIcon(io.icode.concaregh.app.R.mipmap.app_icon_round);
 
@@ -212,7 +216,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
                     builder.setTitle(" Welcome, " + username);
-                    builder.setMessage(getString(io.icode.concaregh.app.R.string.welcome_message));
+                    builder.setMessage(getString(R.string.welcome_message));
                     builder.setCancelable(false);
                     builder.setIcon(io.icode.concaregh.app.R.mipmap.app_icon_round);
 
@@ -436,7 +440,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
         builder.setTitle(getString(io.icode.concaregh.app.R.string.logout));
-        builder.setMessage(getString(io.icode.concaregh.app.R.string.logout_msg));
+        builder.setMessage(getString(R.string.logout_msg));
 
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override

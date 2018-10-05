@@ -83,7 +83,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     finish(); // this prevents the app from going back to the splash screen
 
                     //Creates and start the intent of the next activity
-                    startActivity(new Intent(SplashScreenActivity.this,LoginActivity.class));
+                    startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
 
                     // Add a custom animation ot the activity
                     CustomIntent.customType(SplashScreenActivity.this,"fadein-to-fadeout");
@@ -106,9 +106,9 @@ public class SplashScreenActivity extends AppCompatActivity {
         TextView app_title = findViewById(R.id.splash_screen_text);
 
         //add an animation using the YoYo Library
-        YoYo.with(Techniques.FadeIn)
-                .duration(800)
-                .repeat(2)
+        YoYo.with(Techniques.FlipInX)
+                .duration(1000)
+                .repeat(1)
                 .playOn(app_title);
 
 
@@ -116,9 +116,9 @@ public class SplashScreenActivity extends AppCompatActivity {
         TextView watermark = findViewById(R.id.water_mark);
 
         //add an animation using the YoYo Library
-        YoYo.with(Techniques.BounceInLeft)
+        YoYo.with(Techniques.BounceInUp)
                 .duration(1000)
-                .repeat(2)
+                .repeat(1)
                 .playOn(watermark);
 
 
