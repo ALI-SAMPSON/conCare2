@@ -63,10 +63,10 @@ import io.icode.concaregh.app.models.Orders;
         private String source;
 
         // To what server you need to connect to for submission
-        private String server = "rslr.connectbind.com";
+        private String server;
 
         // Port that is to be used like 8080 or 8000
-        private int port = 2345;
+        private int port;
 
         public Sender(String server,
                       int port,

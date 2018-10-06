@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import io.icode.concaregh.app.R;
 import io.icode.concaregh.app.models.Orders;
@@ -31,6 +32,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import io.icode.concaregh.app.sms.Sender;
 import maes.tech.intentanim.CustomIntent;
@@ -289,18 +295,18 @@ public class PlaceOrderActivity extends AppCompatActivity {
                         PendingIntent pendingIntent = PendingIntent.getActivity(PlaceOrderActivity.this, 0, intent, 0);
                         Notification notification = new Notification.Builder(PlaceOrderActivity.this)
                                 .setSmallIcon(R.mipmap.app_logo_round)
-                                .setContentTitle(getString(R.string.app_name) + " " + System.currentTimeMillis())
+                                .setContentTitle(getString(R.string.app_name))
                                 .setContentText(" You have successfully made an order for "  +
                                         orders.getContraceptive() + "." +
                                         " One of our agents will deliver it " +
-                                        " to you very soon. Thank you. ")
+                                        " to you very soon. Thank you... ")
                                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                                 .setContentIntent(pendingIntent).getNotification();
                         notification.flags = Notification.FLAG_AUTO_CANCEL;
                         NotificationManager nm = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
                         nm.notify(0, notification);
 
-                        // Method call to sendSMS to phone number
+                        // Method call to sendSMS to company phone number after users successfully place order
                         sendSMSMessage();
 
                     } else {
@@ -322,11 +328,10 @@ public class PlaceOrderActivity extends AppCompatActivity {
         editTextRoomNumber.setText(null);
     }
 
-    // Method to call the Sender class to
-    private void sendSMSMessage(){
+    // Method to call the Sender class using Zentech SMS
+    /*private void sendSMSMessage(){
 
         try {
-
 
             //getting input from the user
             String tel_number = editTextTelNumber.getText().toString().trim();
@@ -366,12 +371,80 @@ public class PlaceOrderActivity extends AppCompatActivity {
                     mobile_number,
                     getString(R.string.app_name));
 
-            // submitmessage using an object of the Sender Class
+            // submit message using an object of the Sender Class for Unicode Message
             s.submitMessage();
 
         }
         catch (Exception ex) {
             ex.printStackTrace();
+        }
+
+    }*/
+
+    // Method to call the Sender class using TextLocal SMS API
+    private void sendSMSMessage(){
+
+        try {
+
+            //getting input from the user
+            String tel_number = editTextTelNumber.getText().toString().trim();
+            String campus = spinnerCampus.getSelectedItem().toString().trim();
+            String location = spinnerLocation.getSelectedItem().toString().trim();
+            String other_location = editTextOtherLocation.getText().toString().trim();
+            String residence = spinnerResidence.getSelectedItem().toString().trim();
+            String contraceptive = spinnerContraceptive.getSelectedItem().toString().trim();
+            String other_contraceptive = editTextOtherContraceptive.getText().toString().trim();
+            String hostel_name = editTextHostelName.getText().toString().trim();
+            String room_number = editTextRoomNumber.getText().toString().trim();
+
+            // receivers mobile number
+            String mobile_number = "+233245134112";
+
+            String _apiKey = "tt8BP4xYcFY-373uinGmMK5fJF8YvdkrHRAIaU1jXk";
+
+            FirebaseUser user = mAuth.getCurrentUser();
+
+            String user_name = user.getDisplayName();
+
+            // variable to hold the message to send
+            String message_to_send =  user_name + " has successfully placed an order for " +
+                    contraceptive + "/" + other_contraceptive + "." +
+                    " Mobile Number " + tel_number + "," +
+                    " location " + location + "," +
+                    " Other Location " + other_location + "," +
+                    " Residence " + residence + "," +
+                    " Hostel name " + hostel_name + " and " +
+                    " Room Number " + room_number;
+
+            // Construct data
+            String apiKey = "apikey=" + _apiKey;
+            String message = "&message=" + message_to_send;
+            String sender = "&sender=" + getString(R.string.app_name);
+            String numbers = "&numbers=" + mobile_number;
+
+            // Send data
+            HttpURLConnection conn = (HttpURLConnection) new URL("https://api.txtlocal.com/send/?").openConnection();
+            String data = apiKey + numbers + message + sender;
+            conn.setDoOutput(true);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Length", Integer.toString(data.length()));
+            conn.getOutputStream().write(data.getBytes("UTF-8"));
+            final BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            final StringBuffer stringBuffer = new StringBuffer();
+            String line;
+            while ((line = rd.readLine()) != null) {
+                //stringBuffer.append(line);
+                Toast.makeText(PlaceOrderActivity.this, "message" + line ,Toast.LENGTH_SHORT).show();
+            }
+            rd.close();
+
+            //return stringBuffer.toString();
+
+        } catch (Exception e) {
+            //System.out.println("Error SMS "+e);
+            // display error message
+            Snackbar.make(nestedScrollView,e.getMessage(),Snackbar.LENGTH_SHORT).show();
+            //return "Error "+e;
         }
 
     }
