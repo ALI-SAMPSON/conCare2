@@ -333,11 +333,11 @@ public class SignUpActivity extends AppCompatActivity {
                                         // method call
                                         saveUserInfo();
 
-                                        // Method call to sendVerification link to the email address
-                                        sendVerificationEmail();
-
                                         // display a success message and verification sent
                                         Snackbar.make(nestedScrollView,getString(io.icode.concaregh.app.R.string.text_sign_up_and_verification_sent),Snackbar.LENGTH_LONG).show();
+
+                                        // Method call to sendVerification link to the email address
+                                        sendVerificationEmail();
 
                                         //clears text Fields
                                         clearTextFields();

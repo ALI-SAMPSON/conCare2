@@ -243,10 +243,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
     //method for handling the placing of order
     public void placeOrder(){
 
-            // creates and initialize a progressDialog
-           // progressDialog = ProgressDialog.show(PlaceOrderActivity.this,"Processing",null,true,true);
-           // progressDialog.setMessage("Please wait...");
-
             //getting input from the user
             String tel_number = editTextTelNumber.getText().toString().trim();
             String campus = spinnerCampus.getSelectedItem().toString().trim();
@@ -277,8 +273,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
-                        // hides the progressDialog if task is successful
-                        progressBar.setVisibility(View.GONE);
+
                         // display a snackbar after a successful order
                         Snackbar.make(nestedScrollView,
                                 "You have successfully made an order.." +
@@ -306,13 +301,19 @@ public class PlaceOrderActivity extends AppCompatActivity {
                         NotificationManager nm = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
                         nm.notify(0, notification);
 
-                        // Method call to sendSMS to company phone number after users successfully place order
+                        // Method call to sendSMS
+                        // to company phone number
+                        // after users successfully
+                        // place order
                         sendSMSMessage();
 
                     } else {
                         // display error message
                         Snackbar.make(nestedScrollView, task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
                     }
+
+                    // hides the progressDialog if task is successful
+                    progressBar.setVisibility(View.GONE);
 
                     // Method call to sendSMS to phone number
                     sendSMSMessage();
@@ -433,7 +434,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
             final StringBuffer stringBuffer = new StringBuffer();
             String line;
             while ((line = rd.readLine()) != null) {
-                //stringBuffer.append(line);
+                stringBuffer.append(line);
                 Toast.makeText(PlaceOrderActivity.this, "message" + line ,Toast.LENGTH_SHORT).show();
             }
             rd.close();
@@ -441,7 +442,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
             //return stringBuffer.toString();
 
         } catch (Exception e) {
-            //System.out.println("Error SMS "+e);
+            System.out.println("Error SMS "+e);
             // display error message
             Snackbar.make(nestedScrollView,e.getMessage(),Snackbar.LENGTH_SHORT).show();
             //return "Error "+e;
