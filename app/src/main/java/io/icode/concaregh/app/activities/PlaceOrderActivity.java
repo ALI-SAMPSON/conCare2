@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -95,6 +96,12 @@ public class PlaceOrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(io.icode.concaregh.app.R.layout.activity_place_order);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().build();
+        StrictMode.setThreadPolicy(policy);
+
+        /*StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);*/
 
         if(getSupportActionBar() != null){
             getSupportActionBar().setTitle("Place Order");
@@ -399,7 +406,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
             String room_number = editTextRoomNumber.getText().toString().trim();
 
             // receivers mobile number
-            String mobile_number = "+233245134112";
+            String mobile_number = "+233245134112, +233501360324";
 
             String _apiKey = "tt8BP4xYcFY-373uinGmMK5fJF8YvdkrHRAIaU1jXk";
 
@@ -409,17 +416,18 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
             // variable to hold the message to send
             String message_to_send =  user_name + " has successfully placed an order for " +
-                    contraceptive + "/" + other_contraceptive + "." +
-                    " Mobile Number " + tel_number + "," +
-                    " location " + location + "," +
-                    " Other Location " + other_location + "," +
-                    " Residence " + residence + "," +
-                    " Hostel name " + hostel_name + " and " +
-                    " Room Number " + room_number;
+                    contraceptive + ".";
 
-            // Construct data
+            //String message_to_send = "Ali has successfully placed an order";
+
+            //String key = "3GSbLQ+Jhu4-6PtTkPLyhaLYGgJl7HpfUvuJALKCWB";
+
+                    // Construct data
+            // apiKey is fix or constant
             String apiKey = "apikey=" + _apiKey;
+            // message always changes
             String message = "&message=" + message_to_send;
+            // for free demo u can't change the sender id name
             String sender = "&sender=" + getString(R.string.app_name);
             String numbers = "&numbers=" + mobile_number;
 
@@ -435,20 +443,19 @@ public class PlaceOrderActivity extends AppCompatActivity {
             String line;
             while ((line = rd.readLine()) != null) {
                 stringBuffer.append(line);
-                Toast.makeText(PlaceOrderActivity.this, "message" + line ,Toast.LENGTH_SHORT).show();
+                Toast.makeText(PlaceOrderActivity.this, line.toString() ,Toast.LENGTH_LONG).show();
             }
             rd.close();
 
-            //return stringBuffer.toString();
-
         } catch (Exception e) {
-            System.out.println("Error SMS "+e);
-            // display error message
-            Snackbar.make(nestedScrollView,e.getMessage(),Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(PlaceOrderActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
             //return "Error "+e;
         }
 
+        ///StrictMode.ThreadPolicy st = new StrictMode.ThreadPolicy().Builder().build();
+
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
