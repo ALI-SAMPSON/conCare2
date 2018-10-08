@@ -97,7 +97,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(io.icode.concaregh.app.R.layout.activity_place_order);
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().build();
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         /*StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -408,7 +408,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
             // receivers mobile number
             String mobile_number = "+233245134112, +233501360324";
 
-            String _apiKey = "tt8BP4xYcFY-373uinGmMK5fJF8YvdkrHRAIaU1jXk";
+            String _apiKey = "tt8BP4xYcFY-1rUOdyp6AqavwmPHrJXZWk2dg4HcNR";
 
             FirebaseUser user = mAuth.getCurrentUser();
 
@@ -443,7 +443,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
             String line;
             while ((line = rd.readLine()) != null) {
                 stringBuffer.append(line);
-                Toast.makeText(PlaceOrderActivity.this, line.toString() ,Toast.LENGTH_LONG).show();
+                Toast.makeText(PlaceOrderActivity.this, line ,Toast.LENGTH_LONG).show();
             }
             rd.close();
 
@@ -451,8 +451,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
             Toast.makeText(PlaceOrderActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
             //return "Error "+e;
         }
-
-        ///StrictMode.ThreadPolicy st = new StrictMode.ThreadPolicy().Builder().build();
 
     }
 
