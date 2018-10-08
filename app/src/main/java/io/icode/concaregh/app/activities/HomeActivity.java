@@ -200,7 +200,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     builder.setTitle(" Welcome, " + username);
                     builder.setMessage(getString(R.string.welcome_message));
                     builder.setCancelable(false);
-                    builder.setIcon(io.icode.concaregh.app.R.mipmap.app_icon_round);
+                    builder.setIcon(R.mipmap.app_logo_round);
 
                     builder.setPositiveButton("DISMISS", new DialogInterface.OnClickListener() {
                         @Override
@@ -218,7 +218,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     builder.setTitle(" Welcome, " + username);
                     builder.setMessage(getString(R.string.welcome_message));
                     builder.setCancelable(false);
-                    builder.setIcon(io.icode.concaregh.app.R.mipmap.app_icon_round);
+                    builder.setIcon(R.mipmap.app_logo_round);
 
                     builder.setPositiveButton("DISMISS", new DialogInterface.OnClickListener() {
                         @Override
