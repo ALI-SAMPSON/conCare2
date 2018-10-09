@@ -3,6 +3,7 @@ package io.icode.concaregh.app.activities;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.StrictMode;
 import android.provider.Settings;
@@ -35,9 +36,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import io.icode.concaregh.app.sms.Sender;
 import maes.tech.intentanim.CustomIntent;
@@ -81,6 +84,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
     private DatabaseReference orderRef;
 
     private ProgressBar progressBar;
+
+    private ProgressDialog progressDialog;
 
     private NestedScrollView nestedScrollView;
 
@@ -183,6 +188,11 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar);
 
+        progressDialog = new ProgressDialog(this, ProgressDialog.THEME_HOLO_DARK);
+        progressDialog.setTitle("Placing Order");
+        progressDialog.setMessage("please wait...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
 
     }
 
@@ -272,7 +282,9 @@ public class PlaceOrderActivity extends AppCompatActivity {
             orders.setContraceptive(contraceptive);
             orders.setOther_contraceptive(other_contraceptive);
 
-            progressBar.setVisibility(View.VISIBLE);
+            // displays the dialog
+            //progressBar.setVisibility(View.VISIBLE);
+            progressDialog.show();
 
             FirebaseDatabase.getInstance().getReference("Orders")
                     .child(mAuth.getCurrentUser().getUid())
@@ -320,7 +332,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
                     }
 
                     // hides the progressDialog if task is successful
-                    progressBar.setVisibility(View.GONE);
+                    //progressBar.setVisibility(View.GONE);
+                    progressDialog.dismiss();
 
                     // Method call to sendSMS to phone number
                     sendSMSMessage();
@@ -336,61 +349,121 @@ public class PlaceOrderActivity extends AppCompatActivity {
         editTextRoomNumber.setText(null);
     }
 
-    // Method to call the Sender class using Zentech SMS
-    /*private void sendSMSMessage(){
+    // Method to send sms to admin
+    // after user books a room
+    private void sendSMSMessage(){
+
+        //gets text or input from the user
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        final String user_name = user.getDisplayName();
+
+        //final String user_name = editTextUsername.getText().toString().trim();
+        //getting input from the user
+        String tel_number = editTextTelNumber.getText().toString().trim();
+        String campus = spinnerCampus.getSelectedItem().toString().trim();
+        String location = spinnerLocation.getSelectedItem().toString().trim();
+        String other_location = editTextOtherLocation.getText().toString().trim();
+        String residence = spinnerResidence.getSelectedItem().toString().trim();
+        String contraceptive = spinnerContraceptive.getSelectedItem().toString().trim();
+        String other_contraceptive = editTextOtherContraceptive.getText().toString().trim();
+        String hostel_name = editTextHostelName.getText().toString().trim();
+        String room_number = editTextRoomNumber.getText().toString().trim();
+
+        String username = "zent-marketing";
+        // password that is to be used along with username
+
+        String password = "marketin";
+        // Message content that is to be transmitted
+
+        String message =  user_name + " has successfully placed an order for " + contraceptive + ".";
+
+        /**
+         * What type of the message that is to be sent
+         * <ul>
+         * <li>0:means plain text</li>
+         * <li>1:means flash</li>
+         * <li>2:means Unicode (Message content should be in Hex)</li>
+         * <li>6:means Unicode Flash (Message content should be in Hex)</li>
+         * </ul>
+         */
+        String type = "0";
+        /**
+         * Require DLR or not
+         * <ul>
+         * <li>0:means DLR is not Required</li>
+         * <li>1:means DLR is Required</li>
+         * </ul>
+         */
+        String dlr = "1";
+        /**
+         * Destinations to which message is to be sent For submitting more than one
+
+         * destination at once destinations should be comma separated Like
+         * 91999000123,91999000124
+         */
+        String destination = "233245134112";
+
+        // Sender Id to be used for submitting the message
+        String source = "ConCare GH";
+
+        // To what server you need to connect to for submission
+        final String server = "rslr.connectbind.com";
+
+        // Port that is to be used like 8080 or 8000
+        int port = 2345;
 
         try {
-
-            //getting input from the user
-            String tel_number = editTextTelNumber.getText().toString().trim();
-            String campus = spinnerCampus.getSelectedItem().toString().trim();
-            String location = spinnerLocation.getSelectedItem().toString().trim();
-            String other_location = editTextOtherLocation.getText().toString().trim();
-            String residence = spinnerResidence.getSelectedItem().toString().trim();
-            String contraceptive = spinnerContraceptive.getSelectedItem().toString().trim();
-            String other_contraceptive = editTextOtherContraceptive.getText().toString().trim();
-            String hostel_name = editTextHostelName.getText().toString().trim();
-            String room_number = editTextRoomNumber.getText().toString().trim();
-
-            // receivers mobile number
-            String mobile_number = "0245134112";
-
-            FirebaseUser user = mAuth.getCurrentUser();
-
-            String user_name = user.getDisplayName();
-
-            // variable to hold the message to send
-            String message =  user_name + " has successfully placed an order for " +
-                    contraceptive + "/" + other_contraceptive + "." +
-                    " Mobile Number " + tel_number + "," +
-                    " location " + location + "," +
-                    " Other Location " + other_location + "," +
-                    " Residence " + residence + "," +
-                    " Hostel name " + hostel_name + " and " +
-                    " Room Number " + room_number;
-
-            // Below example is for sending Plain text
-            Sender s = new Sender("rslr.connectbind.com",
-                    2345, "tester909",
-                    "test11",
-                    message,
-                    "1",
-                    "0",
-                    mobile_number,
-                    getString(R.string.app_name));
-
-            // submit message using an object of the Sender Class for Unicode Message
-            s.submitMessage();
-
+            // Url that will be called to submit the message
+            URL sendUrl = new URL("http://" + server + ":" + "/bulksms/bulksms?");
+            HttpURLConnection httpConnection = (HttpURLConnection) sendUrl
+                    .openConnection();
+            // This method sets the method type to POST so that
+            // will be send as a POST request
+            httpConnection.setRequestMethod("POST");
+            // This method is set as true wince we intend to send
+            // input to the server
+            httpConnection.setDoInput(true);
+            // This method implies that we intend to receive data from server.
+            httpConnection.setDoOutput(true);
+            // Implies do not use cached data
+            httpConnection.setUseCaches(false);
+            // Data that will be sent over the stream to the server.
+            DataOutputStream dataStreamToServer = new DataOutputStream( httpConnection.getOutputStream());
+            dataStreamToServer.writeBytes("username="
+                    + URLEncoder.encode(username, "UTF-8") + "&password="
+                    + URLEncoder.encode(password, "UTF-8") + "&type="
+                    + URLEncoder.encode(type, "UTF-8") + "&dlr="
+                    + URLEncoder.encode(dlr, "UTF-8") + "&destination="
+                    + URLEncoder.encode(destination, "UTF-8") + "&source="
+                    + URLEncoder.encode(source, "UTF-8") + "&message="
+                    + URLEncoder.encode(message, "UTF-8"));
+            dataStreamToServer.flush();
+            dataStreamToServer.close();
+            // Here take the output value of the server.
+            BufferedReader dataStreamFromUrl = new BufferedReader( new InputStreamReader(httpConnection.getInputStream()));
+            String dataFromUrl = "", dataBuffer = "";
+            // Writing information from the stream to the buffer
+            while ((dataBuffer = dataStreamFromUrl.readLine()) != null) {
+                dataFromUrl += dataBuffer;
+            }
+            /**
+             * Now dataFromUrl variable contains the Response received from the
+             * server so we can parse the response and process it accordingly.
+             */
+            dataStreamFromUrl.close();
+            System.out.println("Response: " + dataFromUrl);
+            //Toast.makeText(context, dataFromUrl, Toast.LENGTH_SHORT).show();
         }
         catch (Exception ex) {
-            ex.printStackTrace();
+            // catches any error that occurs and outputs to the user
+            Toast.makeText(PlaceOrderActivity.this,ex.getMessage(),Toast.LENGTH_LONG).show();
         }
 
-    }*/
+    }
 
     // Method to call the Sender class using TextLocal SMS API
-    private void sendSMSMessage(){
+    /*private void sendSMSMessage(){
 
         try {
 
@@ -453,7 +526,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
         }
 
     }
-
+    */
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
