@@ -370,10 +370,10 @@ public class PlaceOrderActivity extends AppCompatActivity {
         String hostel_name = editTextHostelName.getText().toString().trim();
         String room_number = editTextRoomNumber.getText().toString().trim();
 
-        String username = "zent-marketing";
+        String username = "zent-concare";
         // password that is to be used along with username
 
-        String password = "marketin";
+        String password = "concare1";
         // Message content that is to be transmitted
 
         String message =  user_name + " has successfully placed an order for " + contraceptive + ".";
