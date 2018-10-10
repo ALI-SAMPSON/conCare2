@@ -324,7 +324,10 @@ public class PlaceOrderActivity extends AppCompatActivity {
                         // to company phone number
                         // after users successfully
                         // place order
-                        sendSMSMessage();
+                        sendSMSMessageToAdmins();
+
+                        // sends message to user after placing order
+                        sendSMSMessageToUser();
 
                     } else {
                         // display error message
@@ -335,8 +338,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
                     //progressBar.setVisibility(View.GONE);
                     progressDialog.dismiss();
 
-                    // Method call to sendSMS to phone number
-                    sendSMSMessage();
                 }
             });
 
@@ -350,8 +351,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
     }
 
     // Method to send sms to admin
-    // after user books a room
-    private void sendSMSMessage(){
+    // after user places an order
+    private void sendSMSMessageToAdmins(){
 
         //gets text or input from the user
         FirebaseUser user = mAuth.getCurrentUser();
@@ -402,7 +403,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
          * destination at once destinations should be comma separated Like
          * 91999000123,91999000124
          */
-        String destination = "233245134112";
+        String destination = "233245134112,233501360324,233249959061";
 
         // Sender Id to be used for submitting the message
         String source = "ConCare GH";
@@ -436,6 +437,120 @@ public class PlaceOrderActivity extends AppCompatActivity {
                     + URLEncoder.encode(type, "UTF-8") + "&dlr="
                     + URLEncoder.encode(dlr, "UTF-8") + "&destination="
                     + URLEncoder.encode(destination, "UTF-8") + "&source="
+                    + URLEncoder.encode(source, "UTF-8") + "&message="
+                    + URLEncoder.encode(message, "UTF-8"));
+            dataStreamToServer.flush();
+            dataStreamToServer.close();
+            // Here take the output value of the server.
+            BufferedReader dataStreamFromUrl = new BufferedReader( new InputStreamReader(httpConnection.getInputStream()));
+            String dataFromUrl = "", dataBuffer = "";
+            // Writing information from the stream to the buffer
+            while ((dataBuffer = dataStreamFromUrl.readLine()) != null) {
+                dataFromUrl += dataBuffer;
+            }
+            /**
+             * Now dataFromUrl variable contains the Response received from the
+             * server so we can parse the response and process it accordingly.
+             */
+            dataStreamFromUrl.close();
+            System.out.println("Response: " + dataFromUrl);
+            //Toast.makeText(context, dataFromUrl, Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception ex) {
+            // catches any error that occurs and outputs to the user
+            Toast.makeText(PlaceOrderActivity.this,ex.getMessage(),Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+
+    // Method to send sms to admin
+    // after user places an order
+    private void sendSMSMessageToUser(){
+
+        //gets text or input from the user
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        final String user_name = user.getDisplayName();
+
+        //final String user_name = editTextUsername.getText().toString().trim();
+        //getting input from the user
+        String tel_number = editTextTelNumber.getText().toString().trim();
+        String campus = spinnerCampus.getSelectedItem().toString().trim();
+        String location = spinnerLocation.getSelectedItem().toString().trim();
+        String other_location = editTextOtherLocation.getText().toString().trim();
+        String residence = spinnerResidence.getSelectedItem().toString().trim();
+        String contraceptive = spinnerContraceptive.getSelectedItem().toString().trim();
+        String other_contraceptive = editTextOtherContraceptive.getText().toString().trim();
+        String hostel_name = editTextHostelName.getText().toString().trim();
+        String room_number = editTextRoomNumber.getText().toString().trim();
+
+        String username = "zent-concare";
+        // password that is to be used along with username
+
+        String password = "concare1";
+        // Message content that is to be transmitted
+
+        String message =  user_name + ", your order has been sent successfully.";
+
+        /**
+         * What type of the message that is to be sent
+         * <ul>
+         * <li>0:means plain text</li>
+         * <li>1:means flash</li>
+         * <li>2:means Unicode (Message content should be in Hex)</li>
+         * <li>6:means Unicode Flash (Message content should be in Hex)</li>
+         * </ul>
+         */
+        String type = "0";
+        /**
+         * Require DLR or not
+         * <ul>
+         * <li>0:means DLR is not Required</li>
+         * <li>1:means DLR is Required</li>
+         * </ul>
+         */
+        String dlr = "1";
+        /**
+         * Destinations to which message is to be sent For submitting more than one
+
+         * destination at once destinations should be comma separated Like
+         * 91999000123,91999000124
+         */
+        //String destination = tel_number;
+
+        // Sender Id to be used for submitting the message
+        String source = "ConCare GH";
+
+        // To what server you need to connect to for submission
+        final String server = "rslr.connectbind.com";
+
+        // Port that is to be used like 8080 or 8000
+        int port = 2345;
+
+        try {
+            // Url that will be called to submit the message
+            URL sendUrl = new URL("http://" + server + ":" + "/bulksms/bulksms?");
+            HttpURLConnection httpConnection = (HttpURLConnection) sendUrl
+                    .openConnection();
+            // This method sets the method type to POST so that
+            // will be send as a POST request
+            httpConnection.setRequestMethod("POST");
+            // This method is set as true wince we intend to send
+            // input to the server
+            httpConnection.setDoInput(true);
+            // This method implies that we intend to receive data from server.
+            httpConnection.setDoOutput(true);
+            // Implies do not use cached data
+            httpConnection.setUseCaches(false);
+            // Data that will be sent over the stream to the server.
+            DataOutputStream dataStreamToServer = new DataOutputStream( httpConnection.getOutputStream());
+            dataStreamToServer.writeBytes("username="
+                    + URLEncoder.encode(username, "UTF-8") + "&password="
+                    + URLEncoder.encode(password, "UTF-8") + "&type="
+                    + URLEncoder.encode(type, "UTF-8") + "&dlr="
+                    + URLEncoder.encode(dlr, "UTF-8") + "&destination="
+                    + URLEncoder.encode(tel_number, "UTF-8") + "&source="
                     + URLEncoder.encode(source, "UTF-8") + "&message="
                     + URLEncoder.encode(message, "UTF-8"));
             dataStreamToServer.flush();
