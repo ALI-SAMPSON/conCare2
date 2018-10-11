@@ -51,7 +51,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
     Animation shake;
 
     //objects of the View Classes
-    private EditText editTextTelNumber;
+    private EditText editTextPhoneNumber;
     private EditText editTextHostelName;
     private EditText editTextRoomNumber;
 
@@ -121,11 +121,11 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         button_layout = findViewById(io.icode.concaregh.app.R.id.button_layout);
 
-        editTextTelNumber = findViewById(io.icode.concaregh.app.R.id.editTextTelNumber);
-        editTextHostelName = findViewById(io.icode.concaregh.app.R.id.editTextHostel);
-        editTextRoomNumber = findViewById(io.icode.concaregh.app.R.id.editTextRoomNumber);
-        editTextOtherLocation = findViewById(io.icode.concaregh.app.R.id.editTextOtherLocation);
-        editTextOtherContraceptive = findViewById(io.icode.concaregh.app.R.id.editTextOtherContraceptive);
+        editTextPhoneNumber = findViewById(R.id.editTextPhoneNumber);
+        editTextHostelName = findViewById(R.id.editTextHostel);
+        editTextRoomNumber = findViewById(R.id.editTextRoomNumber);
+        editTextOtherLocation = findViewById(R.id.editTextOtherLocation);
+        editTextOtherContraceptive = findViewById(R.id.editTextOtherContraceptive);
 
         //spinner view campus
         spinnerCampus = findViewById(io.icode.concaregh.app.R.id.spinnerCampus);
@@ -217,23 +217,23 @@ public class PlaceOrderActivity extends AppCompatActivity {
         //getting input from the fields
         String hostel_name = editTextHostelName.getText().toString().trim();
         String room_number = editTextRoomNumber.getText().toString().trim();
-        String tel_number = editTextTelNumber.getText().toString().trim();
+        String phone_number = editTextPhoneNumber.getText().toString().trim();
 
         // checks if the fields are not empty
-        if(tel_number.isEmpty()){
+        if(phone_number.isEmpty()){
             // starts animation on this view
-            editTextTelNumber.clearAnimation();
-            editTextTelNumber.startAnimation(shake);
-            editTextTelNumber.setError(getString(io.icode.concaregh.app.R.string.error_text_phone_number));
-            editTextTelNumber.requestFocus();
+            editTextPhoneNumber.clearAnimation();
+            editTextPhoneNumber.startAnimation(shake);
+            editTextPhoneNumber.setError(getString(io.icode.concaregh.app.R.string.error_text_phone_number));
+            editTextPhoneNumber.requestFocus();
             return;
         }
-        else if(tel_number.length() != 10){
+        else if(phone_number.length() != 10){
             // starts animation on this view
-            editTextTelNumber.clearAnimation();
-            editTextTelNumber.startAnimation(shake);
-            editTextTelNumber.setError(getString(io.icode.concaregh.app.R.string.phone_invalid));
-            editTextTelNumber.requestFocus();
+            editTextPhoneNumber.clearAnimation();
+            editTextPhoneNumber.startAnimation(shake);
+            editTextPhoneNumber.setError(getString(io.icode.concaregh.app.R.string.phone_invalid));
+            editTextPhoneNumber.requestFocus();
             return;
         }
         else if(room_number.isEmpty()){
@@ -261,7 +261,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
     public void placeOrder(){
 
             //getting input from the user
-            String tel_number = editTextTelNumber.getText().toString().trim();
+            String phone_number = editTextPhoneNumber.getText().toString().trim();
             String campus = spinnerCampus.getSelectedItem().toString().trim();
             String location = spinnerLocation.getSelectedItem().toString().trim();
             String other_location = editTextOtherLocation.getText().toString().trim();
@@ -274,7 +274,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
             // setting values to setter methods
             orders.setHostel_name(hostel_name);
             orders.setRoom_number(room_number);
-            orders.setTelephone_Number(tel_number);
+            orders.setTelephone_Number(phone_number);
             orders.setCampus(campus);
             orders.setLocation(location);
             orders.setOther_location(other_location);
@@ -327,7 +327,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
                         sendSMSMessageToAdmins();
 
                         // sends message to user after placing order
-                        sendSMSMessageToUser();
+                        //sendSMSMessageToUser();
 
                     } else {
                         // display error message
@@ -345,7 +345,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
     //clears the textfields
     public void clearTextFields(){
-        editTextTelNumber.setText(null);
+        editTextPhoneNumber.setText(null);
         editTextHostelName.setText(null);
         editTextRoomNumber.setText(null);
     }
@@ -361,7 +361,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         //final String user_name = editTextUsername.getText().toString().trim();
         //getting input from the user
-        String tel_number = editTextTelNumber.getText().toString().trim();
+        String phone_number = editTextPhoneNumber.getText().toString().trim();
         String campus = spinnerCampus.getSelectedItem().toString().trim();
         String location = spinnerLocation.getSelectedItem().toString().trim();
         String other_location = editTextOtherLocation.getText().toString().trim();
@@ -475,7 +475,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         //final String user_name = editTextUsername.getText().toString().trim();
         //getting input from the user
-        String tel_number = editTextTelNumber.getText().toString().trim();
+
         String campus = spinnerCampus.getSelectedItem().toString().trim();
         String location = spinnerLocation.getSelectedItem().toString().trim();
         String other_location = editTextOtherLocation.getText().toString().trim();
@@ -491,7 +491,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
         String password = "concare1";
         // Message content that is to be transmitted
 
-        String message =  user_name + ", your order has been sent successfully.";
+        String message = " Your order has been sent successfully. ";
 
         /**
          * What type of the message that is to be sent
@@ -517,7 +517,9 @@ public class PlaceOrderActivity extends AppCompatActivity {
          * destination at once destinations should be comma separated Like
          * 91999000123,91999000124
          */
-        //String destination = tel_number;
+
+        // getting mobile number from EditText
+        String destination = editTextPhoneNumber.getText().toString().trim();
 
         // Sender Id to be used for submitting the message
         String source = "ConCare GH";
@@ -550,7 +552,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
                     + URLEncoder.encode(password, "UTF-8") + "&type="
                     + URLEncoder.encode(type, "UTF-8") + "&dlr="
                     + URLEncoder.encode(dlr, "UTF-8") + "&destination="
-                    + URLEncoder.encode(tel_number, "UTF-8") + "&source="
+                    + URLEncoder.encode(destination, "UTF-8") + "&source="
                     + URLEncoder.encode(source, "UTF-8") + "&message="
                     + URLEncoder.encode(message, "UTF-8"));
             dataStreamToServer.flush();
@@ -647,12 +649,16 @@ public class PlaceOrderActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
        switch (item.getItemId()){
            case android.R.id.home:
-               //send user back to home activity
-               startActivity(new Intent(this, HomeActivity.class));
+
                // finishes this activity
                finish();
+
+               //send user back to home activity
+               startActivity(new Intent(this, HomeActivity.class));
+
                // Add a custom animation ot the activity
                CustomIntent.customType(PlaceOrderActivity.this,"fadein-to-fadeout");
+
                break;
                default:
                    break;
@@ -661,7 +667,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
     }
 
     public void onClearButtonClick(View view) {
-        editTextTelNumber.setText(null);
+        editTextPhoneNumber.setText(null);
         editTextOtherLocation.setText(null);
         editTextOtherContraceptive.setText(null);
         editTextHostelName.setText(null);
@@ -671,6 +677,20 @@ public class PlaceOrderActivity extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
+        // Add a custom animation ot the activity
+        CustomIntent.customType(PlaceOrderActivity.this,"fadein-to-fadeout");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        // finishes the activity
+        finish();
+
+        // starts the Home Activity
+        startActivity(new Intent(PlaceOrderActivity.this,HomeActivity.class));
+
         // Add a custom animation ot the activity
         CustomIntent.customType(PlaceOrderActivity.this,"fadein-to-fadeout");
     }

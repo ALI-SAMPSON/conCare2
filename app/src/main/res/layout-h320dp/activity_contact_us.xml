@@ -10,19 +10,20 @@
     <ImageView
         android:id="@+id/about_us_imageView"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_height="230dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/about_us_bg"/>
+        android:src="@drawable/about_us_bg"
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="0dp"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
         app:fontFamily="@font/nunito_extrabold"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:text="@string/who_we_are"
         android:textColor="@color/orange_light"
         android:padding="10dp"
@@ -33,21 +34,21 @@
         android:id="@+id/sub_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="0dp"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
         android:text="@string/text_about_us"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textColor="@color/colorBlack"
         app:fontFamily="@font/nunito_semibold"
-        android:padding="15dp"
+        android:padding="dp"
         android:layout_centerHorizontal="true"/>
 
     <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_below="@+id/sub_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="0dp"
         android:orientation="vertical">
 
@@ -59,11 +60,10 @@
             android:gravity="center"
             android:layout_gravity="center_horizontal"
             android:text="@string/text_contact"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textColor="@color/orange_light"
             app:fontFamily="@font/nunito_extrabold"
-            android:padding="15dp"
-            android:layout_centerHorizontal="true"/>
+            android:padding="5dp" />
 
         <TextView
             android:id="@+id/sub_text_1"
@@ -76,8 +76,7 @@
             android:textSize="16sp"
             android:textColor="@color/colorBlack"
             app:fontFamily="@font/nunito_semibold"
-            android:padding="20dp"
-            android:layout_centerHorizontal="true"/>
+            android:padding="2dp"/>
 
     </LinearLayout>
 

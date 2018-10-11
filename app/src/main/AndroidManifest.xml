@@ -3,6 +3,14 @@
     package="io.icode.concaregh.app"
     android:installLocation="auto">
 
+    <!-- support screen sizes -->
+    <supports-screens
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true"
+        android:anyDensity="true"/>
+
     <!-- Added permission -->
     <uses-feature
         android:name="android.hardware.telephony"
@@ -33,7 +41,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.LoginActivity"
-            android:configChanges="screenLayout|screenSize|smallestScreenSize"
+            android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
 
@@ -54,17 +62,17 @@
         </activity>
         <activity
             android:name=".activities.AboutUsActivity"
-            android:configChanges="screenLayout|screenSize|smallestScreenSize"
+            android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme" />
         <activity
             android:name=".activities.SignUpActivity"
-            android:configChanges="screenLayout|screenSize|smallestScreenSize"
+            android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Sign_up" />
         <activity
             android:name=".activities.SplashScreenActivity"
-            android:configChanges="screenLayout|screenSize|smallestScreenSize"
+            android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash">
             <intent-filter>
@@ -75,7 +83,7 @@
         </activity>
         <activity
             android:name=".activities.HomeActivity"
-            android:configChanges="screenLayout|screenSize|smallestScreenSize"
+            android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme">
 
@@ -97,7 +105,7 @@
         </activity>
         <activity
             android:name=".activities.PlaceOrderActivity"
-            android:configChanges="screenLayout|screenSize|smallestScreenSize"
+            android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme.order">
 
@@ -119,17 +127,17 @@
         </activity>
         <activity
             android:name=".activities.EditProfileActivity"
-            android:configChanges="screenLayout|screenSize|smallestScreenSize"
+            android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme.profile" />
         <activity
             android:name=".activities.ContactUsActivity"
-            android:configChanges="screenLayout|screenSize|smallestScreenSize"
+            android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme.order">
         </activity>
         <activity android:name=".activities.ResetPasswordActivity"
-            android:configChanges="screenLayout|screenSize|smallestScreenSize"
+            android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Reset_Password">
         </activity>

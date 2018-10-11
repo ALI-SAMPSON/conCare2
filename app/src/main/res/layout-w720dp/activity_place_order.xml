@@ -27,8 +27,8 @@
             android:layout_centerHorizontal="true"
             android:padding="5dp"
             android:layout_marginTop="10dp"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
             android:scaleType="centerCrop"
             android:src="@mipmap/splash_bg"
             android:contentDescription="@string/todo" />
@@ -45,10 +45,11 @@
             android:textColorHint="@color/white_snow">
             <EditText
                 android:id="@+id/editTextPhoneNumber"
-                android:layout_width="300dp"
+                android:layout_width="500dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
+                android:layout_marginTop="5dp"
                 android:hint="@string/hint_phone"
                 android:drawableLeft="@drawable/ic_phone"
                 android:drawableStart="@drawable/ic_phone"
@@ -60,7 +61,8 @@
                 app:fontFamily="@font/nunito_semibold"
                 android:maxLength="15"
                 android:maxLines="1"
-                android:layout_marginStart="0dp"/>
+                android:layout_marginStart="0dp"
+                android:importantForAutofill="no" />
         </android.support.design.widget.TextInputLayout>
 
         <!--TextInputLayout and LinearLayout and spinner View for user's Campus-->
@@ -76,7 +78,7 @@
             android:orientation="horizontal"
             android:layout_marginStart="0dp">
             <LinearLayout
-                android:layout_width="300dp"
+                android:layout_width="500dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:layout_height="match_parent"
@@ -132,7 +134,7 @@
             android:layout_gravity="center"
             android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="300dp"
+                android:layout_width="500dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:layout_height="match_parent"
@@ -194,7 +196,7 @@
             android:layout_marginStart="0dp">
             <EditText
                 android:id="@+id/editTextOtherLocation"
-                android:layout_width="280dp"
+                android:layout_width="450dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
@@ -220,7 +222,7 @@
             android:layout_gravity="center"
             android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="300dp"
+                android:layout_width="500dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:layout_height="match_parent"
@@ -279,7 +281,7 @@
             android:orientation="horizontal"
             android:layout_marginStart="0dp">
             <LinearLayout
-                android:layout_width="300dp"
+                android:layout_width="500dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:layout_height="match_parent"
@@ -338,7 +340,7 @@
             android:visibility="visible">
             <EditText
                 android:id="@+id/editTextOtherContraceptive"
-                android:layout_width="280dp"
+                android:layout_width="450dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
@@ -369,7 +371,7 @@
             android:layout_marginStart="0dp">
             <EditText
                 android:id="@+id/editTextHostel"
-                android:layout_width="300dp"
+                android:layout_width="500dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
@@ -396,7 +398,7 @@
             android:textColorHint="@color/white_snow">
             <EditText
                 android:id="@+id/editTextRoomNumber"
-                android:layout_width="300dp"
+                android:layout_width="500dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
@@ -428,7 +430,7 @@
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/appCompatButtonPayment"
                 android:layout_marginTop="30dp"
-                android:layout_width="150dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_gravity="center_horizontal"
@@ -446,7 +448,7 @@
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/appCompatButtonCancel"
                 android:layout_marginTop="30dp"
-                android:layout_width="150dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_gravity="center_horizontal"

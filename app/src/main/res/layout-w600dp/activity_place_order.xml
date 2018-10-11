@@ -27,8 +27,8 @@
             android:layout_centerHorizontal="true"
             android:padding="5dp"
             android:layout_marginTop="10dp"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
             android:scaleType="centerCrop"
             android:src="@mipmap/splash_bg"
             android:contentDescription="@string/todo" />
@@ -45,7 +45,7 @@
             android:textColorHint="@color/white_snow">
             <EditText
                 android:id="@+id/editTextPhoneNumber"
-                android:layout_width="300dp"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
@@ -71,12 +71,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center_horizontal"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="0dp"
             android:orientation="horizontal"
             android:layout_marginStart="0dp">
             <LinearLayout
-                android:layout_width="300dp"
+                android:layout_width="400dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:layout_height="match_parent"
@@ -128,11 +128,12 @@
             android:id="@+id/textInputLayoutLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
             android:layout_gravity="center"
             android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="300dp"
+                android:layout_width="400dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:layout_height="match_parent"
@@ -185,7 +186,7 @@
             android:id="@+id/textInputLayoutOtherLocation"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="0dp"
             android:gravity="center_horizontal"
             android:textAlignment="center"
@@ -194,7 +195,7 @@
             android:layout_marginStart="0dp">
             <EditText
                 android:id="@+id/editTextOtherLocation"
-                android:layout_width="280dp"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
@@ -216,11 +217,12 @@
             android:id="@+id/textInputLayoutResidence"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
             android:layout_gravity="center"
             android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="300dp"
+                android:layout_width="400dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:layout_height="match_parent"
@@ -274,12 +276,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center_horizontal"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="0dp"
             android:orientation="horizontal"
             android:layout_marginStart="0dp">
             <LinearLayout
-                android:layout_width="300dp"
+                android:layout_width="400dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:layout_height="match_parent"
@@ -332,13 +334,14 @@
             android:id="@+id/textInputLayoutOtherContraceptive"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
             android:textAlignment="center"
             android:textColorHint="@color/orange_light"
             android:visibility="visible">
             <EditText
                 android:id="@+id/editTextOtherContraceptive"
-                android:layout_width="280dp"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
@@ -361,7 +364,7 @@
             android:id="@+id/textInputLayoutHostel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="0dp"
             android:gravity="center_horizontal"
             android:textAlignment="center"
@@ -369,7 +372,7 @@
             android:layout_marginStart="0dp">
             <EditText
                 android:id="@+id/editTextHostel"
-                android:layout_width="300dp"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
@@ -391,12 +394,13 @@
             android:id="@+id/textInputLayoutRoomNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
             android:textAlignment="center"
             android:textColorHint="@color/white_snow">
             <EditText
                 android:id="@+id/editTextRoomNumber"
-                android:layout_width="300dp"
+                android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
@@ -428,7 +432,7 @@
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/appCompatButtonPayment"
                 android:layout_marginTop="30dp"
-                android:layout_width="150dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_gravity="center_horizontal"
@@ -446,7 +450,7 @@
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/appCompatButtonCancel"
                 android:layout_marginTop="30dp"
-                android:layout_width="150dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_gravity="center_horizontal"

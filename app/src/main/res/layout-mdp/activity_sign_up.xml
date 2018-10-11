@@ -18,7 +18,6 @@
         android:layout_marginTop="0dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
         android:gravity="center_horizontal|center_vertical"
         android:orientation="vertical">
 
@@ -279,8 +278,8 @@
             android:id="@+id/progressBar1"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_gravity="center_horizontal"
             android:visibility="gone"/>
 
