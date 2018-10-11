@@ -96,8 +96,7 @@
                 android:maxLines="1"
                 android:drawableStart="@drawable/ic_email"
                 tools:targetApi="o"
-                android:layout_marginStart="0dp"
-                android:autofillHints="" />
+                android:layout_marginStart="0dp"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- TextInputLayout and AppCompatEdiText for Username -->
@@ -128,7 +127,7 @@
                 android:inputType="text|textAutoComplete|textAutoCorrect"
                 android:maxLines="1"
                 android:drawableStart="@drawable/ic_person_white"
-                android:autofillHints="" tools:targetApi="o"/>
+                tools:targetApi="o"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- TextInputLayout and AppCompatEdiText for Password -->
@@ -162,7 +161,7 @@
                 android:maxLines="1"
                 android:layout_marginStart="0dp"
                 android:drawableStart="@drawable/ic_lock_white"
-                android:autofillHints="" tools:targetApi="o"/>
+                tools:targetApi="o"/>
         </android.support.design.widget.TextInputLayout>
 
         <!--TextInputLayout and LinearLayout and spinner View for Voter's Gender-->
@@ -251,7 +250,7 @@
                 android:maxLines="1"
                 android:drawableStart="@drawable/ic_phone"
                 android:layout_marginStart="0dp"
-                android:autofillHints="" tools:targetApi="o"/>
+                tools:targetApi="o"/>
         </android.support.design.widget.TextInputLayout>
 
 
@@ -294,7 +293,7 @@
             android:text="@string/login_link"
             android:textColor="@color/colorWhite"
             android:textAllCaps="false"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="normal"
             app:fontFamily="@font/nunito_semibold"
             android:textAlignment="center"

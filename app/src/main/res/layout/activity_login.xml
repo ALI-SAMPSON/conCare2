@@ -50,7 +50,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal">
 
         <!-- TextInputLayout and AppCompatEdiText for Username -->
         <android.support.design.widget.TextInputLayout
@@ -76,7 +78,7 @@
                 android:hint="@string/hint_email"
                 android:inputType="textEmailAddress|textAutoComplete|textAutoCorrect"
                 android:drawableStart="@drawable/ic_email_orange"
-                android:importantForAutofill="no" tools:targetApi="o"/>
+                tools:targetApi="o"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- TextInputLayout and AppCompatEdiText for Password -->
@@ -150,7 +152,7 @@
         android:textColor="@color/colorWhite"
         android:textAllCaps="false"
         app:fontFamily="@font/nunito_semibold"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="normal"
         android:textAlignment="center"
         android:background="@drawable/round_corner_button_login"
@@ -184,6 +186,6 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_margin="10dp"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 
 </RelativeLayout>

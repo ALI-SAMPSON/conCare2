@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="580dp"
         android:gravity="center"
         android:background="@mipmap/login_bg"
         android:orientation="horizontal">
@@ -39,7 +39,7 @@
     <android.support.v7.widget.CardView
         android:id="@+id/login_cardView"
         android:layout_width="500dp"
-        android:layout_height="250dp"
+        android:layout_height="300dp"
         android:focusable="true"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
@@ -50,7 +50,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal">
 
         <!-- TextInputLayout and AppCompatEdiText for Username -->
         <android.support.design.widget.TextInputLayout
@@ -76,7 +78,7 @@
                 android:hint="@string/hint_email"
                 android:inputType="textEmailAddress|textAutoComplete|textAutoCorrect"
                 android:drawableStart="@drawable/ic_email_orange"
-                android:importantForAutofill="no" tools:targetApi="o"/>
+                tools:targetApi="o"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- TextInputLayout and AppCompatEdiText for Password -->
@@ -150,7 +152,7 @@
         android:textColor="@color/colorWhite"
         android:textAllCaps="false"
         app:fontFamily="@font/nunito_semibold"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="normal"
         android:textAlignment="center"
         android:background="@drawable/round_corner_button_login"
@@ -168,7 +170,7 @@
         android:text="@string/sign_up_link"
         android:textColor="@color/orange_light"
         app:fontFamily="@font/nunito_semibold"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textAllCaps="false"
         android:textStyle="normal"
         android:textAlignment="center"
@@ -181,8 +183,8 @@
         android:layout_below="@+id/appCompatButtonSignUpLink"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_margin="10dp"
         android:visibility="gone"/>
 

@@ -123,7 +123,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         editTextPhoneNumber = findViewById(R.id.editTextPhoneNumber);
         editTextHostelName = findViewById(R.id.editTextHostel);
-        editTextRoomNumber = findViewById(R.id.editTextRoomNumber);
+        editTextRoomNumber = findViewById(R.id.editTextRoomNum);
         editTextOtherLocation = findViewById(R.id.editTextOtherLocation);
         editTextOtherContraceptive = findViewById(R.id.editTextOtherContraceptive);
 

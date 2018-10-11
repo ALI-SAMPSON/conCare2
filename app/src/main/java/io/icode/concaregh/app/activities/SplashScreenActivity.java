@@ -1,12 +1,15 @@
 package io.icode.concaregh.app.activities;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +33,8 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -40,6 +45,13 @@ public class SplashScreenActivity extends AppCompatActivity {
         //app_title = findViewById(R.id.splash_screen_text);
 
         //watermark = findViewById(R.id.water_mark);
+
+        progressBar = findViewById(R.id.progressBar);
+        // changes color of progressBar to you desired color
+        progressBar.getIndeterminateDrawable().setColorFilter(0xff676767,PorterDuff.Mode.MULTIPLY);
+
+        // displays the progressBar
+        progressBar.setVisibility(View.VISIBLE);
 
         // firebase instance
         mAuth = FirebaseAuth.getInstance();
@@ -77,6 +89,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+
                     sleep(SPLASH_SCREEN_DISPLAY_TIME);
 
                     // finishes the activity

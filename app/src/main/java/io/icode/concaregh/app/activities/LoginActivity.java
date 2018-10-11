@@ -1,5 +1,6 @@
 package io.icode.concaregh.app.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -32,6 +33,8 @@ import maes.tech.intentanim.CustomIntent;
 public class LoginActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
+
+    private ProgressDialog progressDialog;
 
     private EditText editTextEmail;
     private EditText editTextPassword;
@@ -101,6 +104,10 @@ public class LoginActivity extends AppCompatActivity {
         relativeLayout = findViewById(io.icode.concaregh.app.R.id.relativeLayout);
 
         progressBar = findViewById(io.icode.concaregh.app.R.id.progressBar);
+
+        progressDialog = new ProgressDialog(this, ProgressDialog.THEME_HOLO_LIGHT);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("please wait...");
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -207,7 +214,8 @@ public class LoginActivity extends AppCompatActivity {
         appCompatButtonLogin.startAnimation(shake);
 
         // shows the progressBar
-        progressBar.setVisibility(View.VISIBLE);
+        //progressBar.setVisibility(View.VISIBLE);
+        progressDialog.show();
 
         //gets text from the editTExt fields
         final String _email = editTextEmail.getText().toString().trim();
@@ -228,7 +236,8 @@ public class LoginActivity extends AppCompatActivity {
                           Snackbar.make(relativeLayout,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
                       }
                         // dismisses the progressBar
-                        progressBar.setVisibility(View.GONE);
+                        //progressBar.setVisibility(View.GONE);
+                      progressDialog.dismiss();
                     }
                 });
 
@@ -288,10 +297,12 @@ public class LoginActivity extends AppCompatActivity {
         //appCompatButtonSignUpLink.clearAnimation();
         //appCompatButtonSignUpLink.startAnimation(shake);
 
-        // creates an instance of the intent class and opens the signUpctivity
-        startActivity(new Intent(this,SignUpActivity.class));
         // finish the activity
         finish();
+
+        // creates an instance of the intent class and opens the signUpctivity
+        startActivity(new Intent(this,SignUpActivity.class));
+
         // Add a custom animation ot the activity
         CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
     }
@@ -306,12 +317,14 @@ public class LoginActivity extends AppCompatActivity {
     public void onForgotPasswordClick(View view) {
 
         // shakes the button when clicked
-        //forgot_password.setAnimation(shake);
+        YoYo.with(Techniques.FlipOutX).playOn(forgot_password);
+
+        // finish the activity
+        finish();
 
         // start the ResetPassword Activity
         startActivity(new Intent(LoginActivity.this,ResetPasswordActivity.class));
-        // finish the activity
-        finish();
+
         // Add a custom animation ot the activity
         CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
     }
@@ -329,6 +342,10 @@ public class LoginActivity extends AppCompatActivity {
 
         // finishes the activity
         finish();
+
+        moveTaskToBack(true);
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(1);
 
         // Add a custom animation ot the activity
         //CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");

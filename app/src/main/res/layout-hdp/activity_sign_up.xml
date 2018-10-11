@@ -97,8 +97,7 @@
                 android:maxLines="1"
                 android:drawableStart="@drawable/ic_email"
                 tools:targetApi="o"
-                android:layout_marginStart="0dp"
-                android:autofillHints="" />
+                android:layout_marginStart="0dp"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- TextInputLayout and AppCompatEdiText for Username -->
@@ -129,7 +128,7 @@
                 android:inputType="text|textAutoComplete|textAutoCorrect"
                 android:maxLines="1"
                 android:drawableStart="@drawable/ic_person_white"
-                android:autofillHints="" tools:targetApi="o"/>
+                tools:targetApi="o"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- TextInputLayout and AppCompatEdiText for Password -->
@@ -163,7 +162,7 @@
                 android:maxLines="1"
                 android:layout_marginStart="0dp"
                 android:drawableStart="@drawable/ic_lock_white"
-                android:autofillHints="" tools:targetApi="o"/>
+                tools:targetApi="o"/>
         </android.support.design.widget.TextInputLayout>
 
         <!--TextInputLayout and LinearLayout and spinner View for Voter's Gender-->
@@ -252,7 +251,7 @@
                 android:maxLines="1"
                 android:drawableStart="@drawable/ic_phone"
                 android:layout_marginStart="0dp"
-                android:autofillHints="" tools:targetApi="o"/>
+                tools:targetApi="o"/>
         </android.support.design.widget.TextInputLayout>
 
 
@@ -268,7 +267,7 @@
             android:text="@string/signUp"
             android:textColor="@color/orange_deep"
             android:textAllCaps="false"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="normal"
             android:textAlignment="center"
             app:fontFamily="@font/nunito_semibold"

@@ -13,7 +13,7 @@
         android:id="@+id/top_layout"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="550dp"
         android:background="@drawable/nav_header_bg">
     </LinearLayout>
 
@@ -76,7 +76,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColorHint="@color/background_super_dark"
                 app:fontFamily="@font/nunito_semibold"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 android:hint="@string/hint_username"
                 android:inputType="text|textAutoComplete|textAutoCorrect"
                 android:maxLines="1"/>
@@ -93,7 +93,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/update"
         android:textColor="@color/colorWhite"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="normal"
         android:textAlignment="center"
         android:background="@drawable/nice_design_button_orange"
@@ -111,7 +111,7 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/bottom_image"
-        android:contentDescription="TODO">
+        android:contentDescription="@string/todo">
     </ImageView>
 
     <ProgressBar

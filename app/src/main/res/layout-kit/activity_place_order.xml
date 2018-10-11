@@ -27,8 +27,8 @@
             android:layout_centerHorizontal="true"
             android:padding="5dp"
             android:layout_marginTop="10dp"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:src="@mipmap/splash_bg"
             android:contentDescription="@string/todo" />
@@ -84,7 +84,7 @@
                 <!--TextView View  and Spinner View for Voter's Gender-->
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/textViewCampus"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:text="@string/hint_campus"
                     android:textSize="16sp"
@@ -111,12 +111,12 @@
                     android:layout_marginStart="0dp">
                     <android.support.v7.widget.AppCompatSpinner
                         android:id="@+id/spinnerCampus"
-                        android:layout_width="120dp"
+                        android:layout_width="100dp"
                         android:layout_height="40dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="0dp"
-                        android:layout_marginEnd="0dp"
-                        android:layout_marginStart="10dp" />
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="16dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -143,7 +143,7 @@
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:text="@string/location"
-                    android:textSize="19sp"
+                    android:textSize="16sp"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/nunito_semibold"
@@ -154,7 +154,8 @@
                     android:drawablePadding="@dimen/padding_normal"
                     android:drawableLeft="@drawable/ic_location"
                     android:layout_marginStart="1dp"
-                    android:drawableStart="@drawable/ic_location" tools:targetApi="jelly_bean" />
+                    android:drawableStart="@drawable/ic_location"
+                    tools:targetApi="o" />
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:orientation="horizontal"
@@ -167,17 +168,16 @@
                     android:layout_marginStart="0dp">
                     <android.support.v7.widget.AppCompatSpinner
                         android:id="@+id/spinnerLocation"
-                        android:layout_width="120dp"
+                        android:layout_width="100dp"
                         android:layout_height="40dp"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginRight="22dp"
-                        android:layout_marginEnd="22dp"
-                        android:layout_marginStart="0dp" />
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="16dp" />
                 </LinearLayout>
 
             </LinearLayout>
         </android.support.design.widget.TextInputLayout>
-
 
         <!-- TextInputLayout and AppCompatEdiText for other location -->
         <android.support.design.widget.TextInputLayout
@@ -194,7 +194,7 @@
             android:layout_marginStart="0dp">
             <EditText
                 android:id="@+id/editTextOtherLocation"
-                android:layout_width="200dp"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
@@ -207,7 +207,8 @@
                 android:inputType="text"
                 android:fontFamily="@font/nunito_semibold"
                 android:layout_marginStart="0dp"
-                android:drawableStart="@drawable/ic_edit_location" tools:targetApi="jelly_bean" />
+                android:drawableStart="@drawable/ic_edit_location"
+                tools:targetApi="o" />
         </android.support.design.widget.TextInputLayout>
 
         <!--TextInputLayout and LinearLayout and spinner View for user's Location-->
@@ -231,7 +232,7 @@
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:text="@string/residence"
-                    android:textSize="19sp"
+                    android:textSize="16sp"
                     android:fontFamily="@font/nunito_semibold"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_horizontal"
@@ -241,8 +242,9 @@
                     android:layout_weight="1.11"
                     android:drawablePadding="@dimen/padding_normal"
                     android:drawableLeft="@drawable/ic_residence"
-                    android:layout_marginStart="1dp" tools:targetApi="jelly_bean"
-                    android:drawableStart="@drawable/ic_residence" />
+                    android:layout_marginStart="1dp"
+                    tools:targetApi="o"
+                    android:drawableStart="@drawable/ic_residence"/>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:orientation="horizontal"
@@ -257,10 +259,10 @@
                         android:id="@+id/spinnerResidence"
                         android:layout_width="100dp"
                         android:layout_height="40dp"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginRight="25dp"
-                        android:layout_marginEnd="25dp"
-                        android:layout_marginStart="0dp" />
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="16dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -290,7 +292,7 @@
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:text="@string/contraceptive"
-                    android:textSize="19sp"
+                    android:textSize="16sp"
                     app:fontFamily="@font/nunito_semibold"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_horizontal"
@@ -314,7 +316,7 @@
                     android:layout_marginStart="0dp">
                     <android.support.v7.widget.AppCompatSpinner
                         android:id="@+id/spinnerContraceptive"
-                        android:layout_width="90dp"
+                        android:layout_width="100dp"
                         android:layout_height="40dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="10dp"
@@ -338,7 +340,7 @@
             android:visibility="visible">
             <EditText
                 android:id="@+id/editTextOtherContraceptive"
-                android:layout_width="200dp"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
@@ -395,7 +397,7 @@
             android:textAlignment="center"
             android:textColorHint="@color/white_snow">
             <EditText
-                android:id="@+id/editTextRoomNumber"
+                android:id="@+id/editTextRoomNum"
                 android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -409,7 +411,8 @@
                 android:textSize="16sp"
                 android:inputType="text"
                 android:layout_marginStart="0dp"
-                android:drawableStart="@drawable/ic_room_number" tools:targetApi="jelly_bean" />
+                android:drawableStart="@drawable/ic_room_number"
+                tools:targetApi="o"/>
         </android.support.design.widget.TextInputLayout>
 
 
@@ -428,7 +431,7 @@
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/appCompatButtonPayment"
                 android:layout_marginTop="30dp"
-                android:layout_width="100dp"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_gravity="center_horizontal"
@@ -446,7 +449,7 @@
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/appCompatButtonCancel"
                 android:layout_marginTop="30dp"
-                android:layout_width="100dp"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_gravity="center_horizontal"

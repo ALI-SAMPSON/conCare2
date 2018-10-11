@@ -63,7 +63,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         progressBar = findViewById(io.icode.concaregh.app.R.id.progressBar);
 
-        progressDialog = ProgressDialog.show(this,"","Please wait...",true,true);
+        progressDialog = new ProgressDialog(this, ProgressDialog.THEME_HOLO_LIGHT);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("please wait...");
+        progressDialog.show();
 
         shake = AnimationUtils.loadAnimation(ResetPasswordActivity.this, io.icode.concaregh.app.R.anim.anim_shake);
 

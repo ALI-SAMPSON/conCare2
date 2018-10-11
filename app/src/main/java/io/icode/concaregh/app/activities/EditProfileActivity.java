@@ -104,6 +104,9 @@ public class EditProfileActivity extends AppCompatActivity {
         pickImage.setType("image/*");
         pickImage.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(pickImage,"Select Profile Picture"),REQUEST_CODE);
+
+        // Add a custom animation ot the activity
+        CustomIntent.customType(EditProfileActivity.this,"fadein-to-fadeout");
     }
 
 
@@ -235,10 +238,10 @@ public class EditProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
-                //start home activity when back button is pressed
-                startActivity(new Intent(this,HomeActivity.class));
                 // finishes the activity
                 finish();
+                //start home activity when back button is pressed
+                startActivity(new Intent(this,HomeActivity.class));
                 // Add a custom animation ot the activity
                 CustomIntent.customType(EditProfileActivity.this,"fadein-to-fadeout");
                 default:

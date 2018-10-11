@@ -40,7 +40,7 @@
             android:layout_margin="5dp"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textStyle="italic"
             app:fontFamily="@font/nunito_extrabold"
             android:padding="5dp"
@@ -81,8 +81,8 @@
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             style="?android:progressBarStyleLarge"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             android:visibility="gone"/>
 
         <!--TextInputLayout and LinearLayout
@@ -166,8 +166,8 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:id="@+id/fab"
-            android:layout_width="47dp"
-            android:layout_height="47dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             app:rippleColor="@color/status_bar_back"
             android:src="@drawable/ic_phone"
             android:layout_margin="15dp">

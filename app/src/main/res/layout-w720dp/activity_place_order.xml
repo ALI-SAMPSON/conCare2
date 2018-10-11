@@ -62,7 +62,7 @@
                 android:maxLength="15"
                 android:maxLines="1"
                 android:layout_marginStart="0dp"
-                android:importantForAutofill="no" />
+                tools:targetApi="o" />
         </android.support.design.widget.TextInputLayout>
 
         <!--TextInputLayout and LinearLayout and spinner View for user's Campus-->
@@ -156,7 +156,8 @@
                     android:drawablePadding="@dimen/padding_normal"
                     android:drawableLeft="@drawable/ic_location"
                     android:layout_marginStart="1dp"
-                    android:drawableStart="@drawable/ic_location" tools:targetApi="jelly_bean" />
+                    android:drawableStart="@drawable/ic_location"
+                    tools:targetApi="o" />
                 <LinearLayout
                     android:layout_width="170dp"
                     android:orientation="horizontal"
@@ -209,7 +210,8 @@
                 android:inputType="text"
                 android:fontFamily="@font/nunito_semibold"
                 android:layout_marginStart="0dp"
-                android:drawableStart="@drawable/ic_edit_location" tools:targetApi="jelly_bean" />
+                android:drawableStart="@drawable/ic_edit_location"
+                tools:targetApi="o"/>
         </android.support.design.widget.TextInputLayout>
 
         <!--TextInputLayout and LinearLayout and spinner View for user's Location-->
@@ -243,7 +245,8 @@
                     android:layout_weight="1.11"
                     android:drawablePadding="@dimen/padding_normal"
                     android:drawableLeft="@drawable/ic_residence"
-                    android:layout_marginStart="1dp" tools:targetApi="jelly_bean"
+                    android:layout_marginStart="1dp"
+                    tools:targetApi="o"
                     android:drawableStart="@drawable/ic_residence" />
                 <LinearLayout
                     android:layout_width="170dp"
@@ -353,7 +356,8 @@
                 android:textSize="14sp"
                 android:inputType="text"
                 app:fontFamily="@font/nunito_semibold"
-                android:layout_marginStart="0dp"/>
+                android:layout_marginStart="0dp"
+                tools:targetApi="o" />
         </android.support.design.widget.TextInputLayout>
 
 
@@ -384,7 +388,8 @@
                 android:textSize="16sp"
                 android:inputType="text"
                 android:layout_marginStart="0dp"
-                android:drawableStart="@drawable/ic_hostel" />
+                android:drawableStart="@drawable/ic_hostel"
+                tools:targetApi="o" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- TextInputLayout and AppCompatEdiText for Hostel and room number -->
@@ -397,7 +402,7 @@
             android:textAlignment="center"
             android:textColorHint="@color/white_snow">
             <EditText
-                android:id="@+id/editTextRoomNumber"
+                android:id="@+id/editTextRoomNum"
                 android:layout_width="500dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -411,7 +416,8 @@
                 android:textSize="16sp"
                 android:inputType="text"
                 android:layout_marginStart="0dp"
-                android:drawableStart="@drawable/ic_room_number" tools:targetApi="jelly_bean" />
+                android:drawableStart="@drawable/ic_room_number"
+                tools:targetApi="o"/>
         </android.support.design.widget.TextInputLayout>
 
 

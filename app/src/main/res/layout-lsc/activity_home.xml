@@ -40,7 +40,7 @@
             android:layout_margin="5dp"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="italic"
             app:fontFamily="@font/nunito_extrabold"
             android:padding="5dp"
@@ -166,15 +166,14 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:id="@+id/fab"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             app:rippleColor="@color/status_bar_back"
             android:src="@drawable/ic_phone"
             android:layout_margin="15dp">
         </android.support.design.widget.FloatingActionButton>
 
     </RelativeLayout>
-
 
     <!--navigation view -->
     <android.support.design.widget.NavigationView
