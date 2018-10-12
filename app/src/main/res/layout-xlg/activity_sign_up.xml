@@ -97,7 +97,8 @@
                 android:maxLines="1"
                 android:drawableStart="@drawable/ic_email"
                 tools:targetApi="o"
-                android:layout_marginStart="0dp"/>
+                android:layout_marginStart="0dp"
+                android:importantForAutofill="no" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- TextInputLayout and AppCompatEdiText for Username -->
@@ -128,7 +129,8 @@
                 android:inputType="text|textAutoComplete|textAutoCorrect"
                 android:maxLines="1"
                 android:drawableStart="@drawable/ic_person_white"
-                tools:targetApi="o"/>
+                tools:targetApi="o"
+                android:importantForAutofill="no" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- TextInputLayout and AppCompatEdiText for Password -->
@@ -162,7 +164,8 @@
                 android:maxLines="1"
                 android:layout_marginStart="0dp"
                 android:drawableStart="@drawable/ic_lock_white"
-                tools:targetApi="o"/>
+                tools:targetApi="o"
+                android:importantForAutofill="no" />
         </android.support.design.widget.TextInputLayout>
 
         <!--TextInputLayout and LinearLayout and spinner View for Voter's Gender-->
@@ -251,7 +254,8 @@
                 android:maxLines="1"
                 android:drawableStart="@drawable/ic_phone"
                 android:layout_marginStart="0dp"
-                tools:targetApi="o"/>
+                tools:targetApi="o"
+                android:importantForAutofill="no" />
         </android.support.design.widget.TextInputLayout>
 
 

@@ -61,7 +61,8 @@
                 android:maxLength="15"
                 android:maxLines="1"
                 android:layout_marginStart="0dp"
-                tools:targetApi="o" />
+                tools:targetApi="o"
+                android:importantForAutofill="no" />
         </android.support.design.widget.TextInputLayout>
 
         <!--TextInputLayout and LinearLayout and spinner View for user's Campus-->
@@ -211,7 +212,8 @@
                 android:fontFamily="@font/nunito_semibold"
                 android:layout_marginStart="0dp"
                 android:drawableStart="@drawable/ic_edit_location"
-                tools:targetApi="o"/>
+                tools:targetApi="o"
+                android:importantForAutofill="no" />
         </android.support.design.widget.TextInputLayout>
 
         <!--TextInputLayout and LinearLayout and spinner View for user's Location-->
@@ -359,7 +361,8 @@
                 android:inputType="text"
                 app:fontFamily="@font/nunito_semibold"
                 android:layout_marginStart="0dp"
-                tools:targetApi="o" />
+                tools:targetApi="o"
+                android:importantForAutofill="no" />
         </android.support.design.widget.TextInputLayout>
 
 
@@ -391,7 +394,8 @@
                 android:inputType="text"
                 android:layout_marginStart="0dp"
                 android:drawableStart="@drawable/ic_hostel"
-                tools:targetApi="o"/>
+                tools:targetApi="o"
+                android:importantForAutofill="no" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- TextInputLayout and AppCompatEdiText for Hostel and room number -->
@@ -420,7 +424,8 @@
                 android:inputType="text"
                 android:layout_marginStart="0dp"
                 android:drawableStart="@drawable/ic_room_number"
-                tools:targetApi="o"/>
+                tools:targetApi="o"
+                android:importantForAutofill="no" />
         </android.support.design.widget.TextInputLayout>
 
 

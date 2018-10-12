@@ -77,7 +77,8 @@
                 android:textSize="18sp"
                 android:hint="@string/hint_username"
                 android:inputType="text|textAutoComplete|textAutoCorrect"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                android:importantForAutofill="no" tools:targetApi="o"/>
         </android.support.design.widget.TextInputLayout>
 
     <!--Save Button-->

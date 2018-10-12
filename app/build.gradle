@@ -5,16 +5,42 @@ android {
     defaultConfig {
         applicationId "io.icode.concaregh.app"
         minSdkVersion 15
-        targetSdkVersion 28
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    signingConfigs {
+        myconfig {
+            keyAlias 'key0'
+            keyPassword 'Brainbox'
+            storeFile file('E:/APPLICATION/CON CARE GH/ConCare GH/app license.jks')
+            storePassword 'Brainbox'
         }
+    }
+    buildTypes {
+        debug {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            debuggable false
+            //jniDebugBuild false
+            signingConfig signingConfigs.myconfig
+            minifyEnabled true
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+            //jniDebugBuild false
+            signingConfig signingConfigs.myconfig
+            //shrinkResources true  // -- always add this above minifyEnabled --
+            //signingConfig signingConfigs.config
+            //debuggable false
+            //jniDebuggable false
+            //jniDebuggable false
+            //jniDebuggable false
+        }
+    }
+    productFlavors {
     }
 }
 

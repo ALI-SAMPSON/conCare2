@@ -88,7 +88,8 @@
                 android:hint="@string/hint_email"
                 android:inputType="textEmailAddress|textAutoComplete|textAutoCorrect"
                 android:drawableStart="@drawable/ic_email_orange"
-                tools:targetApi="o"/>
+                tools:targetApi="o"
+                android:importantForAutofill="no" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- TextInputLayout and AppCompatEdiText for Password -->
