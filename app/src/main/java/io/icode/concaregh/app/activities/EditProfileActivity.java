@@ -21,6 +21,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import io.icode.concaregh.app.R;
+
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -64,8 +67,8 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(io.icode.concaregh.app.R.layout.activity_edit_profile);
 
-        circleImageView = findViewById(io.icode.concaregh.app.R.id.circularImageView);
-        username = findViewById(io.icode.concaregh.app.R.id.editTextUsername);
+        circleImageView = findViewById(R.id.circularImageView);
+        username = findViewById(R.id.editTextUsername);
 
         if(getSupportActionBar() != null){
             getSupportActionBar().setTitle(getString(io.icode.concaregh.app.R.string.title_edit_profile));
@@ -74,10 +77,11 @@ public class EditProfileActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        progressBar = findViewById(io.icode.concaregh.app.R.id.progressBar);
-        progressBar1 = findViewById(io.icode.concaregh.app.R.id.progressBar1);
+        progressBar = findViewById(R.id.progressBar);
 
-        relativeLayout = findViewById(io.icode.concaregh.app.R.id.relativeLayout);
+        progressBar1 = findViewById(R.id.progressBar1);
+
+        relativeLayout = findViewById(R.id.relativeLayout);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -92,6 +96,10 @@ public class EditProfileActivity extends AppCompatActivity {
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // Adds a custom animation to the view using Library
+                YoYo.with(Techniques.FlipInX).playOn(circleImageView);
+
                 // method to open user's phone gallery
                 openGallery();
             }
@@ -147,7 +155,8 @@ public class EditProfileActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressBar.setVisibility(View.GONE);
-                            profileImageUrl = profileImageRef.getDownloadUrl().toString();
+                            //profileImageUrl = profileImageRef.getDownloadUrl().toString();
+                            profileImageUrl = taskSnapshot.getDownloadUrl().toString();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -171,7 +180,8 @@ public class EditProfileActivity extends AppCompatActivity {
         String _username = username.getText().toString().trim();
 
         if(_username.isEmpty()) {
-            username.setError(getString(io.icode.concaregh.app.R.string.error_empty_field));
+            YoYo.with(Techniques.Shake).playOn(username);
+            username.setError(getString(R.string.error_empty_field));
             username.requestFocus();
             return;
         }
@@ -196,19 +206,17 @@ public class EditProfileActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
-                                // dismiss progress bar
-                                progressBar1.setVisibility(View.GONE);
+
                                 // display a success message
                                 Toast.makeText(EditProfileActivity.this,"Profile Updated Successfully",Toast.LENGTH_LONG).show();
                             }
                             else{
-                                // dismiss progress dialog
-                                progressDialog.dismiss();
                                 // display an error message
                                 Snackbar.make(relativeLayout,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
                             }
 
-                            //loadUserInfo();
+                            // dismiss progress bar
+                            progressBar1.setVisibility(View.GONE);
                         }
                     });
         }

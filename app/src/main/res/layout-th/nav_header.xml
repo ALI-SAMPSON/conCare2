@@ -9,7 +9,7 @@
     android:background="@drawable/nav_header_bg">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circularImageView"
+        android:id="@+id/circleImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="0dp"

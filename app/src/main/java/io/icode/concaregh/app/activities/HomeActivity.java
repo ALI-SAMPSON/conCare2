@@ -34,8 +34,10 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.icode.concaregh.app.models.Users;
 import maes.tech.intentanim.CustomIntent;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -52,6 +54,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private Animation shake;
 
     FirebaseAuth mAuth;
+
+    Users users;
 
     NavigationView navigationView;
 
@@ -84,21 +88,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         mDrawerLayout = findViewById(R.id.drawer);
 
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+
         // setNavigationViewListener;
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         // getting reference to the navigation drawer view objects in the nav_header
-        circleImageView = navigationView.getHeaderView(0).findViewById(R.id.circularImageView);
+        circleImageView = navigationView.getHeaderView(0).findViewById(R.id.circleImageView);
         username = navigationView.getHeaderView(0).findViewById(R.id.username);
         email = navigationView.getHeaderView(0).findViewById(R.id.email);
 
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, io.icode.concaregh.app.R.string.open, io.icode.concaregh.app.R.string.close);
-        mDrawerLayout.addDrawerListener(mToggle);
-        mToggle.syncState();
-
         //checks of there is support actionBar
         if(getSupportActionBar() != null){
-            getSupportActionBar().setTitle(getString(io.icode.concaregh.app.R.string.home));
+            getSupportActionBar().setTitle(getString(R.string.home));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
@@ -111,8 +115,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         shake = AnimationUtils.loadAnimation(this, R.anim.anim_scale_out);
 
-        //progressDialog = ProgressDialog.show(this,"","Please wait...",true,true);
-
         // floating action button onclick Listener and initialization
         fab = findViewById(R.id.fab);
 
@@ -121,13 +123,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         mAuth = FirebaseAuth.getInstance();
 
+        users = new Users();
+
         onClickCircularImageView();
 
         // Calling method to display a welcome message
         displayWelcomeMessage();
 
         // method call
-        //loadUserInfo();
+        loadUserInfo();
 
     }
 
@@ -160,6 +164,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 // Add a custom animation ot the activity
                 CustomIntent.customType(HomeActivity.this,"up-to-bottom");
+
             }
         });
 
@@ -235,6 +240,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // get current logged in user
         FirebaseUser user = mAuth.getCurrentUser();
 
+        //String photoUrl = users.getImageUrl();
+
         // getting the username and image of current logged in user
         String _photoUrl = user.getPhotoUrl().toString();
         String _username = user.getDisplayName();
@@ -242,36 +249,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // checks if current user is not null
         if(user != null){
-            if(user.getPhotoUrl() != null){
-                Glide.with(HomeActivity.this)
-                        .load(_photoUrl)
-                        .into(circleImageView);
+            if(_photoUrl != null){
+                Glide.with(HomeActivity.this).load(_photoUrl).into(circleImageView);
+                //Picasso.get().load(_photoUrl).centerCrop().into(circleImageView);
             }
             // checks if the username of the current user is not null
-            if(user.getDisplayName() != null){
+            if(_username != null){
                 username.setText(" Username : " + _username);
             }
             // checks if the email of the current user is not null
-            if(user.getEmail() != null){
+            if(_email != null){
                 email.setText(" Email : " + _email);
             }
 
         }
-        /*else if(user != null && _photoUrl != null){
-            // checks if the username of the current user is not null
-            if(user.getDisplayName() != null){
-                username.setText(" Username : " + _username);
-            }
-            // checks if the email of the current user is not null
-            if(user.getEmail() != null){
-                email.setText(" Email : " + _email);
-            }
-            if(user.getPhotoUrl() != null){
-                Glide.with(HomeActivity.this)
-                        .load(_photoUrl)
-                        .into(circleImageView);
-            }
-        }*/
 
     }
 
@@ -306,6 +297,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                YoYo.with(Techniques.RubberBand).playOn(circleImageView);
                 // start EditProfile activity
                 startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
                 // Add a custom animation ot the activity
@@ -353,7 +346,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(io.icode.concaregh.app.R.menu.menu_user,menu);
+        getMenuInflater().inflate(R.menu.menu_user,menu);
         return true;
     }
 
@@ -423,7 +416,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         doublePressBackToExitApp = true;
         // display a toast message to user
-        Toast.makeText(HomeActivity.this,getString(io.icode.concaregh.app.R.string.exit_app_message),Toast.LENGTH_SHORT).show();
+        Toast.makeText(HomeActivity.this,getString(R.string.exit_app_message),Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
             @Override

@@ -3,6 +3,7 @@ package io.icode.concaregh.app.activities;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
@@ -82,6 +83,8 @@ public class SignUpActivity extends AppCompatActivity {
     // progressBar to load signUp user
     ProgressBar progressBar1;
 
+    ProgressDialog progressDialog;
+
     private CircleImageView circleImageView;
 
     Uri uriProfileImage;
@@ -127,9 +130,13 @@ public class SignUpActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar);
         // sets a custom color on progressBar
-        progressBar.getIndeterminateDrawable().setColorFilter(0xFE5722,PorterDuff.Mode.MULTIPLY);
+        //progressBar.getIndeterminateDrawable().setColorFilter(0xFE5722,PorterDuff.Mode.MULTIPLY);
 
         progressBar1 = findViewById(R.id.progressBar1);
+
+        progressDialog = new ProgressDialog(this, ProgressDialog.THEME_HOLO_LIGHT);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("please wait...");
 
         shake = AnimationUtils.loadAnimation(SignUpActivity.this, R.anim.anim_shake);
 
@@ -178,20 +185,20 @@ public class SignUpActivity extends AppCompatActivity {
         else if(password.length() < 6 ){
             editTextPassword.clearAnimation();
             editTextPassword.startAnimation(shake);
-            editTextPassword.setError(getString(io.icode.concaregh.app.R.string.error_password_length));
+            editTextPassword.setError(getString(R.string.error_password_length));
             editTextPassword.requestFocus();
             return;
         }
         else if(phone.isEmpty()){
             editTextPhoneNumber.clearAnimation();
             editTextPhoneNumber.startAnimation(shake);
-            editTextPhoneNumber.setError(getString(io.icode.concaregh.app.R.string.error_empty_phone));
+            editTextPhoneNumber.setError(getString(R.string.error_empty_phone));
             return;
         }
         else if(phone.length() != 10){
             editTextPhoneNumber.clearAnimation();
             editTextPhoneNumber.startAnimation(shake);
-            editTextPhoneNumber.setError(getString(io.icode.concaregh.app.R.string.phone_invalid));
+            editTextPhoneNumber.setError(getString(R.string.phone_invalid));
             return;
         }
         else{
@@ -254,7 +261,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void uploadImage(){
 
-        final StorageReference profileImageRef = storage
+        final StorageReference profileImageRef = FirebaseStorage.getInstance()
                 .getReference("Profile Pic/" + System.currentTimeMillis() + ".jpg");
 
         if(uriProfileImage != null){
@@ -265,7 +272,8 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressBar.setVisibility(View.GONE);
-                            profileImageUrl = profileImageRef.getDownloadUrl().toString();
+                            profileImageUrl = taskSnapshot.getDownloadUrl().toString();
+                            users.setImageUrl(profileImageUrl);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -320,7 +328,9 @@ public class SignUpActivity extends AppCompatActivity {
         //appCompatButtonSignUp.clearAnimation();
         //appCompatButtonSignUp.startAnimation(shake);
 
-        progressBar1.setVisibility(View.VISIBLE);
+        // displays the progressBar
+        //progressBar1.setVisibility(View.VISIBLE);
+        progressDialog.show();
 
         //gets text from the editTExt fields
         final String email = editTextEmail.getText().toString().trim();
@@ -352,6 +362,10 @@ public class SignUpActivity extends AppCompatActivity {
                                         // method call
                                         saveUserInfo();
 
+                                        // Method call to sendVerification
+                                        // link to users's email address
+                                        sendVerificationEmail();
+
                                         // display a success message and verification sent
                                         Snackbar.make(nestedScrollView,getString(R.string.text_sign_up_and_verification_sent),Snackbar.LENGTH_LONG).show();
 
@@ -376,13 +390,6 @@ public class SignUpActivity extends AppCompatActivity {
                                         NotificationManager nm = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
                                         nm.notify(0, notification);
 
-                                        // Method call to sendVerification
-                                        // link to users's email address
-                                        sendVerificationEmail();
-
-                                        // sign out user
-                                        //mAuth.signOut();
-
                                     }
                                     else {
                                         // display a message if there is an error
@@ -400,7 +407,8 @@ public class SignUpActivity extends AppCompatActivity {
                         }
 
                         // dismisses the progressBar
-                        progressBar1.setVisibility(View.GONE);
+                        //progressBar1.setVisibility(View.GONE);
+                        progressDialog.dismiss();
 
                     }
                 });

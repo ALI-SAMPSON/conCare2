@@ -7,17 +7,19 @@ public class Users {
     private String username;
     private String gender;
     private String phoneNumber;
+    private String imageUrl;
 
 
     //default constructor
     public Users(){}
 
     //constructor with one or more parameters
-    public Users(String email,String username,String gender,String phoneNumber){
+    public Users(String email,String username,String gender,String phoneNumber, String imageUrl){
         this.email = email;
         this.username = username;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
+        this.imageUrl = imageUrl;
 
     }
 
@@ -57,5 +59,12 @@ public class Users {
         return phoneNumber;
     }
 
+    public void setImageUrl(String imageUrl){
+        this.imageUrl = imageUrl;
+    }
+
+    public String getImageUrl(){
+        return imageUrl;
+    }
 
 }
