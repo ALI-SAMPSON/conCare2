@@ -406,7 +406,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
         String destination = "233245134112,233501360324,233249959061";
 
         // Sender Id to be used for submitting the message
-        String source = "ConCare GH";
+        String source = "CONCARE GH";
 
         // To what server you need to connect to for submission
         final String server = "rslr.connectbind.com";
@@ -522,7 +522,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
         String destination = editTextPhoneNumber.getText().toString().trim();
 
         // Sender Id to be used for submitting the message
-        String source = "ConCare GH";
+        String source = "CONCARE GH";
 
         // To what server you need to connect to for submission
         final String server = "rslr.connectbind.com";
