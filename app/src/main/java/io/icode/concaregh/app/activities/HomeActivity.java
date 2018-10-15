@@ -78,19 +78,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(io.icode.concaregh.app.R.layout.activity_home);
 
         spinnerGender = findViewById(io.icode.concaregh.app.R.id.spinnerGender);
-        arrayAdapterGender = ArrayAdapter.createFromResource(this, io.icode.concaregh.app.R.array.gender, io.icode.concaregh.app.R.layout.spinner_item_home);
+        arrayAdapterGender = ArrayAdapter.createFromResource(this, R.array.gender, R.layout.spinner_item_home);
         arrayAdapterGender.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
         spinnerGender.setAdapter(arrayAdapterGender);
 
-        mDrawerLayout = findViewById(io.icode.concaregh.app.R.id.drawer);
+        mDrawerLayout = findViewById(R.id.drawer);
 
         // setNavigationViewListener;
-        navigationView = findViewById(io.icode.concaregh.app.R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         // getting reference to the navigation drawer view objects in the nav_header
-        circleImageView = navigationView.getHeaderView(0).findViewById(io.icode.concaregh.app.R.id.circularImageView);
-        username = navigationView.getHeaderView(0).findViewById(io.icode.concaregh.app.R.id.username);
-        email = navigationView.getHeaderView(0).findViewById(io.icode.concaregh.app.R.id.email);
+        circleImageView = navigationView.getHeaderView(0).findViewById(R.id.circularImageView);
+        username = navigationView.getHeaderView(0).findViewById(R.id.username);
+        email = navigationView.getHeaderView(0).findViewById(R.id.email);
 
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, io.icode.concaregh.app.R.string.open, io.icode.concaregh.app.R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
@@ -127,7 +127,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         displayWelcomeMessage();
 
         // method call
-        loadUserInfo();
+        //loadUserInfo();
 
     }
 
@@ -146,19 +146,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
 
         }
-        /*else if(mAuth.getCurrentUser() != null){
-            // starts the home activity if user is already logged in
-            final Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    // hides the progressBar
-                    progressDialog.dismiss();
-                    timer.cancel();
-                }
-            },2000);
 
-        }*/
     }
 
     // Onclick Listener method for floating button
@@ -254,8 +242,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // checks if current user is not null
         if(user != null){
-            // checks if the photo of the current user is not null
-            if(user.getPhotoUrl() != null ){
+            if(user.getPhotoUrl() != null){
                 Glide.with(HomeActivity.this)
                         .load(_photoUrl)
                         .into(circleImageView);
@@ -270,6 +257,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
 
         }
+        /*else if(user != null && _photoUrl != null){
+            // checks if the username of the current user is not null
+            if(user.getDisplayName() != null){
+                username.setText(" Username : " + _username);
+            }
+            // checks if the email of the current user is not null
+            if(user.getEmail() != null){
+                email.setText(" Email : " + _email);
+            }
+            if(user.getPhotoUrl() != null){
+                Glide.with(HomeActivity.this)
+                        .load(_photoUrl)
+                        .into(circleImageView);
+            }
+        }*/
 
     }
 
@@ -285,13 +287,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         if(user != null){
             // checks if the photeUrl of the current user is null
-            if(_username != null && _email != null && _photoUrl == null){
+            if(_username != null && _email != null && _photoUrl != null){
                 username.setText(" Username : " + _username);
                 email.setText( " Email : " + _email);
                 //Load image for user
                 Glide.with(this)
-                        .asBitmap()
-                        .load(io.icode.concaregh.app.R.drawable.no_image)
+                        .load(_photoUrl)
                         .into(circleImageView);
             }
 
@@ -320,10 +321,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // handle navigation item click
         switch (item.getItemId()){
-            case io.icode.concaregh.app.R.id.menu_home:
+            case R.id.menu_home:
                 // do nothing
                 break;
-            case io.icode.concaregh.app.R.id.menu_edit_profile:
+            case R.id.menu_edit_profile:
                 // start EditProfile activity
                 startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
                 // Add a custom animation ot the activity
@@ -332,13 +333,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             /*case R.id.orders:
                 // start orders fragment
                 break;*/
-             case io.icode.concaregh.app.R.id.menu_about:
+             case R.id.menu_about:
                 // start About Us Activity
                  startActivity(new Intent(HomeActivity.this,AboutUsActivity.class));
                  // Add a custom animation ot the activity
                  CustomIntent.customType(HomeActivity.this,"bottom-to-up");
                 break;
-            case io.icode.concaregh.app.R.id.menu_sign_out:
+            case R.id.menu_sign_out:
                 // a call to logout method
                signOut();
                 break;
@@ -362,19 +363,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             return true;
         }
         switch(item.getItemId()){
-            case io.icode.concaregh.app.R.id.menu_about:
+            case R.id.menu_about:
                 // starts the about us activity
                 startActivity(new Intent(this,AboutUsActivity.class));
                 // Add a custom animation ot the activity
                 CustomIntent.customType(HomeActivity.this,"bottom-to-up");
                 break;
-            case io.icode.concaregh.app.R.id.menu_contact:
+            case R.id.menu_contact:
                 // starts the Contact us activity
                 startActivity(new Intent(this,ContactUsActivity.class));
                 // Add a custom animation ot the activity
                 CustomIntent.customType(HomeActivity.this,"up-to-bottom");
                 break;
-            case io.icode.concaregh.app.R.id.menu_exit:
+            case R.id.menu_exit:
                 // close application
                 exitApplication();
             default:

@@ -6,9 +6,11 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -145,7 +147,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressBar.setVisibility(View.GONE);
-                            profileImageUrl = taskSnapshot.getDownloadUrl().toString();
+                            profileImageUrl = profileImageRef.getDownloadUrl().toString();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -205,6 +207,8 @@ public class EditProfileActivity extends AppCompatActivity {
                                 // display an error message
                                 Snackbar.make(relativeLayout,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
                             }
+
+                            //loadUserInfo();
                         }
                     });
         }

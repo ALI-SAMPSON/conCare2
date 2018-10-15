@@ -6,19 +6,18 @@ public class Users {
     private String email;
     private String username;
     private String gender;
-    private String telephoneNumber;
+    private String phoneNumber;
 
 
     //default constructor
-    public Users(){
-    }
+    public Users(){}
 
     //constructor with one or more parameters
-    public Users(String email,String username,String gender,String telephoneNumber){
+    public Users(String email,String username,String gender,String phoneNumber){
         this.email = email;
         this.username = username;
         this.gender = gender;
-        this.telephoneNumber = telephoneNumber;
+        this.phoneNumber = phoneNumber;
 
     }
 
@@ -35,6 +34,7 @@ public class Users {
     public void setUsername(String username){
         this.username = username;
     }
+
     public String getUsername(){
         return username;
     }
@@ -43,16 +43,18 @@ public class Users {
     public void setGender(String gender){
         this.gender = gender;
     }
+
     public String getGender(){
         return gender;
     }
 
     //Getter and Setter Method for TelephoneNumber
-    public void setTelephoneNumber(String telephoneNumber){
-        this.telephoneNumber = telephoneNumber;
+    public void setPhoneNumber(String phoneNumber){
+        this.phoneNumber = phoneNumber;
     }
-    public String getTelephoneNumber(){
-        return telephoneNumber;
+
+    public String getPhoneNumber(){
+        return phoneNumber;
     }
 
 

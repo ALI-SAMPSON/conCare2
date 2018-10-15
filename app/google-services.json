@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "879334319823",
-    "firebase_url": "https://con-care-gh.firebaseio.com",
-    "project_id": "con-care-gh",
-    "storage_bucket": "con-care-gh.appspot.com"
+    "project_number": "270028073199",
+    "firebase_url": "https://con-care-gh-166ea.firebaseio.com",
+    "project_id": "con-care-gh-166ea",
+    "storage_bucket": "con-care-gh-166ea.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:879334319823:android:1422ac2c3ba99c64",
+        "mobilesdk_app_id": "1:270028073199:android:90a612c6a77580a9",
         "android_client_info": {
           "package_name": "io.icode.concaregh.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "879334319823-v90r707a4a5kfd60o40ko8rqqpr4kh0b.apps.googleusercontent.com",
+          "client_id": "270028073199-8m8i6hqjph28h23t7v882dcqvuo16ovg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.icode.concaregh.app",
+            "certificate_hash": "cb8c0af6f657780058faa47307fa5bf4e11d4fcd"
+          }
+        },
+        {
+          "client_id": "270028073199-0olfa1gu8s1f54ue63kaf10musfn580g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCiYDtvCD8ozMr68arU3uRv1kiZgF9OI_I"
+          "current_key": "AIzaSyD0gRBZWxz0BF6TUHzLcSHKd3cTmZEgAvk"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "270028073199-0olfa1gu8s1f54ue63kaf10musfn580g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

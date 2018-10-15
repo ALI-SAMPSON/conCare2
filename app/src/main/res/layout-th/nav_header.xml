@@ -4,14 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
+    android:layout_height="230dp"
     android:padding="20dp"
     android:background="@drawable/nav_header_bg">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circularImageView"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="0dp"
         android:layout_gravity="center_horizontal"
         android:scaleType="centerCrop"
@@ -29,7 +29,7 @@
         app:fontFamily="@font/nunito_semibold"
         android:text="@string/dummy_username"
         android:textColor="@color/colorWhite"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="bold"/>
 
     <TextView
@@ -42,7 +42,7 @@
         app:fontFamily="@font/nunito_semibold"
         android:text="@string/dummy_email"
         android:textColor="@color/colorWhite"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="normal"/>
 
 </LinearLayout>

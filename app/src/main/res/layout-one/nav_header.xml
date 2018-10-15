@@ -10,8 +10,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circularImageView"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_marginTop="0dp"
         android:layout_gravity="center_horizontal"
         android:scaleType="centerCrop"
@@ -29,7 +29,7 @@
         app:fontFamily="@font/nunito_semibold"
         android:text="@string/dummy_username"
         android:textColor="@color/colorWhite"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="bold"/>
 
     <TextView
@@ -42,7 +42,7 @@
         app:fontFamily="@font/nunito_semibold"
         android:text="@string/dummy_email"
         android:textColor="@color/colorWhite"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="normal"/>
 
 </LinearLayout>
