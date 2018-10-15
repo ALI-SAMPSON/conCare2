@@ -1,5 +1,6 @@
 package io.icode.concaregh.app.activities;
 
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -24,11 +25,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import io.icode.concaregh.app.R;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -75,7 +79,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     DatabaseReference userRef;
 
-    FirebaseStorage storage;
+    //FirebaseStorage storage;
 
     // progressBar to load image uploading to database
     ProgressBar progressBar;
@@ -118,7 +122,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         circleImageView = findViewById(R.id.circularImageView);
 
-        storage = FirebaseStorage.getInstance();
+        //storage = FirebaseStorage.getInstance();
 
         mAuth = FirebaseAuth.getInstance();
 

@@ -16,12 +16,12 @@
         android:gravity="center_horizontal|center_vertical"
         android:layout_marginBottom="0dp">
 
-        <ProgressBar
+        <!--<ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"/>-->
 
         <!--<de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/home_imageView"
@@ -33,14 +33,20 @@
             android:scaleType="centerCrop"
             android:src="@mipmap/splash_bg"
             android:contentDescription="@string/todo" /> -->
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+        </View>
 
         <!-- TextInputLayout and AppCompatEdiText for Tel. Number -->
         <android.support.design.widget.TextInputLayout
+            android:layout_below="@+id/view"
             android:id="@+id/phoneNumber_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="50dp"
             android:textAlignment="center"
             android:textColorHint="@color/white_snow">
             <EditText
@@ -75,14 +81,13 @@
             android:layout_gravity="center"
             android:gravity="center_horizontal"
             android:layout_marginTop="0dp"
-            android:layout_marginLeft="0dp"
-            android:orientation="horizontal"
-            android:layout_marginStart="0dp">
+            android:layout_margin="2dp"
+            android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="500dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:weightSum="1">
                 <!--TextView View  and Spinner View for Voter's Gender-->
                 <android.support.v7.widget.AppCompatTextView
@@ -132,13 +137,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:layout_margin="2dp"
             android:layout_gravity="center"
             android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="500dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:weightSum="1">
                 <!--TextView View  and Spinner View for Voter's Gender-->
                 <android.support.v7.widget.AppCompatTextView
@@ -190,12 +196,11 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="0dp"
-            android:layout_marginLeft="0dp"
+            android:layout_margin="2dp"
             android:gravity="center_horizontal"
             android:textAlignment="center"
             android:textColorHint="@color/orange_light"
-            android:visibility="visible"
-            android:layout_marginStart="0dp">
+            android:visibility="visible">
             <EditText
                 android:id="@+id/editTextOtherLocation"
                 android:layout_width="450dp"
@@ -223,13 +228,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:layout_margin="2dp"
             android:layout_gravity="center"
             android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="500dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:weightSum="1">
                 <!--TextView View  and Spinner View for Voter's Gender-->
                 <android.support.v7.widget.AppCompatTextView
@@ -282,14 +288,13 @@
             android:layout_gravity="center"
             android:gravity="center_horizontal"
             android:layout_marginTop="0dp"
-            android:layout_marginLeft="0dp"
-            android:orientation="horizontal"
-            android:layout_marginStart="0dp">
+            android:layout_margin="2dp"
+            android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="500dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:weightSum="1">
                 <!--TextView View  and Spinner View for Voter's Gender-->
                 <android.support.v7.widget.AppCompatTextView
@@ -340,6 +345,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center_horizontal"
+            android:layout_margin="2dp"
             android:textAlignment="center"
             android:textColorHint="@color/orange_light"
             android:visibility="visible">
@@ -371,11 +377,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
-            android:layout_marginLeft="0dp"
+            android:layout_margin="2dp"
             android:gravity="center_horizontal"
             android:textAlignment="center"
-            android:textColorHint="@color/white_snow"
-            android:layout_marginStart="0dp">
+            android:textColorHint="@color/white_snow">
             <EditText
                 android:id="@+id/editTextHostel"
                 android:layout_width="500dp"
@@ -403,6 +408,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:layout_margin="2dp"
             android:textAlignment="center"
             android:textColorHint="@color/white_snow">
             <EditText
@@ -433,14 +439,14 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:gravity="center_horizontal"
             android:layout_gravity="center_horizontal">
 
             <!-- Make payment Button -->
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/appCompatButtonPayment"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="0dp"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -458,7 +464,7 @@
             <!-- Cancel payment Button -->
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/appCompatButtonCancel"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="0dp"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"

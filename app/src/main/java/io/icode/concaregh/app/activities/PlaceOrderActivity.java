@@ -115,11 +115,11 @@ public class PlaceOrderActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        shake = AnimationUtils.loadAnimation(PlaceOrderActivity.this, io.icode.concaregh.app.R.anim.anim_shake);
+        shake = AnimationUtils.loadAnimation(PlaceOrderActivity.this, R.anim.anim_shake);
 
-        nestedScrollView = findViewById(io.icode.concaregh.app.R.id.nestedScrollView);
+        nestedScrollView = findViewById(R.id.nestedScrollView);
 
-        button_layout = findViewById(io.icode.concaregh.app.R.id.button_layout);
+        button_layout = findViewById(R.id.button_layout);
 
         editTextPhoneNumber = findViewById(R.id.editTextPhoneNumber);
         editTextHostelName = findViewById(R.id.editTextHostel);
@@ -129,17 +129,17 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         //spinner view campus
         spinnerCampus = findViewById(io.icode.concaregh.app.R.id.spinnerCampus);
-        arrayAdapterCampus = ArrayAdapter.createFromResource(this, io.icode.concaregh.app.R.array.campus, io.icode.concaregh.app.R.layout.spinner_item);
+        arrayAdapterCampus = ArrayAdapter.createFromResource(this, R.array.campus, R.layout.spinner_item);
         arrayAdapterCampus.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
         spinnerCampus.setAdapter(arrayAdapterCampus);
 
         spinnerLocation = findViewById(io.icode.concaregh.app.R.id.spinnerLocation);
-        arrayAdapterLocation = ArrayAdapter.createFromResource(this, io.icode.concaregh.app.R.array.location, io.icode.concaregh.app.R.layout.spinner_item);
-        arrayAdapterLocation.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
+        arrayAdapterLocation = ArrayAdapter.createFromResource(this, R.array.location, R.layout.spinner_item);
+        arrayAdapterLocation.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinnerLocation.setAdapter(arrayAdapterLocation);
 
         spinnerResidence = findViewById(io.icode.concaregh.app.R.id.spinnerResidence);
-        arrayAdapterResidence = ArrayAdapter.createFromResource(this, io.icode.concaregh.app.R.array.residence, io.icode.concaregh.app.R.layout.spinner_item);
+        arrayAdapterResidence = ArrayAdapter.createFromResource(this, R.array.residence, R.layout.spinner_item);
         arrayAdapterResidence.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
         spinnerResidence.setAdapter(arrayAdapterResidence);
 
@@ -149,12 +149,12 @@ public class PlaceOrderActivity extends AppCompatActivity {
         String gender = getIntent().getExtras().get("gender").toString().trim();
 
         if(gender.equals("MALE")){
-            arrayAdapterContraceptive = ArrayAdapter.createFromResource(this, io.icode.concaregh.app.R.array.con_male, io.icode.concaregh.app.R.layout.spinner_item);
+            arrayAdapterContraceptive = ArrayAdapter.createFromResource(this, R.array.con_male, R.layout.spinner_item);
             arrayAdapterContraceptive.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
             spinnerContraceptive.setAdapter(arrayAdapterContraceptive);
         }
         else if(gender.equals("FEMALE")){
-            arrayAdapterContraceptive = ArrayAdapter.createFromResource(this, io.icode.concaregh.app.R.array.con_female, io.icode.concaregh.app.R.layout.spinner_item);
+            arrayAdapterContraceptive = ArrayAdapter.createFromResource(this, R.array.con_female, R.layout.spinner_item);
             arrayAdapterContraceptive.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
             spinnerContraceptive.setAdapter(arrayAdapterContraceptive);
         }
@@ -579,71 +579,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
     }
 
-    // Method to call the Sender class using TextLocal SMS API
-    /*private void sendSMSMessage(){
-
-        try {
-
-            //getting input from the user
-            String tel_number = editTextTelNumber.getText().toString().trim();
-            String campus = spinnerCampus.getSelectedItem().toString().trim();
-            String location = spinnerLocation.getSelectedItem().toString().trim();
-            String other_location = editTextOtherLocation.getText().toString().trim();
-            String residence = spinnerResidence.getSelectedItem().toString().trim();
-            String contraceptive = spinnerContraceptive.getSelectedItem().toString().trim();
-            String other_contraceptive = editTextOtherContraceptive.getText().toString().trim();
-            String hostel_name = editTextHostelName.getText().toString().trim();
-            String room_number = editTextRoomNumber.getText().toString().trim();
-
-            // receivers mobile number
-            String mobile_number = "+233245134112, +233501360324";
-
-            String _apiKey = "tt8BP4xYcFY-1rUOdyp6AqavwmPHrJXZWk2dg4HcNR";
-
-            FirebaseUser user = mAuth.getCurrentUser();
-
-            String user_name = user.getDisplayName();
-
-            // variable to hold the message to send
-            String message_to_send =  user_name + " has successfully placed an order for " +
-                    contraceptive + ".";
-
-            //String message_to_send = "Ali has successfully placed an order";
-
-            //String key = "3GSbLQ+Jhu4-6PtTkPLyhaLYGgJl7HpfUvuJALKCWB";
-
-                    // Construct data
-            // apiKey is fix or constant
-            String apiKey = "apikey=" + _apiKey;
-            // message always changes
-            String message = "&message=" + message_to_send;
-            // for free demo u can't change the sender id name
-            String sender = "&sender=" + getString(R.string.app_name);
-            String numbers = "&numbers=" + mobile_number;
-
-            // Send data
-            HttpURLConnection conn = (HttpURLConnection) new URL("https://api.txtlocal.com/send/?").openConnection();
-            String data = apiKey + numbers + message + sender;
-            conn.setDoOutput(true);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Length", Integer.toString(data.length()));
-            conn.getOutputStream().write(data.getBytes("UTF-8"));
-            final BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            final StringBuffer stringBuffer = new StringBuffer();
-            String line;
-            while ((line = rd.readLine()) != null) {
-                stringBuffer.append(line);
-                Toast.makeText(PlaceOrderActivity.this, line ,Toast.LENGTH_LONG).show();
-            }
-            rd.close();
-
-        } catch (Exception e) {
-            Toast.makeText(PlaceOrderActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
-            //return "Error "+e;
-        }
-
-    }
-    */
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){

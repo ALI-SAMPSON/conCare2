@@ -127,6 +127,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         onClickCircularImageView();
 
+        onTextViewClick();
+
         // Calling method to display a welcome message
         displayWelcomeMessage();
 
@@ -168,6 +170,47 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+    }
+
+    // Circular ImageView ClickListener
+    private void onClickCircularImageView(){
+
+        circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Adds a custom animation to the view using Library
+                YoYo.with(Techniques.FlipInX).playOn(circleImageView);
+
+                // start EditProfile activity
+                startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
+
+                // Add a custom animation ot the activity
+                CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+
+            }
+        });
+
+    }
+
+    // Add animation to textViews
+    public void onTextViewClick(){
+
+        // adds animation to username TextView
+        username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                YoYo.with(Techniques.Wave).playOn(username);
+            }
+        });
+
+        // adds animation to email TextView
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                YoYo.with(Techniques.Shake).playOn(email);
+            }
+        });
     }
 
     // Method to display a welcome  message to user when he or she logs in
@@ -290,24 +333,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
 
     }
-
-    // Circular ImageView ClickListener
-    private void onClickCircularImageView(){
-
-        circleImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                YoYo.with(Techniques.RubberBand).playOn(circleImageView);
-                // start EditProfile activity
-                startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
-                // Add a custom animation ot the activity
-                CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
-            }
-        });
-
-    }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item){

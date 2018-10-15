@@ -17,6 +17,8 @@ import io.icode.concaregh.app.R;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.firebase.auth.FirebaseAuth;
 
 import maes.tech.intentanim.CustomIntent;
@@ -30,6 +32,8 @@ public class SplashScreenActivity extends AppCompatActivity {
     private TextView watermark;
 
     private final int SPLASH_SCREEN_DISPLAY_TIME = 4000;
+
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     private FirebaseAuth mAuth;
 
@@ -46,6 +50,9 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         //watermark = findViewById(R.id.water_mark);
 
+        // method call to check google play services is available on device
+        checkPlayServices();
+
         progressBar = findViewById(R.id.progressBar);
         // changes color of progressBar to you desired color
         progressBar.getIndeterminateDrawable().setColorFilter(0xff676767,PorterDuff.Mode.MULTIPLY);
@@ -59,6 +66,26 @@ public class SplashScreenActivity extends AppCompatActivity {
         // method call
         runAnimation();
 
+    }
+
+    // checks for availability of Google Play Services
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                //Log.i(TAG, "This device is not supported.");
+                // display a toast
+                Toast.makeText(SplashScreenActivity.this,"This device is not supported.",Toast.LENGTH_LONG)
+                        .show();
+                finish();
+            }
+            return false;
+        }
+        return true;
     }
 
 
@@ -102,7 +129,8 @@ public class SplashScreenActivity extends AppCompatActivity {
                     CustomIntent.customType(SplashScreenActivity.this,"fadein-to-fadeout");
 
                     super.run();
-                } catch (InterruptedException e) {
+                }
+                catch (InterruptedException e) {
                     // displays a toast
                     Toast.makeText(SplashScreenActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
                 }
