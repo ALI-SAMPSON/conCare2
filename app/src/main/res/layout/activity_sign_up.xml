@@ -299,7 +299,7 @@
         <!-- Link to the Login Page -->
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/appCompatButtonLoginLink"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -307,7 +307,7 @@
             android:text="@string/login_link"
             android:textColor="@color/colorWhite"
             android:textAllCaps="false"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="normal"
             app:fontFamily="@font/nunito_semibold"
             android:textAlignment="center"

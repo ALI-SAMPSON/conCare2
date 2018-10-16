@@ -296,7 +296,7 @@
         <!-- Link to the Login Page -->
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/appCompatButtonLoginLink"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:layout_width="500dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"

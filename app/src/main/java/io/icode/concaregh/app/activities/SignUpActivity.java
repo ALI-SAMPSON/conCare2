@@ -276,8 +276,17 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressBar.setVisibility(View.GONE);
-                            profileImageUrl = taskSnapshot.getDownloadUrl().toString();
-                            users.setImageUrl(profileImageUrl);
+                            //profileImageUrl = taskSnapshot.getDownloadUrl().toString();
+                            // gets the download Url of the image
+                            profileImageRef.getDownloadUrl()
+                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Uri downloadUrl = uri;
+                                    profileImageUrl = downloadUrl.toString();
+                                    users.setImageUrl(downloadUrl.toString());
+                                }
+                            });
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -328,10 +337,6 @@ public class SignUpActivity extends AppCompatActivity {
     // signUp method
     public void signUp(){
 
-        // add an animation to shake button
-        //appCompatButtonSignUp.clearAnimation();
-        //appCompatButtonSignUp.startAnimation(shake);
-
         // displays the progressBar
         //progressBar1.setVisibility(View.VISIBLE);
         progressDialog.show();
@@ -372,6 +377,8 @@ public class SignUpActivity extends AppCompatActivity {
 
                                         // display a success message and verification sent
                                         Snackbar.make(nestedScrollView,getString(R.string.text_sign_up_and_verification_sent),Snackbar.LENGTH_LONG).show();
+
+                                        //mAuth.signOut();
 
                                         //clears text Fields
                                         clearTextFields();

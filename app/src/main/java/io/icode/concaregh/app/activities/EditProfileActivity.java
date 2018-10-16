@@ -38,6 +38,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.icode.concaregh.app.models.Users;
 import maes.tech.intentanim.CustomIntent;
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -60,6 +61,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
 
+    Users users;
+
     private static final int  REQUEST_CODE = 1;
 
     @Override
@@ -76,6 +79,8 @@ public class EditProfileActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        users = new Users();
 
         progressBar = findViewById(R.id.progressBar);
 
@@ -155,8 +160,20 @@ public class EditProfileActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressBar.setVisibility(View.GONE);
-                            //profileImageUrl = profileImageRef.getDownloadUrl().toString();
-                            profileImageUrl = taskSnapshot.getDownloadUrl().toString();
+
+                            profileImageRef.getDownloadUrl()
+                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                          Uri downloadUrl = uri;
+                                          /*  sets the ProfileImageUrl and setImageUrl
+                                            ** method of the Users class to the URL and
+                                            */
+                                          profileImageUrl = downloadUrl.toString();
+                                          users.setImageUrl(downloadUrl.toString());
+                                        }
+                                    });
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
