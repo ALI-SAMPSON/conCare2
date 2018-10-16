@@ -46,10 +46,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(io.icode.concaregh.app.R.layout.activity_splash_screen);
 
-        //app_title = findViewById(R.id.splash_screen_text);
-
-        //watermark = findViewById(R.id.water_mark);
-
         // method call to check google play services is available on device
         checkPlayServices();
 
@@ -94,14 +90,14 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onStart();
         if(mAuth.getCurrentUser() != null){
 
-            // finishes the activity
-            finish();
-
             // starts the activity
             startActivity(new Intent(SplashScreenActivity.this,HomeActivity.class));
 
             // Add a custom animation ot the activity
             CustomIntent.customType(SplashScreenActivity.this,"fadein-to-fadeout");
+
+            // finishes the activity
+            finish();
         }
         else{
             // open splash screen first
@@ -119,14 +115,14 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                     sleep(SPLASH_SCREEN_DISPLAY_TIME);
 
-                    // finishes the activity
-                    finish(); // this prevents the app from going back to the splash screen
-
                     //Creates and start the intent of the next activity
                     startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
 
                     // Add a custom animation ot the activity
                     CustomIntent.customType(SplashScreenActivity.this,"fadein-to-fadeout");
+
+                    // finishes the activity
+                    finish(); // this prevents the app from going back to the splash screen
 
                     super.run();
                 }

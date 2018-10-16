@@ -37,7 +37,6 @@
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
-
             <!-- Deep linking intent-filter to identify app online when users search -->
             <intent-filter android:label="@string/filter_title_con_care_gh">
                 <action android:name="android.intent.action.VIEW" />
@@ -52,7 +51,6 @@
                 <data android:scheme="example"
                     android:host="google" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".activities.AboutUsActivity"
@@ -81,108 +79,29 @@
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme">
 
-            <!-- Deep linking intent-filter to identify app online when users search -->
-            <intent-filter android:label="@string/filter_title_con_care_gh">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-                <data android:scheme="http"
-                    android:host="www.example.com"
-                    android:pathPrefix="/google" />
-                <!-- note that the leading "/" is required for pathPrefix-->
-                <!-- Accepts URIs that begin with "example://gizmos” -->
-                <data android:scheme="example"
-                    android:host="google" />
-            </intent-filter>
-
         </activity>
         <activity
             android:name=".activities.PlaceOrderActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme.order">
-
-            <!-- Deep linking intent-filter to identify app online when users search -->
-            <intent-filter android:label="@string/filter_title_con_care_gh">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-                <data android:scheme="http"
-                    android:host="www.example.com"
-                    android:pathPrefix="/google" />
-                <!-- note that the leading "/" is required for pathPrefix-->
-                <!-- Accepts URIs that begin with "example://gizmos” -->
-                <data android:scheme="example"
-                    android:host="google" />
-            </intent-filter>
-
         </activity>
         <activity
             android:name=".activities.EditProfileActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme.profile">
-
-            <!-- Deep linking intent-filter to identify app online when users search -->
-            <intent-filter android:label="@string/filter_title_con_care_gh">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-                <data android:scheme="http"
-                    android:host="www.example.com"
-                    android:pathPrefix="/google" />
-                <!-- note that the leading "/" is required for pathPrefix-->
-                <!-- Accepts URIs that begin with "example://gizmos” -->
-                <data android:scheme="example"
-                    android:host="google" />
-            </intent-filter>
-
         </activity>
         <activity
             android:name=".activities.ContactUsActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme.order">
-
-            <!-- Deep linking intent-filter to identify app online when users search -->
-            <intent-filter android:label="@string/filter_title_con_care_gh">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-                <data android:scheme="http"
-                    android:host="www.example.com"
-                    android:pathPrefix="/google" />
-                <!-- note that the leading "/" is required for pathPrefix-->
-                <!-- Accepts URIs that begin with "example://gizmos” -->
-                <data android:scheme="example"
-                    android:host="google" />
-            </intent-filter>
-
         </activity>
         <activity android:name=".activities.ResetPasswordActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Reset_Password">
-
-            <!-- Deep linking intent-filter to identify app online when users search -->
-            <intent-filter android:label="@string/filter_title_con_care_gh">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-                <data android:scheme="http"
-                    android:host="www.example.com"
-                    android:pathPrefix="/google" />
-                <!-- note that the leading "/" is required for pathPrefix-->
-                <!-- Accepts URIs that begin with "example://gizmos” -->
-                <data android:scheme="example"
-                    android:host="google" />
-            </intent-filter>
-
         </activity>
 
     </application>

@@ -43,7 +43,7 @@
         <!-- TextInputLayout and AppCompatEdiText for Tel. Number -->
         <android.support.design.widget.TextInputLayout
             android:layout_below="@+id/view"
-            android:id="@+id/phoneNumber_container"
+            android:id="@+id/phoneNum_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -51,7 +51,7 @@
             android:textAlignment="center"
             android:textColorHint="@color/white_snow">
             <EditText
-                android:id="@+id/editTextPhoneNumber"
+                android:id="@+id/editTextMobile"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -62,7 +62,7 @@
                 android:drawablePadding="@dimen/padding_normal"
                 android:textColor="@color/white_snow"
                 android:textColorHint="@color/orange_deep"
-                android:inputType="phone"
+                android:inputType="text"
                 android:textSize="16sp"
                 app:fontFamily="@font/nunito_semibold"
                 android:maxLength="15"

@@ -142,14 +142,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onStart();
         if(mAuth.getCurrentUser() == null){
 
-            // finishes the activity
-            finish();
-
             // starts the login activity currently logged in user is null(login_bg_1 logged in user)
             startActivity(new Intent(HomeActivity.this,LoginActivity.class));
 
             // Add a custom animation ot the activity
             CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+
+            // finishes the activity
+            finish();
 
         }
 
@@ -466,12 +466,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(DialogInterface dialogInterface, int i) {
                 // logs current user out of the system
                 mAuth.signOut();
-                // finishes the activity
-                finish();
                 // starts the activity
                 startActivity(new Intent(HomeActivity.this,LoginActivity.class));
                 // Add a custom animation ot the activity
                 CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+
+                // finishes the activity
+                finish();
             }
         });
 
@@ -490,8 +491,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     //Click Listener for proceed button on homeActivity
     public void onProceedButtonClick(View view) {
-
-        // sets animation on the button
 
         // adds a custom animation
         YoYo.with(Techniques.FlipInY).playOn(btn_proceed);

@@ -121,7 +121,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         button_layout = findViewById(R.id.button_layout);
 
-        editTextPhoneNumber = findViewById(R.id.editTextPhoneNumber);
+        editTextPhoneNumber = findViewById(R.id.editTextMobile);
         editTextHostelName = findViewById(R.id.editTextHostel);
         editTextRoomNumber = findViewById(R.id.editTextRoomNum);
         editTextOtherLocation = findViewById(R.id.editTextOtherLocation);
@@ -188,11 +188,10 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar);
 
-        progressDialog = new ProgressDialog(this, ProgressDialog.THEME_HOLO_DARK);
+        progressDialog = new ProgressDialog(this, ProgressDialog.THEME_HOLO_LIGHT);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setTitle("Placing Order");
         progressDialog.setMessage("please wait...");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-
 
     }
 
@@ -224,15 +223,15 @@ public class PlaceOrderActivity extends AppCompatActivity {
             // starts animation on this view
             editTextPhoneNumber.clearAnimation();
             editTextPhoneNumber.startAnimation(shake);
-            editTextPhoneNumber.setError(getString(io.icode.concaregh.app.R.string.error_text_phone_number));
+            editTextPhoneNumber.setError(getString(R.string.error_text_phone_number));
             editTextPhoneNumber.requestFocus();
             return;
         }
-        else if(phone_number.length() != 10){
+        else if(phone_number.length() != 12){
             // starts animation on this view
             editTextPhoneNumber.clearAnimation();
             editTextPhoneNumber.startAnimation(shake);
-            editTextPhoneNumber.setError(getString(io.icode.concaregh.app.R.string.phone_invalid));
+            editTextPhoneNumber.setError(getString(R.string.phone_invalid));
             editTextPhoneNumber.requestFocus();
             return;
         }
@@ -240,7 +239,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
             // starts animation on this view
             editTextRoomNumber.clearAnimation();
             editTextRoomNumber.startAnimation(shake);
-            editTextRoomNumber.setError(getString(io.icode.concaregh.app.R.string.error_text_room_number));
+            editTextRoomNumber.setError(getString(R.string.error_text_room_number));
             editTextRoomNumber.requestFocus();
             return;
         }
@@ -324,10 +323,10 @@ public class PlaceOrderActivity extends AppCompatActivity {
                         // to company phone number
                         // after users successfully
                         // place order
-                        sendSMSMessageToAdmins();
+                        //sendSMSMessageToAdmins();
 
                         // sends message to user after placing order
-                        //sendSMSMessageToUser();
+                        sendSMSMessageToUser();
 
                     } else {
                         // display error message
@@ -520,6 +519,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         // getting mobile number from EditText
         String destination = editTextPhoneNumber.getText().toString().trim();
+        //String destination = "233209062445";
 
         // Sender Id to be used for submitting the message
         String source = "CONCARE GH";
@@ -585,14 +585,14 @@ public class PlaceOrderActivity extends AppCompatActivity {
        switch (item.getItemId()){
            case android.R.id.home:
 
-               // finishes this activity
-               finish();
-
                //send user back to home activity
                startActivity(new Intent(this, HomeActivity.class));
 
                // Add a custom animation ot the activity
                CustomIntent.customType(PlaceOrderActivity.this,"fadein-to-fadeout");
+
+               // finishes this activity
+               finish();
 
                break;
                default:
@@ -620,13 +620,13 @@ public class PlaceOrderActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        // finishes the activity
-        finish();
-
         // starts the Home Activity
         startActivity(new Intent(PlaceOrderActivity.this,HomeActivity.class));
 
         // Add a custom animation ot the activity
         CustomIntent.customType(PlaceOrderActivity.this,"fadein-to-fadeout");
+
+        // finishes the activity
+        finish();
     }
 }

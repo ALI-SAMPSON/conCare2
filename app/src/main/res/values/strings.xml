@@ -243,6 +243,9 @@
     <string name="default_notification_channel_id"
         translatable="false">Default Notification Channel Id</string>
 
+    <string name="prefix_number"
+        translatable="false">233</string>
+
     <!-- Deep linking intent-filter-->
     <string name="filter_title_con_care_gh"
         translatable="false">Con Care GH </string>

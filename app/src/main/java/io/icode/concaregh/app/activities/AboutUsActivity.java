@@ -27,7 +27,7 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(io.icode.concaregh.app.R.layout.activity_about_us);
+        setContentView(R.layout.activity_about_us);
 
         if(getSupportActionBar() != null){
             getSupportActionBar().setTitle("About Us");
@@ -105,12 +105,12 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
-                // finishes the activity
-                finish();
                 //starts the home activity
                 startActivity(new Intent(this,HomeActivity.class));
                 // Add a custom animation ot the activity
                 CustomIntent.customType(AboutUsActivity.this,"fadein-to-fadeout");
+                // finishes the activity
+                finish();
                 break;
                 default:
                     break;
@@ -128,15 +128,14 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        // finishes the activity
-        finish();
-
         // open the LoginActivity
         startActivity(new Intent(AboutUsActivity.this,HomeActivity.class));
 
         // Add a custom animation ot the activity
         CustomIntent.customType(AboutUsActivity.this,"fadein-to-fadeout");
+
+        // finishes the activity
+        finish();
 
     }
 }

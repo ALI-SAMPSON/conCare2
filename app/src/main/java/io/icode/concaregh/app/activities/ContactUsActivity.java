@@ -14,7 +14,7 @@ public class ContactUsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(io.icode.concaregh.app.R.layout.activity_contact_us);
+        setContentView(R.layout.activity_contact_us);
 
         if(getSupportActionBar() != null){
             getSupportActionBar().setTitle(getString(io.icode.concaregh.app.R.string.text_contact));
@@ -30,11 +30,11 @@ public class ContactUsActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case android.R.id.home:
-                // sends user to Home Activity
-                finish();
                 startActivity(new Intent(ContactUsActivity.this,HomeActivity.class));
                 // Add a custom animation ot the activity
                 CustomIntent.customType(ContactUsActivity.this,"fadein-to-fadeout");
+                // sends user to Home Activity
+                finish();
                 break;
                 default:
                     break;
@@ -52,15 +52,14 @@ public class ContactUsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        // finishes the activity
-        finish();
-
         // open the LoginActivity
         startActivity(new Intent(ContactUsActivity.this,HomeActivity.class));
 
         // Add a custom animation ot the activity
         CustomIntent.customType(ContactUsActivity.this,"fadein-to-fadeout");
+
+        // finishes the activity
+        finish();
 
     }
 }

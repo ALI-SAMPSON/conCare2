@@ -12,6 +12,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -39,9 +40,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextPassword;
 
-    private AppCompatButton forgot_password;
-    private AppCompatButton appCompatButtonLogin;
-    private AppCompatButton appCompatButtonSignUpLink;
+    private Button forgot_password;
+    private Button buttonLogin;
+    Button buttonSignUpLink;
 
     private CardView my_card;
 
@@ -58,33 +59,16 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(io.icode.concaregh.app.R.layout.activity_login);
+        setContentView(R.layout.activity_login);
 
-        app_logo = findViewById(io.icode.concaregh.app.R.id.app_logo);
+        app_logo = findViewById(R.id.app_logo);
 
         // scales the image in and out
         app_logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                /*
-                if(!isCircularImageViewClicked){
-                    // instance of the animation class
-                    Animation zoom_in = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_zoom_in);
-                    app_logo.startAnimation(zoom_in);
-                    isCircularImageViewClicked = !isCircularImageViewClicked;
-                }
-
-                else{
-                    // instance of the animation class
-                    Animation zoom_out = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim_zoom_out);
-                    app_logo.startAnimation(zoom_out);
-                    isCircularImageViewClicked = !isCircularImageViewClicked;
-                }
-                */
-
                 // instance of the animation class
-                Animation scale_image = AnimationUtils.loadAnimation(getApplicationContext(), io.icode.concaregh.app.R.anim.anim_scale_imageview);
+                Animation scale_image = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_scale_imageview);
                 app_logo.clearAnimation();
                 app_logo.startAnimation(scale_image);
             }
@@ -97,9 +81,9 @@ public class LoginActivity extends AppCompatActivity {
         my_card = findViewById(io.icode.concaregh.app.R.id.login_cardView);
 
         // getting the ids of the views
-        forgot_password = findViewById(io.icode.concaregh.app.R.id.forgot_password);
-        appCompatButtonLogin = findViewById(io.icode.concaregh.app.R.id.appCompatButtonLogin);
-        appCompatButtonSignUpLink = findViewById(io.icode.concaregh.app.R.id.appCompatButtonSignUpLink);
+        forgot_password = findViewById(R.id.forgot_password);
+        buttonLogin = findViewById(R.id.ButtonLogin);
+        buttonSignUpLink = findViewById(R.id.ButtonSignUpLink);
 
         relativeLayout = findViewById(io.icode.concaregh.app.R.id.relativeLayout);
 
@@ -128,14 +112,14 @@ public class LoginActivity extends AppCompatActivity {
         // checks if user is currently logged in
         if(mAuth.getCurrentUser() != null){
 
-            // finish the activity
-            finish();
-
             // start the activity
             startActivity(new Intent(LoginActivity.this,HomeActivity.class));
 
             // Add a custom animation ot the activity
             CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
+
+            // finish the activity
+            finish();
         }
     }
 
@@ -210,8 +194,8 @@ public class LoginActivity extends AppCompatActivity {
     public void loginUser(){
 
         // shakes the button
-        appCompatButtonLogin.clearAnimation();
-        appCompatButtonLogin.startAnimation(shake);
+        buttonLogin.clearAnimation();
+        buttonLogin.startAnimation(shake);
 
         // shows the progressBar
         //progressBar.setVisibility(View.VISIBLE);
@@ -262,11 +246,11 @@ public class LoginActivity extends AppCompatActivity {
             // start the home activity
             startActivity(new Intent(LoginActivity.this,HomeActivity.class));
 
-            // finishes this activity(prevents user from going back to this activity when back button is pressed)
-            finish();
-
             // Add a custom animation ot the activity
             CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
+
+            // finishes this activity(prevents user from going back to this activity when back button is pressed)
+            finish();
 
         }
         else {
@@ -277,14 +261,14 @@ public class LoginActivity extends AppCompatActivity {
             // signs user out and restarts the Login Activity
             mAuth.signOut();
 
-            // finish the activity
-            finish();
-
             // restarts the activity
             startActivity(new Intent (LoginActivity.this,LoginActivity.class));
 
             // Add a custom animation ot the activity
             CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
+
+            // finish the activity
+            finish();
 
         }
 
@@ -293,18 +277,14 @@ public class LoginActivity extends AppCompatActivity {
     // Link to the signUp Interface
     public void onSignUpLinkClick(View view){
 
-        // shakes the button
-        //appCompatButtonSignUpLink.clearAnimation();
-        //appCompatButtonSignUpLink.startAnimation(shake);
-
-        // finish the activity
-        finish();
-
         // creates an instance of the intent class and opens the signUpctivity
         startActivity(new Intent(this,SignUpActivity.class));
 
         // Add a custom animation ot the activity
         CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
+
+        // finish the activity
+        finish();
     }
 
     // Method to clear text fields
@@ -319,14 +299,14 @@ public class LoginActivity extends AppCompatActivity {
         // shakes the button when clicked
         YoYo.with(Techniques.FlipOutX).playOn(forgot_password);
 
-        // finish the activity
-        finish();
-
         // start the ResetPassword Activity
         startActivity(new Intent(LoginActivity.this,ResetPasswordActivity.class));
 
         // Add a custom animation ot the activity
         CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
+
+        // finish the activity
+        finish();
     }
 
     @Override
@@ -340,12 +320,12 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        // finishes the activity
-        finish();
-
         moveTaskToBack(true);
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(1);
+
+        // finishes the activity
+        finish();
 
         // Add a custom animation ot the activity
         //CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
