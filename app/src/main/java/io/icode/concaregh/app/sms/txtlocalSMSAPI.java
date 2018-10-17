@@ -1,4 +1,4 @@
-package io.icode.concaregh.app.firebaseMessaging;
+package io.icode.concaregh.app.sms;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

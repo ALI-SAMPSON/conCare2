@@ -142,7 +142,7 @@
 
     <!--Login Button-->
     <Button
-        android:id="@+id/ButtonLogin"
+        android:id="@+id/buttonLogin"
         android:layout_marginTop="35dp"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
@@ -161,13 +161,13 @@
 
     <!-- Link to the user sign up page -->
     <Button
-        android:id="@+id/ButtonSignUpLink"
+        android:id="@+id/buttonSignUpLink"
         android:layout_marginTop="20dp"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:layout_below="@+id/ButtonLogin"
+        android:layout_below="@+id/buttonLogin"
         android:text="@string/sign_up_link"
         android:textColor="@color/orange_light"
         app:fontFamily="@font/nunito_semibold"
@@ -181,11 +181,11 @@
     <!--Progress Bar-->
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_below="@+id/appCompatButtonSignUpLink"
+        android:layout_below="@+id/buttonSignUpLink"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:visibility="gone"/>
 

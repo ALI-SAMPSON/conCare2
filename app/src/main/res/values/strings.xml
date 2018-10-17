@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name"
-        translatable="false">ConCare GH</string>
+        translatable="false">CONCARE GH</string>
     <string name="hint_email"
         translatable="false">Email</string>
     <string name="hint_password"
@@ -56,7 +56,7 @@
     <string name="lbl_forgot_password"
         translatable="false">Forgot Password?</string>
     <string name="msg_forgot_password"
-        translatable="false">Please enter your email to reset password</string>
+        translatable="false">Please enter your email address to reset password</string>
     <string name="btn_reset_password"
         translatable="false">Reset Password</string>
     <string name="btn_back"
@@ -98,6 +98,8 @@
         translatable="false">Enter your room number"</string>
     <string name="error_text_phone_number"
         translatable="false">Phone number is a required field</string>
+    <string name="error_number_prefix"
+        translatable="false"> Please make sure your phone number is preceded by 233. e.g. 23324*******</string>
 
     <string name="welcome_msg_home"
         translatable="false">Welcome To ConCare GH</string>

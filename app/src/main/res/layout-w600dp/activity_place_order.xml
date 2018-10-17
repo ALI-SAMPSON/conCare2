@@ -40,10 +40,23 @@
             android:layout_height="50dp">
         </View>
 
+        <TextView
+            android:id="@+id/hint_phone"
+            android:layout_below="@+id/view"
+            android:layout_marginTop="50dp"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            app:fontFamily="@font/nunito_semibold"
+            android:padding="10dp"
+            android:text="@string/error_number_prefix"
+            android:textSize="16sp"
+            android:textColor="@color/white_dim"/>
+
         <!-- TextInputLayout and AppCompatEdiText for Tel. Number -->
         <android.support.design.widget.TextInputLayout
-            android:layout_below="@+id/view"
-            android:id="@+id/phoneNumber_container"
+            android:layout_below="@+id/hint_phone"
+            android:id="@+id/phoneNum_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -51,7 +64,7 @@
             android:textAlignment="center"
             android:textColorHint="@color/white_snow">
             <EditText
-                android:id="@+id/editTextPhoneNumber"
+                android:id="@+id/editTextMobile"
                 android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -74,7 +87,7 @@
 
         <!--TextInputLayout and LinearLayout and spinner View for user's Campus-->
         <android.support.design.widget.TextInputLayout
-            android:layout_below="@+id/phoneNumber_container"
+            android:layout_below="@+id/phoneNum_container"
             android:id="@+id/textInputLayoutCampus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

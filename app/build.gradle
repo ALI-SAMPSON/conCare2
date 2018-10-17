@@ -14,14 +14,14 @@ android {
         multiDexEnabled true
     }
     // added to remove errors during build
-    /*lintOptions {
-        checkReleaseBuilds true
+    lintOptions {
+        //checkReleaseBuilds true
         // Or, if you prefer, you can continue to check for errors in release builds,
         // but continue the build even when errors are found:
-        abortOnError true
+        abortOnError false
     }
 
-    signingConfigs {
+    /*signingConfigs {
         myconfig {
             keyAlias 'key0'
             keyPassword 'Brainbox'

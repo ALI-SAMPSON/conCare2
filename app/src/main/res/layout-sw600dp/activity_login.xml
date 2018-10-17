@@ -9,16 +9,6 @@
     android:background="@color/colorWhite"
     tools:context=".activities.LoginActivity">
 
-    <!--Progress Bar-->
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_margin="10dp"
-        android:visibility="gone"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="430dp"
@@ -124,7 +114,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <!-- Link to reset the user password -->
-        <android.support.v7.widget.AppCompatButton
+        <Button
             android:id="@+id/forgot_password"
             android:layout_marginTop="10dp"
             android:layout_width="350dp"
@@ -150,8 +140,8 @@
     </android.support.v7.widget.CardView>
 
     <!--Login Button-->
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/appCompatButtonLogin"
+    <Button
+        android:id="@+id/buttonLogin"
         android:layout_marginTop="35dp"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
@@ -169,14 +159,14 @@
         android:onClick="onLoginButtonClick"/>
 
     <!-- Link to the user sign up page -->
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/appCompatButtonSignUpLink"
+    <Button
+        android:id="@+id/buttonSignUpLink"
         android:layout_marginTop="20dp"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:layout_below="@+id/appCompatButtonLogin"
+        android:layout_below="@+id/buttonLogin"
         android:text="@string/sign_up_link"
         android:textColor="@color/orange_light"
         app:fontFamily="@font/nunito_semibold"
@@ -186,5 +176,16 @@
         android:textAlignment="center"
         android:background="@drawable/round_corner_button_with_stroke"
         android:onClick="onSignUpLinkClick"/>
+
+    <!--Progress Bar-->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_below="@+id/buttonSignUpLink"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:visibility="gone"/>
 
 </RelativeLayout>

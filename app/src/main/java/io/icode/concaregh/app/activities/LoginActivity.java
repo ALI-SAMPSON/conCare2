@@ -2,11 +2,11 @@ package io.icode.concaregh.app.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.CardView;
 import android.util.Patterns;
 import android.view.View;
@@ -33,9 +33,7 @@ import maes.tech.intentanim.CustomIntent;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private ProgressBar progressBar;
-
-    private ProgressDialog progressDialog;
+    ProgressBar progressBar;
 
     private EditText editTextEmail;
     private EditText editTextPassword;
@@ -82,21 +80,19 @@ public class LoginActivity extends AppCompatActivity {
 
         // getting the ids of the views
         forgot_password = findViewById(R.id.forgot_password);
-        buttonLogin = findViewById(R.id.ButtonLogin);
-        buttonSignUpLink = findViewById(R.id.ButtonSignUpLink);
+        buttonLogin = findViewById(R.id.buttonLogin);
+        buttonSignUpLink = findViewById(R.id.buttonSignUpLink);
 
         relativeLayout = findViewById(io.icode.concaregh.app.R.id.relativeLayout);
 
         progressBar = findViewById(io.icode.concaregh.app.R.id.progressBar);
-
-        progressDialog = new ProgressDialog(this, ProgressDialog.THEME_HOLO_LIGHT);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage("please wait...");
+        // sets a custom color on progressBar
+        //progressBar.getIndeterminateDrawable().setColorFilter(0xFE5722,PorterDuff.Mode.MULTIPLY);
 
         mAuth = FirebaseAuth.getInstance();
 
         // animation to anim_shake button
-        shake = AnimationUtils.loadAnimation(LoginActivity.this, io.icode.concaregh.app.R.anim.anim_shake);
+        shake = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.anim_shake);
 
         // animation to bounce  App logo on Login screen
         bounce_views();
@@ -198,8 +194,7 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.startAnimation(shake);
 
         // shows the progressBar
-        //progressBar.setVisibility(View.VISIBLE);
-        progressDialog.show();
+        progressBar.setVisibility(View.VISIBLE);
 
         //gets text from the editTExt fields
         final String _email = editTextEmail.getText().toString().trim();
@@ -220,8 +215,7 @@ public class LoginActivity extends AppCompatActivity {
                           Snackbar.make(relativeLayout,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
                       }
                         // dismisses the progressBar
-                        //progressBar.setVisibility(View.GONE);
-                      progressDialog.dismiss();
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
 

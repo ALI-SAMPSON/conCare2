@@ -40,6 +40,11 @@ allprojects {
         maven {
             url 'https://maven.google.com/'
         }
+
+        // Removes deprecated API warnings
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:deprecation"
+        }
     }
 }
 

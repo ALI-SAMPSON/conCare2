@@ -1,8 +1,5 @@
 package io.icode.concaregh.app.activities;
 
-import android.app.Dialog;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -13,26 +10,25 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatSpinner;
 import android.util.Patterns;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import io.icode.concaregh.app.R;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -62,8 +58,8 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText editTextPassword;
     private EditText editTextPhoneNumber;
 
-    private AppCompatButton appCompatButtonSignUp;
-    private AppCompatButton appCompatButtonLoginLink;
+    Button ButtonSignUp;
+    Button ButtonLoginLink;
 
     private AppCompatSpinner spinnerGender;
     private ArrayAdapter<CharSequence> spinnerAdapter;
@@ -87,8 +83,6 @@ public class SignUpActivity extends AppCompatActivity {
     // progressBar to load signUp user
     ProgressBar progressBar1;
 
-    ProgressDialog progressDialog;
-
     private CircleImageView circleImageView;
 
     Uri uriProfileImage;
@@ -98,6 +92,10 @@ public class SignUpActivity extends AppCompatActivity {
     Users users;
 
     private static final int  REQUEST_CODE = 1;
+
+    private String CHANNEL_ID = "notification_channel_id";
+
+    private int notificationId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,8 +108,8 @@ public class SignUpActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextPhoneNumber = findViewById(R.id.editTextPhoneNumber);
 
-        appCompatButtonSignUp = findViewById(R.id.appCompatButtonSignUp);
-        appCompatButtonLoginLink = findViewById(R.id.appCompatButtonLoginLink);
+        ButtonSignUp = findViewById(R.id.buttonSignUp);
+        ButtonLoginLink = findViewById(R.id.buttonLoginLink);
 
         spinnerGender = findViewById(R.id.spinnerGender);
         spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.gender, R.layout.spinner_item_sign_up);
@@ -121,8 +119,6 @@ public class SignUpActivity extends AppCompatActivity {
         nestedScrollView = findViewById(R.id.nestedScrollView);
 
         circleImageView = findViewById(R.id.circularImageView);
-
-        //storage = FirebaseStorage.getInstance();
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -137,10 +133,8 @@ public class SignUpActivity extends AppCompatActivity {
         //progressBar.getIndeterminateDrawable().setColorFilter(0xFE5722,PorterDuff.Mode.MULTIPLY);
 
         progressBar1 = findViewById(R.id.progressBar1);
-
-        progressDialog = new ProgressDialog(this, ProgressDialog.THEME_HOLO_LIGHT);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage("please wait...");
+        // sets a custom color on progressBar
+        //progressBar1.getIndeterminateDrawable().setColorFilter(0xFE5722,PorterDuff.Mode.MULTIPLY);
 
         shake = AnimationUtils.loadAnimation(SignUpActivity.this, R.anim.anim_shake);
 
@@ -338,8 +332,7 @@ public class SignUpActivity extends AppCompatActivity {
     public void signUp(){
 
         // displays the progressBar
-        //progressBar1.setVisibility(View.VISIBLE);
-        progressDialog.show();
+        progressBar1.setVisibility(View.VISIBLE);
 
         //gets text from the editTExt fields
         final String email = editTextEmail.getText().toString().trim();
@@ -371,6 +364,37 @@ public class SignUpActivity extends AppCompatActivity {
                                         // method call
                                         saveUserInfo();
 
+                                        //clears text Fields
+                                        clearTextFields();
+
+                                        // Sends a notification to the user after signing up successfully
+                                        // Creating an explicit intent for the activity in the app
+                                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        PendingIntent pendingIntent = PendingIntent.getActivity(SignUpActivity.this, 0, intent, 0);
+
+                                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(SignUpActivity.this, CHANNEL_ID)
+                                                .setSmallIcon(R.mipmap.app_logo_round)
+                                                .setContentTitle(getString(R.string.app_name))
+                                                .setContentText("Sign Up Successful. A verification link has been\n" +
+                                                        " sent to " + mAuth.getCurrentUser().getEmail() + "." +
+                                                        " Please visit your inbox to verify\n" +
+                                                        " our email address. Thanks for joining us!")
+                                                .setStyle(new NotificationCompat.BigTextStyle()
+                                                .bigText("Sign Up Successful. A verification link has been\n" +
+                                                        " sent to " + mAuth.getCurrentUser().getEmail() + "." +
+                                                        " Please visit your inbox to verify\n" +
+                                                        " our email address. Thanks for joining us!"))
+                                                // Set the intent that will fire when the user taps the notification
+                                                .setWhen(System.currentTimeMillis())
+                                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+                                                .setContentIntent(pendingIntent)
+                                                .setAutoCancel(true);
+
+                                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(SignUpActivity.this);
+                                        notificationManager.notify(notificationId,mBuilder.build());
+
                                         // Method call to sendVerification
                                         // link to users's email address
                                         sendVerificationEmail();
@@ -379,27 +403,6 @@ public class SignUpActivity extends AppCompatActivity {
                                         Snackbar.make(nestedScrollView,getString(R.string.text_sign_up_and_verification_sent),Snackbar.LENGTH_LONG).show();
 
                                         //mAuth.signOut();
-
-                                        //clears text Fields
-                                        clearTextFields();
-
-                                        //sends a notification to the user of placing order successfully
-                                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                        PendingIntent pendingIntent = PendingIntent.getActivity(SignUpActivity.this, 0, intent, 0);
-                                        Notification notification = new Notification.Builder(SignUpActivity.this)
-                                                .setSmallIcon(R.mipmap.app_logo_round)
-                                                .setContentTitle(getString(R.string.app_name))
-                                                .setContentText("Sign Up Successful. A verification link has been\n" +
-                                                        "        sent to " + mAuth.getCurrentUser().getEmail() + "." +
-                                                        " Please visit your inbox to verify\n" +
-                                                        "        your email address. Thanks for joining us!")
-                                                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
-                                                .setContentIntent(pendingIntent).getNotification();
-                                        notification.flags = Notification.FLAG_AUTO_CANCEL;
-                                        NotificationManager nm = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
-                                        nm.notify(0, notification);
 
                                     }
                                     else {
@@ -418,8 +421,7 @@ public class SignUpActivity extends AppCompatActivity {
                         }
 
                         // dismisses the progressBar
-                        //progressBar1.setVisibility(View.GONE);
-                        progressDialog.dismiss();
+                        progressBar1.setVisibility(View.GONE);
 
                     }
                 });
@@ -437,12 +439,20 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
+
                     // sign user out after verification link is sent successfully
                     mAuth.signOut();
+
                 }
                 else {
+                    // sign user out after
+                    // verification link
+                    // is sent successfully
+                    mAuth.signOut();
+
                     // display error message
                     Snackbar.make(nestedScrollView,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
+
                 }
             }
         });
@@ -452,14 +462,13 @@ public class SignUpActivity extends AppCompatActivity {
     //link from the Sign Up page to the Login Page
     public void onLoginLinkButtonClick(View view){
 
-        // add an animation to shake button
-        appCompatButtonLoginLink.setAnimation(shake);
-
-        finish();
-        // creates an instance of the intent class and opens the signUp activity
+        // starts this activity
         startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
         // Add a custom animation ot the activity
         CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");
+
+        finish();
+
     }
 
     //clears the textfields
@@ -481,14 +490,14 @@ public class SignUpActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        // finishes the activity
-        finish();
-
         // open the LoginActivity
         startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
 
         // Add a custom animation ot the activity
         CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");
+
+        // finishes the activity
+        finish();
 
     }
 }

@@ -114,7 +114,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <!-- Link to reset the user password -->
-            <android.support.v7.widget.AppCompatButton
+            <Button
                 android:id="@+id/forgot_password"
                 android:layout_marginTop="10dp"
                 android:layout_width="255dp"
@@ -141,8 +141,8 @@
 
 
     <!--Login Button-->
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/appCompatButtonLogin"
+    <Button
+        android:id="@+id/buttonLogin"
         android:layout_marginTop="35dp"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
@@ -160,14 +160,14 @@
         android:onClick="onLoginButtonClick"/>
 
     <!-- Link to the user sign up page -->
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/appCompatButtonSignUpLink"
+    <Button
+        android:id="@+id/buttonSignUpLink"
         android:layout_marginTop="20dp"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:layout_below="@+id/appCompatButtonLogin"
+        android:layout_below="@+id/buttonLogin"
         android:text="@string/sign_up_link"
         android:textColor="@color/orange_light"
         app:fontFamily="@font/nunito_semibold"
@@ -181,11 +181,11 @@
     <!--Progress Bar-->
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_below="@+id/appCompatButtonSignUpLink"
+        android:layout_below="@+id/buttonSignUpLink"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:visibility="gone"/>
 

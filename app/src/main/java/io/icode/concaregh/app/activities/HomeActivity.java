@@ -1,7 +1,6 @@
 package io.icode.concaregh.app.activities;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -63,8 +62,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     TextView username;
     TextView email;
 
-    ProgressDialog progressDialog;
-
     FloatingActionButton fab;
 
     /* boolean variable to launch Alert Dialog
@@ -107,9 +104,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
-
-        // checks if phone supports Google Play Services
-        //GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
 
         btn_proceed = findViewById(R.id.proceed_Image);
 
@@ -180,7 +174,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
 
                 // Adds a custom animation to the view using Library
-                YoYo.with(Techniques.FlipInX).playOn(circleImageView);
+                YoYo.with(Techniques.RubberBand).playOn(circleImageView);
 
                 // start EditProfile activity
                 startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));

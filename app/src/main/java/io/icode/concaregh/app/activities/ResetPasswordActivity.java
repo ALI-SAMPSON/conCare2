@@ -31,6 +31,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
     // class variables
     ProgressBar progressBar;
 
+    @SuppressWarnings("deprecation")
     ProgressDialog progressDialog;
 
     CoordinatorLayout coordinatorLayout;
@@ -61,7 +62,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        progressBar = findViewById(io.icode.concaregh.app.R.id.progressBar);
+        progressBar = findViewById(R.id.progressBar);
 
         progressDialog = new ProgressDialog(this, ProgressDialog.THEME_HOLO_LIGHT);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);

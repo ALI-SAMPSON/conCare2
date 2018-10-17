@@ -10,12 +10,13 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatSpinner;
-import android.telephony.SmsManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -24,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import io.icode.concaregh.app.R;
@@ -42,7 +44,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import io.icode.concaregh.app.sms.Sender;
 import maes.tech.intentanim.CustomIntent;
 
 public class PlaceOrderActivity extends AppCompatActivity {
@@ -74,17 +75,16 @@ public class PlaceOrderActivity extends AppCompatActivity {
     private AppCompatSpinner spinnerContraceptive;
     private ArrayAdapter<CharSequence> arrayAdapterContraceptive;
 
-    private AppCompatButton make_payment;
-    private AppCompatButton cancel_payment;
+     AppCompatButton make_payment;
+     AppCompatButton cancel_payment;
 
     //objects of the classes
     private Orders orders;
 
-    private FirebaseDatabase database;
-    private DatabaseReference orderRef;
-
+    @SuppressWarnings("unused")
     private ProgressBar progressBar;
 
+    @SuppressWarnings("deprecation")
     private ProgressDialog progressDialog;
 
     private NestedScrollView nestedScrollView;
@@ -95,7 +95,11 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
     //textInput layouts
     private TextInputLayout textInputLayoutOtherLocation;
-    private TextInputLayout textInputLayoutOtherContraceptive;
+    //private TextInputLayout textInputLayoutOtherContraceptive;
+
+    private String CHANNEL_ID = "notification_channel_id";
+
+    private int notificationId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,9 +108,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
-        /*StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);*/
 
         if(getSupportActionBar() != null){
             getSupportActionBar().setTitle("Place Order");
@@ -174,15 +175,13 @@ public class PlaceOrderActivity extends AppCompatActivity {
             //do nothing
         }
 
+
         // getting view to the buttons
-        make_payment = findViewById(io.icode.concaregh.app.R.id.appCompatButtonPayment);
-        cancel_payment = findViewById(io.icode.concaregh.app.R.id.appCompatButtonCancel);
+        make_payment = findViewById(R.id.appCompatButtonPayment);
+        cancel_payment = findViewById(R.id.appCompatButtonCancel);
 
         //object initialization
         orders = new Orders();
-
-        //database = FirebaseDatabase.getInstance();
-        //orderRef = database.getReference().child("Orders");
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -301,23 +300,33 @@ public class PlaceOrderActivity extends AppCompatActivity {
                         //clears the fields after order is placed
                         clearTextFields();
 
-                        //sends a notification to the user of placing order successfully
+                        // Sends a notification to the user of placing order successfully
+                        // Creating an explicit intent for the activity in the app
                         Intent intent = new Intent(PlaceOrderActivity.this, HomeActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         PendingIntent pendingIntent = PendingIntent.getActivity(PlaceOrderActivity.this, 0, intent, 0);
-                        Notification notification = new Notification.Builder(PlaceOrderActivity.this)
+
+                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(PlaceOrderActivity.this, CHANNEL_ID)
                                 .setSmallIcon(R.mipmap.app_logo_round)
                                 .setContentTitle(getString(R.string.app_name))
                                 .setContentText(" You have successfully made an order for "  +
                                         orders.getContraceptive() + "." +
                                         " One of our agents will deliver it " +
                                         " to you very soon. Thank you... ")
+                                .setStyle(new NotificationCompat.BigTextStyle()
+                                        .bigText(" You have successfully made an order for "  +
+                                                orders.getContraceptive() + "." +
+                                                " One of our agents will deliver it " +
+                                                " to you very soon. Thank you... "))
+                                // Set the intent that will fire when the user taps the notification
+                                .setWhen(System.currentTimeMillis())
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
-                                .setContentIntent(pendingIntent).getNotification();
-                        notification.flags = Notification.FLAG_AUTO_CANCEL;
-                        NotificationManager nm = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
-                        nm.notify(0, notification);
+                                .setContentIntent(pendingIntent)
+                                .setAutoCancel(true);
+
+                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(PlaceOrderActivity.this);
+                        notificationManager.notify(notificationId,mBuilder.build());
 
                         // Method call to sendSMS
                         // to company phone number
@@ -326,7 +335,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
                         //sendSMSMessageToAdmins();
 
                         // sends message to user after placing order
-                        sendSMSMessageToUser();
+                        //sendSMSMessageToUser();
 
                     } else {
                         // display error message

@@ -1,6 +1,5 @@
 package io.icode.concaregh.app.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -54,8 +53,6 @@ public class EditProfileActivity extends AppCompatActivity {
     ProgressBar progressBar;
 
     ProgressBar progressBar1;
-
-    ProgressDialog progressDialog;
 
     RelativeLayout relativeLayout;
 
