@@ -22,7 +22,18 @@
         android:gravity="center_horizontal|center_vertical"
         android:orientation="vertical">
 
-        <TextView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circularImageView"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/app_logo"
+            android:scaleType="centerCrop">
+        </de.hdodenhof.circleimageview.CircleImageView>
+
+        <!-- <TextView
             android:layout_marginTop="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,10 +71,10 @@
                 android:src="@drawable/profile_icon"
                 app:civ_border_width="2dp"
                 app:civ_border_color="@color/white_ghost">
-            </de.hdodenhof.circleimageview.CircleImageView>
+            </de.hdodenhof.circleimageview.CircleImageView> -->
 
             <!--Progress Bar-->
-            <ProgressBar
+            <!-- <ProgressBar
                 android:id="@+id/progressBar"
                 style="?android:attr/progressBarStyleSmall"
                 android:layout_centerHorizontal="true"
@@ -74,7 +85,7 @@
                 android:layout_gravity="center_horizontal"
                 android:visibility="gone"/>
 
-        </RelativeLayout>
+        </RelativeLayout> -->
 
 
         <!-- TextInputLayout and AppCompatEdiText for Email -->
@@ -82,9 +93,10 @@
             android:id="@+id/email_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="0dp"
             android:gravity="center_horizontal"
+            android:layout_gravity="center"
             android:textAlignment="center"
             android:textColorHint="@color/colorWhite"
             android:layout_marginStart="0dp">
@@ -119,6 +131,7 @@
             android:layout_marginLeft="0dp"
             android:layout_marginTop="20dp"
             android:gravity="center_horizontal"
+            android:layout_gravity="center"
             android:textAlignment="center"
             android:textColorHint="@color/colorWhite"
             android:layout_marginStart="0dp">
@@ -150,6 +163,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="0dp"
             android:gravity="center_horizontal"
+            android:layout_gravity="center"
             android:textAlignment="center"
             android:textColorHint="@color/colorWhite"
             app:passwordToggleEnabled="true"
@@ -200,7 +214,7 @@
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:text="@string/text_gender"
-                    android:textSize="19sp"
+                    android:textSize="16sp"
                     android:gravity="center_vertical"
                     app:fontFamily="@font/nunito_semibold"
                     android:drawableLeft="@drawable/ic_people_black_24dp"
@@ -241,6 +255,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="0dp"
             android:gravity="center_horizontal"
+            android:layout_gravity="center"
             android:textAlignment="center"
             android:textColorHint="@color/colorWhite"
             android:layout_marginStart="0dp">
@@ -274,7 +289,6 @@
             android:layout_marginTop="20dp"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:gravity="center_horizontal|center_vertical"
             android:layout_gravity="center_horizontal|center_vertical"
             android:text="@string/signUp"
@@ -290,11 +304,9 @@
         <ProgressBar
             android:id="@+id/progressBar1"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:max="100"
-            android:indeterminate="true"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:visibility="gone"/>
 

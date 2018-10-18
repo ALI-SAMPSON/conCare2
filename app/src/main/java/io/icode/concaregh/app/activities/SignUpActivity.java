@@ -78,12 +78,14 @@ public class SignUpActivity extends AppCompatActivity {
     //FirebaseStorage storage;
 
     // progressBar to load image uploading to database
-    ProgressBar progressBar;
+    //ProgressBar progressBar;
 
     // progressBar to load signUp user
     ProgressBar progressBar1;
 
     private CircleImageView circleImageView;
+
+    private CircleImageView app_logo;
 
     Uri uriProfileImage;
 
@@ -118,7 +120,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         nestedScrollView = findViewById(R.id.nestedScrollView);
 
-        circleImageView = findViewById(R.id.circularImageView);
+        //circleImageView = findViewById(R.id.circularImageView);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -128,7 +130,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         users = new Users();
 
-        progressBar = findViewById(R.id.progressBar);
+        //progressBar = findViewById(R.id.progressBar);
         // sets a custom color on progressBar
         //progressBar.getIndeterminateDrawable().setColorFilter(0xFE5722,PorterDuff.Mode.MULTIPLY);
 
@@ -138,8 +140,24 @@ public class SignUpActivity extends AppCompatActivity {
 
         shake = AnimationUtils.loadAnimation(SignUpActivity.this, R.anim.anim_shake);
 
+        app_logo = findViewById(R.id.circularImageView);
+
         // a method call to the chooseImage method
-        chooseImage();
+        //chooseImage();
+
+        animateLogo();
+
+    }
+
+    // method to animate the app logo
+    public void animateLogo(){
+        // animate Logo when imageView is clicked
+        app_logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                YoYo.with(Techniques.RotateIn).playOn(app_logo);
+            }
+        });
     }
 
     //Sign Up Button Method
@@ -207,6 +225,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     // method to select image from gallery
+
+    /*
     public void chooseImage(){
 
         circleImageView.setOnClickListener(new View.OnClickListener() {
@@ -222,8 +242,11 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
     }
+    */
 
     // another method to create a gallery intent to choose image from gallery
+
+    /*
     private void openGallery(){
         // create an intent object to open user gallery for image
         Intent pickImage = new Intent();
@@ -233,8 +256,9 @@ public class SignUpActivity extends AppCompatActivity {
         // Add a custom animation ot the activity
         CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");
     }
+    */
 
-
+    /*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -256,7 +280,9 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
     }
+    */
 
+    /*
     private void uploadImage(){
 
         final StorageReference profileImageRef = FirebaseStorage.getInstance()
@@ -293,8 +319,11 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
+    */
+
+
     // method to save username and profile image
-    private void saveUserInfo(){
+    /*private void saveUserInfo(){
 
         String _username = editTextUsername.getText().toString().trim();
 
@@ -326,6 +355,39 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
     }
+    */
+
+    // method to save username and profile image
+    private void saveUsername(){
+
+        String _username = editTextUsername.getText().toString().trim();
+
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        if(user != null){
+            UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(_username)
+                    .build();
+
+            // updates user info with the passed username and image
+            user.updateProfile(userProfileChangeRequest)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                // dismiss progress bar
+                                //progressBar1.setVisibility(View.GONE);
+                            }
+                            else{
+                                // display an error message
+                                Snackbar.make(nestedScrollView,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+            }
+
+    }
+
 
 
     // signUp method
@@ -361,11 +423,11 @@ public class SignUpActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
 
-                                        // method call
-                                        saveUserInfo();
+                                        // method call to save
+                                        // username and profile picture
+                                        //saveUserInfo();
 
-                                        //clears text Fields
-                                        clearTextFields();
+                                        saveUsername();
 
                                         // Sends a notification to the user after signing up successfully
                                         // Creating an explicit intent for the activity in the app
@@ -397,17 +459,25 @@ public class SignUpActivity extends AppCompatActivity {
 
                                         // Method call to sendVerification
                                         // link to users's email address
-                                        sendVerificationEmail();
+                                        //sendVerificationEmail();
 
                                         // display a success message and verification sent
-                                        Snackbar.make(nestedScrollView,getString(R.string.text_sign_up_and_verification_sent),Snackbar.LENGTH_LONG).show();
+                                        //Snackbar.make(nestedScrollView,getString(R.string.text_sign_up_and_verification_sent),Snackbar.LENGTH_LONG).show();
 
-                                        //mAuth.signOut();
+                                        Snackbar.make(nestedScrollView,getString(R.string.sign_up_successful),Snackbar.LENGTH_LONG).show();
+
+                                        mAuth.signOut();
+
+                                        //clears text Fields
+                                        clearTextFields();
 
                                     }
                                     else {
                                         // display a message if there is an error
                                         Snackbar.make(nestedScrollView,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
+
+                                        // sign out user
+                                        mAuth.signOut();
                                     }
                                 }
                             });
@@ -418,6 +488,9 @@ public class SignUpActivity extends AppCompatActivity {
                         else{
                             // display a message if there is an error
                             Snackbar.make(nestedScrollView,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
+
+                            // sign out user
+                            mAuth.signOut();
                         }
 
                         // dismisses the progressBar
@@ -440,14 +513,19 @@ public class SignUpActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
 
-                    // sign user out after verification link is sent successfully
+                    /** sign user out
+                      after verification link is sent successfully
+                     *
+                     */
                     mAuth.signOut();
 
                 }
                 else {
-                    // sign user out after
-                    // verification link
-                    // is sent successfully
+
+                    /** sign user out
+                     after verification link is sent successfully
+                     *
+                     */
                     mAuth.signOut();
 
                     // display error message
@@ -461,6 +539,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     //link from the Sign Up page to the Login Page
     public void onLoginLinkButtonClick(View view){
+
+        mAuth.signOut();
 
         // starts this activity
         startActivity(new Intent(SignUpActivity.this,LoginActivity.class));

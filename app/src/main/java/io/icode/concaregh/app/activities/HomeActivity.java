@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -177,10 +178,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 YoYo.with(Techniques.RubberBand).playOn(circleImageView);
 
                 // start EditProfile activity
-                startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
+                //startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
 
                 // Add a custom animation ot the activity
-                CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+                //CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
 
             }
         });
@@ -243,7 +244,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     AlertDialog alert = builder.create();
                     alert.show();
 
-                } else {
+                }
+                else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
                     builder.setTitle(" Welcome, " + username);
                     builder.setMessage(getString(R.string.welcome_message));
@@ -277,19 +279,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // get current logged in user
         FirebaseUser user = mAuth.getCurrentUser();
 
-        //String photoUrl = users.getImageUrl();
-
         // getting the username and image of current logged in user
-        String _photoUrl = user.getPhotoUrl().toString();
+        //String _photoUrl = user.getPhotoUrl().toString();
         String _username = user.getDisplayName();
         String _email = user.getEmail();
 
         // checks if current user is not null
         if(user != null){
-            if(_photoUrl != null){
-                Glide.with(HomeActivity.this).load(_photoUrl).into(circleImageView);
-                //Picasso.get().load(_photoUrl).centerCrop().into(circleImageView);
-            }
             // checks if the username of the current user is not null
             if(_username != null){
                 username.setText(" Username : " + _username);
@@ -300,33 +296,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
 
         }
-
     }
 
-    private void loadUserInfoWithoutImage(){
-
-        // get current logged in user
-        FirebaseUser user = mAuth.getCurrentUser();
-
-        // getting the username and image of current logged in user
-        String _photoUrl = user.getPhotoUrl().toString();
-        String _username = user.getDisplayName();
-        String _email = user.getEmail();
-
-        if(user != null){
-            // checks if the photeUrl of the current user is null
-            if(_username != null && _email != null && _photoUrl != null){
-                username.setText(" Username : " + _username);
-                email.setText( " Email : " + _email);
-                //Load image for user
-                Glide.with(this)
-                        .load(_photoUrl)
-                        .into(circleImageView);
-            }
-
-        }
-
-    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item){
@@ -336,12 +307,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_home:
                 // do nothing
                 break;
-            case R.id.menu_edit_profile:
+            /*case R.id.menu_edit_profile:
                 // start EditProfile activity
                 startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
                 // Add a custom animation ot the activity
                 CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
                 break;
+                */
             /*case R.id.orders:
                 // start orders fragment
                 break;*/
@@ -351,6 +323,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                  // Add a custom animation ot the activity
                  CustomIntent.customType(HomeActivity.this,"bottom-to-up");
                 break;
+            case R.id.menu_contact:
+                // starts the Contact us activity
+                startActivity(new Intent(HomeActivity.this,ContactUsActivity.class));
+                // Add a custom animation ot the activity
+                CustomIntent.customType(HomeActivity.this,"up-to-bottom");
             case R.id.menu_sign_out:
                 // a call to logout method
                signOut();
@@ -365,7 +342,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_user,menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_user,menu);
         return true;
     }
 
@@ -377,13 +355,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         switch(item.getItemId()){
             case R.id.menu_about:
                 // starts the about us activity
-                startActivity(new Intent(this,AboutUsActivity.class));
+                startActivity(new Intent(HomeActivity.this,AboutUsActivity.class));
                 // Add a custom animation ot the activity
                 CustomIntent.customType(HomeActivity.this,"bottom-to-up");
                 break;
             case R.id.menu_contact:
                 // starts the Contact us activity
-                startActivity(new Intent(this,ContactUsActivity.class));
+                startActivity(new Intent(HomeActivity.this,ContactUsActivity.class));
                 // Add a custom animation ot the activity
                 CustomIntent.customType(HomeActivity.this,"up-to-bottom");
                 break;

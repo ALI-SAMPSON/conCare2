@@ -38,8 +38,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextPassword;
 
-    private Button forgot_password;
-    private Button buttonLogin;
+    Button forgot_password;
+    Button buttonLogin;
     Button buttonSignUpLink;
 
     private CardView my_card;
@@ -60,17 +60,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         app_logo = findViewById(R.id.app_logo);
-
-        // scales the image in and out
-        app_logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // instance of the animation class
-                Animation scale_image = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_scale_imageview);
-                app_logo.clearAnimation();
-                app_logo.startAnimation(scale_image);
-            }
-        });
 
         // initialization of the objects of the views
         editTextEmail = findViewById(io.icode.concaregh.app.R.id.editTextEmail);
@@ -100,6 +89,9 @@ public class LoginActivity extends AppCompatActivity {
         // method call to add animation to card
         onCardViewClickAnim();
 
+        // method call
+        animateLogo();
+
     }
 
     @Override
@@ -119,6 +111,19 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    // method to animate the app logo
+    public void animateLogo(){
+        // scales the image in and out
+        app_logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // instance of the animation class
+                Animation scale_image = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_scale_imageview);
+                app_logo.clearAnimation();
+                app_logo.startAnimation(scale_image);
+            }
+        });
+    }
 
     // method to animate the app logo
     private void bounce_views(){
@@ -207,12 +212,32 @@ public class LoginActivity extends AppCompatActivity {
                       if(task.isSuccessful()){
 
                           // Method to check if email is Verified
-                          checkIfEmailIsVerified();
+                          //checkIfEmailIsVerified();
+
+                          // display a successful login message
+                          Toast.makeText(LoginActivity.this,getString(R.string.login_successful),Toast.LENGTH_SHORT).show();
+
+                          // clear the text fields
+                          clearTextFields();
+
+                          // start the home activity
+                          startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+
+                          // Add a custom animation ot the activity
+                          CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
+
+                          // finishes this activity(prevents user from going back to this activity when back button is pressed)
+                          finish();
 
                       }
                       else{
+
                           // display a message if there is an error
                           Snackbar.make(relativeLayout,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
+
+                          // sign out user
+                          mAuth.signOut();
+
                       }
                         // dismisses the progressBar
                         progressBar.setVisibility(View.GONE);
@@ -232,7 +257,7 @@ public class LoginActivity extends AppCompatActivity {
         if(isEmailVerified){
 
             // display a successful login message
-            Toast.makeText(LoginActivity.this,getString(io.icode.concaregh.app.R.string.login_successful),Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this,getString(R.string.login_successful),Toast.LENGTH_SHORT).show();
 
             // clear the text fields
             clearTextFields();
@@ -250,7 +275,7 @@ public class LoginActivity extends AppCompatActivity {
         else {
 
             // display a message to the user to verify email
-            Toast.makeText(LoginActivity.this,getString(io.icode.concaregh.app.R.string.text_email_not_verified),Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivity.this,getString(R.string.text_email_not_verified),Toast.LENGTH_LONG).show();
 
             // signs user out and restarts the Login Activity
             mAuth.signOut();

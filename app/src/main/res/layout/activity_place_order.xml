@@ -75,7 +75,7 @@
                 android:drawablePadding="@dimen/padding_normal"
                 android:textColor="@color/white_snow"
                 android:textColorHint="@color/orange_deep"
-                android:inputType="text"
+                android:inputType="phone"
                 android:textSize="16sp"
                 app:fontFamily="@font/nunito_semibold"
                 android:maxLength="15"

@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -129,32 +130,32 @@ public class PlaceOrderActivity extends AppCompatActivity {
         editTextOtherContraceptive = findViewById(R.id.editTextOtherContraceptive);
 
         //spinner view campus
-        spinnerCampus = findViewById(io.icode.concaregh.app.R.id.spinnerCampus);
+        spinnerCampus = findViewById(R.id.spinnerCampus);
         arrayAdapterCampus = ArrayAdapter.createFromResource(this, R.array.campus, R.layout.spinner_item);
         arrayAdapterCampus.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
         spinnerCampus.setAdapter(arrayAdapterCampus);
 
-        spinnerLocation = findViewById(io.icode.concaregh.app.R.id.spinnerLocation);
+        spinnerLocation = findViewById(R.id.spinnerLocation);
         arrayAdapterLocation = ArrayAdapter.createFromResource(this, R.array.location, R.layout.spinner_item);
         arrayAdapterLocation.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinnerLocation.setAdapter(arrayAdapterLocation);
 
-        spinnerResidence = findViewById(io.icode.concaregh.app.R.id.spinnerResidence);
+        spinnerResidence = findViewById(R.id.spinnerResidence);
         arrayAdapterResidence = ArrayAdapter.createFromResource(this, R.array.residence, R.layout.spinner_item);
         arrayAdapterResidence.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
         spinnerResidence.setAdapter(arrayAdapterResidence);
 
         //reference to the spinner view and array adapter
-        spinnerContraceptive = findViewById(io.icode.concaregh.app.R.id.spinnerContraceptive);
+        spinnerContraceptive = findViewById(R.id.spinnerContraceptive);
 
         String gender = getIntent().getExtras().get("gender").toString().trim();
 
-        if(gender.equals("MALE")){
+        if(gender.equals("Male")){
             arrayAdapterContraceptive = ArrayAdapter.createFromResource(this, R.array.con_male, R.layout.spinner_item);
             arrayAdapterContraceptive.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
             spinnerContraceptive.setAdapter(arrayAdapterContraceptive);
         }
-        else if(gender.equals("FEMALE")){
+        else if(gender.equals("Female")){
             arrayAdapterContraceptive = ArrayAdapter.createFromResource(this, R.array.con_female, R.layout.spinner_item);
             arrayAdapterContraceptive.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
             spinnerContraceptive.setAdapter(arrayAdapterContraceptive);
@@ -187,10 +188,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar);
 
-        progressDialog = new ProgressDialog(this, ProgressDialog.THEME_HOLO_LIGHT);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setTitle("Placing Order");
-        progressDialog.setMessage("please wait...");
+        // method call to change ProgressDialog Background
+        changeProgressDialogBg();
 
     }
 
@@ -209,13 +208,35 @@ public class PlaceOrderActivity extends AppCompatActivity {
         button_layout.startAnimation(slide);
     }
 
+    // method to change ProgressDialog background color based on the android version of user's phone
+    private void changeProgressDialogBg(){
+
+        // if the build sdk version >= android 5.0
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            //sets the background color according to android version
+            progressDialog = new ProgressDialog(this, ProgressDialog.THEME_HOLO_DARK);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setTitle("Placing Order");
+            progressDialog.setMessage("please wait...");
+        }
+        //else do this
+        else{
+            //sets the background color according to android version
+            progressDialog = new ProgressDialog(this, ProgressDialog.THEME_HOLO_LIGHT);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setTitle("Placing Order");
+            progressDialog.setMessage("please wait...");
+        }
+
+    }
+
     // on click listener for placing order
     public void onPlaceOrderButtonClick(View view) {
 
         //getting input from the fields
+        String phone_number = editTextPhoneNumber.getText().toString().trim();
         String hostel_name = editTextHostelName.getText().toString().trim();
         String room_number = editTextRoomNumber.getText().toString().trim();
-        String phone_number = editTextPhoneNumber.getText().toString().trim();
 
         // checks if the fields are not empty
         if(phone_number.isEmpty()){
@@ -335,7 +356,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
                         //sendSMSMessageToAdmins();
 
                         // sends message to user after placing order
-                        //sendSMSMessageToUser();
+                        sendSMSMessageToUser();
 
                     } else {
                         // display error message
@@ -476,14 +497,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
     // after user places an order
     private void sendSMSMessageToUser(){
 
-        //gets text or input from the user
-        FirebaseUser user = mAuth.getCurrentUser();
-
-        final String user_name = user.getDisplayName();
-
-        //final String user_name = editTextUsername.getText().toString().trim();
-        //getting input from the user
-
+        String destination = editTextPhoneNumber.getText().toString();
         String campus = spinnerCampus.getSelectedItem().toString().trim();
         String location = spinnerLocation.getSelectedItem().toString().trim();
         String other_location = editTextOtherLocation.getText().toString().trim();
@@ -527,7 +541,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
          */
 
         // getting mobile number from EditText
-        String destination = editTextPhoneNumber.getText().toString().trim();
+        //String destination;
         //String destination = "233209062445";
 
         // Sender Id to be used for submitting the message

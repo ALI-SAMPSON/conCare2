@@ -81,7 +81,8 @@
                 android:maxLength="15"
                 android:maxLines="1"
                 android:layout_marginStart="0dp"
-                android:importantForAutofill="no" tools:targetApi="o" />
+                android:importantForAutofill="no"
+                tools:targetApi="o" />
         </android.support.design.widget.TextInputLayout>
 
         <!--TextInputLayout and LinearLayout and spinner View for user's Campus-->

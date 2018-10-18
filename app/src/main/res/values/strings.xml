@@ -102,7 +102,7 @@
         translatable="false"> Please make sure your phone number is preceded by 233. e.g. 23324*******</string>
 
     <string name="welcome_msg_home"
-        translatable="false">Welcome To ConCare GH</string>
+        translatable="false">Welcome To CONCARE GH</string>
     <string name="welcome_mgs_sub_desc"
         translatable="false">your home of much privacy!</string>
     <string name="select_gender_type"
@@ -170,7 +170,7 @@
 
     <string name="text_about_us"
         translatable="false">
-        ConCare GH is a unique and nascent reproduction
+        CONCARE GH is a unique and nascent reproduction
         health business set up to enhance reproductive
         health commodity security, a system where every
         person is able to choose, obtain and use quality
@@ -187,7 +187,7 @@
 
     <string name="text_overview"
         translatable="false">
-        ConCare GH seeks to remove shyness,
+        CONCARE GH seeks to remove shyness,
         which is evident of their (victims\')
         reluctance to purchase contraceptives;
         with our business system and strategy,
@@ -209,11 +209,11 @@
 
     <string name="welcome_message"
         translatable="false">
-        ConCare GH has a lot to offer you.
+        CONCARE GH has a lot to offer you.
         Just Open the drawer on the left of
-        the screen to update your profile,
-        read about us and freely place order
-        for any contraceptive of your choice.
+        the screen to know more about us
+        and freely place order for any
+        contraceptive of your choice.
         Enjoy and feel free to contact us if
         need arises!
     </string>

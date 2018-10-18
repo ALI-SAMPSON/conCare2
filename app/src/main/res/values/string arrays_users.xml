@@ -2,8 +2,8 @@
 <resources>
     <!--array of gender-->
     <string-array name="gender">
-        <item>MALE</item>
-        <item>FEMALE</item>
+        <item> Male </item>
+        <item> Female </item>
     </string-array>
 
     <!--array of male contraceptives-->
@@ -24,23 +24,25 @@
 
     <!--array of Campuses-->
     <string-array name="campus">
-        <item>KNUST</item>
+        <item> KNUST </item>
+        <item> OTHER </item>
     </string-array>
 
 
     <string-array name="location">
-        <item>Ayeduase</item>
-        <item>Ayeduase-Newsite</item>
-        <item>Kotei</item>
-        <item>Campus</item>
-        <item>Bomso</item>
-        <item>Gaza Area</item>
-        <item>Other</item>
+        <item> Ayeduase </item>
+        <item> Ayeduase-Newsite </item>
+        <item> Kotei </item>
+        <item> Campus </item>
+        <item> Bomso </item>
+        <item> Gaza Area </item>
+        <item> Other </item>
     </string-array>
 
     <string-array name="residence">
-        <item>Hostel</item>
-        <item>Homestel</item>
+        <item> Hostel </item>
+        <item> Homestel </item>
+        <item> Other </item>
     </string-array>
 
 </resources>
