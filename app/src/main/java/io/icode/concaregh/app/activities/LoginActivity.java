@@ -163,27 +163,23 @@ public class LoginActivity extends AppCompatActivity {
             editTextEmail.clearAnimation();
             editTextEmail.startAnimation(shake);
             editTextEmail.setError(getString(io.icode.concaregh.app.R.string.error_empty_email));
-            return;
         }
         else if(!Patterns.EMAIL_ADDRESS.matcher(_email).matches()){
             editTextEmail.clearAnimation();
             editTextEmail.startAnimation(shake);
             editTextEmail.setError(getString(io.icode.concaregh.app.R.string.email_invalid));
-            return;
         }
         else if(_password.isEmpty()){
             editTextPassword.clearAnimation();
             editTextPassword.startAnimation(shake);
             editTextPassword.setError(getString(io.icode.concaregh.app.R.string.error_empty_password));
             editTextPassword.requestFocus();
-           return;
         }
         else if(_password.length() < 6 ){
             editTextPassword.clearAnimation();
             editTextPassword.startAnimation(shake);
             editTextPassword.setError(getString(io.icode.concaregh.app.R.string.error_password_length));
             editTextPassword.requestFocus();
-            return;
         }
         else{
             // a call to the loginUser method

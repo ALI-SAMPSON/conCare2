@@ -17,6 +17,8 @@
         translatable="false">Username</string>
     <string name="hint_phone"
         translatable="false">Phone Number</string>
+    <string name="hint_contact"
+        translatable="false">Contact Number</string>
     <string name="hint_room_number"
         translatable="false">Hostel Room Number</string>
     <string name="hint_confirm_password"
@@ -77,7 +79,11 @@
     <string name="email_invalid"
         translatable="false">Enter a valid email address</string>
     <string name="email_registered"
-        translatable="false">Enter your registered email id</string>
+        translatable="false">Enter your registered email address</string>
+    <string name="email_valid_registered"
+        translatable="false">Enter your valid registered email address</string>
+    <string name="reset_password_instruction"
+        translatable="false">We have sent you instructions to reset your password. Please visit your inbox!</string>
     <string name="error_password_length"
         translatable="false">Password length cannot be less than 6</string>
     <string name="error_empty_phone"

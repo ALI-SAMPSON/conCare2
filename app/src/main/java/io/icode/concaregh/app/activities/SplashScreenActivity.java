@@ -37,24 +37,34 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    private ProgressBar progressBar;
+    ProgressBar progressBar;
+
+    ProgressBar progressBar1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
-        setContentView(io.icode.concaregh.app.R.layout.activity_splash_screen);
+        setContentView(R.layout.activity_splash_screen);
 
         // method call to check google play services is available on device
         checkPlayServices();
 
+        // getting reference to the first Top progressBar
         progressBar = findViewById(R.id.progressBar);
         // changes color of progressBar to you desired color
         progressBar.getIndeterminateDrawable().setColorFilter(0xff676767,PorterDuff.Mode.MULTIPLY);
 
+        progressBar1 = findViewById(R.id.progressBar1);
+        // changes color of progressBar to you desired color
+        progressBar1.getIndeterminateDrawable().setColorFilter(0xff676767,PorterDuff.Mode.MULTIPLY);
+
         // displays the progressBar
         progressBar.setVisibility(View.VISIBLE);
+
+        // displays the progressBar
+        progressBar1.setVisibility(View.VISIBLE);
 
         // firebase instance
         mAuth = FirebaseAuth.getInstance();

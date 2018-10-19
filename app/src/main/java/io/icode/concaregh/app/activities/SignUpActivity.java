@@ -169,53 +169,48 @@ public class SignUpActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString().trim();
         String phone = editTextPhoneNumber.getText().toString().trim();
 
-        /**
+        /*
          * Input validation
          */
         if(email.isEmpty()){
             editTextEmail.clearAnimation();
             editTextEmail.startAnimation(shake);
             editTextEmail.setError(getString(io.icode.concaregh.app.R.string.error_empty_email));
-            return;
         }
         else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             editTextEmail.clearAnimation();
             editTextEmail.startAnimation(shake);
             editTextEmail.setError(getString(io.icode.concaregh.app.R.string.email_invalid));
-            return;
         }
         else if(username.isEmpty()) {
             editTextUsername.clearAnimation();
             editTextUsername.startAnimation(shake);
             editTextUsername.setError(getString(io.icode.concaregh.app.R.string.error_empty_username));
             editTextUsername.requestFocus();
-            return;
         }
         else if(password.isEmpty()){
             editTextPassword.clearAnimation();
             editTextPassword.startAnimation(shake);
             editTextPassword.setError(getString(io.icode.concaregh.app.R.string.error_empty_password));
             editTextPassword.requestFocus();
-            return;
         }
         else if(password.length() < 6 ){
             editTextPassword.clearAnimation();
             editTextPassword.startAnimation(shake);
             editTextPassword.setError(getString(R.string.error_password_length));
             editTextPassword.requestFocus();
-            return;
         }
         else if(phone.isEmpty()){
             editTextPhoneNumber.clearAnimation();
             editTextPhoneNumber.startAnimation(shake);
             editTextPhoneNumber.setError(getString(R.string.error_empty_phone));
-            return;
+            editTextPhoneNumber.requestFocus();
         }
         else if(phone.length() != 10){
             editTextPhoneNumber.clearAnimation();
             editTextPhoneNumber.startAnimation(shake);
             editTextPhoneNumber.setError(getString(R.string.phone_invalid));
-            return;
+            editTextPhoneNumber.requestFocus();
         }
         else{
             //method call
@@ -464,10 +459,6 @@ public class SignUpActivity extends AppCompatActivity {
                                         // display a success message and verification sent
                                         Snackbar.make(nestedScrollView,getString(R.string.text_sign_up_and_verification_sent),Snackbar.LENGTH_LONG).show();
 
-                                        //Snackbar.make(nestedScrollView,getString(R.string.sign_up_successful),Snackbar.LENGTH_LONG).show();
-
-                                        //mAuth.signOut();
-
                                         //clears text Fields
                                         clearTextFields();
 
@@ -515,18 +506,18 @@ public class SignUpActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
 
-                    /** sign user out
-                      after verification link is sent successfully
-                     *
+                    /* sign user out
+                      after verification
+                      link is sent successfully
                      */
                     mAuth.signOut();
 
                 }
                 else {
 
-                    /** sign user out
-                     after verification link is sent successfully
-                     *
+                    /* sign user out
+                       after verification
+                       link is sent successfully
                      */
                     mAuth.signOut();
 
@@ -558,7 +549,7 @@ public class SignUpActivity extends AppCompatActivity {
         editTextEmail.setText(null);
         editTextUsername.setText(null);
         editTextPassword.setText(null);
-        editTextPhoneNumber.setText(null);
+        //editTextPhoneNumber.setText(null);
     }
 
     @Override

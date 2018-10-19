@@ -150,6 +150,22 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         String gender = getIntent().getExtras().get("gender").toString().trim();
 
+        switch (gender){
+
+            case "Male":
+                arrayAdapterContraceptive = ArrayAdapter.createFromResource(this, R.array.con_male, R.layout.spinner_item);
+                arrayAdapterContraceptive.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
+                spinnerContraceptive.setAdapter(arrayAdapterContraceptive);
+                break;
+            case "Female":
+                arrayAdapterContraceptive = ArrayAdapter.createFromResource(this, R.array.con_female, R.layout.spinner_item);
+                arrayAdapterContraceptive.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
+                spinnerContraceptive.setAdapter(arrayAdapterContraceptive);
+                break;
+
+        }
+
+        /*
         if(gender.equals("Male")){
             arrayAdapterContraceptive = ArrayAdapter.createFromResource(this, R.array.con_male, R.layout.spinner_item);
             arrayAdapterContraceptive.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
@@ -163,6 +179,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
         else{
             //do nothing
         }
+        */
 
         if(spinnerLocation.getSelectedItem().toString().equals("Other")){
             textInputLayoutOtherLocation = findViewById(io.icode.concaregh.app.R.id.textInputLayoutOtherLocation);
@@ -245,15 +262,13 @@ public class PlaceOrderActivity extends AppCompatActivity {
             editTextPhoneNumber.startAnimation(shake);
             editTextPhoneNumber.setError(getString(R.string.error_text_phone_number));
             editTextPhoneNumber.requestFocus();
-            return;
         }
-        else if(phone_number.length() != 12){
+        else if(phone_number.length() != 10){
             // starts animation on this view
             editTextPhoneNumber.clearAnimation();
             editTextPhoneNumber.startAnimation(shake);
             editTextPhoneNumber.setError(getString(R.string.phone_invalid));
             editTextPhoneNumber.requestFocus();
-            return;
         }
         else if(room_number.isEmpty()){
             // starts animation on this view
@@ -261,7 +276,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
             editTextRoomNumber.startAnimation(shake);
             editTextRoomNumber.setError(getString(R.string.error_text_room_number));
             editTextRoomNumber.requestFocus();
-            return;
         }
         else if(hostel_name.isEmpty()){
             // starts animation on this view
@@ -269,7 +283,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
             editTextHostelName.startAnimation(shake);
             editTextHostelName.setError(getString(io.icode.concaregh.app.R.string.error_text_hostel));
             editTextHostelName.requestFocus();
-            return;
         }
         else{
             placeOrder();
@@ -432,7 +445,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
          * destination at once destinations should be comma separated Like
          * 91999000123,91999000124
          */
-        String destination = "233245134112,233501360324,233249959061";
+        String destination = "233245134112,233501360324";
 
         // Sender Id to be used for submitting the message
         String source = getString(R.string.app_name);

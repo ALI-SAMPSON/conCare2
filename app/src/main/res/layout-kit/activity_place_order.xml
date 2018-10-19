@@ -36,11 +36,12 @@
 
         <View
             android:id="@+id/view"
+            android:layout_marginTop="50dp"
             android:layout_width="match_parent"
             android:layout_height="50dp">
         </View>
 
-        <TextView
+        <!--<TextView
             android:id="@+id/hint_phone"
             android:layout_below="@+id/view"
             android:layout_marginTop="50dp"
@@ -51,11 +52,11 @@
             android:padding="10dp"
             android:text="@string/error_number_prefix"
             android:textSize="16sp"
-            android:textColor="@color/white_dim"/>
+            android:textColor="@color/white_dim"/>-->
 
         <!-- TextInputLayout and AppCompatEdiText for Tel. Number -->
         <android.support.design.widget.TextInputLayout
-            android:layout_below="@+id/hint_phone"
+            android:layout_below="@+id/view"
             android:id="@+id/phoneNum_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
-                android:hint="@string/hint_phone"
+                android:hint="@string/hint_contact"
                 android:drawableLeft="@drawable/ic_phone"
                 android:drawableStart="@drawable/ic_phone"
                 android:drawablePadding="@dimen/padding_normal"

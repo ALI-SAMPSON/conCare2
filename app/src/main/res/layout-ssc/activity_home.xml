@@ -12,7 +12,8 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white_dim">
+        android:alpha="0.99"
+        android:background="@color/colorWhite">
 
         <!-- Welcome title -->
        <TextView
@@ -21,10 +22,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/welcome_msg_home"
-           android:layout_margin="5dp"
+            android:layout_margin="5dp"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:fontFamily="@font/nunito_extrabold"
             android:padding="5dp"
@@ -40,7 +41,7 @@
             android:layout_margin="5dp"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="italic"
             app:fontFamily="@font/nunito_extrabold"
             android:padding="5dp"
@@ -56,7 +57,7 @@
             android:layout_marginTop="5dp"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:fontFamily="@font/nunito_semibold"
             android:padding="5dp"
@@ -69,8 +70,8 @@
             android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/home_bg"
+            android:alpha="0.5"
+            android:src="@drawable/splash_bg"
             android:contentDescription="@string/todo">
         </ImageView>
 
@@ -181,7 +182,7 @@
         app:headerLayout="@layout/nav_header"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/white_dim"
+        android:background="@color/colorWhite"
         app:itemTextColor="@color/orange_light"
         app:itemIconTint="@color/orange_light"
         app:menu="@menu/drawer_menu"

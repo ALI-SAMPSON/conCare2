@@ -12,7 +12,8 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white_dim">
+        android:alpha="0.99"
+        android:background="@color/colorWhite">
 
         <!-- Welcome title -->
        <TextView
@@ -70,8 +71,9 @@
             android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="280dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/home_bg"
+            android:alpha="0.5"
+            android:scaleType="fitCenter"
+            android:src="@drawable/splash_bg"
             android:contentDescription="@string/todo">
         </ImageView>
 
@@ -183,7 +185,7 @@
         app:headerLayout="@layout/nav_header"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/white_dim"
+        android:background="@color/colorWhite"
         app:itemTextColor="@color/orange_light"
         app:itemIconTint="@color/orange_light"
         app:menu="@menu/drawer_menu"

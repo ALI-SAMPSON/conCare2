@@ -1,6 +1,5 @@
 package io.icode.concaregh.app.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
@@ -31,9 +30,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
     // class variables
     ProgressBar progressBar;
 
-    @SuppressWarnings("deprecation")
-    ProgressDialog progressDialog;
-
     CoordinatorLayout coordinatorLayout;
 
     FirebaseAuth mAuth;
@@ -49,27 +45,24 @@ public class ResetPasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(io.icode.concaregh.app.R.layout.activity_reset_password);
+        setContentView(R.layout.activity_reset_password);
 
-        // getting references to the views
-        coordinatorLayout = findViewById(io.icode.concaregh.app.R.id.coordinatorLayout);
-
-        editTextEmail = findViewById(io.icode.concaregh.app.R.id.email);
-
-        btn_reset_password = findViewById(io.icode.concaregh.app.R.id.btn_reset_password);
-
-        btn_back = findViewById(io.icode.concaregh.app.R.id.btn_back);
-
+        // firebase instance
         mAuth = FirebaseAuth.getInstance();
 
+        // getting references to the views
+        coordinatorLayout = findViewById(R.id.coordinatorLayout);
+
+        editTextEmail = findViewById(R.id.email);
+
+        btn_reset_password = findViewById(R.id.btn_reset_password);
+
+        btn_back = findViewById(R.id.btn_back);
+
+        // getting reference to the views
         progressBar = findViewById(R.id.progressBar);
 
-        progressDialog = new ProgressDialog(this, ProgressDialog.THEME_HOLO_LIGHT);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage("please wait...");
-        progressDialog.show();
-
-        shake = AnimationUtils.loadAnimation(ResetPasswordActivity.this, io.icode.concaregh.app.R.anim.anim_shake);
+        shake = AnimationUtils.loadAnimation(ResetPasswordActivity.this, R.anim.anim_shake);
 
     }
 
@@ -78,14 +71,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         super.onStart();
         // checks if user is not currently logged in
         if(mAuth.getCurrentUser() == null){
-            final Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    progressDialog.dismiss();
-                    timer.cancel();
-                }
-            },2000);
+            // do nothing
         }
 
     }
@@ -95,12 +81,15 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         // add an animation to anim_shake the button
         btn_back.setAnimation(shake);
-        // finish the activity
-        finish();
+
         // starts the activity
         startActivity(new Intent(ResetPasswordActivity.this,LoginActivity.class));
+
         // Add a custom animation ot the activity
         CustomIntent.customType(ResetPasswordActivity.this,"fadein-to-fadeout");
+
+        // finish the activity
+        finish();
 
     }
 
@@ -112,16 +101,14 @@ public class ResetPasswordActivity extends AppCompatActivity {
         if(email.isEmpty()){
             // set animation and error
             editTextEmail.setAnimation(shake);
-            editTextEmail.setError(getString(io.icode.concaregh.app.R.string.email_registered));
+            editTextEmail.setError(getString(R.string.email_registered));
             editTextEmail.requestFocus();
-            return;
         }
         else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             // set animation and error
             editTextEmail.setAnimation(shake);
-            editTextEmail.setError(getString(io.icode.concaregh.app.R.string.email_registered));
+            editTextEmail.setError(getString(R.string.email_valid_registered));
             editTextEmail.requestFocus();
-            return;
         }
         else{
 
@@ -137,8 +124,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
     // method to reset password
     private void resetPassword(){
 
-
-
         // displays the progressBar
         progressBar.setVisibility(View.VISIBLE);
 
@@ -150,7 +135,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(ResetPasswordActivity.this,"We have sent you instructions to reset your password!",Toast.LENGTH_LONG).show();
+                            Snackbar.make(coordinatorLayout,getString(R.string.reset_password_instruction)
+                                    ,Snackbar.LENGTH_LONG).show();
                         }
                         else{
                             // displays an error message
@@ -174,14 +160,14 @@ public class ResetPasswordActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        // finishes the activity
-        finish();
-
         // open the LoginActivity
         startActivity(new Intent(ResetPasswordActivity.this,LoginActivity.class));
 
         // Add a custom animation ot the activity
         CustomIntent.customType(ResetPasswordActivity.this,"fadein-to-fadeout");
+
+        // finishes the activity
+        finish();
 
     }
 }
