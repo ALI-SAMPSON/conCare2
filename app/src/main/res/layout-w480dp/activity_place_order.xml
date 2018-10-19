@@ -157,7 +157,7 @@
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:text="@string/location"
-                    android:textSize="19sp"
+                    android:textSize="16sp"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/nunito_semibold"
@@ -217,7 +217,7 @@
                 android:drawablePadding="@dimen/padding_normal"
                 android:textColor="@color/white_snow"
                 android:textColorHint="@color/orange_light"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:inputType="text"
                 android:fontFamily="@font/nunito_semibold"
                 android:layout_marginStart="0dp"
@@ -248,7 +248,7 @@
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:text="@string/residence"
-                    android:textSize="19sp"
+                    android:textSize="16sp"
                     android:fontFamily="@font/nunito_semibold"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_horizontal"
@@ -307,7 +307,7 @@
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:text="@string/contraceptive"
-                    android:textSize="19sp"
+                    android:textSize="16sp"
                     app:fontFamily="@font/nunito_semibold"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_horizontal"
@@ -366,7 +366,7 @@
                 android:drawablePadding="@dimen/padding_normal"
                 android:textColor="@color/white_snow"
                 android:textColorHint="@color/orange_light"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:inputType="text"
                 app:fontFamily="@font/nunito_semibold"
                 android:layout_marginStart="0dp"
@@ -449,8 +449,8 @@
             android:layout_gravity="center_horizontal">
 
             <!-- Make payment Button -->
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/appCompatButtonPayment"
+            <Button
+                android:id="@+id/buttonPayment"
                 android:layout_marginTop="0dp"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
@@ -467,8 +467,8 @@
                 android:onClick="onPlaceOrderButtonClick"/>
 
             <!-- Cancel payment Button -->
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/appCompatButtonCancel"
+            <Button
+                android:id="@+id/buttonCancel"
                 android:layout_marginTop="0dp"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"

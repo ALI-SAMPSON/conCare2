@@ -1,7 +1,5 @@
 package io.icode.concaregh.app.activities;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,13 +14,13 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatSpinner;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -35,7 +33,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.BufferedReader;
@@ -76,8 +73,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
     private AppCompatSpinner spinnerContraceptive;
     private ArrayAdapter<CharSequence> arrayAdapterContraceptive;
 
-     AppCompatButton make_payment;
-     AppCompatButton cancel_payment;
+    Button make_payment;
+    Button cancel_payment;
 
     //objects of the classes
     private Orders orders;
@@ -193,15 +190,14 @@ public class PlaceOrderActivity extends AppCompatActivity {
             //do nothing
         }
 
+        mAuth = FirebaseAuth.getInstance();
 
         // getting view to the buttons
-        make_payment = findViewById(R.id.appCompatButtonPayment);
-        cancel_payment = findViewById(R.id.appCompatButtonCancel);
+        make_payment = findViewById(R.id.buttonPayment);
+        cancel_payment = findViewById(R.id.buttonCancel);
 
         //object initialization
         orders = new Orders();
-
-        mAuth = FirebaseAuth.getInstance();
 
         progressBar = findViewById(R.id.progressBar);
 
@@ -292,6 +288,10 @@ public class PlaceOrderActivity extends AppCompatActivity {
     //method for handling the placing of order
     public void placeOrder(){
 
+            // displays the dialog
+            //progressBar.setVisibility(View.VISIBLE);
+            progressDialog.show();
+
             //getting input from the user
             String phone_number = editTextPhoneNumber.getText().toString().trim();
             String campus = spinnerCampus.getSelectedItem().toString().trim();
@@ -314,10 +314,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
             orders.setContraceptive(contraceptive);
             orders.setOther_contraceptive(other_contraceptive);
 
-            // displays the dialog
-            //progressBar.setVisibility(View.VISIBLE);
-            progressDialog.show();
-
             FirebaseDatabase.getInstance().getReference("Orders")
                     .child(mAuth.getCurrentUser().getUid())
                     .setValue(orders).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -331,6 +327,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
                                         "One of our agents will deliver it " +
                                         "to you very soon",
                                 Snackbar.LENGTH_LONG).show();
+
                         //clears the fields after order is placed
                         clearTextFields();
 

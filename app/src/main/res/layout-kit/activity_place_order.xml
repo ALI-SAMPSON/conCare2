@@ -77,7 +77,7 @@
                 android:textColor="@color/white_snow"
                 android:textColorHint="@color/orange_deep"
                 android:inputType="phone"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 app:fontFamily="@font/nunito_semibold"
                 android:maxLength="15"
                 android:maxLines="1"
@@ -109,7 +109,7 @@
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:text="@string/hint_campus"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     app:fontFamily="@font/nunito_semibold"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_horizontal"
@@ -166,7 +166,7 @@
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:text="@string/location"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/nunito_semibold"
@@ -256,7 +256,7 @@
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:text="@string/residence"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:fontFamily="@font/nunito_semibold"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_horizontal"
@@ -315,7 +315,7 @@
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:text="@string/contraceptive"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     app:fontFamily="@font/nunito_semibold"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_horizontal"
@@ -406,7 +406,7 @@
                 android:textColor="@color/white_snow"
                 android:textColorHint="@color/orange_deep"
                 app:fontFamily="@font/nunito_semibold"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:inputType="text"
                 android:layout_marginStart="0dp"
                 android:drawableStart="@drawable/ic_hostel"
@@ -435,7 +435,7 @@
                 android:textColor="@color/white_snow"
                 android:textColorHint="@color/orange_deep"
                 android:fontFamily="@font/nunito_semibold"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:inputType="text"
                 android:layout_marginStart="0dp"
                 android:drawableStart="@drawable/ic_room_number"
@@ -454,8 +454,8 @@
             android:layout_marginTop="20dp">
 
             <!-- Make payment Button -->
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/appCompatButtonPayment"
+            <Button
+                android:id="@+id/buttonPayment"
                 android:layout_marginTop="0dp"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
@@ -464,7 +464,7 @@
                 android:text="@string/text_order"
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="normal"
                 android:textAlignment="center"
                 app:fontFamily="@font/nunito_semibold"
@@ -472,8 +472,8 @@
                 android:onClick="onPlaceOrderButtonClick"/>
 
             <!-- Cancel payment Button -->
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/appCompatButtonCancel"
+            <Button
+                android:id="@+id/buttonCancel"
                 android:layout_marginTop="0dp"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
@@ -483,7 +483,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite"
                 app:fontFamily="@font/nunito_semibold"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="normal"
                 android:textAlignment="center"
                 android:background="@drawable/circular_end_button_cancel_order"
