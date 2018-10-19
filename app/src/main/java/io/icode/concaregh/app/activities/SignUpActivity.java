@@ -459,25 +459,27 @@ public class SignUpActivity extends AppCompatActivity {
 
                                         // Method call to sendVerification
                                         // link to users's email address
-                                        //sendVerificationEmail();
+                                        sendVerificationEmail();
 
                                         // display a success message and verification sent
-                                        //Snackbar.make(nestedScrollView,getString(R.string.text_sign_up_and_verification_sent),Snackbar.LENGTH_LONG).show();
+                                        Snackbar.make(nestedScrollView,getString(R.string.text_sign_up_and_verification_sent),Snackbar.LENGTH_LONG).show();
 
-                                        Snackbar.make(nestedScrollView,getString(R.string.sign_up_successful),Snackbar.LENGTH_LONG).show();
+                                        //Snackbar.make(nestedScrollView,getString(R.string.sign_up_successful),Snackbar.LENGTH_LONG).show();
 
-                                        mAuth.signOut();
+                                        //mAuth.signOut();
 
                                         //clears text Fields
                                         clearTextFields();
 
                                     }
                                     else {
+
                                         // display a message if there is an error
                                         Snackbar.make(nestedScrollView,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
 
                                         // sign out user
                                         mAuth.signOut();
+
                                     }
                                 }
                             });

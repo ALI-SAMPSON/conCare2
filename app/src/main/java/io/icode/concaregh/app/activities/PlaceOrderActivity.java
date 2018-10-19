@@ -53,7 +53,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
     Animation shake;
 
     //objects of the View Classes
-    private EditText editTextPhoneNumber;
+    EditText editTextPhoneNumber;
     private EditText editTextHostelName;
     private EditText editTextRoomNumber;
 
@@ -105,7 +105,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(io.icode.concaregh.app.R.layout.activity_place_order);
+        setContentView(R.layout.activity_place_order);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -356,7 +356,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
                         //sendSMSMessageToAdmins();
 
                         // sends message to user after placing order
-                        sendSMSMessageToUser();
+                        //sendSMSMessageToUser();
 
                     } else {
                         // display error message
@@ -435,7 +435,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
         String destination = "233245134112,233501360324,233249959061";
 
         // Sender Id to be used for submitting the message
-        String source = "CONCARE GH";
+        String source = getString(R.string.app_name);
 
         // To what server you need to connect to for submission
         final String server = "rslr.connectbind.com";
@@ -497,15 +497,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
     // after user places an order
     private void sendSMSMessageToUser(){
 
-        String destination = editTextPhoneNumber.getText().toString();
-        String campus = spinnerCampus.getSelectedItem().toString().trim();
-        String location = spinnerLocation.getSelectedItem().toString().trim();
-        String other_location = editTextOtherLocation.getText().toString().trim();
-        String residence = spinnerResidence.getSelectedItem().toString().trim();
-        String contraceptive = spinnerContraceptive.getSelectedItem().toString().trim();
-        String other_contraceptive = editTextOtherContraceptive.getText().toString().trim();
-        String hostel_name = editTextHostelName.getText().toString().trim();
-        String room_number = editTextRoomNumber.getText().toString().trim();
+        String phone_number = editTextPhoneNumber.getText().toString().trim();
 
         String username = "zent-concare";
         // password that is to be used along with username
@@ -541,11 +533,11 @@ public class PlaceOrderActivity extends AppCompatActivity {
          */
 
         // getting mobile number from EditText
-        //String destination;
+        String destination = phone_number;
         //String destination = "233209062445";
 
         // Sender Id to be used for submitting the message
-        String source = "CONCARE GH";
+        String source = getString(R.string.app_name);
 
         // To what server you need to connect to for submission
         final String server = "rslr.connectbind.com";
@@ -583,20 +575,19 @@ public class PlaceOrderActivity extends AppCompatActivity {
             // Here take the output value of the server.
             BufferedReader dataStreamFromUrl = new BufferedReader( new InputStreamReader(httpConnection.getInputStream()));
             String dataFromUrl = "", dataBuffer = "";
-            // Writing information from the stream to the buffer
+// Writing information from the stream to the buffer
             while ((dataBuffer = dataStreamFromUrl.readLine()) != null) {
                 dataFromUrl += dataBuffer;
             }
-            /**
-             * Now dataFromUrl variable contains the Response received from the
-             * server so we can parse the response and process it accordingly.
-             */
+/**
+ * Now dataFromUrl variable contains the Response received from the
+ * server so we can parse the response and process it accordingly.
+ */
             dataStreamFromUrl.close();
             System.out.println("Response: " + dataFromUrl);
             //Toast.makeText(context, dataFromUrl, Toast.LENGTH_SHORT).show();
         }
         catch (Exception ex) {
-            // catches any error that occurs and outputs to the user
             Toast.makeText(PlaceOrderActivity.this,ex.getMessage(),Toast.LENGTH_LONG).show();
         }
 

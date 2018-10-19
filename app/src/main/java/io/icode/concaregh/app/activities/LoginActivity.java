@@ -212,22 +212,7 @@ public class LoginActivity extends AppCompatActivity {
                       if(task.isSuccessful()){
 
                           // Method to check if email is Verified
-                          //checkIfEmailIsVerified();
-
-                          // display a successful login message
-                          Toast.makeText(LoginActivity.this,getString(R.string.login_successful),Toast.LENGTH_SHORT).show();
-
-                          // clear the text fields
-                          clearTextFields();
-
-                          // start the home activity
-                          startActivity(new Intent(LoginActivity.this,HomeActivity.class));
-
-                          // Add a custom animation ot the activity
-                          CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
-
-                          // finishes this activity(prevents user from going back to this activity when back button is pressed)
-                          finish();
+                          checkIfEmailIsVerified();
 
                       }
                       else{
