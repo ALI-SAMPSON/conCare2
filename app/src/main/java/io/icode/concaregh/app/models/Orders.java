@@ -2,6 +2,7 @@ package io.icode.concaregh.app.models;
 
 public class Orders {
 
+    private String username;
     private String telephone_Number;
     private String campus;
     private String location;
@@ -16,9 +17,11 @@ public class Orders {
     public Orders(){ }
 
     //constructor with one or more parameters
-    public Orders(String telephone_Number,String campus,
+    public Orders(String username, String telephone_Number,String campus,
                   String location,String other_location,String residence,
-                  String contraceptive,String other_contraceptive, String hostel_name,String room_number){
+                  String contraceptive,String other_contraceptive, String hostel_name,String room_number)
+    {
+        this.username = username;
         this.telephone_Number = telephone_Number;
         this.campus = campus;
         this.location = location;
@@ -28,6 +31,15 @@ public class Orders {
         this.other_contraceptive = other_contraceptive;
         this.hostel_name = hostel_name;
         this.room_number = room_number;
+    }
+
+    //Getter and Setter Method for telephone number
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     //Getter and Setter Method for telephone number

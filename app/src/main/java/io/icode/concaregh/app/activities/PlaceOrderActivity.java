@@ -42,6 +42,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import io.icode.concaregh.app.models.Users;
 import maes.tech.intentanim.CustomIntent;
 
 public class PlaceOrderActivity extends AppCompatActivity {
@@ -90,6 +91,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
     private LinearLayout button_layout;
 
     FirebaseAuth mAuth;
+
+    Users users;
 
     //textInput layouts
     private TextInputLayout textInputLayoutOtherLocation;
@@ -192,6 +195,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        users = new Users();
+
         // getting view to the buttons
         make_payment = findViewById(R.id.buttonPayment);
         cancel_payment = findViewById(R.id.buttonCancel);
@@ -292,6 +297,10 @@ public class PlaceOrderActivity extends AppCompatActivity {
             //progressBar.setVisibility(View.VISIBLE);
             progressDialog.show();
 
+            FirebaseUser user = mAuth.getCurrentUser();
+
+            String username = user.getDisplayName();
+
             //getting input from the user
             String phone_number = editTextPhoneNumber.getText().toString().trim();
             String campus = spinnerCampus.getSelectedItem().toString().trim();
@@ -304,6 +313,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
             String room_number = editTextRoomNumber.getText().toString().trim();
 
             // setting values to setter methods
+            orders.setUsername(username);
             orders.setHostel_name(hostel_name);
             orders.setRoom_number(room_number);
             orders.setTelephone_Number(phone_number);
@@ -359,11 +369,9 @@ public class PlaceOrderActivity extends AppCompatActivity {
                         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(PlaceOrderActivity.this);
                         notificationManager.notify(notificationId,mBuilder.build());
 
-                        // Method call to sendSMS
-                        // to company phone number
-                        // after users successfully
-                        // place order
-                        //sendSMSMessageToAdmins();
+                        // Method call to sendSMS to admins phone numbers
+                        // after users successfully place order
+                        sendSMSMessageToAdmins();
 
                         // sends message to user after placing order
                         //sendSMSMessageToUser();
@@ -400,15 +408,15 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         //final String user_name = editTextUsername.getText().toString().trim();
         //getting input from the user
-        String phone_number = editTextPhoneNumber.getText().toString().trim();
-        String campus = spinnerCampus.getSelectedItem().toString().trim();
-        String location = spinnerLocation.getSelectedItem().toString().trim();
-        String other_location = editTextOtherLocation.getText().toString().trim();
-        String residence = spinnerResidence.getSelectedItem().toString().trim();
-        String contraceptive = spinnerContraceptive.getSelectedItem().toString().trim();
-        String other_contraceptive = editTextOtherContraceptive.getText().toString().trim();
-        String hostel_name = editTextHostelName.getText().toString().trim();
-        String room_number = editTextRoomNumber.getText().toString().trim();
+        String phone_number = orders.getTelephone_Number();
+        String campus = orders.getCampus();
+        String location = orders.getLocation();
+        String other_location = orders.getOther_location();
+        String residence = orders.getResidence();
+        String contraceptive = orders.getContraceptive();
+        String other_contraceptive = orders.getOther_contraceptive();
+        String hostel_name = orders.getHostel_name();
+        String room_number = orders.getRoom_number();
 
         String username = "zent-concare";
         // password that is to be used along with username
@@ -416,7 +424,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
         String password = "concare1";
         // Message content that is to be transmitted
 
-        String message =  user_name + " has successfully placed an order for " + contraceptive + ".";
+        String message =  user_name + " has placed an order for " + contraceptive + "." + " Location : " + location + "," + " Hostel name : " + hostel_name + "," + " Room Number : " + room_number + "," + " Mobile Number : " + phone_number;
 
         /**
          * What type of the message that is to be sent
@@ -443,6 +451,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
          * 91999000123,91999000124
          */
         String destination = "233245134112,233501360324";
+
+        //String destination = "233245134112";
 
         // Sender Id to be used for submitting the message
         String source = getString(R.string.app_name);
