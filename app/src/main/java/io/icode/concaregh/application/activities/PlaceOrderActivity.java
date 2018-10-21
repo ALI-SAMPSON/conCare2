@@ -1,4 +1,4 @@
-package io.icode.concaregh.app.activities;
+package io.icode.concaregh.application.activities;
 
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
@@ -24,11 +24,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import io.icode.concaregh.app.R;
-import io.icode.concaregh.app.models.Orders;
+import io.icode.concaregh.application.R;
+import io.icode.concaregh.application.models.Orders;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,7 +41,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import io.icode.concaregh.app.models.Users;
+import io.icode.concaregh.application.models.Users;
 import maes.tech.intentanim.CustomIntent;
 
 public class PlaceOrderActivity extends AppCompatActivity {
@@ -132,7 +131,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
         //spinner view campus
         spinnerCampus = findViewById(R.id.spinnerCampus);
         arrayAdapterCampus = ArrayAdapter.createFromResource(this, R.array.campus, R.layout.spinner_item);
-        arrayAdapterCampus.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
+        arrayAdapterCampus.setDropDownViewResource(io.icode.concaregh.application.R.layout.spinner_dropdown_item);
         spinnerCampus.setAdapter(arrayAdapterCampus);
 
         spinnerLocation = findViewById(R.id.spinnerLocation);
@@ -142,7 +141,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         spinnerResidence = findViewById(R.id.spinnerResidence);
         arrayAdapterResidence = ArrayAdapter.createFromResource(this, R.array.residence, R.layout.spinner_item);
-        arrayAdapterResidence.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
+        arrayAdapterResidence.setDropDownViewResource(io.icode.concaregh.application.R.layout.spinner_dropdown_item);
         spinnerResidence.setAdapter(arrayAdapterResidence);
 
         //reference to the spinner view and array adapter
@@ -154,12 +153,12 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
             case "Male":
                 arrayAdapterContraceptive = ArrayAdapter.createFromResource(this, R.array.con_male, R.layout.spinner_item);
-                arrayAdapterContraceptive.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
+                arrayAdapterContraceptive.setDropDownViewResource(io.icode.concaregh.application.R.layout.spinner_dropdown_item);
                 spinnerContraceptive.setAdapter(arrayAdapterContraceptive);
                 break;
             case "Female":
                 arrayAdapterContraceptive = ArrayAdapter.createFromResource(this, R.array.con_female, R.layout.spinner_item);
-                arrayAdapterContraceptive.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
+                arrayAdapterContraceptive.setDropDownViewResource(io.icode.concaregh.application.R.layout.spinner_dropdown_item);
                 spinnerContraceptive.setAdapter(arrayAdapterContraceptive);
                 break;
 
@@ -182,7 +181,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
         */
 
         if(spinnerLocation.getSelectedItem().toString().equals("Other")){
-            textInputLayoutOtherLocation = findViewById(io.icode.concaregh.app.R.id.textInputLayoutOtherLocation);
+            textInputLayoutOtherLocation = findViewById(io.icode.concaregh.application.R.id.textInputLayoutOtherLocation);
             textInputLayoutOtherLocation.setVisibility(View.VISIBLE);
         }
         /*else if(contraceptive.equals("Other")){
@@ -282,7 +281,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
             // starts animation on this view
             editTextHostelName.clearAnimation();
             editTextHostelName.startAnimation(shake);
-            editTextHostelName.setError(getString(io.icode.concaregh.app.R.string.error_text_hostel));
+            editTextHostelName.setError(getString(io.icode.concaregh.application.R.string.error_text_hostel));
             editTextHostelName.requestFocus();
         }
         else{

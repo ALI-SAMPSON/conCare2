@@ -1,4 +1,4 @@
-package io.icode.concaregh.app.activities;
+package io.icode.concaregh.application.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
-import io.icode.concaregh.app.R;
+import io.icode.concaregh.application.R;
 
 import maes.tech.intentanim.CustomIntent;
 
@@ -35,11 +35,11 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        overview_CardView = findViewById(io.icode.concaregh.app.R.id.cardViewOverview);
-        mission_CardView = findViewById(io.icode.concaregh.app.R.id.cardViewMission);
-        vision_CardView = findViewById(io.icode.concaregh.app.R.id.cardViewVision);
+        overview_CardView = findViewById(io.icode.concaregh.application.R.id.cardViewOverview);
+        mission_CardView = findViewById(io.icode.concaregh.application.R.id.cardViewMission);
+        vision_CardView = findViewById(io.icode.concaregh.application.R.id.cardViewVision);
 
-        sub_Text = findViewById(io.icode.concaregh.app.R.id.sub_text_1);
+        sub_Text = findViewById(io.icode.concaregh.application.R.id.sub_text_1);
 
         overview_CardView.setOnClickListener(this);
         mission_CardView.setOnClickListener(this);

@@ -1,4 +1,4 @@
-package io.icode.concaregh.app;
+package io.icode.concaregh.application;
 
 import org.junit.Test;
 

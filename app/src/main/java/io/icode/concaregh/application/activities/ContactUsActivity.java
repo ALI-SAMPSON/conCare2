@@ -1,11 +1,11 @@
-package io.icode.concaregh.app.activities;
+package io.icode.concaregh.application.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import io.icode.concaregh.app.R;
+import io.icode.concaregh.application.R;
 
 import maes.tech.intentanim.CustomIntent;
 
@@ -17,7 +17,7 @@ public class ContactUsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contact_us);
 
         if(getSupportActionBar() != null){
-            getSupportActionBar().setTitle(getString(io.icode.concaregh.app.R.string.text_contact));
+            getSupportActionBar().setTitle(getString(io.icode.concaregh.application.R.string.text_contact));
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);

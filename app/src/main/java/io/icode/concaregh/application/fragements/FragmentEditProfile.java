@@ -1,4 +1,4 @@
-package io.icode.concaregh.app.fragements;
+package io.icode.concaregh.application.fragements;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-
-import io.icode.concaregh.app.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -23,12 +21,12 @@ public class FragmentEditProfile extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-         View view = inflater.inflate(io.icode.concaregh.app.R.layout.fragment_edit_profile,container,false);
+         View view = inflater.inflate(io.icode.concaregh.application.R.layout.fragment_edit_profile,container,false);
 
          // getting references to the views of the fragment layout
-        CircleImageView circleImageView = view.findViewById(io.icode.concaregh.app.R.id.circularImageView);
-        EditText editTextUsername = view.findViewById(io.icode.concaregh.app.R.id.editTextUsername);
-        AppCompatButton saveButton = view.findViewById(io.icode.concaregh.app.R.id.appCompatButtonSave);
+        CircleImageView circleImageView = view.findViewById(io.icode.concaregh.application.R.id.circularImageView);
+        EditText editTextUsername = view.findViewById(io.icode.concaregh.application.R.id.editTextUsername);
+        AppCompatButton saveButton = view.findViewById(io.icode.concaregh.application.R.id.appCompatButtonSave);
 
         //circleImageView.setImageResource("");
         //editTextUsername.setText("");

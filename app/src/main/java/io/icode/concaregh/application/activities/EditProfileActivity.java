@@ -1,15 +1,13 @@
-package io.icode.concaregh.app.activities;
+package io.icode.concaregh.application.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -19,7 +17,7 @@ import android.widget.Toast;
 //import android.support.v7.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
-import io.icode.concaregh.app.R;
+import io.icode.concaregh.application.R;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -37,7 +35,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.icode.concaregh.app.models.Users;
+import io.icode.concaregh.application.models.Users;
 import maes.tech.intentanim.CustomIntent;
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -65,13 +63,13 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(io.icode.concaregh.app.R.layout.activity_edit_profile);
+        setContentView(io.icode.concaregh.application.R.layout.activity_edit_profile);
 
         circleImageView = findViewById(R.id.circularImageView);
         username = findViewById(R.id.editTextUsername);
 
         if(getSupportActionBar() != null){
-            getSupportActionBar().setTitle(getString(io.icode.concaregh.app.R.string.title_edit_profile));
+            getSupportActionBar().setTitle(getString(io.icode.concaregh.application.R.string.title_edit_profile));
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

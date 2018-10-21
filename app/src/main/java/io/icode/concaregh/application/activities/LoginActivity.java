@@ -1,8 +1,6 @@
-package io.icode.concaregh.app.activities;
+package io.icode.concaregh.application.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import io.icode.concaregh.app.R;
+import io.icode.concaregh.application.R;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -62,19 +60,19 @@ public class LoginActivity extends AppCompatActivity {
         app_logo = findViewById(R.id.app_logo);
 
         // initialization of the objects of the views
-        editTextEmail = findViewById(io.icode.concaregh.app.R.id.editTextEmail);
-        editTextPassword = findViewById(io.icode.concaregh.app.R.id.editTextPassword);
+        editTextEmail = findViewById(io.icode.concaregh.application.R.id.editTextEmail);
+        editTextPassword = findViewById(io.icode.concaregh.application.R.id.editTextPassword);
 
-        my_card = findViewById(io.icode.concaregh.app.R.id.login_cardView);
+        my_card = findViewById(io.icode.concaregh.application.R.id.login_cardView);
 
         // getting the ids of the views
         forgot_password = findViewById(R.id.forgot_password);
         buttonLogin = findViewById(R.id.buttonLogin);
         buttonSignUpLink = findViewById(R.id.buttonSignUpLink);
 
-        relativeLayout = findViewById(io.icode.concaregh.app.R.id.relativeLayout);
+        relativeLayout = findViewById(io.icode.concaregh.application.R.id.relativeLayout);
 
-        progressBar = findViewById(io.icode.concaregh.app.R.id.progressBar);
+        progressBar = findViewById(io.icode.concaregh.application.R.id.progressBar);
         // sets a custom color on progressBar
         //progressBar.getIndeterminateDrawable().setColorFilter(0xFE5722,PorterDuff.Mode.MULTIPLY);
 
@@ -162,23 +160,23 @@ public class LoginActivity extends AppCompatActivity {
         if(_email.isEmpty()){
             editTextEmail.clearAnimation();
             editTextEmail.startAnimation(shake);
-            editTextEmail.setError(getString(io.icode.concaregh.app.R.string.error_empty_email));
+            editTextEmail.setError(getString(io.icode.concaregh.application.R.string.error_empty_email));
         }
         else if(!Patterns.EMAIL_ADDRESS.matcher(_email).matches()){
             editTextEmail.clearAnimation();
             editTextEmail.startAnimation(shake);
-            editTextEmail.setError(getString(io.icode.concaregh.app.R.string.email_invalid));
+            editTextEmail.setError(getString(io.icode.concaregh.application.R.string.email_invalid));
         }
         else if(_password.isEmpty()){
             editTextPassword.clearAnimation();
             editTextPassword.startAnimation(shake);
-            editTextPassword.setError(getString(io.icode.concaregh.app.R.string.error_empty_password));
+            editTextPassword.setError(getString(io.icode.concaregh.application.R.string.error_empty_password));
             editTextPassword.requestFocus();
         }
         else if(_password.length() < 6 ){
             editTextPassword.clearAnimation();
             editTextPassword.startAnimation(shake);
-            editTextPassword.setError(getString(io.icode.concaregh.app.R.string.error_password_length));
+            editTextPassword.setError(getString(io.icode.concaregh.application.R.string.error_password_length));
             editTextPassword.requestFocus();
         }
         else{

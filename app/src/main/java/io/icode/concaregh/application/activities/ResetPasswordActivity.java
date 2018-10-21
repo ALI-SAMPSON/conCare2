@@ -1,4 +1,4 @@
-package io.icode.concaregh.app.activities;
+package io.icode.concaregh.application.activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -13,15 +13,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import io.icode.concaregh.app.R;
+import io.icode.concaregh.application.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import maes.tech.intentanim.CustomIntent;
 

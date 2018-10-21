@@ -1,4 +1,4 @@
-package io.icode.concaregh.app.sms;
+package io.icode.concaregh.application.sms;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -10,7 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import io.icode.concaregh.app.models.Orders;
+import io.icode.concaregh.application.models.Orders;
 
 /**
      * An Example Class to use for the submission using HTTP API You can perform

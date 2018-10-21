@@ -1,4 +1,4 @@
-package io.icode.concaregh.app.models;
+package io.icode.concaregh.application.models;
 
 public class Users {
 

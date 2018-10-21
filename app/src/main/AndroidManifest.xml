@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.icode.concaregh.app"
+    package="io.icode.concaregh.application"
     android:installLocation="auto">
 
     <!-- support screen sizes -->
@@ -33,7 +33,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".activities.LoginActivity"
+            android:name="io.icode.concaregh.application.activities.LoginActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
@@ -53,17 +53,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.AboutUsActivity"
+            android:name="io.icode.concaregh.application.activities.AboutUsActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme" />
         <activity
-            android:name=".activities.SignUpActivity"
+            android:name="io.icode.concaregh.application.activities.SignUpActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Sign_up" />
         <activity
-            android:name=".activities.SplashScreenActivity"
+            android:name="io.icode.concaregh.application.activities.SplashScreenActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash">
@@ -74,31 +74,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.HomeActivity"
+            android:name="io.icode.concaregh.application.activities.HomeActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme">
 
         </activity>
         <activity
-            android:name=".activities.PlaceOrderActivity"
+            android:name="io.icode.concaregh.application.activities.PlaceOrderActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme.order">
         </activity>
         <activity
-            android:name=".activities.EditProfileActivity"
+            android:name="io.icode.concaregh.application.activities.EditProfileActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme.profile">
         </activity>
         <activity
-            android:name=".activities.ContactUsActivity"
+            android:name="io.icode.concaregh.application.activities.ContactUsActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme.order">
         </activity>
-        <activity android:name=".activities.ResetPasswordActivity"
+        <activity android:name="io.icode.concaregh.application.activities.ResetPasswordActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Reset_Password">

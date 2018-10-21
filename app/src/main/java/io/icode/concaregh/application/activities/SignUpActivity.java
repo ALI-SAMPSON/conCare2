@@ -1,12 +1,8 @@
-package io.icode.concaregh.app.activities;
+package io.icode.concaregh.application.activities;
 
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.PorterDuff;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -25,13 +21,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import io.icode.concaregh.app.R;
+import io.icode.concaregh.application.R;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,14 +33,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.icode.concaregh.app.models.Users;
+import io.icode.concaregh.application.models.Users;
 import maes.tech.intentanim.CustomIntent;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -175,23 +164,23 @@ public class SignUpActivity extends AppCompatActivity {
         if(email.isEmpty()){
             editTextEmail.clearAnimation();
             editTextEmail.startAnimation(shake);
-            editTextEmail.setError(getString(io.icode.concaregh.app.R.string.error_empty_email));
+            editTextEmail.setError(getString(io.icode.concaregh.application.R.string.error_empty_email));
         }
         else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             editTextEmail.clearAnimation();
             editTextEmail.startAnimation(shake);
-            editTextEmail.setError(getString(io.icode.concaregh.app.R.string.email_invalid));
+            editTextEmail.setError(getString(io.icode.concaregh.application.R.string.email_invalid));
         }
         else if(username.isEmpty()) {
             editTextUsername.clearAnimation();
             editTextUsername.startAnimation(shake);
-            editTextUsername.setError(getString(io.icode.concaregh.app.R.string.error_empty_username));
+            editTextUsername.setError(getString(io.icode.concaregh.application.R.string.error_empty_username));
             editTextUsername.requestFocus();
         }
         else if(password.isEmpty()){
             editTextPassword.clearAnimation();
             editTextPassword.startAnimation(shake);
-            editTextPassword.setError(getString(io.icode.concaregh.app.R.string.error_empty_password));
+            editTextPassword.setError(getString(io.icode.concaregh.application.R.string.error_empty_password));
             editTextPassword.requestFocus();
         }
         else if(password.length() < 6 ){

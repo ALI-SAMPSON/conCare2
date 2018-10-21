@@ -1,4 +1,4 @@
-package io.icode.concaregh.app.activities;
+package io.icode.concaregh.application.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -26,18 +26,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import io.icode.concaregh.app.R;
+import io.icode.concaregh.application.R;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.icode.concaregh.app.models.Users;
+import io.icode.concaregh.application.models.Users;
 import maes.tech.intentanim.CustomIntent;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -77,11 +74,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(io.icode.concaregh.app.R.layout.activity_home);
+        setContentView(io.icode.concaregh.application.R.layout.activity_home);
 
-        spinnerGender = findViewById(io.icode.concaregh.app.R.id.spinnerGender);
+        spinnerGender = findViewById(io.icode.concaregh.application.R.id.spinnerGender);
         arrayAdapterGender = ArrayAdapter.createFromResource(this, R.array.gender, R.layout.spinner_item_home);
-        arrayAdapterGender.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
+        arrayAdapterGender.setDropDownViewResource(io.icode.concaregh.application.R.layout.spinner_dropdown_item);
         spinnerGender.setAdapter(arrayAdapterGender);
 
         mDrawerLayout = findViewById(R.id.drawer);
@@ -430,7 +427,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private void  signOut(){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-        builder.setTitle(getString(io.icode.concaregh.app.R.string.logout));
+        builder.setTitle(getString(io.icode.concaregh.application.R.string.logout));
         builder.setMessage(getString(R.string.logout_msg));
 
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {

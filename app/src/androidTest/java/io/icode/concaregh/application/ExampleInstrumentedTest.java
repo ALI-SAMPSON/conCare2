@@ -1,4 +1,4 @@
-package io.icode.concaregh.app;
+package io.icode.concaregh.application;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
