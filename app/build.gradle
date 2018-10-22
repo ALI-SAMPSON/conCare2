@@ -95,6 +95,9 @@ dependencies {
     //MultiDex Library
     implementation 'com.android.support:multidex:1.0.3'
 
+    //Google Admob dependency
+    implementation 'com.google.android.gms:play-services-ads:17.0.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

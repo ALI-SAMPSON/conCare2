@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import io.icode.concaregh.application.R;
 
@@ -44,6 +47,15 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
         overview_CardView.setOnClickListener(this);
         mission_CardView.setOnClickListener(this);
         vision_CardView.setOnClickListener(this);
+
+        // Initializing Google Ads
+        MobileAds.initialize(this,"ca-app-pub-4501853719724548~4076180577");
+        // getting reference to AdView
+        AdView adView = findViewById(R.id.adView);
+        //AdRequest object contains runtime information about a single ad request
+        AdRequest adRequest = new AdRequest.Builder().build();
+        // Load ads into Banner Ads
+        adView.loadAd(adRequest);
 
     }
 

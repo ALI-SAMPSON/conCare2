@@ -30,6 +30,10 @@ import io.icode.concaregh.application.R;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -126,6 +130,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // method call
         loadUserInfo();
+
+        // Initializing Google Ads
+        MobileAds.initialize(this,"ca-app-pub-4501853719724548~4076180577");
+        // getting reference to AdView
+        AdView adView = findViewById(R.id.adView);
+        //AdRequest object contains runtime information about a single ad request
+        AdRequest adRequest = new AdRequest.Builder().build();
+        // Load ads into Banner Ads
+        adView.loadAd(adRequest);
+
+        AdView adView1 = findViewById(R.id.adView1);
+        AdRequest adRequest1 = new AdRequest.Builder().build();
+        adView1.loadAd(adRequest1);
 
     }
 

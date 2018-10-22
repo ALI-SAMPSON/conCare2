@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:text="@string/welcome_msg_home"
             android:layout_margin="5dp"
-           android:layout_marginBottom="5dp"
+            android:layout_marginBottom="5dp"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
             android:textSize="20sp"
@@ -77,6 +77,31 @@
             android:src="@drawable/splash_bg"
             android:contentDescription="@string/todo">
         </ImageView>
+
+        <!-- AdView to display ads-->
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+        </com.google.android.gms.ads.AdView>
+
+        <!-- AdView to display ads-->
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView1"
+            android:layout_below="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+        </com.google.android.gms.ads.AdView>
 
         <!--Progress Bar-->
         <ProgressBar

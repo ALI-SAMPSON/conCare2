@@ -32,6 +32,11 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-4501853719724548~4076180577"/>
+
         <activity
             android:name="io.icode.concaregh.application.activities.LoginActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
