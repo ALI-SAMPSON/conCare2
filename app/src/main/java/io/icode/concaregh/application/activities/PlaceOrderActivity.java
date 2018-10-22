@@ -28,6 +28,10 @@ import android.widget.Toast;
 
 import io.icode.concaregh.application.R;
 import io.icode.concaregh.application.models.Orders;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -207,6 +211,15 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         // method call to change ProgressDialog Background
         changeProgressDialogBg();
+
+        // Initializing Google Ads
+        MobileAds.initialize(this,"ca-app-pub-4501853719724548~4076180577");
+        // getting reference to AdView
+        AdView adView = findViewById(R.id.adView);
+        //AdRequest object contains runtime information about a single ad request
+        AdRequest adRequest = new AdRequest.Builder().build();
+        // Load ads into Banner Ads
+        adView.loadAd(adRequest);
 
     }
 

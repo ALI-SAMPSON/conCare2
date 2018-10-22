@@ -73,6 +73,13 @@ public class ResetPasswordActivity extends AppCompatActivity {
         // Load ads into Banner Ads
         adView.loadAd(adRequest);
 
+        // getting reference to AdView
+        AdView adView1 = findViewById(R.id.adView1);
+        //AdRequest object contains runtime information about a single ad request
+        AdRequest adRequest1 = new AdRequest.Builder().build();
+        // Load ads into Banner Ads
+        adView1.loadAd(adRequest1);
+
     }
 
     @Override

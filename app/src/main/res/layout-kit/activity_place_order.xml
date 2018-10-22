@@ -41,6 +41,19 @@
             android:layout_height="50dp">
         </View>
 
+        <!-- AdView to display ads-->
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_below="@+id/view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_centerHorizontal="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-4501853719724548~4076180577">
+        </com.google.android.gms.ads.AdView>
+
         <!--<TextView
             android:id="@+id/hint_phone"
             android:layout_below="@+id/view"
@@ -56,7 +69,7 @@
 
         <!-- TextInputLayout and AppCompatEdiText for Tel. Number -->
         <android.support.design.widget.TextInputLayout
-            android:layout_below="@+id/view"
+            android:layout_below="@+id/adView"
             android:id="@+id/phoneNum_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

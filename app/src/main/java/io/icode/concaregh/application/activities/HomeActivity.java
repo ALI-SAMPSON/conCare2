@@ -140,6 +140,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Load ads into Banner Ads
         adView.loadAd(adRequest);
 
+        //AdView 1
         AdView adView1 = findViewById(R.id.adView1);
         AdRequest adRequest1 = new AdRequest.Builder().build();
         adView1.loadAd(adRequest1);

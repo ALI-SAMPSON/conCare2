@@ -86,7 +86,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+            ads:adUnitId="ca-app-pub-4501853719724548~4076180577">
         </com.google.android.gms.ads.AdView>
 
         <!-- AdView to display ads-->
@@ -99,7 +99,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+            ads:adUnitId="ca-app-pub-4501853719724548~4076180577">
         </com.google.android.gms.ads.AdView>
 
         <!--Progress Bar-->
