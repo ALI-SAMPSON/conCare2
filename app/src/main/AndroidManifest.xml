@@ -5,14 +5,14 @@
 
     <!-- support screen sizes -->
     <supports-screens
-        android:smallScreens="true"
-        android:normalScreens="true"
+        android:anyDensity="true"
         android:largeScreens="true"
-        android:xlargeScreens="true"
-        android:anyDensity="true"/>
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
 
     <!-- Added permission -->
-    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -27,7 +27,6 @@
         android:roundIcon="@mipmap/app_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -35,40 +34,44 @@
         <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-4501853719724548~4076180577"/>
+            android:value="ca-app-pub-4501853719724548~4076180577" />
 
         <activity
-            android:name="io.icode.concaregh.application.activities.LoginActivity"
+            android:name=".activities.LoginActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
+
             <!-- Deep linking intent-filter to identify app online when users search -->
             <intent-filter android:label="@string/filter_title_con_care_gh">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-                <data android:scheme="http"
+                <data
                     android:host="www.example.com"
-                    android:pathPrefix="/google" />
-                <!-- note that the leading "/" is required for pathPrefix-->
+                    android:pathPrefix="/google"
+                    android:scheme="http" />
+                <!-- note that the leading "/" is required for pathPrefix -->
                 <!-- Accepts URIs that begin with "example://gizmos” -->
-                <data android:scheme="example"
-                    android:host="google" />
+                <data
+                    android:host="google"
+                    android:scheme="example" />
             </intent-filter>
         </activity>
         <activity
-            android:name="io.icode.concaregh.application.activities.AboutUsActivity"
+            android:name=".activities.AboutUsActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/homeTheme" />
         <activity
-            android:name="io.icode.concaregh.application.activities.SignUpActivity"
+            android:name=".activities.SignUpActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Sign_up" />
         <activity
-            android:name="io.icode.concaregh.application.activities.SplashScreenActivity"
+            android:name=".activities.SplashScreenActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash">
@@ -79,36 +82,36 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="io.icode.concaregh.application.activities.HomeActivity"
+            android:name=".activities.HomeActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/homeTheme">
-
-        </activity>
+            android:theme="@style/homeTheme" />
         <activity
-            android:name="io.icode.concaregh.application.activities.PlaceOrderActivity"
+            android:name=".activities.PlaceOrderActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/homeTheme.order">
-        </activity>
+            android:theme="@style/homeTheme.order" />
         <activity
-            android:name="io.icode.concaregh.application.activities.EditProfileActivity"
+            android:name=".activities.EditProfileActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/homeTheme.profile">
-        </activity>
+            android:theme="@style/homeTheme.profile" />
         <activity
-            android:name="io.icode.concaregh.application.activities.ContactUsActivity"
+            android:name=".activities.ContactUsActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/homeTheme.order">
-        </activity>
-        <activity android:name="io.icode.concaregh.application.activities.ResetPasswordActivity"
+            android:theme="@style/homeTheme.order" />
+        <activity
+            android:name=".activities.ResetPasswordActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Reset_Password">
-        </activity>
-
+            android:theme="@style/AppTheme.Reset_Password" />
+        <activity
+            android:name=".activities.PhoneLoginActivity"
+            android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"></activity>
+        <activity android:name=".activities.VerifyPhoneActivity"></activity>
     </application>
 
 </manifest>
