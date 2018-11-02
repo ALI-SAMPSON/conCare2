@@ -368,6 +368,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             return true;
         }
         switch(item.getItemId()){
+            case R.id.menu_share:
+                // method call
+                shareIntent();
+                break;
             case R.id.menu_about:
                 // starts the about us activity
                 startActivity(new Intent(HomeActivity.this,AboutUsActivity.class));
@@ -387,6 +391,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // method to share app link to other users
+    public void shareIntent(){
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String sharingSubject = "CONCARE GH";
+        String sharingText = "https://play.google.com/store/apps/details?id=io.icode.concaregh.application";
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT,sharingSubject);
+        sharingIntent.putExtra(Intent.EXTRA_TEXT,sharingText);
+        startActivity(Intent.createChooser(sharingIntent,"Share with"));
     }
 
 

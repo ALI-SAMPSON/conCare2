@@ -14,7 +14,10 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.SupportMenuInflater;
 import android.support.v7.widget.AppCompatSpinner;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -625,6 +628,12 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_share,menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
@@ -641,18 +650,26 @@ public class PlaceOrderActivity extends AppCompatActivity {
                finish();
 
                break;
+           case R.id.menu_share:
+
+               //method call
+               shareIntent();
+
                default:
                    break;
        }
         return super.onOptionsItemSelected(item);
     }
 
-    public void onClearButtonClick(View view) {
-        editTextPhoneNumber.setText(null);
-        editTextOtherLocation.setText(null);
-        editTextOtherContraceptive.setText(null);
-        editTextHostelName.setText(null);
-        editTextRoomNumber.setText(null);
+    // method to share app link to other users
+    public void shareIntent(){
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String sharingSubject = "CONCARE GH";
+        String sharingText = "https://play.google.com/store/apps/details?id=io.icode.concaregh.application";
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT,sharingSubject);
+        sharingIntent.putExtra(Intent.EXTRA_TEXT,sharingText);
+        startActivity(Intent.createChooser(sharingIntent, "Share with"));
     }
 
     @Override
@@ -674,5 +691,13 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         // finishes the activity
         finish();
+    }
+
+    public void onClearButtonClick(View view) {
+        editTextPhoneNumber.setText(null);
+        editTextOtherLocation.setText(null);
+        editTextOtherContraceptive.setText(null);
+        editTextHostelName.setText(null);
+        editTextRoomNumber.setText(null);
     }
 }

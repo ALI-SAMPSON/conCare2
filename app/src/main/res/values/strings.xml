@@ -165,6 +165,9 @@
     <string name="close" translatable="false">Close</string>
     <string name="logout_msg" translatable="false">Are you sure you want to sign out?</string>
 
+    <string name="title_share"
+        translatable="false">Share</string>
+
     <string name="default_notification_channel_id" translatable="false">Default Notification Channel Id</string>
 
     <string name="prefix_number" translatable="false">233</string>
