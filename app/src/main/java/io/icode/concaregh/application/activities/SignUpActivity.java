@@ -422,31 +422,31 @@ public class SignUpActivity extends AppCompatActivity {
                                         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(SignUpActivity.this, CHANNEL_ID)
                                                 .setSmallIcon(R.mipmap.app_logo_round)
                                                 .setContentTitle(getString(R.string.app_name))
-                                                .setContentText("Sign Up Successful. A verification link has been\n" +
-                                                        " sent to " + mAuth.getCurrentUser().getEmail() + "." +
-                                                        " Please visit your inbox to verify\n" +
-                                                        " our email address. Thanks for joining us!")
+                                                .setContentText("Sign Up Successful" + " -> " + "(" + username + ")" + "." +
+                                                        " Please proceed to login and " + "Thank you for joining us!")
+
                                                 .setStyle(new NotificationCompat.BigTextStyle()
-                                                .bigText("Sign Up Successful. A verification link has been\n" +
-                                                        " sent to " + mAuth.getCurrentUser().getEmail() + "." +
-                                                        " Please visit your inbox to verify\n" +
-                                                        " our email address. Thanks for joining us!"))
+                                                .bigText("Sign Up Successful" + " -> " + "(" + username + ")" + "." +
+                                                        " Please proceed to login and " + "Thank you for joining us!"))
                                                 // Set the intent that will fire when the user taps the notification
                                                 .setWhen(System.currentTimeMillis())
                                                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                                                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                                                 .setContentIntent(pendingIntent)
                                                 .setAutoCancel(true);
-
                                         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(SignUpActivity.this);
                                         notificationManager.notify(notificationId,mBuilder.build());
 
                                         // Method call to sendVerification
                                         // link to users's email address
-                                        sendVerificationEmail();
+                                        //sendVerificationEmail();
 
                                         // display a success message and verification sent
-                                        Snackbar.make(nestedScrollView,getString(R.string.text_sign_up_and_verification_sent),Snackbar.LENGTH_LONG).show();
+                                        Snackbar.make(nestedScrollView,getString(R.string.sign_up_successful),Snackbar.LENGTH_LONG).show();
+
+                                        // sign out user
+                                        // after signing Up successfully
+                                        mAuth.signOut();
 
                                         //clears text Fields
                                         clearTextFields();
@@ -538,7 +538,7 @@ public class SignUpActivity extends AppCompatActivity {
         editTextEmail.setText(null);
         editTextUsername.setText(null);
         editTextPassword.setText(null);
-        //editTextPhoneNumber.setText(null);
+        editTextPhoneNumber.setText(null);
     }
 
     @Override

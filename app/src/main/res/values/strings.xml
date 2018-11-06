@@ -46,7 +46,8 @@
     <string name="error_password_length" translatable="false">Password length cannot be less than 6</string>
     <string name="error_empty_phone" translatable="false">Phone Number field cannot be left empty</string>
     <string name="phone_invalid" translatable="false">Enter a valid phone number</string>
-    <string name="sign_up_successful" translatable="false">Sign Up Successful</string>
+    <string name="sign_up_successful" translatable="false">Sign Up Successful. Please proceed to login
+        and Thank you for joining us!</string>
     <string name="login_successful" translatable="false">Login Successful</string>
     <string name="error_empty_field" translatable="false">Field cannot left empty</string>
     <string name="error_empty_username" translatable="false">Username is a required field</string>
@@ -164,6 +165,12 @@
     <string name="open" translatable="false">Open</string>
     <string name="close" translatable="false">Close</string>
     <string name="logout_msg" translatable="false">Are you sure you want to sign out?</string>
+
+    <string name="verification_sent"
+        translatable="false">
+        Sign Up Successful. A verification link has been + sent to + mAuth.getCurrentUser().getEmail()  +
+        Please visit your inbox to verify + our email address. Thanks for joining us!
+    </string>
 
     <string name="title_share"
         translatable="false">Share</string>
