@@ -148,10 +148,8 @@
     <string name="text_input_phone_number" translatable="false">May I ask for your mobile number?</string>
     <string name="text_enter_phone" translatable="false">enter your mobile number</string>
     <string name="text_continue" translatable="false">Continue</string>
-    <string name="text_verification_code"
-        translatable="false">enter verification code</string>
-    <string name="text_wait"
-        translatable="false">Wait for the code sent to You</string>
+    <string name="text_verification_code" translatable="false">enter verification code</string>
+    <string name="text_wait" translatable="false">Wait for the code sent to You</string>
 
     <!-- Navigation drawer menu -->
     <string name="dummy_username" translatable="false">Username : username</string>
@@ -166,14 +164,14 @@
     <string name="close" translatable="false">Close</string>
     <string name="logout_msg" translatable="false">Are you sure you want to sign out?</string>
 
-    <string name="verification_sent"
-        translatable="false">
+    <string name="verification_sent" translatable="false">
         Sign Up Successful. A verification link has been + sent to + mAuth.getCurrentUser().getEmail()  +
         Please visit your inbox to verify + our email address. Thanks for joining us!
     </string>
 
-    <string name="title_share"
-        translatable="false">Share</string>
+    <string name="title_share" translatable="false">Share</string>
+    <string name="text_chat_us"
+        translatable="false">Chat Us</string>
 
     <string name="default_notification_channel_id" translatable="false">Default Notification Channel Id</string>
 

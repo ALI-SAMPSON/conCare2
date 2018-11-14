@@ -110,8 +110,9 @@
             android:name=".activities.PhoneLoginActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"></activity>
-        <activity android:name=".activities.VerifyPhoneActivity"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activities.VerifyPhoneActivity" />
+        <activity android:name=".chatApp.MainActivity"></activity>
     </application>
 
 </manifest>

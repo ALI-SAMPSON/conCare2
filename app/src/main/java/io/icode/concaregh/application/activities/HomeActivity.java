@@ -38,6 +38,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.icode.concaregh.application.chatApp.MainActivity;
 import io.icode.concaregh.application.models.Users;
 import maes.tech.intentanim.CustomIntent;
 
@@ -372,6 +373,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 // method call
                 shareIntent();
                 break;
+            case R.id.menu_chat:
+                // starts the about us activity
+                startActivity(new Intent(HomeActivity.this,MainActivity.class));
+                // Add a custom animation ot the activity
+                CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
             case R.id.menu_about:
                 // starts the about us activity
                 startActivity(new Intent(HomeActivity.this,AboutUsActivity.class));
@@ -472,7 +478,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(HomeActivity.this,LoginActivity.class));
                 // Add a custom animation ot the activity
                 CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
-
                 // finishes the activity
                 finish();
             }

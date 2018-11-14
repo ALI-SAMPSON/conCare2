@@ -10,23 +10,30 @@
     </item>
 
     <item
+        android:id="@+id/menu_chat"
+        android:title="@string/text_chat_us"
+        android:orderInCategory="100"
+        app:showAsAction="never">
+    </item>
+
+    <item
         android:id="@+id/menu_about"
         android:title="@string/text_about"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         app:showAsAction="never">
     </item>
 
     <item
         android:id="@+id/menu_contact"
         android:title="@string/text_contact"
-        android:orderInCategory="200"
+        android:orderInCategory="300"
         app:showAsAction="never">
     </item>
 
     <item
         android:id="@+id/menu_exit"
         android:title="@string/text_exit"
-        android:orderInCategory="300"
+        android:orderInCategory="400"
         app:showAsAction="never">
     </item>
 
