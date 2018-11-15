@@ -378,6 +378,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(HomeActivity.this,MainActivity.class));
                 // Add a custom animation ot the activity
                 CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+                break;
             case R.id.menu_about:
                 // starts the about us activity
                 startActivity(new Intent(HomeActivity.this,AboutUsActivity.class));
@@ -393,6 +394,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_exit:
                 // close application
                 exitApplication();
+                break;
             default:
                 break;
         }
