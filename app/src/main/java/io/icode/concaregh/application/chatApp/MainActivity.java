@@ -1,5 +1,6 @@
 package io.icode.concaregh.application.chatApp;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -29,9 +30,11 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.icode.concaregh.application.R;
+import io.icode.concaregh.application.activities.HomeActivity;
 import io.icode.concaregh.application.fragements.ChatsFragment;
 import io.icode.concaregh.application.fragements.UsersFragment;
 import io.icode.concaregh.application.models.Users;
+import maes.tech.intentanim.CustomIntent;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         //checks of there is support actionBar
         if(getSupportActionBar() != null){
-            getSupportActionBar().setTitle(getString(R.string.home));
+            getSupportActionBar().setTitle("");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
@@ -111,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_user,menu);
+        inflater.inflate(R.menu.menu_share,menu);
         return true;
     }
 
@@ -119,7 +122,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-
+                startActivity(new Intent(MainActivity.this,HomeActivity.class));
+                CustomIntent.customType(MainActivity.this,"right-to-left");
                 break;
         }
         return super.onOptionsItemSelected(item);

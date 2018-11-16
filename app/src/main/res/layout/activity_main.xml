@@ -22,9 +22,9 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@mipmap/splash_bg1"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/avatar_placeholder"
                 android:scaleType="centerCrop"/>
 
             <TextView
@@ -34,6 +34,7 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginLeft="25dp"
                 android:textStyle="bold"
+                android:visibility="visible"
                 app:fontFamily="@font/nunito_semibold"
                 android:textColor="@color/colorWhite"
                 android:text="@string/hint_username"/>
