@@ -14,8 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,8 +31,9 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.icode.concaregh.application.R;
 import io.icode.concaregh.application.activities.HomeActivity;
+import io.icode.concaregh.application.adapters.ViewPagerAdapter;
+import io.icode.concaregh.application.fragements.AdminFragment;
 import io.icode.concaregh.application.fragements.ChatsFragment;
-import io.icode.concaregh.application.fragements.UsersFragment;
 import io.icode.concaregh.application.models.Users;
 import maes.tech.intentanim.CustomIntent;
 
@@ -71,27 +72,31 @@ public class MainActivity extends AppCompatActivity {
 
         user = mAuth.getCurrentUser();
 
-        chatDbRef = FirebaseDatabase.getInstance().getReference("Users");
+        chatDbRef = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
                 //child(user.getUid());
 
         chatDbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Users users = dataSnapshot.getValue(Users.class);
-                username.setText(users.getUsername());
-                //text if user's imageUrl is equal to default
-                if(users.getImageUrl() == null){
-                    profile_image.setImageResource(R.drawable.avatar_placeholder);
-                }
-                else{
-                    // load user's Image Url
-                    Glide.with(MainActivity.this).load(users.getImageUrl()).into(profile_image);
-                }
+
+                    Users users = dataSnapshot.getValue(Users.class);
+
+                    username.setText(user.getDisplayName());
+
+                    //text if user's imageUrl is equal to default
+                    if(user.getPhotoUrl() == null){
+                        profile_image.setImageResource(R.drawable.avatar_placeholder);
+                    }
+                    else{
+                        // load user's Image Url
+                        Glide.with(MainActivity.this).load(user.getPhotoUrl()).into(profile_image);
+                    }
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(MainActivity.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
 
@@ -101,9 +106,9 @@ public class MainActivity extends AppCompatActivity {
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        // adds ChatsFragment and UsersFragment to the viewPager
+        // adds ChatsFragment and AdminFragment to the viewPager
         viewPagerAdapter.addFragment(new ChatsFragment(), getString(R.string.text_chats));
-        viewPagerAdapter.addFragment(new UsersFragment(), getString(R.string.text_users));
+        viewPagerAdapter.addFragment(new AdminFragment(), getString(R.string.text_admin));
         //Sets Adapter view of the ViewPager
         viewPager.setAdapter(viewPagerAdapter);
 
@@ -114,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_share,menu);
+        inflater.inflate(R.menu.menu_chat,menu);
         return true;
     }
 
@@ -122,49 +127,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
+                // navigates user to the home Activity
                 startActivity(new Intent(MainActivity.this,HomeActivity.class));
                 CustomIntent.customType(MainActivity.this,"right-to-left");
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    // ViewPager Adapter Class
-    class ViewPagerAdapter extends FragmentPagerAdapter{
-
-        private ArrayList<Fragment> fragments;
-        private ArrayList<String> titles;
-
-        ViewPagerAdapter(FragmentManager fm){
-            super(fm);
-            this.fragments = new ArrayList<>();
-            this.titles = new ArrayList<>();
-        }
-
-        // get the positions of the fragments
-        @Override
-        public Fragment getItem(int position) {
-            return fragments.get(position);
-        }
-
-        // get Count of fragments
-        @Override
-        public int getCount() {
-            return fragments.size();
-        }
-
-        //method to add Fragment and their titles to the list
-        public void addFragment(Fragment fragment, String title){
-            fragments.add(fragment);
-            titles.add(title);
-        }
-
-        // Press Ctrl + 0
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return titles.get(position);
-        }
     }
 
 }

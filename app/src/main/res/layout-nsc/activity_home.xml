@@ -183,7 +183,7 @@
              android:layout_centerHorizontal="true"
              android:background="@drawable/circular_button"
              android:scaleType="centerInside"
-             android:src="@drawable/ic_send_black_24dp"
+             android:src="@drawable/ic_send"
              android:onClick="onProceedButtonClick"
              android:contentDescription="@string/todo">
          </ImageView>

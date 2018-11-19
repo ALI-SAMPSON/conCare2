@@ -171,10 +171,9 @@
 
     <string name="title_share" translatable="false">Share</string>
     <string name="text_chat_us" translatable="false">Chat Us</string>
-    <string name="text_chats"
-        translatable="false">Chats</string>
-    <string name="text_users"
-        translatable="false">Users</string>
+    <string name="text_chats" translatable="false">Chats</string>
+    <string name="text_users" translatable="false">Users</string>
+    <string name="text_admin" translatable="false">Admin</string>
     <string name="text_chat_with_us" translatable="false">Chat with Us</string>
 
     <string name="default_notification_channel_id" translatable="false">Default Notification Channel Id</string>
@@ -191,7 +190,9 @@
     <string name="who_we_are" translatable="false">WHO WE ARE</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment"
-        translatable="false">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+
+    <string name="type_message"
+        translatable="false">Type a message...</string>
 
 </resources>

@@ -112,7 +112,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity android:name=".activities.VerifyPhoneActivity" />
-        <activity android:name=".chatApp.MainActivity"></activity>
+        <activity android:name=".chatApp.MainActivity" />
+        <activity android:name=".chatApp.MessageActivity"></activity>
     </application>
 
 </manifest>

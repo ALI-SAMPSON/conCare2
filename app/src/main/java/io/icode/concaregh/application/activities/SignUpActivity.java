@@ -35,6 +35,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.icode.concaregh.application.models.Admin;
 import io.icode.concaregh.application.models.Users;
 import maes.tech.intentanim.CustomIntent;
 
@@ -82,6 +83,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     Users users;
 
+    Admin admin;
+
     private static final int  REQUEST_CODE = 1;
 
     private String CHANNEL_ID = "notification_channel_id";
@@ -118,6 +121,8 @@ public class SignUpActivity extends AppCompatActivity {
         userRef = userdB.getReference("Users");
 
         users = new Users();
+
+        admin = new Admin();
 
         //progressBar = findViewById(R.id.progressBar);
         // sets a custom color on progressBar
@@ -394,12 +399,13 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
 
+                            final FirebaseUser user = mAuth.getCurrentUser();
+
                             users.setEmail(email);
                             users.setUsername(username);
                             users.setGender(gender);
                             users.setPhoneNumber(phone);
-
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            users.setUid(user.getUid());
 
                             userRef.child(user.getUid()).setValue(users)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {

@@ -1,24 +1,24 @@
 package io.icode.concaregh.application.models;
 
-public class Users {
+public class Admin {
 
     //field in the database
     private String email;
     private String username;
-    private String uid;
+    private String adminUid;
     private String gender;
     private String phoneNumber;
     private String imageUrl;
 
 
     //default constructor
-    public Users(){}
+    public Admin(){}
 
     //constructor with one or more parameters
-    public Users(String email,String username, String uid, String gender,String phoneNumber, String imageUrl){
+    public Admin(String email,String username, String adminUid, String gender,String phoneNumber, String imageUrl){
         this.email = email;
         this.username = username;
-        this.uid = uid;
+        this.adminUid = adminUid;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
         this.imageUrl = imageUrl;
@@ -44,12 +44,12 @@ public class Users {
     }
 
     //Getter and Setter Method for uid
-    public String getUid() {
-        return uid;
+    public String getAdminUid() {
+        return adminUid;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setAdminUid(String adminUid) {
+        this.adminUid = adminUid;
     }
 
     //Getter and Setter Method for Gender
