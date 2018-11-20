@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:background="@mipmap/admin_icon_round" />
+        android:background="@null" />
 
     <TextView
         android:id="@+id/username"
@@ -33,7 +33,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:layout_height="1dp"
-        android:alpha="0.2"
+        android:alpha="0.25"
         android:background="@color/status_bar_back"/>
 
 </RelativeLayout>

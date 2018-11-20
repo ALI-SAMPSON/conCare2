@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,14 +32,18 @@ public class MessageActivity extends AppCompatActivity {
     CircleImageView profile_image;
     TextView username;
 
-    FirebaseUser currentAdmin;
+    FirebaseUser currentUser;
     DatabaseReference adminRef;
 
     // editText and Button to send Message
-    EditText msg_send;
-    ImageButton btn_send;
+    EditText msg_to_send;
+    ImageView btn_send;
 
     Intent intent;
+
+    // string to get intentExtras
+    String adminId;
+    String admin_username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +63,15 @@ public class MessageActivity extends AppCompatActivity {
 
         profile_image =  findViewById(R.id.profile_image);
         username =  findViewById(R.id.username);
-        msg_send =  findViewById(R.id.editText_send);
+        msg_to_send =  findViewById(R.id.editText_send);
         btn_send =  findViewById(R.id.btn_send);
 
         intent = getIntent();
-        final String adminId = intent.getStringExtra("uid");
+        adminId = intent.getStringExtra("uid");
+        admin_username = intent.getStringExtra("username");
 
-        currentAdmin = FirebaseAuth.getInstance().getCurrentUser();
+
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
         adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(adminId);
 
         getAdminDetails();
@@ -80,7 +87,7 @@ public class MessageActivity extends AppCompatActivity {
                 username.setText(admin.getUsername());
                 if(admin.getImageUrl() == null){
                     // sets a default placeholder into imageView if url is null
-                    profile_image.setImageResource(R.mipmap.admin_icon_round);
+                    profile_image.setImageResource(R.drawable.app_logo);
                 }
                 else{
                     // loads imageUrl into imageView if url is not null
@@ -104,17 +111,24 @@ public class MessageActivity extends AppCompatActivity {
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("sender",sender);
-        hashMap.put("receiver", sender);
+        hashMap.put("receiver", receiver);
         hashMap.put("message",message);
 
         chatRef.child("Chats").push().setValue(hashMap);
 
     }
 
-    // ImageButtton to send Message
+    // ImageView OnClickListener to send Message
     public void btnSend(View view) {
 
-        String message  =
+        String message  = msg_to_send.getText().toString();
+        if(!message.equals("")){
+            sendMessage(currentUser.getDisplayName(),admin_username,message);
+        }
+        else{
+             Toast.makeText(MessageActivity.this,
+                     "Please type in a message",Toast.LENGTH_LONG).show();
+        }
 
     }
 }

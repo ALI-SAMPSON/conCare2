@@ -48,7 +48,7 @@ public class RecyclerViewAdapterAdmin extends RecyclerView.Adapter<RecyclerViewA
 
         if(admin.getImageUrl() == null){
             // loads the default placeholder into ImageView if ImageUrl is null
-            holder.profile_pic.setImageResource(R.drawable.avatar_placeholder);
+            holder.profile_pic.setImageResource(R.mipmap.app_logo_round);
         }
         else{
             // loads user image into the ImageView
@@ -62,6 +62,7 @@ public class RecyclerViewAdapterAdmin extends RecyclerView.Adapter<RecyclerViewA
                 // passing adminUid as a string to the MessageActivity
                 Intent intent = new Intent(mCtx,MessageActivity.class);
                 intent.putExtra("uid",admin.getAdminUid());
+                intent.putExtra("username",admin.getUsername());
                 mCtx.startActivity(intent);
             }
         });

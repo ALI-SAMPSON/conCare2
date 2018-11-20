@@ -76,13 +76,15 @@
             android:layout_marginEnd="10dp"
             android:layout_centerVertical="true"/>
 
-        <ImageButton
+        <ImageView
             android:id="@+id/btn_send"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:background="@drawable/ic_send"
+            android:src="@drawable/ic_send"
+            android:scaleType="center"
+            android:background="@drawable/circular_button"
             android:onClick="btnSend"/>
 
     </RelativeLayout>
