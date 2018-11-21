@@ -113,7 +113,12 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".activities.VerifyPhoneActivity" />
         <activity android:name=".chatApp.MainActivity" />
-        <activity android:name=".chatApp.MessageActivity"></activity>
+        <activity android:name=".chatApp.MessageActivity" />
+        <activity android:name=".activities.OrderActivity"
+            android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/homeTheme.order" >
+        </activity>
     </application>
 
 </manifest>

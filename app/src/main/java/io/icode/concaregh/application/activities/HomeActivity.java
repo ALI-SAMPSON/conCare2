@@ -48,10 +48,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
 
-    private AppCompatSpinner spinnerGender;
-    private ArrayAdapter<CharSequence> arrayAdapterGender;
-
-    private ImageView btn_proceed;
 
     private Animation shake;
 
@@ -81,11 +77,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(io.icode.concaregh.application.R.layout.activity_home);
 
-        spinnerGender = findViewById(io.icode.concaregh.application.R.id.spinnerGender);
-        arrayAdapterGender = ArrayAdapter.createFromResource(this, R.array.gender, R.layout.spinner_item_home);
-        arrayAdapterGender.setDropDownViewResource(io.icode.concaregh.application.R.layout.spinner_dropdown_item);
-        spinnerGender.setAdapter(arrayAdapterGender);
-
         mDrawerLayout = findViewById(R.id.drawer);
 
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
@@ -108,7 +99,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             getSupportActionBar().setHomeButtonEnabled(true);
         }
 
-        btn_proceed = findViewById(R.id.proceed_Image);
 
         shake = AnimationUtils.loadAnimation(this, R.anim.anim_scale_out);
 
@@ -498,25 +488,23 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    //Click Listener for proceed button on homeActivity
-    public void onProceedButtonClick(View view) {
-
-        // adds a custom animation
-        YoYo.with(Techniques.FlipInY).playOn(btn_proceed);
-
-        // gets the text from the spinner and passes it to the next activity
-        String gender = spinnerGender.getSelectedItem().toString().trim();
-
-        Intent intent = new Intent(this,PlaceOrderActivity.class);
-        intent.putExtra("gender",gender);
-        startActivity(intent);
+    @Override
+    public void finish() {
+        super.finish();
         // Add a custom animation ot the activity
         CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
     }
 
-    @Override
-    public void finish() {
-        super.finish();
+    public void onChatUsButtonClick(View view) {
+        // starts the about us activity
+        startActivity(new Intent(HomeActivity.this,MainActivity.class));
+        // Add a custom animation ot the activity
+        CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+    }
+
+    public void onOrderButtonClick(View view) {
+        // starts the about us activity
+        startActivity(new Intent(HomeActivity.this,OrderActivity.class));
         // Add a custom animation ot the activity
         CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
     }

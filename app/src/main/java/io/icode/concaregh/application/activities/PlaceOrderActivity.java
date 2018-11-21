@@ -641,7 +641,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
            case android.R.id.home:
 
                //send user back to home activity
-               startActivity(new Intent(this, HomeActivity.class));
+               startActivity(new Intent(this, OrderActivity.class));
 
                // Add a custom animation ot the activity
                CustomIntent.customType(PlaceOrderActivity.this,"fadein-to-fadeout");
@@ -684,7 +684,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
         super.onBackPressed();
 
         // starts the Home Activity
-        startActivity(new Intent(PlaceOrderActivity.this,HomeActivity.class));
+        startActivity(new Intent(PlaceOrderActivity.this,OrderActivity.class));
 
         // Add a custom animation ot the activity
         CustomIntent.customType(PlaceOrderActivity.this,"fadein-to-fadeout");

@@ -56,7 +56,7 @@
     <string name="error_text_phone_number" translatable="false">Phone number is a required field</string>
     <string name="error_number_prefix" translatable="false"> Please make sure your phone number is preceded by 233. e.g. 23324*******</string>
 
-    <string name="welcome_msg_home" translatable="false">Welcome To CONCARE GH</string>
+    <string name="welcome_msg_home" translatable="false">WELCOME TO CONCARE GH</string>
     <string name="welcome_mgs_sub_desc" translatable="false">your home of much privacy!</string>
     <string name="select_gender_type" translatable="false">Select gender type for contraceptive</string>
     <string name="order_now" translatable="false">Order Now!</string>
@@ -192,7 +192,56 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 
-    <string name="type_message"
-        translatable="false">Type a message...</string>
+    <string name="type_message" translatable="false">Type a message...</string>
+
+    <string name="text_reproductive_health"
+        translatable="false">
+
+        Reproductive health is a crucial part of general health and a central feature of human development.
+        It is a reflection of health during childhood, and crucial during adolescence and adulthood,
+        sets the stage for health beyond the reproductive years for both men and women and affects the
+        health of the next generation.
+
+        Reproductive health does not start out from a list of diseases or problems- STIs, maternal mortality.
+        Instead, it must be understood in the context of relationship- fulfillment and risk; the availability
+        to avoid unwanted or unsafe pregnancy.
+
+        Do you have any problem with your reproductive health, or perhaps, you want to acquire knowledge on
+        how to put on good, healthy reproductive lifestyles, feel free to chat our consortium of professionals.
+
+        A healthy reproductive system is a key to good health!
+
+    </string>
+
+    <string name="text_1"
+        translatable="false">
+        Reproductive health is a crucial part of general health and a central feature of human development.
+        It is a reflection of health during childhood, and crucial during adolescence and adulthood,
+        sets the stage for health beyond the reproductive years for both men and women and affects the
+        health of the next generation.
+    </string>
+
+    <string name="text_2"
+        translatable="false">
+        Reproductive health does not start out from a list of diseases or problems- STIs, maternal mortality.
+        Instead, it must be understood in the context of relationship- fulfillment and risk; the availability
+        to avoid unwanted or unsafe pregnancy.
+    </string>
+
+    <string name="text_3"
+        translatable="false">
+        Do you have any problem with your reproductive health, or perhaps, you want to acquire knowledge on
+        how to put on good, healthy reproductive lifestyles, feel free to chat our consortium of professionals.
+    </string>
+
+    <string name="text_4"
+        translatable="false">
+        A healthy reproductive system is a key to good health!
+    </string>
+
+    <string name="text_welcome"
+        translatable="false">
+        Welcome
+    </string>
 
 </resources>
