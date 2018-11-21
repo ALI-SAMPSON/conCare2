@@ -43,7 +43,7 @@ public class OrderActivity extends AppCompatActivity {
 
         spinnerGender = findViewById(io.icode.concaregh.application.R.id.spinnerGender);
         arrayAdapterGender = ArrayAdapter.createFromResource(this, R.array.gender, R.layout.spinner_item_home);
-        arrayAdapterGender.setDropDownViewResource(io.icode.concaregh.application.R.layout.spinner_dropdown_item);
+        arrayAdapterGender.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinnerGender.setAdapter(arrayAdapterGender);
 
         btn_proceed = findViewById(R.id.proceed_Image);
