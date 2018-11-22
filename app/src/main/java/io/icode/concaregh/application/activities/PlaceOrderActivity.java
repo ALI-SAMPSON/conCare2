@@ -610,7 +610,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
             // Here take the output value of the server.
             BufferedReader dataStreamFromUrl = new BufferedReader( new InputStreamReader(httpConnection.getInputStream()));
             String dataFromUrl = "", dataBuffer = "";
-// Writing information from the stream to the buffer
+            // Writing information from the stream to the buffer
             while ((dataBuffer = dataStreamFromUrl.readLine()) != null) {
                 dataFromUrl += dataBuffer;
             }

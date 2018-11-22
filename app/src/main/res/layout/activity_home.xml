@@ -151,7 +151,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/circular_end_button_place_order"
+                android:background="@color/orange_light"
                 app:fontFamily="@font/nunito_semibold"
                 android:onClick="onChatUsButtonClick">
             </Button>
@@ -170,7 +170,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/circular_end_button_cancel_order"
+                android:background="@color/orange_light"
                 app:fontFamily="@font/nunito_semibold"
                 android:layout_gravity="center|end"
                 android:onClick="onOrderButtonClick"

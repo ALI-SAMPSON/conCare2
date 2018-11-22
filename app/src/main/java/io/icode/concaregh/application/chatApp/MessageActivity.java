@@ -2,13 +2,17 @@ package io.icode.concaregh.application.chatApp;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,19 +25,27 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.icode.concaregh.application.R;
+import io.icode.concaregh.application.adapters.MessageAdapter;
 import io.icode.concaregh.application.models.Admin;
+import io.icode.concaregh.application.models.Chats;
 
 public class MessageActivity extends AppCompatActivity {
+
+    RelativeLayout relativeLayout;
 
     CircleImageView profile_image;
     TextView username;
 
     FirebaseUser currentUser;
     DatabaseReference adminRef;
+
+    DatabaseReference chatRef;
 
     // editText and Button to send Message
     EditText msg_to_send;
@@ -42,8 +54,14 @@ public class MessageActivity extends AppCompatActivity {
     Intent intent;
 
     // string to get intentExtras
-    String adminId;
+    String adminUid;
     String admin_username;
+
+    // variable for MessageAdapter class
+    MessageAdapter messageAdapter;
+    List<Chats> mChats;
+
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,18 +79,27 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
+        relativeLayout = findViewById(R.id.relativeLayout);
+
         profile_image =  findViewById(R.id.profile_image);
         username =  findViewById(R.id.username);
         msg_to_send =  findViewById(R.id.editText_send);
         btn_send =  findViewById(R.id.btn_send);
 
+        //getting reference to the recyclerview and setting it up
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
         intent = getIntent();
-        adminId = intent.getStringExtra("uid");
+        adminUid = intent.getStringExtra("uid");
         admin_username = intent.getStringExtra("username");
 
-
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(adminId);
+        adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(adminUid);
+
 
         getAdminDetails();
 
@@ -94,6 +121,9 @@ public class MessageActivity extends AppCompatActivity {
                     Glide.with(MessageActivity.this)
                             .load(admin.getImageUrl()).into(profile_image);
                 }
+
+                // method call
+                readMessages(currentUser.getUid(),adminUid,admin.getImageUrl());
             }
 
             @Override
@@ -122,13 +152,46 @@ public class MessageActivity extends AppCompatActivity {
     public void btnSend(View view) {
 
         String message  = msg_to_send.getText().toString();
+
         if(!message.equals("")){
-            sendMessage(currentUser.getDisplayName(),admin_username,message);
+            sendMessage(currentUser.getUid(),adminUid,message);
+            msg_to_send.setText(null);
         }
         else{
              Toast.makeText(MessageActivity.this,
                      "Please type in a message",Toast.LENGTH_LONG).show();
         }
+    }
+
+    // method to readMessages
+    private void readMessages(final String myid, final String userid, final String imageUrl){
+
+        // array initialization
+        mChats = new ArrayList<>();
+
+        chatRef = FirebaseDatabase.getInstance().getReference("Chats");
+        chatRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mChats.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Chats chats = snapshot.getValue(Chats.class);
+                        if(chats.getReceiver().equals(myid) && chats.getSender().equals(userid) ||
+                                chats.getReceiver().equals(userid) && chats.getSender().equals(myid)){
+                            mChats.add(chats);
+                        }
+
+                        messageAdapter = new MessageAdapter(MessageActivity.this,mChats,imageUrl);
+                        recyclerView.setAdapter(messageAdapter);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Snackbar.make(relativeLayout,databaseError.getMessage(),Snackbar.LENGTH_LONG).show();
+            }
+        });
 
     }
 }

@@ -4,39 +4,39 @@ public class Chats {
 
     //Users users = new Users();
 
-    private String uid;
-    private String username;
-    private String imageUrl;
+    private String sender;
+    private String receiver;
+    private String message;
 
     public Chats(){}
 
-    public Chats(String uid, String username,String imageUrl){
-        this.uid = uid;
-        this.username = username;
-        this.imageUrl = imageUrl;
+    public Chats(String sender, String receiver, String message) {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.message = message;
     }
 
-    public String getUid() {
-        return uid;
+    public String getSender() {
+        return sender;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
-    public String getUsername() {
-        return username;
+    public String getReceiver() {
+        return receiver;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getMessage() {
+        return message;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
