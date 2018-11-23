@@ -98,6 +98,7 @@ public class MessageActivity extends AppCompatActivity {
         admin_username = intent.getStringExtra("username");
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
         adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(adminUid);
 
 
@@ -123,7 +124,7 @@ public class MessageActivity extends AppCompatActivity {
                 }
 
                 // method call
-                readMessages(currentUser.getUid(),adminUid,admin.getImageUrl());
+                readMessages(currentUser.getDisplayName(),admin_username,admin.getImageUrl());
             }
 
             @Override
@@ -154,16 +155,19 @@ public class MessageActivity extends AppCompatActivity {
         String message  = msg_to_send.getText().toString();
 
         if(!message.equals("")){
-            sendMessage(currentUser.getUid(),adminUid,message);
-            msg_to_send.setText(null);
+            // call to method to sendMessage and
+            // set the editText field to null afterwards
+            sendMessage(currentUser.getDisplayName(),admin_username,message);
         }
         else{
              Toast.makeText(MessageActivity.this,
                      "Please type in a message",Toast.LENGTH_LONG).show();
         }
+        // clear the field after message is sent
+        msg_to_send.setText("");
     }
 
-    // method to readMessages
+    // method to readMessages from the system
     private void readMessages(final String myid, final String userid, final String imageUrl){
 
         // array initialization

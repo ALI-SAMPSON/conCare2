@@ -20,19 +20,17 @@ import io.icode.concaregh.application.models.Chats;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
 
-    private static final int MSG_TYPE_LEFT = 0;
-    private static final int MSG_TYPE_RIGHT = 1;
+    public static final int MSG_TYPE_LEFT = 0;
+    public static final int MSG_TYPE_RIGHT = 1;
 
-    private Context mCTx;
+    private Context mCtx;
     private List<Chats> mChats;
     private String imageUrl;
 
-    FirebaseUser user;
+    private FirebaseUser user;
 
-    public MessageAdapter(){}
-
-    public MessageAdapter(Context mCTx, List<Chats> mChats, String imageUrl){
-        this.mCTx = mCTx;
+    public MessageAdapter(Context mCtx, List<Chats> mChats, String imageUrl){
+        this.mCtx= mCtx;
         this.mChats = mChats;
         this.imageUrl = imageUrl;
     }
@@ -42,11 +40,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         if(viewType == MSG_TYPE_RIGHT){
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_chat_item_right,parent,false);
+            View view = LayoutInflater.from(mCtx).inflate(R.layout.recyclerview_chat_item_right,parent,false);
             return new MessageAdapter.ViewHolder(view);
         }
         else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_chat_item_left,parent,false);
+            View view = LayoutInflater.from(mCtx).inflate(R.layout.recyclerview_chat_item_left,parent,false);
             return new MessageAdapter.ViewHolder(view);
         }
 
@@ -62,10 +60,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         // checks if imageUrl is empty or not
         if(imageUrl == null){
-            holder.profile_image.setImageResource(R.drawable.avatar_placeholder);
+            holder.profile_image.setImageResource(R.drawable.ic_person_unknown );
         }
         else{
-            Glide.with(mCTx).load(imageUrl).into(holder.profile_image);
+            Glide.with(mCtx).load(imageUrl).into(holder.profile_image);
         }
 
     }
@@ -95,7 +93,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if(mChats.get(position).getSender().equals(user.getUid())){
+        if(mChats.get(position).getSender().equals(user.getDisplayName())){
             return MSG_TYPE_RIGHT;
         }
         else{

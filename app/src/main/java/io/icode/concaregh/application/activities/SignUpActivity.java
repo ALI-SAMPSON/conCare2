@@ -65,6 +65,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     DatabaseReference userRef;
 
+    DatabaseReference adminRef;
+
     //FirebaseStorage storage;
 
     // progressBar to load image uploading to database
@@ -119,6 +121,8 @@ public class SignUpActivity extends AppCompatActivity {
         userdB = FirebaseDatabase.getInstance();
 
         userRef = userdB.getReference("Users");
+
+        adminRef = FirebaseDatabase.getInstance().getReference("Admin");
 
         users = new Users();
 

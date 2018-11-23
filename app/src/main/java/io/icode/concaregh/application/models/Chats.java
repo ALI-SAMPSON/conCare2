@@ -2,8 +2,6 @@ package io.icode.concaregh.application.models;
 
 public class Chats {
 
-    //Users users = new Users();
-
     private String sender;
     private String receiver;
     private String message;

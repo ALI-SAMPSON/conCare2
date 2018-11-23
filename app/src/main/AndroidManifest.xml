@@ -59,6 +59,7 @@
                     android:host="google"
                     android:scheme="example" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".activities.AboutUsActivity"
