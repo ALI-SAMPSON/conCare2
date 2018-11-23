@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //text if user's imageUrl is equal to default
                     if(user.getPhotoUrl() == null){
-                        profile_image.setImageResource(R.drawable.avatar_placeholder);
+                        profile_image.setImageResource(R.drawable.ic_person_unknown);
                     }
                     else{
                         // load user's Image Url
