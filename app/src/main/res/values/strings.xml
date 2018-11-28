@@ -136,12 +136,11 @@
 
     <string name="welcome_message" translatable="false">
         CONCARE GH has a lot to offer you.
-        Just Open the drawer on the left of
-        the screen to know more about us
-        and freely place order for any
-        contraceptive of your choice.
-        Enjoy and feel free to contact us if
-        need arises!
+        Just open the drawer on the left of
+        the screen to update your profile,
+        know more about us and freely place
+        order for any contraceptive of your choice.
+        Enjoy and feel free to contact us if need arises!
     </string>
 
     <!-- text used in PhoneLoginActivity-->

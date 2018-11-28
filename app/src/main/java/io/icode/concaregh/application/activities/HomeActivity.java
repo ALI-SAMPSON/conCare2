@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import io.icode.concaregh.application.R;
 
+import com.bumptech.glide.Glide;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.ads.AdRequest;
@@ -36,6 +37,11 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.icode.concaregh.application.chatApp.MainActivity;
@@ -52,6 +58,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private Animation shake;
 
     FirebaseAuth mAuth;
+
+    DatabaseReference userInfoRef;
 
     Users users;
 
@@ -184,10 +192,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 YoYo.with(Techniques.RubberBand).playOn(circleImageView);
 
                 // start EditProfile activity
-                //startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
+                startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
 
                 // Add a custom animation ot the activity
-                //CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+                CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
 
             }
         });
@@ -283,10 +291,44 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private void loadUserInfo(){
 
         // get current logged in user
-        FirebaseUser user = mAuth.getCurrentUser();
+        final FirebaseUser user = mAuth.getCurrentUser();
 
+        userInfoRef = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+
+        userInfoRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Users users = dataSnapshot.getValue(Users.class);
+
+                if(user != null) {
+                    // sets username and email
+                    username.setText(" Username : " + user.getDisplayName());
+                    email.setText(" Email : " + user.getEmail());
+                    // checks if imageUrl is not null
+                    if (user.getPhotoUrl() == null) {
+                        circleImageView.setImageResource(R.drawable.profile_icon);
+                    } else {
+                        Glide.with(HomeActivity.this).load(user.getPhotoUrl()).into(circleImageView);
+                    }
+                }
+                else{
+
+                    // sets username, email and image of user
+                    username.setText(" Username : " + getString(R.string.dummy_username));
+                    email.setText(" Email : " + getString(R.string.dummy_email));
+                    circleImageView.setImageResource(R.drawable.profile_icon);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(HomeActivity.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+
+        /*
         // getting the username and image of current logged in user
-        //String _photoUrl = user.getPhotoUrl().toString();
         String _username = user.getDisplayName();
         String _email = user.getEmail();
 
@@ -302,6 +344,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
 
         }
+        */
     }
 
 
@@ -313,13 +356,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_home:
                 // do nothing
                 break;
-            /*case R.id.menu_edit_profile:
+            case R.id.menu_edit_profile:
                 // start EditProfile activity
                 startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
                 // Add a custom animation ot the activity
                 CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
                 break;
-                */
             /*case R.id.orders:
                 // start orders fragment
                 break;*/

@@ -31,6 +31,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -58,6 +60,8 @@ public class EditProfileActivity extends AppCompatActivity {
     RelativeLayout relativeLayout;
 
     FirebaseAuth mAuth;
+
+    DatabaseReference userRef;
 
     Users users;
 
@@ -155,7 +159,9 @@ public class EditProfileActivity extends AppCompatActivity {
 
     }
 
+    // method to upload image to database
     private void uploadImage(){
+
         final StorageReference profileImageRef = FirebaseStorage.getInstance()
                 .getReference("Profile Pic/" + System.currentTimeMillis() + ".jpg");
 
@@ -177,7 +183,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                             ** method of the Users class to the URL and
                                             */
                                           profileImageUrl = downloadUrl.toString();
-                                          users.setImageUrl(downloadUrl.toString());
+                                          users.setImageUrl(profileImageUrl);
                                         }
                                     });
 
@@ -201,7 +207,7 @@ public class EditProfileActivity extends AppCompatActivity {
     // method to save username and profile image
     private void saveUserInfo(){
 
-        String _username = username.getText().toString().trim();
+        final String _username = username.getText().toString().trim();
 
         if(_username.isEmpty()) {
             YoYo.with(Techniques.Shake).playOn(username);
@@ -216,7 +222,7 @@ public class EditProfileActivity extends AppCompatActivity {
         // progressBar for update Button
         progressBar1.setVisibility(View.VISIBLE);
 
-        FirebaseUser user = mAuth.getCurrentUser();
+        final FirebaseUser user = mAuth.getCurrentUser();
 
         if(user != null && profileImageUrl != null){
             UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder()
@@ -230,6 +236,12 @@ public class EditProfileActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
+
+                                userRef = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+
+                                // updating these fields if task is successful
+                                users.setUsername(_username);
+                                //users.setImageUrl(profileImageUrl);
 
                                 // display a success message
                                 Toast.makeText(EditProfileActivity.this,"Profile Updated Successfully",Toast.LENGTH_LONG).show();

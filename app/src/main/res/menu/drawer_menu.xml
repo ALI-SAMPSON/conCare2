@@ -9,13 +9,12 @@
         android:icon="@drawable/ic_residence">
     </item>
 
-   <!-- <item
+   <item
         android:id="@+id/menu_edit_profile"
         android:title="@string/edit_profile"
         android:orderInCategory="200"
         android:icon="@drawable/ic_person_white">
     </item>
-    -->
 
     <item
         android:id="@+id/menu_about"
