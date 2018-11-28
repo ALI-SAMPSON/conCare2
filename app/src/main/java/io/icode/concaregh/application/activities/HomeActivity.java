@@ -308,7 +308,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     if (user.getPhotoUrl() == null) {
                         circleImageView.setImageResource(R.drawable.profile_icon);
                     } else {
-                        Glide.with(HomeActivity.this).load(user.getPhotoUrl()).into(circleImageView);
+                        Glide.with(getApplicationContext()).load(user.getPhotoUrl()).into(circleImageView);
                     }
                 }
                 else{

@@ -38,6 +38,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.icode.concaregh.application.models.Users;
@@ -183,7 +184,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                             ** method of the Users class to the URL and
                                             */
                                           profileImageUrl = downloadUrl.toString();
-                                          users.setImageUrl(profileImageUrl);
+                                          //users.setImageUrl(profileImageUrl);
                                         }
                                     });
 
@@ -216,8 +217,6 @@ public class EditProfileActivity extends AppCompatActivity {
             return;
         }
 
-        /*progressDialog = ProgressDialog.show(this, getString(R.string.text_uploading_details),
-                getString(R.string.text_please_wait),true,true);*/
 
         // progressBar for update Button
         progressBar1.setVisibility(View.VISIBLE);
@@ -238,10 +237,11 @@ public class EditProfileActivity extends AppCompatActivity {
                             if(task.isSuccessful()){
 
                                 userRef = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
-
                                 // updating these fields if task is successful
-                                users.setUsername(_username);
-                                //users.setImageUrl(profileImageUrl);
+                                HashMap<String, Object> updateInfo = new HashMap<>();
+                                updateInfo.put("imageUrl",profileImageUrl);
+                                updateInfo.put("username", _username);
+                                userRef.updateChildren(updateInfo);
 
                                 // display a success message
                                 Toast.makeText(EditProfileActivity.this,"Profile Updated Successfully",Toast.LENGTH_LONG).show();
