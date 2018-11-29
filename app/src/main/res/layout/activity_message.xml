@@ -68,7 +68,7 @@
             android:hint="@string/type_message"
             android:background="@android:color/transparent"
             android:inputType="textMultiLine"
-            app:fontFamily="@font/nunito_semibold"
+            app:fontFamily="@font/lato"
             android:layout_toLeftOf="@+id/btn_send"
             android:layout_toStartOf="@+id/btn_send"
             android:layout_marginLeft="10dp"
@@ -87,7 +87,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_send"
-            android:scaleType="center"
+            android:scaleType="centerInside"
             android:background="@drawable/circular_button"
             android:onClick="btnSend"/>
 

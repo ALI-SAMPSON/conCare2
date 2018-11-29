@@ -124,7 +124,7 @@ public class MessageActivity extends AppCompatActivity {
                 }
 
                 // method call
-                readMessages(currentUser.getDisplayName(),admin_username,admin.getImageUrl());
+                readMessages(currentUser.getUid(),adminUid,admin.getImageUrl());
             }
 
             @Override
@@ -157,7 +157,7 @@ public class MessageActivity extends AppCompatActivity {
         if(!message.equals("")){
             // call to method to sendMessage and
             // set the editText field to null afterwards
-            sendMessage(currentUser.getDisplayName(),admin_username,message);
+            sendMessage(currentUser.getUid(),adminUid,message);
         }
         else{
              Toast.makeText(MessageActivity.this,
@@ -197,5 +197,26 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    // method to set user status to "online" or "offline"
+    private void status(String status){
+
+        adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(adminUid);
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("status", status);
+        adminRef.updateChildren(hashMap);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        status("online");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        status("offline");
     }
 }

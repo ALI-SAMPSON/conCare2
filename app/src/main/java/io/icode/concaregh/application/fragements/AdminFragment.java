@@ -86,7 +86,7 @@ public class AdminFragment extends Fragment {
                 }
 
                 // adapter initialization and RecyclerView set up
-                adapterUser = new RecyclerViewAdapterAdmin(getContext(),mAdmin);
+                adapterUser = new RecyclerViewAdapterAdmin(getContext(),mAdmin,true);
                 recyclerView.setAdapter(adapterUser);
                 adapterUser.notifyDataSetChanged();
             }

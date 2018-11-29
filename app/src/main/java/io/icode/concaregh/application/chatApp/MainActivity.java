@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.icode.concaregh.application.R;
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         // adds ChatsFragment and AdminFragment to the viewPager
-        viewPagerAdapter.addFragment(new ChatsFragment(), getString(R.string.text_chats));
+        // viewPagerAdapter.addFragment(new ChatsFragment(), getString(R.string.text_chats));
         viewPagerAdapter.addFragment(new AdminFragment(), getString(R.string.text_admin));
         //Sets Adapter view of the ViewPager
         viewPager.setAdapter(viewPagerAdapter);
@@ -135,4 +136,25 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // method to set user status to "online" or "offline"
+    private void status(String status){
+        chatDbRef = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("status",status);
+        chatDbRef.updateChildren(hashMap);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        status("online");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        status("offline");
+    }
 }

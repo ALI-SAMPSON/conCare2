@@ -93,7 +93,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if(mChats.get(position).getSender().equals(user.getDisplayName())){
+        if(mChats.get(position).getSender().equals(user.getUid())){
             return MSG_TYPE_RIGHT;
         }
         else{

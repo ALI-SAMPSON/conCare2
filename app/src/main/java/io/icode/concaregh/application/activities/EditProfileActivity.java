@@ -254,7 +254,15 @@ public class EditProfileActivity extends AppCompatActivity {
                             // dismiss progress bar
                             progressBar1.setVisibility(View.GONE);
                         }
-                    });
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    // display an error message
+                    Snackbar.make(relativeLayout,e.getMessage(),Snackbar.LENGTH_LONG).show();
+                    // dismiss progress bar
+                    progressBar1.setVisibility(View.GONE);
+                }
+            });
         }
 
     }
@@ -286,12 +294,12 @@ public class EditProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
-                // finishes the activity
-                finish();
                 //start home activity when back button is pressed
                 startActivity(new Intent(this,HomeActivity.class));
                 // Add a custom animation ot the activity
                 CustomIntent.customType(EditProfileActivity.this,"fadein-to-fadeout");
+                // finishes the activity
+                finish();
                 default:
                     break;
         }
