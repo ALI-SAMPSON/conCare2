@@ -8,8 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -17,12 +25,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import io.icode.concaregh.application.R;
 import io.icode.concaregh.application.chatApp.MessageActivity;
 import io.icode.concaregh.application.models.Admin;
+import io.icode.concaregh.application.models.Chats;
 
 public class RecyclerViewAdapterAdmin extends RecyclerView.Adapter<RecyclerViewAdapterAdmin.ViewHolder> {
 
     private Context mCtx;
     private List<Admin> mAdmin;
     private boolean isChat;
+
+    private String theLastMessage;
 
     public RecyclerViewAdapterAdmin(Context mCtx, List<Admin> mAdmin, boolean isChat){
         this.mCtx = mCtx;
@@ -55,6 +66,14 @@ public class RecyclerViewAdapterAdmin extends RecyclerView.Adapter<RecyclerViewA
         else{
             // loads user image into the ImageView
             Glide.with(mCtx).load(admin.getImageUrl()).into(holder.profile_pic);
+        }
+
+        // calling the lastMessage method
+        if(isChat){
+            lastMessage(admin.getAdminUid(),holder.last_msg);
+        }
+        else{
+            holder.last_msg.setVisibility(View.GONE);
         }
 
         // code to check if admin is online
@@ -98,6 +117,7 @@ public class RecyclerViewAdapterAdmin extends RecyclerView.Adapter<RecyclerViewA
 
         CircleImageView profile_pic;
         TextView username;
+        TextView last_msg;
 
         // status online or offline indicators
         CircleImageView status_online;
@@ -110,7 +130,45 @@ public class RecyclerViewAdapterAdmin extends RecyclerView.Adapter<RecyclerViewA
             username = itemView.findViewById(R.id.username);
             status_online = itemView.findViewById(R.id.status_online);
             status_offline = itemView.findViewById(R.id.status_offline);
+            last_msg = itemView.findViewById(R.id.last_msg);
         }
+    }
+
+    private void lastMessage(final String adminUid, final TextView last_msg){
+        theLastMessage = "default";
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference lastMsgRef = FirebaseDatabase.getInstance().getReference("Chats");
+        lastMsgRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Chats chats = snapshot.getValue(Chats.class);
+                    assert chats != null;
+                    if(chats.getReceiver().equals(currentUser.getUid()) && chats.getSender().equals(adminUid)
+                            || chats.getReceiver().equals(adminUid) && chats.getSender().equals(currentUser.getUid())){
+                        theLastMessage = chats.getMessage();
+                    }
+                }
+
+                switch (theLastMessage){
+                    case "default":
+                        last_msg.setText(R.string.no_message);
+                        break;
+
+                        default:
+                            last_msg.setText(theLastMessage);
+                            break;
+                }
+
+                theLastMessage = "default";
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // display error message if one should occur
+                Toast.makeText(mCtx, databaseError.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 }
