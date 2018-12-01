@@ -409,7 +409,11 @@ public class SignUpActivity extends AppCompatActivity {
                             users.setUsername(username);
                             users.setGender(gender);
                             users.setPhoneNumber(phone);
+                            assert user != null;
                             users.setUid(user.getUid());
+                            users.setImageUrl("");
+                            users.setStatus("offline"); // set status to offline by default
+                            users.setSearch(username.toLowerCase());
 
                             userRef.child(user.getUid()).setValue(users)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {

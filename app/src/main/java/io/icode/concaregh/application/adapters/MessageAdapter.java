@@ -60,10 +60,23 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         // checks if imageUrl is empty or not
         if(imageUrl == null){
-            holder.profile_image.setImageResource(R.drawable.ic_person_unknown );
+            holder.profile_image.setImageResource(R.drawable.app_logo);
         }
         else{
             Glide.with(mCtx).load(imageUrl).into(holder.profile_image);
+        }
+
+        // checks if chat is seen by user and sets the appropriate text
+        if(position == mChats.size()-1){
+            if(chats.isIsseen()){
+                holder.txt_seen.setText(R.string.text_seen);
+            }
+            else {
+                holder.txt_seen.setText(R.string.text_delivered);
+            }
+        }
+        else{
+            holder.txt_seen.setVisibility(View.GONE);
         }
 
     }
@@ -77,12 +90,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         CircleImageView profile_image;
         TextView show_message;
+        TextView txt_seen;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             show_message = itemView.findViewById(R.id.show_message);
             profile_image = itemView.findViewById(R.id.profile_image);
+            txt_seen = itemView.findViewById(R.id.txt_seen);
 
 
         }

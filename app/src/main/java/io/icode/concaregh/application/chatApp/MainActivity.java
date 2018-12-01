@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else{
                         // load user's Image Url
-                        Glide.with(MainActivity.this).load(user.getPhotoUrl()).into(profile_image);
+                        Glide.with(getApplicationContext()).load(user.getPhotoUrl()).into(profile_image);
                     }
 
             }

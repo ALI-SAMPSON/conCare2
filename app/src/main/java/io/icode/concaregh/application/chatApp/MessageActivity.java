@@ -63,6 +63,8 @@ public class MessageActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
 
+    ValueEventListener seenListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,8 +103,9 @@ public class MessageActivity extends AppCompatActivity {
 
         adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(adminUid);
 
-
         getAdminDetails();
+
+        seenMessage(adminUid);
 
     }
 
@@ -119,7 +122,7 @@ public class MessageActivity extends AppCompatActivity {
                 }
                 else{
                     // loads imageUrl into imageView if url is not null
-                    Glide.with(MessageActivity.this)
+                    Glide.with(getApplicationContext())
                             .load(admin.getImageUrl()).into(profile_image);
                 }
 
@@ -167,6 +170,35 @@ public class MessageActivity extends AppCompatActivity {
         msg_to_send.setText("");
     }
 
+    // methopd to check if user or admin has seen the message
+    private void seenMessage(final String adminUid){
+
+        chatRef = FirebaseDatabase.getInstance().getReference("Chats");
+
+        seenListener = chatRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Chats chats = snapshot.getValue(Chats.class);
+                    assert chats != null;
+                    if(chats.getReceiver().equals(currentUser.getUid()) && chats.getSender().equals(adminUid)){
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("isseen",true);
+                        snapshot.getRef().updateChildren(hashMap);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Snackbar.make(relativeLayout,databaseError.getMessage(),Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
     // method to readMessages from the system
     private void readMessages(final String myid, final String userid, final String imageUrl){
 
@@ -180,7 +212,8 @@ public class MessageActivity extends AppCompatActivity {
                 mChats.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Chats chats = snapshot.getValue(Chats.class);
-                        if(chats.getReceiver().equals(myid) && chats.getSender().equals(userid) ||
+                    assert chats != null;
+                    if(chats.getReceiver().equals(myid) && chats.getSender().equals(userid) ||
                                 chats.getReceiver().equals(userid) && chats.getSender().equals(myid)){
                             mChats.add(chats);
                         }
@@ -217,6 +250,8 @@ public class MessageActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        // removes listener
+        chatRef.removeEventListener(seenListener);
         status("offline");
     }
 }
