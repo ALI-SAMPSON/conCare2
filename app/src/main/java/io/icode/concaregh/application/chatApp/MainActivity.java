@@ -25,11 +25,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.icode.concaregh.application.Notifications.Token;
 import io.icode.concaregh.application.R;
 import io.icode.concaregh.application.activities.HomeActivity;
 import io.icode.concaregh.application.adapters.ViewPagerAdapter;
@@ -38,6 +40,7 @@ import io.icode.concaregh.application.fragements.ChatsFragment;
 import io.icode.concaregh.application.models.Users;
 import maes.tech.intentanim.CustomIntent;
 
+@SuppressWarnings("ALL")
 public class MainActivity extends AppCompatActivity {
 
     CircleImageView profile_image;
@@ -45,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     FirebaseAuth mAuth;
-    FirebaseUser user;
+    FirebaseUser currentUser;
     DatabaseReference chatDbRef;
 
     @Override
@@ -71,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        user = mAuth.getCurrentUser();
+        currentUser = mAuth.getCurrentUser();
 
-        chatDbRef = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+        chatDbRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
 
         chatDbRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -81,15 +84,15 @@ public class MainActivity extends AppCompatActivity {
 
                     Users users = dataSnapshot.getValue(Users.class);
 
-                    username.setText(user.getDisplayName());
+                    username.setText(currentUser.getDisplayName());
 
                     //text if user's imageUrl is equal to default
-                    if(user.getPhotoUrl() == null){
+                    if(currentUser.getPhotoUrl() == null){
                         profile_image.setImageResource(R.drawable.profile_icon);
                     }
                     else{
                         // load user's Image Url
-                        Glide.with(getApplicationContext()).load(user.getPhotoUrl()).into(profile_image);
+                        Glide.with(getApplicationContext()).load(currentUser.getPhotoUrl()).into(profile_image);
                     }
 
             }
@@ -114,6 +117,16 @@ public class MainActivity extends AppCompatActivity {
 
         //sets tablayout with viewPager
         tabLayout.setupWithViewPager(viewPager);
+
+        // method call to update token
+        updateToken(FirebaseInstanceId.getInstance().getToken());
+    }
+
+    // Update currentAdmin's token
+    private void updateToken(String token){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token token1 = new Token(token);
+        reference.child(currentUser.getUid()).setValue(token1);
     }
 
     @Override
@@ -138,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
     // method to set user status to "online" or "offline"
     private void status(String status){
-        chatDbRef = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+        chatDbRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
 
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("status",status);

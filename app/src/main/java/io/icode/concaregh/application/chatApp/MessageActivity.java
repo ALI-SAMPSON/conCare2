@@ -23,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -30,10 +31,20 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.icode.concaregh.application.Notifications.Client;
+import io.icode.concaregh.application.Notifications.Data;
+import io.icode.concaregh.application.Notifications.MyResponse;
+import io.icode.concaregh.application.Notifications.Sender;
+import io.icode.concaregh.application.Notifications.Token;
 import io.icode.concaregh.application.R;
 import io.icode.concaregh.application.adapters.MessageAdapter;
+import io.icode.concaregh.application.fragements.APIService;
 import io.icode.concaregh.application.models.Admin;
 import io.icode.concaregh.application.models.Chats;
+import io.icode.concaregh.application.models.Users;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MessageActivity extends AppCompatActivity {
 
@@ -65,6 +76,10 @@ public class MessageActivity extends AppCompatActivity {
 
     ValueEventListener seenListener;
 
+    APIService apiService;
+
+    boolean notify = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +95,8 @@ public class MessageActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
         relativeLayout = findViewById(R.id.relativeLayout);
 
@@ -139,7 +156,28 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
-    private void sendMessage(String sender, String receiver, String message){
+    // ImageView OnClickListener to send Message
+    public void btnSend(View view) {
+
+        // sets notify to true
+        notify = true;
+
+        String message  = msg_to_send.getText().toString();
+
+        if(!message.equals("")){
+            // call to method to sendMessage and
+            // set the editText field to null afterwards
+            sendMessage(currentUser.getUid(),adminUid,message);
+        }
+        else{
+            Toast.makeText(MessageActivity.this,
+                    "No message to send",Toast.LENGTH_LONG).show();
+        }
+        // clear the field after message is sent
+        msg_to_send.setText("");
+    }
+
+    private void sendMessage(String sender, final String receiver, String message){
 
         DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference();
 
@@ -150,24 +188,70 @@ public class MessageActivity extends AppCompatActivity {
 
         chatRef.child("Chats").push().setValue(hashMap);
 
+        // variable to hold the message to be sent
+        final String msg = message;
+
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Users users = dataSnapshot.getValue(Users.class);
+                if(notify) {
+                    sendNotification(receiver, users.getUsername(), msg);
+                }
+                notify = false;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Snackbar.make(relativeLayout,databaseError.getMessage(),Snackbar.LENGTH_LONG).show();
+            }
+        });
+
     }
 
-    // ImageView OnClickListener to send Message
-    public void btnSend(View view) {
+    // sends notification to respective user as soon as message is sent
+    private void sendNotification(String receiver, final String username, final String message){
 
-        String message  = msg_to_send.getText().toString();
+        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
+        Query query = tokens.orderByKey().equalTo(receiver);
 
-        if(!message.equals("")){
-            // call to method to sendMessage and
-            // set the editText field to null afterwards
-            sendMessage(currentUser.getUid(),adminUid,message);
-        }
-        else{
-             Toast.makeText(MessageActivity.this,
-                     "Please type in a message",Toast.LENGTH_LONG).show();
-        }
-        // clear the field after message is sent
-        msg_to_send.setText("");
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Token token = snapshot.getValue(Token.class);
+                    Data data = new Data(currentUser.getUid(), R.mipmap.app_icon_round,"You have a New Message" ,
+                            username+": "+message,adminUid);
+
+                    Sender sender = new Sender(data, token.getToken());
+
+                    apiService.sendNotification(sender)
+                            .enqueue(new Callback<MyResponse>() {
+                                @Override
+                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                                    if(response.code() == 200){
+                                        assert response.body() != null;
+                                        if(response.body().success != 1){
+                                            Snackbar.make(relativeLayout,"Failed!",Snackbar.LENGTH_LONG).show();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<MyResponse> call, Throwable t) {
+                                    //Snackbar.make(relativeLayout,t.getMessage(),Snackbar.LENGTH_LONG).show();
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Snackbar.make(relativeLayout,databaseError.getMessage(),Snackbar.LENGTH_LONG).show();
+            }
+        });
+
     }
 
     // methopd to check if user or admin has seen the message
