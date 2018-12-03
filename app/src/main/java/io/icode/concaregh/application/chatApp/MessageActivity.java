@@ -80,6 +80,7 @@ public class MessageActivity extends AppCompatActivity {
 
     boolean notify = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -221,9 +222,10 @@ public class MessageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Token token = snapshot.getValue(Token.class);
-                    Data data = new Data(currentUser.getUid(), R.mipmap.app_icon_round,"You have a New Message" ,
+                    Data data = new Data(currentUser.getUid(), R.drawable.ic_notification,getString(R.string.app_name),
                             username+": "+message,adminUid);
 
+                    assert token != null;
                     Sender sender = new Sender(data, token.getToken());
 
                     apiService.sendNotification(sender)
@@ -240,7 +242,7 @@ public class MessageActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onFailure(Call<MyResponse> call, Throwable t) {
-                                    //Snackbar.make(relativeLayout,t.getMessage(),Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make(relativeLayout,t.getMessage(),Snackbar.LENGTH_LONG).show();
                                 }
                             });
                 }

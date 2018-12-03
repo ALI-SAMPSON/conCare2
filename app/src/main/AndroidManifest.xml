@@ -36,6 +36,9 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-4501853719724548~4076180577" />
 
+        <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notification" />
+
         <activity
             android:name=".activities.LoginActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
