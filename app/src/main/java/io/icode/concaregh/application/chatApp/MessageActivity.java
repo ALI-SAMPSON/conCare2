@@ -1,6 +1,7 @@
 package io.icode.concaregh.application.chatApp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -318,6 +319,13 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
+    // keeping track of the current user the admin is chatting to avoid sending notification everytime
+    private void currentAdmin(String adminUid){
+        SharedPreferences.Editor editor =  getSharedPreferences("PREFS",MODE_PRIVATE).edit();
+        editor.putString("currentadmin",adminUid);
+        editor.apply();
+    }
+
     // method to set user status to "online" or "offline"
     private void status(String status){
 
@@ -330,7 +338,9 @@ public class MessageActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //method calls
         status("online");
+        currentAdmin(adminUid);
     }
 
     @Override
@@ -338,6 +348,8 @@ public class MessageActivity extends AppCompatActivity {
         super.onPause();
         // removes listener
         chatRef.removeEventListener(seenListener);
+        // method calls
         status("offline");
+        currentAdmin("none");
     }
 }
