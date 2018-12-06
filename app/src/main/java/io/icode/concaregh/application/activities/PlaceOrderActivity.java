@@ -51,6 +51,7 @@ import java.net.URLEncoder;
 import io.icode.concaregh.application.models.Users;
 import maes.tech.intentanim.CustomIntent;
 
+@SuppressWarnings("ALL")
 public class PlaceOrderActivity extends AppCompatActivity {
 
     // animation class
@@ -89,7 +90,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
     @SuppressWarnings("unused")
     private ProgressBar progressBar;
 
-    @SuppressWarnings("deprecation")
     private ProgressDialog progressDialog;
 
     private NestedScrollView nestedScrollView;

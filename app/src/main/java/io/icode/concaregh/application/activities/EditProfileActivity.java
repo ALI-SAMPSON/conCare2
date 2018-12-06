@@ -184,7 +184,6 @@ public class EditProfileActivity extends AppCompatActivity {
                                             ** method of the Users class to the URL and
                                             */
                                           profileImageUrl = downloadUrl.toString();
-                                          //users.setImageUrl(profileImageUrl);
                                         }
                                     });
 

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">CONCARE GH</string>
     <string name="hint_email" translatable="false">Email</string>
     <string name="hint_password" translatable="false">Password</string>
@@ -263,5 +263,15 @@
     <string name="no_message" translatable="false">
          No Message
     </string>
+
+    <!-- Strings for ContextMenulistener for deleting messages  in chats -->
+    <string name="select_action" translatable="false">
+         Select An Action
+    </string>
+
+    <string name="text_delete" translatable="false">
+         Delete Message
+    </string>
+
 
 </resources>

@@ -47,7 +47,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MessageActivity extends AppCompatActivity {
+public class MessageActivity extends AppCompatActivity implements MessageAdapter.OnItemClickListener {
 
     RelativeLayout relativeLayout;
 
@@ -308,6 +308,9 @@ public class MessageActivity extends AppCompatActivity {
                         messageAdapter = new MessageAdapter(MessageActivity.this,mChats,imageUrl);
                         recyclerView.setAdapter(messageAdapter);
 
+                        // setting on OnItemClickListener in this activity as an interface
+                        messageAdapter.setOnItemClickListener(MessageActivity.this);
+
                 }
             }
 
@@ -317,6 +320,24 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    /**handling ContextMenu
+     Click Listeners in activity
+     */
+    @Override
+    public void onItemClick(int position) {
+        Toast.makeText(this," please long click on a message to delete ",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onDeleteClick(int postion) {
+
+    }
+
+    @Override
+    public void onCancelClick(int position) {
+        // do nothing
     }
 
     // keeping track of the current user the admin is chatting to avoid sending notification everytime

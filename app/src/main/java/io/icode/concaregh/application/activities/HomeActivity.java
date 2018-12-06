@@ -298,6 +298,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         userInfoRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 Users users = dataSnapshot.getValue(Users.class);
 
                 if(user != null) {
@@ -307,7 +308,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     // checks if imageUrl is not null
                     if (user.getPhotoUrl() == null) {
                         circleImageView.setImageResource(R.drawable.profile_icon);
-                    } else {
+                    }
+                    else {
                         Glide.with(getApplicationContext()).load(user.getPhotoUrl()).into(circleImageView);
                     }
                 }
@@ -327,24 +329,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        /*
-        // getting the username and image of current logged in user
-        String _username = user.getDisplayName();
-        String _email = user.getEmail();
-
-        // checks if current user is not null
-        if(user != null){
-            // checks if the username of the current user is not null
-            if(_username != null){
-                username.setText(" Username : " + _username);
-            }
-            // checks if the email of the current user is not null
-            if(_email != null){
-                email.setText(" Email : " + _email);
-            }
-
-        }
-        */
     }
 
 

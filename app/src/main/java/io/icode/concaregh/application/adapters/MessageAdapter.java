@@ -3,7 +3,9 @@ package io.icode.concaregh.application.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -28,6 +30,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     private String imageUrl;
 
     private FirebaseUser user;
+
+    // Global variable to handle OnItemClickListener
+    public static OnItemClickListener mListener;
 
     public MessageAdapter(Context mCtx, List<Chats> mChats, String imageUrl){
         this.mCtx= mCtx;
@@ -86,7 +91,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         return mChats.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
+            View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
 
         CircleImageView profile_image;
         TextView show_message;
@@ -99,7 +105,63 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             profile_image = itemView.findViewById(R.id.profile_image);
             txt_seen = itemView.findViewById(R.id.txt_seen);
 
+            // setting onClickListener on itemView
+            itemView.setOnClickListener(this);
+            // setting onCreateContextMenuListener on itemView
+            itemView.setOnCreateContextMenuListener(this);
 
+        }
+
+        // handling normal Clicks
+        @Override
+        public void onClick(View view){
+            if(mListener != null){
+                //get Adapter position
+                int position = getAdapterPosition();
+                /*checks if position of item clicked is equal
+                to the position of an item in recyclerView*/
+                if(position != RecyclerView.NO_POSITION){
+                    mListener.onItemClick(position);
+                }
+            }
+        }
+
+        // Handling Context Menu Item Clicks
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+            // setting a title on ContextMenu
+            contextMenu.setHeaderTitle(R.string.select_action);
+            // menu items to delete message or cancel
+            MenuItem delete = contextMenu.add(ContextMenu.NONE,1,1,R.string.text_delete);
+            MenuItem cancel = contextMenu.add(ContextMenu.NONE,2,2,R.string.text_cancel);
+
+            // setting onMenuItemClickListeners on contextMenu items
+            delete.setOnMenuItemClickListener(this);
+            cancel.setOnMenuItemClickListener(this);
+
+        }
+
+        // Handling onItemClick(Actual item) in the ContextMenu
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            if(mListener != null){
+                //get Adapter position
+                int position = getAdapterPosition();
+                /*checks if position of item clicked is equal
+                to the position of an item in recyclerView*/
+                if(position != RecyclerView.NO_POSITION){
+                    switch ((menuItem.getItemId())){
+                        case 1:
+                            mListener.onDeleteClick(position);
+                            return true;
+                        case 2:
+                            mListener.onCancelClick(position);
+                            return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 
@@ -116,4 +178,19 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         }
 
     }
+
+    // An interface to implement onItemClickListener
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+
+        void onDeleteClick(int position);
+
+        void onCancelClick(int position);
+    }
+
+    // Method to handle on ItemClickListener
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
+    }
+
 }

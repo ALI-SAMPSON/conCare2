@@ -100,7 +100,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 
     //Google Admob dependency
-    implementation 'com.google.android.gms:play-services-ads:17.0.0'
+    implementation 'com.google.android.gms:play-services-ads:17.1.1'
 
     // material edittext
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
