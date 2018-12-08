@@ -18,6 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -296,18 +299,24 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         chatRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // clears the chats to avoid reading duplicate message
                 mChats.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Chats chats = snapshot.getValue(Chats.class);
+                    // gets the unique keys of the chats
+                    chats.setKey(snapshot.getKey());
+
                     assert chats != null;
                     if(chats.getReceiver().equals(myid) && chats.getSender().equals(userid) ||
                                 chats.getReceiver().equals(userid) && chats.getSender().equals(myid)){
                             mChats.add(chats);
                         }
 
+                        // initializing the messageAdapter and setting adapter to recyclerView
                         messageAdapter = new MessageAdapter(MessageActivity.this,mChats,imageUrl);
                         recyclerView.setAdapter(messageAdapter);
-
+                        // notify data change in adapter
+                        messageAdapter.notifyDataSetChanged();
                         // setting on OnItemClickListener in this activity as an interface
                         messageAdapter.setOnItemClickListener(MessageActivity.this);
 
@@ -331,13 +340,32 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
     }
 
     @Override
-    public void onDeleteClick(int postion) {
+    public void onDeleteClick(int position) {
 
+        // gets the position of the selected message
+        Chats selectedMessage = mChats.get(position);
+
+        //gets the key at the selected position
+        String selectedKey = selectedMessage.getKey();
+
+        chatRef.child(selectedKey).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(MessageActivity.this," Message deleted ",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(MessageActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
     public void onCancelClick(int position) {
-        // do nothing
+        // do nothing / close ContextMenu
     }
 
     // keeping track of the current user the admin is chatting to avoid sending notification everytime

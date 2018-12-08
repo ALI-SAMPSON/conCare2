@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
         // adds ChatsFragment and AdminFragment to the viewPager
         // viewPagerAdapter.addFragment(new ChatsFragment(), getString(R.string.text_chats));
-        viewPagerAdapter.addFragment(new AdminFragment(), getString(R.string.text_admin));
+        viewPagerAdapter.addFragment(new AdminFragment(), getString(R.string.app_name));
         //Sets Adapter view of the ViewPager
         viewPager.setAdapter(viewPagerAdapter);
 
