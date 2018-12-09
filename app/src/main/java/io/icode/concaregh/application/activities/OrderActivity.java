@@ -41,7 +41,7 @@ public class OrderActivity extends AppCompatActivity {
             getSupportActionBar().setHomeButtonEnabled(true);
         }
 
-        spinnerGender = findViewById(io.icode.concaregh.application.R.id.spinnerGender);
+        spinnerGender = findViewById(R.id.spinnerGender);
         arrayAdapterGender = ArrayAdapter.createFromResource(this, R.array.gender, R.layout.spinner_item_home);
         arrayAdapterGender.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinnerGender.setAdapter(arrayAdapterGender);
@@ -75,7 +75,10 @@ public class OrderActivity extends AppCompatActivity {
                 CustomIntent.customType(OrderActivity.this,"fadein-to-fadeout");
                 // finish
                 finish();
+
                 break;
+                default:
+                    break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -94,7 +97,6 @@ public class OrderActivity extends AppCompatActivity {
 
     //Click Listener for proceed button on homeActivity
     public void onProceedButtonClick(View view) {
-
         // adds a custom animation
         YoYo.with(Techniques.FlipInY).playOn(btn_proceed);
 

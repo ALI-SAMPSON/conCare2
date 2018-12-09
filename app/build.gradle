@@ -29,9 +29,9 @@ android {
             storePassword 'Brainbox'
         }
     }*/
-    buildTypes {
+    /*buildTypes {
 
-        /*debug {
+        debug {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             //debuggable false
             //jniDebugBuild false
@@ -45,8 +45,9 @@ android {
             //jniDebugBuild false
             signingConfig signingConfigs.myconfig
 
-        }*/
+        }
     }
+    */
     productFlavors {
     }
 }

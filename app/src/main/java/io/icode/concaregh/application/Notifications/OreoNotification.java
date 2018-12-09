@@ -12,6 +12,7 @@ import android.os.Build;
 
 import io.icode.concaregh.application.R;
 
+@SuppressWarnings("ALL")
 public class OreoNotification extends ContextWrapper {
 
     // static variables to hold the channel Id and Name

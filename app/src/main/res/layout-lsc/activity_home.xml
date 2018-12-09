@@ -8,200 +8,178 @@
     android:layout_height="match_parent"
     tools:context=".activities.HomeActivity">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.99"
-        android:background="@color/colorWhite">
+        android:layout_height="match_parent">
 
-        <!-- Welcome title -->
-       <TextView
-           android:layout_above="@+id/welcome_msg_sub_text"
-            android:id="@+id/welcome_msg"
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:orientation="vertical"
+            android:background="@color/white_ghost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/welcome_msg_home"
-            android:layout_margin="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_centerHorizontal="true"
-            android:textAlignment="center"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:fontFamily="@font/nunito_extrabold"
-            android:padding="5dp"
-            android:textColor="@color/orange_light"/>
+            android:layout_gravity="center"
+            android:padding="5dp">
 
-        <!-- theme text -->
-        <TextView
-            android:layout_above="@+id/text_instruction"
-            android:id="@+id/welcome_msg_sub_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/welcome_mgs_sub_desc"
-            android:layout_margin="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_centerHorizontal="true"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="italic"
-            app:fontFamily="@font/nunito_extrabold"
-            android:padding="5dp"
-            android:textColor="@color/orange_light"/>
-
-        <!-- order Now text -->
-        <TextView
-            android:layout_above="@+id/home_image"
-            android:id="@+id/text_instruction"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:text="@string/order_now"
-            android:layout_marginTop="5dp"
-            android:layout_centerHorizontal="true"
-            android:textAlignment="center"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:fontFamily="@font/nunito_semibold"
-            android:padding="5dp"
-            android:textColor="@color/status_bar_back"/>
-
-        <!-- content imageView text -->
-        <ImageView
-            android:id="@+id/home_image"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center_vertical"
-            android:layout_width="match_parent"
-            android:layout_height="320dp"
-            android:alpha="0.5"
-            android:src="@drawable/splash_bg"
-            android:contentDescription="@string/todo">
-        </ImageView>
-
-        <!-- AdView to display ads-->
-        <com.google.android.gms.ads.AdView
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/adView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-4501853719724548~4076180577">
-        </com.google.android.gms.ads.AdView>
-
-        <!-- AdView to display ads-->
-        <com.google.android.gms.ads.AdView
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/adView1"
-            android:layout_below="@+id/adView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-4501853719724548~4076180577">
-        </com.google.android.gms.ads.AdView>
-
-        <!--Progress Bar-->
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"
-            style="?android:progressBarStyleLarge"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:visibility="gone"/>
-
-        <!--TextInputLayout and LinearLayout
-        and spinner View for contraceptive type-->
-        <android.support.design.widget.TextInputLayout
-            android:layout_below="@+id/home_image"
-            android:id="@+id/textInputLayoutGender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="0dp"
-            android:orientation="horizontal"
-            android:layout_marginStart="0dp">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center"
+            <!-- Welcome title -->
+            <TextView
+                android:id="@+id/welcome_msg"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="1">
-                <!--TextView View  and Spinner View for Voter's Gender-->
-               <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/textViewGender"
-                    android:layout_width="0dp"
-                    android:layout_height="45dp"
-                    android:text="@string/gender"
-                    android:textSize="20sp"
-                    android:gravity="center_vertical"
-                    android:layout_gravity="center_horizontal"
-                    android:drawableLeft="@drawable/ic_gender"
-                    android:drawablePadding="@dimen/padding_normal"
-                    android:textColor="@color/status_bar_back"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_weight="1.11"
-                    android:drawableStart="@drawable/ic_gender"
-                    android:layout_marginStart="1dp" />
-                <LinearLayout
-                    android:layout_width="170dp"
-                    android:orientation="horizontal"
-                    android:layout_height="45dp"
-                    android:weightSum="1"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="0dp">
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/spinnerGender"
-                        android:layout_width="150dp"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginStart="5dp" />
-                </LinearLayout>
+                android:text="@string/welcome_msg_home"
+                android:layout_margin="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_centerHorizontal="true"
+                android:textAlignment="center"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/nunito_extrabold"
+                android:padding="5dp"
+                android:textColor="@color/orange_light"/>
 
-            </LinearLayout>
-        </android.support.design.widget.TextInputLayout>
+            <!--  Reproductive Health Text 1 -->
+            <TextView
+                android:layout_below="@+id/welcome_msg"
+                android:id="@+id/text_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_1"
+                android:layout_margin="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                app:fontFamily="@font/nunito_semibold"
+                android:padding="5dp"
+                android:textColor="@color/orange_light"/>
 
-        <!-- Login Image View used as a Button -->
-         <ImageView
-             android:id="@+id/proceed_Image"
-             android:layout_width="85dp"
-             android:layout_height="85dp"
-             android:layout_margin="20dp"
-             android:layout_alignParentBottom="true"
-             android:layout_centerHorizontal="true"
-             android:background="@drawable/circular_button"
-             android:scaleType="centerInside"
-             android:src="@drawable/ic_send"
-             android:onClick="onProceedButtonClick"
-             android:contentDescription="@string/todo">
-         </ImageView>
+            <!--  Reproductive Health Text 2 -->
+            <TextView
+                android:layout_below="@+id/text_1"
+                android:id="@+id/text_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_2"
+                android:layout_margin="5dp"
+                android:layout_centerHorizontal="true"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/nunito_semibold"
+                android:padding="5dp"
+                android:textColor="@color/background_super_dark"/>
 
-        <!--Floating action bar -->
-       <android.support.design.widget.FloatingActionButton
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/fab"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            app:rippleColor="@color/status_bar_back"
-            android:src="@drawable/ic_phone"
-            android:layout_margin="15dp">
-        </android.support.design.widget.FloatingActionButton>
+            <!--  Reproductive Health Text 3 -->
+            <TextView
+                android:layout_below="@+id/text_2"
+                android:id="@+id/text_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_3"
+                android:layout_margin="5dp"
+                android:layout_centerHorizontal="true"
+                android:textSize="20sp"
+                app:fontFamily="@font/nunito_semibold"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:textColor="@color/orange_light"/>
 
-    </RelativeLayout>
+            <!--  Reproductive Health Text 4 -->
+            <TextView
+                android:layout_below="@+id/text_3"
+                android:id="@+id/text_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_4"
+                android:layout_margin="5dp"
+                android:layout_centerHorizontal="true"
+                android:textSize="20sp"
+                app:fontFamily="@font/nunito_semibold"
+                android:padding="5dp"
+                android:textColor="@color/background_super_dark"/>
+
+            <!-- AdView to display ads-->
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-4501853719724548~4076180577">
+            </com.google.android.gms.ads.AdView>
+
+            <!-- AdView to display ads-->
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView1"
+                android:layout_below="@+id/text_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-4501853719724548~4076180577">
+            </com.google.android.gms.ads.AdView>
+
+            <!--  Chat Us Button -->
+            <Button
+                android:id="@+id/chat_btn"
+                android:layout_below="@+id/text_4"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/text_chat_us"
+                android:textColor="@color/colorWhite"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:background="@color/orange_light"
+                app:fontFamily="@font/nunito_semibold"
+                android:onClick="onChatUsButtonClick">
+            </Button>
+
+            <!-- Order Button -->
+            <Button
+                android:id="@+id/order_btn"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/text_order"
+                android:textColor="@color/colorWhite"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:background="@color/orange_light"
+                app:fontFamily="@font/nunito_semibold"
+                android:layout_gravity="center|end"
+                android:onClick="onOrderButtonClick"
+                android:contentDescription="@string/todo">
+            </Button>
+
+            <!--Floating action bar -->
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentRight="false"
+                android:layout_alignParentEnd="false"
+                android:layout_width="47dp"
+                android:layout_height="wrap_content"
+                app:rippleColor="@color/orange_light"
+                android:src="@drawable/ic_phone"
+                android:layout_margin="20dp">
+            </android.support.design.widget.FloatingActionButton>
+
+        </RelativeLayout>
+
+    </ScrollView>
 
     <!--navigation view -->
     <android.support.design.widget.NavigationView
