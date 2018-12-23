@@ -1,7 +1,7 @@
 package io.icode.concaregh.application.fragements;
 
-import io.icode.concaregh.application.Notifications.MyResponse;
-import io.icode.concaregh.application.Notifications.Sender;
+import io.icode.concaregh.application.notifications.MyResponse;
+import io.icode.concaregh.application.notifications.Sender;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;

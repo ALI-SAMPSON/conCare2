@@ -1,4 +1,4 @@
-package io.icode.concaregh.application.Notifications;
+package io.icode.concaregh.application.notifications;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

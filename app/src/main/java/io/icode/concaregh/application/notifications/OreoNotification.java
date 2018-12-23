@@ -1,4 +1,4 @@
-package io.icode.concaregh.application.Notifications;
+package io.icode.concaregh.application.notifications;
 
 import android.annotation.TargetApi;
 import android.app.Notification;
@@ -67,7 +67,7 @@ public class OreoNotification extends ContextWrapper {
                 .setContentIntent(pendingIntent)
                 .setContentTitle(title)
                 .setContentText(body)
-                .setSmallIcon(R.mipmap.notification_icon_round)
+                .setSmallIcon(Integer.parseInt(icon))
                 .setSound(soundUri)
                 .setAutoCancel(true);
 

@@ -273,4 +273,16 @@
          Delete Message
     </string>
 
+    <string name="text_online" translatable="false">
+         online
+    </string>
+
+    <string name="text_offline" translatable="false">
+         offline
+    </string>
+
+    <string name="text_no_status" translatable="false">
+         no status
+    </string>
+
 </resources>

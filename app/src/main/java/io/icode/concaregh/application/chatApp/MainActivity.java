@@ -2,11 +2,7 @@ package io.icode.concaregh.application.chatApp;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,16 +23,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.icode.concaregh.application.Notifications.Token;
+import io.icode.concaregh.application.notifications.Token;
 import io.icode.concaregh.application.R;
 import io.icode.concaregh.application.activities.HomeActivity;
 import io.icode.concaregh.application.adapters.ViewPagerAdapter;
 import io.icode.concaregh.application.fragements.AdminFragment;
-import io.icode.concaregh.application.fragements.ChatsFragment;
 import io.icode.concaregh.application.models.Users;
 import maes.tech.intentanim.CustomIntent;
 
@@ -99,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                // display error message
                 Toast.makeText(MainActivity.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
             }
         });

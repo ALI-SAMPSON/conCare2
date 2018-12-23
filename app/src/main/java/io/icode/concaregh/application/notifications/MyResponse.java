@@ -1,4 +1,4 @@
-package io.icode.concaregh.application.Notifications;
+package io.icode.concaregh.application.notifications;
 
 public class MyResponse {
 

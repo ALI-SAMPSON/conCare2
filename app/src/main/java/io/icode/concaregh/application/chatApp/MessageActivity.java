@@ -2,6 +2,7 @@ package io.icode.concaregh.application.chatApp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,11 +35,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.icode.concaregh.application.Notifications.Client;
-import io.icode.concaregh.application.Notifications.Data;
-import io.icode.concaregh.application.Notifications.MyResponse;
-import io.icode.concaregh.application.Notifications.Sender;
-import io.icode.concaregh.application.Notifications.Token;
+import io.icode.concaregh.application.activities.HomeActivity;
+import io.icode.concaregh.application.notifications.Client;
+import io.icode.concaregh.application.notifications.Data;
+import io.icode.concaregh.application.notifications.MyResponse;
+import io.icode.concaregh.application.notifications.Sender;
+import io.icode.concaregh.application.notifications.Token;
 import io.icode.concaregh.application.R;
 import io.icode.concaregh.application.adapters.MessageAdapter;
 import io.icode.concaregh.application.fragements.APIService;
@@ -54,8 +55,10 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
     RelativeLayout relativeLayout;
 
+    // fields to contain admin details
     CircleImageView profile_image;
     TextView username;
+    TextView admin_status;
 
     FirebaseUser currentUser;
     DatabaseReference adminRef;
@@ -70,6 +73,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
     // string to get intentExtras
     String adminUid;
+
     String admin_username;
 
     // variable for MessageAdapter class
@@ -83,6 +87,10 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
     APIService apiService;
 
     boolean notify = false;
+
+    private boolean isChat;
+
+    private String theLastMessage;
 
 
     @Override
@@ -107,6 +115,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
         profile_image =  findViewById(R.id.profile_image);
         username =  findViewById(R.id.username);
+        admin_status =  findViewById(R.id.admin_status);
         msg_to_send =  findViewById(R.id.editText_send);
         btn_send =  findViewById(R.id.btn_send);
 
@@ -124,10 +133,17 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(adminUid);
+        //.child(adminUid);
 
+        // method to load admin details into the imageView
+        // and TextView in the toolbar section of this activity's layout resource file
         getAdminDetails();
 
+        // get the current status of admin
+        getAdminStatus();
+
         seenMessage(adminUid);
+
 
     }
 
@@ -136,8 +152,11 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         adminRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 Admin admin = dataSnapshot.getValue(Admin.class);
+
                 username.setText(admin.getUsername());
+
                 if(admin.getImageUrl() == null){
                     // sets a default placeholder into imageView if url is null
                     profile_image.setImageResource(R.drawable.app_logo);
@@ -226,7 +245,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Token token = snapshot.getValue(Token.class);
-                    Data data = new Data(currentUser.getUid(), R.drawable.ic_notification,getString(R.string.app_name),
+                    Data data = new Data(currentUser.getUid(), R.mipmap.app_logo_round,getString(R.string.app_name),
                             username+": "+message,adminUid);
 
                     assert token != null;
@@ -379,6 +398,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
     private void status(String status){
 
         adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(adminUid);
+        //.child(adminUid);
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("status", status);
         adminRef.updateChildren(hashMap);
@@ -401,4 +421,49 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         status("offline");
         currentAdmin("none");
     }
+
+    // method to get the status of the admin
+    private void getAdminStatus(){
+
+        DatabaseReference adminRef = FirebaseDatabase.getInstance().getReference("Admin");
+
+        adminRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                //for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+
+                Admin admin = dataSnapshot.getValue(Admin.class);
+
+                assert admin != null;
+
+                String admin_uid = admin.getAdminUid();
+                String admin_username = admin.getUsername();
+
+                // code to check if admin is online/offline
+                if(isChat){
+                    if(admin.getStatus().equals("online")){
+                        admin_status.setText(R.string.text_online);
+                    }
+                    else{
+                        admin_status.setText(R.string.text_offline);
+                    }
+                }
+                else{
+                    admin_status.setText(R.string.text_no_status);
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // display error message
+                Toast.makeText(MessageActivity.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+    }
+
 }

@@ -1,4 +1,4 @@
-package io.icode.concaregh.application.Notifications;
+package io.icode.concaregh.application.notifications;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

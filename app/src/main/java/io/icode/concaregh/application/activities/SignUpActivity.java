@@ -465,6 +465,15 @@ public class SignUpActivity extends AppCompatActivity {
                                         //clears text Fields
                                         clearTextFields();
 
+                                        // start the login Activity after Sign Up is successful
+                                        startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+
+                                        // Add a custom animation ot the activity
+                                        CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");
+
+                                        // finish the activity
+                                        finish();
+
                                     }
                                     else {
 
@@ -536,13 +545,13 @@ public class SignUpActivity extends AppCompatActivity {
     //link from the Sign Up page to the Login Page
     public void onLoginLinkButtonClick(View view){
 
-        mAuth.signOut();
+        //mAuth.signOut();
 
         // starts this activity
         startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
         // Add a custom animation ot the activity
         CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");
-
+        // finish activity
         finish();
 
     }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="io.icode.concaregh.application"
     android:installLocation="auto">
 
@@ -26,7 +27,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/app_logo_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -36,32 +39,14 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-4501853719724548~4076180577" />
 
-        <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_notification" />
+        <!--<meta-data android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notification" /> -->
 
         <activity
             android:name=".activities.LoginActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
-
-            <!-- Deep linking intent-filter to identify app online when users search -->
-            <intent-filter android:label="@string/filter_title_con_care_gh">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-                <data
-                    android:host="www.example.com"
-                    android:pathPrefix="/google"
-                    android:scheme="http" />
-                <!-- note that the leading "/" is required for pathPrefix -->
-                <!-- Accepts URIs that begin with "example://gizmos” -->
-                <data
-                    android:host="google"
-                    android:scheme="example" />
-            </intent-filter>
 
         </activity>
         <activity
@@ -123,7 +108,7 @@
             android:theme="@style/homeTheme.order" >
         </activity>
 
-        <service android:name=".Notifications$MyFirebaseIdService"
+        <service android:name=".notifications.MyFirebaseIdService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -131,10 +116,9 @@
             </intent-filter>
         </service>
 
-        <service android:name=".Notifications$MyFirebaseMessaging"
+        <service android:name=".notifications.MyFirebaseMessaging"
             android:enabled="true"
-            android:exported="true"
-            android:stopWithTask="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>

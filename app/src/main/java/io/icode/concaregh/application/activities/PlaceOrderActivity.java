@@ -171,32 +171,9 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         }
 
-        /*
-        if(gender.equals("Male")){
-            arrayAdapterContraceptive = ArrayAdapter.createFromResource(this, R.array.con_male, R.layout.spinner_item);
-            arrayAdapterContraceptive.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
-            spinnerContraceptive.setAdapter(arrayAdapterContraceptive);
-        }
-        else if(gender.equals("Female")){
-            arrayAdapterContraceptive = ArrayAdapter.createFromResource(this, R.array.con_female, R.layout.spinner_item);
-            arrayAdapterContraceptive.setDropDownViewResource(io.icode.concaregh.app.R.layout.spinner_dropdown_item);
-            spinnerContraceptive.setAdapter(arrayAdapterContraceptive);
-        }
-        else{
-            //do nothing
-        }
-        */
-
         if(spinnerLocation.getSelectedItem().toString().equals("Other")){
             textInputLayoutOtherLocation = findViewById(io.icode.concaregh.application.R.id.textInputLayoutOtherLocation);
             textInputLayoutOtherLocation.setVisibility(View.VISIBLE);
-        }
-        /*else if(contraceptive.equals("Other")){
-            textInputLayoutOtherContraceptive = findViewById(R.id.textInputLayoutOtherContraceptive);
-            textInputLayoutOtherContraceptive.setVisibility(View.VISIBLE);
-        }*/
-        else{
-            //do nothing
         }
 
         mAuth = FirebaseAuth.getInstance();
@@ -224,14 +201,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
         // Load ads into Banner Ads
         adView.loadAd(adRequest);
 
-    }
-
-    @Override
-    protected void onStart(){
-        super.onStart();
-        if(mAuth.getCurrentUser() != null){
-            // do nothing
-        }
     }
 
     // Adds a sliding animation to the buttons
@@ -390,6 +359,16 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
                         // sends message to user after placing order
                         //sendSMSMessageToUser();
+
+                        // creates an instance of the intent class and opens the signUpActivity
+                        startActivity(new Intent(PlaceOrderActivity.this,HomeActivity.class));
+
+                        // Add a custom animation ot the activity
+                        CustomIntent.customType(PlaceOrderActivity.this,"fadein-to-fadeout");
+
+                        // finish the activity
+                        finish();
+
 
                     } else {
                         // display error message

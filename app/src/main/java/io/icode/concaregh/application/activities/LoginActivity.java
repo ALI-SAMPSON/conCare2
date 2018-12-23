@@ -293,8 +293,8 @@ public class LoginActivity extends AppCompatActivity {
     // Link to the signUp Interface
     public void onSignUpLinkClick(View view){
 
-        // creates an instance of the intent class and opens the signUpctivity
-        startActivity(new Intent(this,SignUpActivity.class));
+        // creates an instance of the intent class and opens the signUpActivity
+        startActivity(new Intent(LoginActivity.this,SignUpActivity.class));
 
         // Add a custom animation ot the activity
         CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
