@@ -101,6 +101,7 @@ public class RecyclerViewAdapterAdmin extends RecyclerView.Adapter<RecyclerViewA
                 Intent intent = new Intent(mCtx,MessageActivity.class);
                 intent.putExtra("uid",admin.getAdminUid());
                 intent.putExtra("username",admin.getUsername());
+                intent.putExtra("status",admin.getStatus());
                 mCtx.startActivity(intent);
             }
         });

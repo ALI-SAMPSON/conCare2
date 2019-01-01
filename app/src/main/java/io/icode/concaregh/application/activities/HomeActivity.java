@@ -128,6 +128,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         users = new Users();
 
+        admin = new Admin();
+
+        // reference to the admin class
+        adminRef = FirebaseDatabase.getInstance().getReference("Admin");
+
+        // method calls
         onClickCircularImageView();
 
         onTextViewClick();
@@ -152,11 +158,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         AdView adView1 = findViewById(R.id.adView1);
         AdRequest adRequest1 = new AdRequest.Builder().build();
         adView1.loadAd(adRequest1);
-
-        admin = new Admin();
-
-        // reference to the admin class
-        adminRef = FirebaseDatabase.getInstance().getReference("Admin");
 
     }
 
@@ -537,55 +538,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     //open the message activity to start a chat conversation with admin (ConCare GH)
     public void onChatUsButtonClick(View view) {
-
-        adminRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-
-                    Admin admin = snapshot.getValue(Admin.class);
-
-                    //assert admin != null;
-
-                    //String admin_uid = admin.getAdminUid();
-                    //String admin_username = admin.getUsername();
-                    //String admin_status = admin.getStatus();
-
-                    if(admin != null){
-
-                        // storing admin uid and username in sharePreference to be used later in app
-                        SharedPreferences.Editor editor = PreferenceManager
-                                .getDefaultSharedPreferences(HomeActivity.this).edit();
-                        editor.putString("uid", admin.getAdminUid());
-                        editor.putString("username", admin.getUsername());
-                        editor.putString("status", admin.getStatus());
-                        editor.apply();
-
-                        // passing adminUid as a string to the MessageActivity
-                        Intent intent = new Intent(HomeActivity.this, MessageActivity.class);
-                        //intent.putExtra("uid", admin.getAdminUid());
-                        //intent.putExtra("username", admin.getUsername());
-                        //intent.putExtra("status", admin.getStatus());
-                        startActivity(intent);
-
-                    }
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // display error message
-                Toast.makeText(HomeActivity.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        });
-
         // starts the about us activity
-        //startActivity(new Intent(HomeActivity.this,MainActivity.class));
+        startActivity(new Intent(HomeActivity.this,MainActivity.class));
         // Add a custom animation ot the activity
-        //CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+        CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
     }
 
     public void onOrderButtonClick(View view) {

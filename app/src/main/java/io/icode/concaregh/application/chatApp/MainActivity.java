@@ -1,8 +1,11 @@
 package io.icode.concaregh.application.chatApp;
 
+//import android.app.FragmentManager;
+import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +56,14 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
+        toolbar.setNavigationIcon(R.drawable.ic_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // finish activity
+                finish();
+            }
+        });
 
         //checks of there is support actionBar
         if(getSupportActionBar() != null){
@@ -98,20 +109,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // getting reference to the views
-        TabLayout tabLayout =  findViewById(R.id.tab_layout);
-        ViewPager viewPager = findViewById(R.id.view_pager);
-
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        // adds ChatsFragment and AdminFragment to the viewPager
-        // viewPagerAdapter.addFragment(new ChatsFragment(), getString(R.string.text_chats));
-        viewPagerAdapter.addFragment(new AdminFragment(), getString(R.string.app_name));
-        //Sets Adapter view of the ViewPager
-        viewPager.setAdapter(viewPagerAdapter);
-
-        //sets tablayout with viewPager
-        tabLayout.setupWithViewPager(viewPager);
+        // method to display fragment
+        displayFragment();
 
         // method call to update token
         updateToken(FirebaseInstanceId.getInstance().getToken());
@@ -122,6 +121,27 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
         Token token1 = new Token(token);
         reference.child(currentUser.getUid()).setValue(token1);
+    }
+
+
+    // method to displayy fragment
+    private void displayFragment(){
+
+        // creating an instance of the adminFragment
+        AdminFragment adminFragment = new AdminFragment();
+
+        // getting support fragment
+        FragmentManager fm = getSupportFragmentManager();
+
+        // creating fragment transaction to start
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
+        // adds fragment to this activities layout file
+        fragmentTransaction.add(R.id.fragment_container,
+                adminFragment).addToBackStack(null)
+                .commit();
+
+
     }
 
     @Override
@@ -136,9 +156,9 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case android.R.id.home:
                 // navigates user to the home Activity
-                startActivity(new Intent(MainActivity.this,HomeActivity.class));
-                CustomIntent.customType(MainActivity.this,"right-to-left");
-                finish();
+                //startActivity(new Intent(MainActivity.this,HomeActivity.class));
+                //CustomIntent.customType(MainActivity.this,"right-to-left");
+                //finish();
                 break;
         }
         return super.onOptionsItemSelected(item);

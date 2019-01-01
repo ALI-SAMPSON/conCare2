@@ -76,6 +76,8 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
     String admin_username;
 
+    String status;
+
     // variable for MessageAdapter class
     MessageAdapter messageAdapter;
     List<Chats> mChats;
@@ -129,18 +131,19 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         intent = getIntent();
         adminUid = intent.getStringExtra("uid");
         admin_username = intent.getStringExtra("username");
+        // get the current status of admin
+        status = intent.getStringExtra("status");
+
+        // set status of the admin on toolbar below the username in the message activity
+        admin_status.setText(status);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(adminUid);
-        //.child(adminUid);
 
         // method to load admin details into the imageView
         // and TextView in the toolbar section of this activity's layout resource file
         getAdminDetails();
-
-        // get the current status of admin
-        getAdminStatus();
 
         seenMessage(adminUid);
 
@@ -420,50 +423,6 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         // method calls
         status("offline");
         currentAdmin("none");
-    }
-
-    // method to get the status of the admin
-    private void getAdminStatus(){
-
-        DatabaseReference adminRef = FirebaseDatabase.getInstance().getReference("Admin");
-
-        adminRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                //for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-
-                Admin admin = dataSnapshot.getValue(Admin.class);
-
-                assert admin != null;
-
-                String admin_uid = admin.getAdminUid();
-                String admin_username = admin.getUsername();
-
-                // code to check if admin is online/offline
-                if(isChat){
-                    if(admin.getStatus().equals("online")){
-                        admin_status.setText(R.string.text_online);
-                    }
-                    else{
-                        admin_status.setText(R.string.text_offline);
-                    }
-                }
-                else{
-                    admin_status.setText(R.string.text_no_status);
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // display error message
-                Toast.makeText(MessageActivity.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        });
-
-
     }
 
 }
