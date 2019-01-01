@@ -30,6 +30,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.icode.concaregh.application.activities.OrderActivity;
 import io.icode.concaregh.application.notifications.Token;
 import io.icode.concaregh.application.R;
 import io.icode.concaregh.application.activities.HomeActivity;
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Users users = dataSnapshot.getValue(Users.class);
 
-                    username.setText(currentUser.getDisplayName());
+                    username.setText("CHAT US NOW");
 
                     //text if user's imageUrl is equal to default
                     if(currentUser.getPhotoUrl() == null){
@@ -154,11 +155,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case android.R.id.home:
-                // navigates user to the home Activity
-                //startActivity(new Intent(MainActivity.this,HomeActivity.class));
-                //CustomIntent.customType(MainActivity.this,"right-to-left");
-                //finish();
+            case R.id.menu_order:
+                // navigates user to the order Activity
+                startActivity(new Intent(MainActivity.this,OrderActivity.class));
+                CustomIntent.customType(MainActivity.this,"right-to-left");
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);

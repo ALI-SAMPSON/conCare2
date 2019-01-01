@@ -285,4 +285,8 @@
          no status
     </string>
 
+    <string name="text_order_here" translatable="false">
+         Order here!
+    </string>
+
 </resources>
