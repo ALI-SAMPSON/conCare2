@@ -137,7 +137,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
-                android:background="@color/orange_light"
+                android:background="@drawable/round_home_button"
                 app:fontFamily="@font/nunito_semibold"
                 android:onClick="onChatUsButtonClick">
             </Button>
@@ -156,7 +156,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:background="@color/orange_light"
+                android:background="@drawable/round_home_button"
                 app:fontFamily="@font/nunito_semibold"
                 android:layout_gravity="center|end"
                 android:onClick="onOrderButtonClick"

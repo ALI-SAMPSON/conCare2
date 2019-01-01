@@ -6,13 +6,13 @@
 
     <gradient
         android:angle="225"
-        android:startColor="@color/status_bar_back"
-        android:endColor="@color/status_bar_back"/>
+        android:startColor="@color/orange_light"
+        android:endColor="@color/orange_light"/>
 
     <corners
-        android:topLeftRadius="15dp"
-        android:topRightRadius="15dp"
-        android:bottomLeftRadius="15dp"
-        android:bottomRightRadius="15dp"/>
+        android:topLeftRadius="5dp"
+        android:topRightRadius="5dp"
+        android:bottomLeftRadius="5dp"
+        android:bottomRightRadius="5dp"/>
 
 </shape>
