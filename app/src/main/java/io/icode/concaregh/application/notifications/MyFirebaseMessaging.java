@@ -45,21 +45,23 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
         RemoteMessage.Notification notification = remoteMessage.getNotification();
         int j = Integer.parseInt(user.replaceAll("[\\D]",""));
-        Intent intent = new Intent(this,MessageActivity.class);
+        //Intent intent = new Intent(this,MessageActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("userid",user);
-        intent.putExtras(bundle);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,j,intent,PendingIntent.FLAG_ONE_SHOT);
+        //intent.putExtras(bundle);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //PendingIntent pendingIntent = PendingIntent.getActivity(this,j,intent,PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.app_logo)
                 .setContentTitle(title)
                 .setContentText(body)
-                .setAutoCancel(true)
+                .setAutoCancel(false)
                 .setSound(defaultSound)
-                .setContentIntent(pendingIntent);
+                .setVibrate(new long[]{1000,1000,1000})
+                .setWhen(System.currentTimeMillis());
+                //.setContentIntent(pendingIntent);
 
         NotificationManager nm = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 
