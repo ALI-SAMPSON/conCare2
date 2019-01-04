@@ -1,4 +1,4 @@
-package io.icode.concaregh.application.fragements;
+package io.icode.concaregh.application.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

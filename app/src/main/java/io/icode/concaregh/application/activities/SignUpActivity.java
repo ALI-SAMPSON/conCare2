@@ -405,11 +405,12 @@ public class SignUpActivity extends AppCompatActivity {
 
                             final FirebaseUser user = mAuth.getCurrentUser();
 
+                            assert user != null;
+
                             users.setEmail(email);
                             users.setUsername(username);
                             users.setGender(gender);
                             users.setPhoneNumber(phone);
-                            assert user != null;
                             users.setUid(user.getUid());
                             users.setImageUrl("");
                             users.setStatus("offline"); // set status to offline by default

@@ -1,4 +1,4 @@
-package io.icode.concaregh.application.fragements;
+package io.icode.concaregh.application.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +26,10 @@ import java.util.List;
 import io.icode.concaregh.application.R;
 import io.icode.concaregh.application.adapters.RecyclerViewAdapterAdmin;
 import io.icode.concaregh.application.models.Admin;
+import io.icode.concaregh.application.notifications.Token;
 
 
+@SuppressWarnings("ALL")
 public class AdminFragment extends Fragment {
 
     private RecyclerView recyclerView;
@@ -35,7 +38,7 @@ public class AdminFragment extends Fragment {
 
     ConstraintLayout mLayout;
 
-    FirebaseAuth mAuth;
+    FirebaseUser firebaseUser;
 
     DatabaseReference userRef;
 
@@ -53,20 +56,32 @@ public class AdminFragment extends Fragment {
 
         mAdmin = new ArrayList<>();
 
-        mAuth = FirebaseAuth.getInstance();
-
         userRef = FirebaseDatabase.getInstance().getReference("Admin");
 
-        readAdmin();
+        // adapter initialization and RecyclerView set up
+        adapterUser = new RecyclerViewAdapterAdmin(getContext(),mAdmin,true);
+        recyclerView.setAdapter(adapterUser);
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        // method call to display admin in recyclerView
+        displayAdmin();
+
+        // method call to update token
+        updateToken(FirebaseInstanceId.getInstance().getToken());
 
         // return view
         return view;
     }
 
-    // message to read the admin from the database
-    public  void readAdmin(){
+    private void updateToken(String token){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token token1 = new Token(token);
+        reference.child(firebaseUser.getUid()).setValue(token1);
+    }
 
-        final FirebaseUser currentUser = mAuth.getCurrentUser();
+    // message to read the admin from the database
+    public  void displayAdmin(){
 
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -79,15 +94,10 @@ public class AdminFragment extends Fragment {
 
                     assert admin != null;
 
-                    assert currentUser != null;
-
                     mAdmin.add(admin);
 
                 }
 
-                // adapter initialization and RecyclerView set up
-                adapterUser = new RecyclerViewAdapterAdmin(getContext(),mAdmin,true);
-                recyclerView.setAdapter(adapterUser);
                 adapterUser.notifyDataSetChanged();
             }
 

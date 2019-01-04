@@ -4,9 +4,7 @@ package io.icode.concaregh.application.chatApp;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -31,12 +29,10 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.icode.concaregh.application.activities.OrderActivity;
-import io.icode.concaregh.application.notifications.Token;
 import io.icode.concaregh.application.R;
-import io.icode.concaregh.application.activities.HomeActivity;
-import io.icode.concaregh.application.adapters.ViewPagerAdapter;
-import io.icode.concaregh.application.fragements.AdminFragment;
+import io.icode.concaregh.application.fragments.AdminFragment;
 import io.icode.concaregh.application.models.Users;
+import io.icode.concaregh.application.notifications.Token;
 import maes.tech.intentanim.CustomIntent;
 
 @SuppressWarnings("ALL")

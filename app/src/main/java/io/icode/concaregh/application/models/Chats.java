@@ -45,13 +45,14 @@ public class Chats {
         this.message = message;
     }
 
-    public boolean isIsseen() {
+    public boolean isSeen() {
         return isseen;
     }
 
-    public void setIsseen(boolean isseen) {
-        this.isseen = isseen;
+    public void setSeen(boolean isseen) {
+        isseen = isseen;
     }
+
 
     //getters and setters to store && retrieve the unique key of each message
     // excluding from database field

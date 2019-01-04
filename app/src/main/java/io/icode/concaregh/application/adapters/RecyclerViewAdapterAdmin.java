@@ -2,7 +2,10 @@ package io.icode.concaregh.application.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -149,6 +152,7 @@ public class RecyclerViewAdapterAdmin extends RecyclerView.Adapter<RecyclerViewA
                             || chats.getReceiver().equals(adminUid) && chats.getSender().equals(currentUser.getUid())){
                         theLastMessage = chats.getMessage();
                     }
+
                 }
 
                 switch (theLastMessage){
@@ -161,6 +165,7 @@ public class RecyclerViewAdapterAdmin extends RecyclerView.Adapter<RecyclerViewA
                             break;
                 }
 
+
                 theLastMessage = "default";
             }
 
@@ -171,5 +176,6 @@ public class RecyclerViewAdapterAdmin extends RecyclerView.Adapter<RecyclerViewA
             }
         });
     }
+
 
 }

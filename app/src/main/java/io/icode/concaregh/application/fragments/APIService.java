@@ -1,5 +1,6 @@
-package io.icode.concaregh.application.fragements;
+package io.icode.concaregh.application.fragments;
 
+import io.icode.concaregh.application.notifications.MyFirebaseIdService;
 import io.icode.concaregh.application.notifications.MyResponse;
 import io.icode.concaregh.application.notifications.Sender;
 import retrofit2.Call;

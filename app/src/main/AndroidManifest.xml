@@ -108,6 +108,7 @@
             android:theme="@style/homeTheme.order" >
         </activity>
 
+        <!-- Adding FirebaseIdService and FirebaseMessaging service-->
         <service android:name=".notifications.MyFirebaseIdService"
             android:enabled="true"
             android:exported="true">

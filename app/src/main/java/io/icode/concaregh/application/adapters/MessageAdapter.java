@@ -1,6 +1,8 @@
 package io.icode.concaregh.application.adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
@@ -73,7 +75,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         // checks if chat is seen by user and sets the appropriate text
         if(position == mChats.size()-1){
-            if(chats.isIsseen()){
+            if(chats.isSeen()){
                 holder.txt_seen.setText(R.string.text_seen);
             }
             else {

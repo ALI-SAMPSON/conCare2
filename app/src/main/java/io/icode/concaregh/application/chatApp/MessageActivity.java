@@ -1,8 +1,10 @@
 package io.icode.concaregh.application.chatApp;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -33,24 +35,26 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.icode.concaregh.application.activities.HomeActivity;
+import io.icode.concaregh.application.R;
+import io.icode.concaregh.application.adapters.MessageAdapter;
+import io.icode.concaregh.application.fragments.APIService;
+import io.icode.concaregh.application.models.Admin;
+import io.icode.concaregh.application.models.Chats;
+import io.icode.concaregh.application.models.Users;
 import io.icode.concaregh.application.notifications.Client;
 import io.icode.concaregh.application.notifications.Data;
 import io.icode.concaregh.application.notifications.MyResponse;
 import io.icode.concaregh.application.notifications.Sender;
 import io.icode.concaregh.application.notifications.Token;
-import io.icode.concaregh.application.R;
-import io.icode.concaregh.application.adapters.MessageAdapter;
-import io.icode.concaregh.application.fragements.APIService;
-import io.icode.concaregh.application.models.Admin;
-import io.icode.concaregh.application.models.Chats;
-import io.icode.concaregh.application.models.Users;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@SuppressWarnings("ALL")
 public class MessageActivity extends AppCompatActivity implements MessageAdapter.OnItemClickListener {
 
     RelativeLayout relativeLayout;
@@ -65,6 +69,8 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
     DatabaseReference chatRef;
 
+    DatabaseReference userRef;
+
     // editText and Button to send Message
     EditText msg_to_send;
     ImageView btn_send;
@@ -72,7 +78,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
     Intent intent;
 
     // string to get intentExtras
-    String adminUid;
+    String admin_uid;
 
     String admin_username;
 
@@ -86,6 +92,8 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
     ValueEventListener seenListener;
 
+    ValueEventListener mDBListener;
+
     APIService apiService;
 
     boolean notify = false;
@@ -93,6 +101,8 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
     private boolean isChat;
 
     private String theLastMessage;
+
+    ProgressDialog progressDialog;
 
 
     @Override
@@ -129,7 +139,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         recyclerView.setLayoutManager(linearLayoutManager);
 
         intent = getIntent();
-        adminUid = intent.getStringExtra("uid");
+        admin_uid = intent.getStringExtra("uid");
         admin_username = intent.getStringExtra("username");
         // get the current status of admin
         status = intent.getStringExtra("status");
@@ -139,14 +149,19 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(adminUid);
+        adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(admin_uid);
+
+        // progressDialog to display before deleting message
+        progressDialog = new ProgressDialog(this);
+
+        progressDialog.setMessage("Deleting message...");
 
         // method to load admin details into the imageView
         // and TextView in the toolbar section of this activity's layout resource file
         getAdminDetails();
 
-        seenMessage(adminUid);
-
+        //method call to seen message
+        seenMessage(admin_uid);
 
     }
 
@@ -171,7 +186,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
                 }
 
                 // method call
-                readMessages(currentUser.getUid(),adminUid,admin.getImageUrl());
+                readMessages(currentUser.getUid(),admin_uid,admin.getImageUrl());
             }
 
             @Override
@@ -194,7 +209,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         if(!message.equals("")){
             // call to method to sendMessage and
             // set the editText field to null afterwards
-            sendMessage(currentUser.getUid(),adminUid,message);
+            sendMessage(currentUser.getUid(),admin_uid,message);
         }
         else{
             Toast.makeText(MessageActivity.this,
@@ -204,7 +219,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         msg_to_send.setText("");
     }
 
-    private void sendMessage(String sender, final String receiver, String message){
+    private void sendMessage(String sender, final String receiver, final String message){
 
         DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference();
 
@@ -212,18 +227,21 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         hashMap.put("sender",sender);
         hashMap.put("receiver", receiver);
         hashMap.put("message",message);
+        hashMap.put("isseen", false);
 
         chatRef.child("Chats").push().setValue(hashMap);
 
         // variable to hold the message to be sent
         final String msg = message;
 
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
+        userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Users users = dataSnapshot.getValue(Users.class);
+                assert users != null;
                 if(notify) {
+                    // method call to send notification to admin as soon as message is sent
                     sendNotification(receiver, users.getUsername(), msg);
                 }
                 notify = false;
@@ -237,7 +255,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
     }
 
-    // sends notification to respective user as soon as message is sent
+    // sends notification to admin as soon as message is sent
     private void sendNotification(String receiver, final String username, final String message){
 
         DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
@@ -248,8 +266,8 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Token token = snapshot.getValue(Token.class);
-                    Data data = new Data(currentUser.getUid(), R.mipmap.app_logo_round,getString(R.string.app_name),
-                            username+": "+message,adminUid);
+                    Data data = new Data(currentUser.getUid(),R.mipmap.app_logo,
+                            username+": "+message,getString(R.string.app_name),admin_uid);
 
                     assert token != null;
                     Sender sender = new Sender(data, token.getToken());
@@ -259,7 +277,6 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
                                 @Override
                                 public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
                                     if(response.code() == 200){
-                                        assert response.body() != null;
                                         if(response.body().success != 1){
                                             Snackbar.make(relativeLayout,"Failed!",Snackbar.LENGTH_LONG).show();
                                         }
@@ -283,7 +300,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
     }
 
     // methopd to check if user or admin has seen the message
-    private void seenMessage(final String adminUid){
+    private void seenMessage(final String admin_uid){
 
         chatRef = FirebaseDatabase.getInstance().getReference("Chats");
 
@@ -294,7 +311,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Chats chats = snapshot.getValue(Chats.class);
                     assert chats != null;
-                    if(chats.getReceiver().equals(currentUser.getUid()) && chats.getSender().equals(adminUid)){
+                    if(chats.getReceiver().equals(currentUser.getUid()) && chats.getSender().equals(admin_uid)){
                         HashMap<String, Object> hashMap = new HashMap<>();
                         hashMap.put("isseen",true);
                         snapshot.getRef().updateChildren(hashMap);
@@ -318,7 +335,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         mChats = new ArrayList<>();
 
         chatRef = FirebaseDatabase.getInstance().getReference("Chats");
-        chatRef.addValueEventListener(new ValueEventListener() {
+        mDBListener = chatRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // clears the chats to avoid reading duplicate message
@@ -362,27 +379,63 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
     }
 
     @Override
-    public void onDeleteClick(int position) {
+    public void onDeleteClick(final int position) {
 
-        // gets the position of the selected message
-        Chats selectedMessage = mChats.get(position);
+        AlertDialog.Builder builder = new AlertDialog.Builder(MessageActivity.this);
+        builder.setTitle(getString(R.string.title_delete_message));
+        builder.setMessage(getString(R.string.text_delete_message));
 
-        //gets the key at the selected position
-        String selectedKey = selectedMessage.getKey();
-
-        chatRef.child(selectedKey).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(MessageActivity.this," Message deleted ",Toast.LENGTH_SHORT).show();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MessageActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                // show dialog
+                progressDialog.show();
+
+                Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        // dismiss dialog
+                        progressDialog.dismiss();
+
+                        // gets the position of the selected message
+                        Chats selectedMessage = mChats.get(position);
+
+                        //gets the key at the selected position
+                        String selectedKey = selectedMessage.getKey();
+
+                        chatRef.child(selectedKey).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    Toast.makeText(MessageActivity.this," Message deleted ",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(MessageActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+
+                    }
+                },3000);
+
             }
         });
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
     }
 
     @Override
@@ -400,7 +453,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
     // method to set user status to "online" or "offline"
     private void status(String status){
 
-        adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(adminUid);
+        adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(admin_uid);
         //.child(adminUid);
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("status", status);
@@ -412,17 +465,25 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         super.onResume();
         //method calls
         status("online");
-        currentAdmin(adminUid);
+        //currentAdmin(adminUid);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        // removes listener
-        chatRef.removeEventListener(seenListener);
         // method calls
-        status("offline");
-        currentAdmin("none");
+        status("online");
+        //currentAdmin("none");
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // set status to offline if activity is destroyed
+        status("offline");
+        // removes eventListeners when activity is destroyed
+        chatRef.removeEventListener(seenListener);
+        chatRef.removeEventListener(mDBListener);
+
+    }
 }

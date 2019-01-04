@@ -34,9 +34,11 @@
         android:layout_below="@+id/username"
         android:layout_toRightOf="@+id/profile_image"
         android:layout_toEndOf="@+id/profile_image"
+        app:fontFamily="@font/lato"
         android:text="@string/text_hello"
         android:textSize="14sp"
         android:maxLines="1"
+        android:layout_marginTop="2dp"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"/>
 
