@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white_greyish"
     android:orientation="vertical"
-    tools:context=".chatApp.MainActivity">
+    tools:context=".chatApp.ChatActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"

@@ -15,6 +15,11 @@ import maes.tech.intentanim.CustomIntent;
 
 public class ContactUsActivity extends AppCompatActivity {
 
+    // variables for adView
+    AdView adView;
+
+    AdRequest adRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,9 +35,9 @@ public class ContactUsActivity extends AppCompatActivity {
         // Initializing Google Ads
         MobileAds.initialize(this,"ca-app-pub-4501853719724548~4076180577");
         // getting reference to AdView
-        AdView adView = findViewById(R.id.adView);
+        adView = findViewById(R.id.adView);
         //AdRequest object contains runtime information about a single ad request
-        AdRequest adRequest = new AdRequest.Builder().build();
+        adRequest = new AdRequest.Builder().build();
         // Load ads into Banner Ads
         adView.loadAd(adRequest);
 
@@ -43,33 +48,22 @@ public class ContactUsActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case android.R.id.home:
-                startActivity(new Intent(ContactUsActivity.this,HomeActivity.class));
-                // Add a custom animation ot the activity
-                CustomIntent.customType(ContactUsActivity.this,"fadein-to-fadeout");
+
                 // sends user to Home Activity
                 finish();
+
                 break;
+
                 default:
                     break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-        // Add a custom animation ot the activity
-        CustomIntent.customType(ContactUsActivity.this,"fadein-to-fadeout");
-    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        // open the LoginActivity
-        startActivity(new Intent(ContactUsActivity.this,HomeActivity.class));
-
-        // Add a custom animation ot the activity
-        CustomIntent.customType(ContactUsActivity.this,"fadein-to-fadeout");
 
         // finishes the activity
         finish();

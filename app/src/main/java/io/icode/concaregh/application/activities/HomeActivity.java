@@ -1,13 +1,12 @@
 package io.icode.concaregh.application.activities;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -16,15 +15,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatSpinner;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +30,6 @@ import com.bumptech.glide.Glide;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,9 +40,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.icode.concaregh.application.chatApp.MainActivity;
-import io.icode.concaregh.application.chatApp.MessageActivity;
+import io.icode.concaregh.application.chatApp.ChatActivity;
 import io.icode.concaregh.application.models.Admin;
 import io.icode.concaregh.application.models.Users;
 import maes.tech.intentanim.CustomIntent;
@@ -63,19 +60,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     FirebaseAuth mAuth;
 
-    DatabaseReference userInfoRef;
+    Users users;
 
     Admin admin;
 
-    DatabaseReference adminRef;
+    DatabaseReference userInfoRef;
 
-    Users users;
+    DatabaseReference adminRef;
 
     NavigationView navigationView;
 
     CircleImageView circleImageView;
     TextView username;
     TextView email;
+
+    ProgressDialog progressDialog;
 
     FloatingActionButton fab;
 
@@ -121,9 +120,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // floating action button onclick Listener and initialization
         fab = findViewById(R.id.fab);
 
-        // call to the onclick Listener for floating button
-        onClickFab();
-
+        // getting instance of firebaseAuth
         mAuth = FirebaseAuth.getInstance();
 
         users = new Users();
@@ -133,16 +130,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // reference to the admin class
         adminRef = FirebaseDatabase.getInstance().getReference("Admin");
 
-        // method calls
-        onClickCircularImageView();
-
-        onTextViewClick();
-
         // Calling method to display a welcome message
         displayWelcomeMessage();
 
         // method call
         loadUserInfo();
+
+        // call to the onclick Listener for floating button
+        onClickFab();
+
+        // method call for on click listener for imageView
+        onClickCircularImageView();
+
+        onTextViewClick();
+
+        // method call to change ProgressDialog style based on the android version of user's phone
+        changeProgressDialogBackground();
 
 
         // Initializing Google Ads
@@ -243,8 +246,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // get current logged in user
         FirebaseUser user = mAuth.getCurrentUser();
 
+        assert user != null;
+
         /* getting username of the currently
          Logged In user and storing in a string */
+
         String username = user.getDisplayName();
 
         // checks if user is not equal to null
@@ -340,6 +346,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                // display error message
                 Toast.makeText(HomeActivity.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
@@ -378,7 +385,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_sign_out:
                 // a call to logout method
                signOut();
+
                 break;
+
                 default:
                     break;
         }
@@ -406,7 +415,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_chat:
                 // starts the about us activity
-                startActivity(new Intent(HomeActivity.this,MainActivity.class));
+                startActivity(new Intent(HomeActivity.this,ChatActivity.class));
                 // Add a custom animation ot the activity
                 CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
                 break;
@@ -423,9 +432,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 CustomIntent.customType(HomeActivity.this,"up-to-bottom");
                 break;
             case R.id.menu_exit:
+
                 // close application
                 exitApplication();
+
                 break;
+
             default:
                 break;
         }
@@ -505,14 +517,34 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // logs current user out of the system
-                mAuth.signOut();
-                // starts the activity
-                startActivity(new Intent(HomeActivity.this,LoginActivity.class));
-                // Add a custom animation ot the activity
-                CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
-                // finishes the activity
-                finish();
+
+                // show dialog
+                progressDialog.show();
+
+                // delays the running of the ProgressBar for 3 secs
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        // dismiss dialog
+                        progressDialog.dismiss();
+
+                        // logs current user out of the system
+                        mAuth.signOut();
+
+                        // starts the activity
+                        startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+
+                        // Add a custom animation ot the activity
+                        CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+
+                        // finishes the activity
+                        finish();
+
+                    }
+                },3000);
+
             }
         });
 
@@ -539,7 +571,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     //open the message activity to start a chat conversation with admin (ConCare GH)
     public void onChatUsButtonClick(View view) {
         // starts the about us activity
-        startActivity(new Intent(HomeActivity.this,MainActivity.class));
+        startActivity(new Intent(HomeActivity.this,ChatActivity.class));
         // Add a custom animation ot the activity
         CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
     }
@@ -549,5 +581,27 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         startActivity(new Intent(HomeActivity.this,OrderActivity.class));
         // Add a custom animation ot the activity
         CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+    }
+
+    // method to change ProgressDialog style based on the android version of user's phone
+    private void changeProgressDialogBackground(){
+
+        // if the build sdk version >= android 5.0
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            //sets the background color according to android version
+            progressDialog = new ProgressDialog(this, ProgressDialog.THEME_HOLO_DARK);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setTitle("");
+            progressDialog.setMessage("signing out...");
+        }
+        //else do this
+        else{
+            //sets the background color according to android version
+            progressDialog = new ProgressDialog(this, ProgressDialog.THEME_HOLO_LIGHT);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setTitle("");
+            progressDialog.setMessage("signing out...");
+        }
+
     }
 }

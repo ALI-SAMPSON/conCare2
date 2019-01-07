@@ -12,6 +12,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
+import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.view.animation.Animation;
@@ -98,6 +99,8 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        nestedScrollView = findViewById(R.id.nestedScrollView);
+
         //initialization of the view objects
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextUsername = findViewById(R.id.editTextUsername);
@@ -112,21 +115,20 @@ public class SignUpActivity extends AppCompatActivity {
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item_sign_up);
         spinnerGender.setAdapter(spinnerAdapter);
 
-        nestedScrollView = findViewById(R.id.nestedScrollView);
-
         //circleImageView = findViewById(R.id.circularImageView);
 
         mAuth = FirebaseAuth.getInstance();
+
+        users = new Users();
+
+        admin = new Admin();
+
 
         userdB = FirebaseDatabase.getInstance();
 
         userRef = userdB.getReference("Users");
 
         adminRef = FirebaseDatabase.getInstance().getReference("Admin");
-
-        users = new Users();
-
-        admin = new Admin();
 
         //progressBar = findViewById(R.id.progressBar);
         // sets a custom color on progressBar
@@ -170,7 +172,7 @@ public class SignUpActivity extends AppCompatActivity {
         /*
          * Input validation
          */
-        if(email.isEmpty()){
+        if(TextUtils.isEmpty(email)){
             editTextEmail.clearAnimation();
             editTextEmail.startAnimation(shake);
             editTextEmail.setError(getString(io.icode.concaregh.application.R.string.error_empty_email));
@@ -180,13 +182,13 @@ public class SignUpActivity extends AppCompatActivity {
             editTextEmail.startAnimation(shake);
             editTextEmail.setError(getString(io.icode.concaregh.application.R.string.email_invalid));
         }
-        else if(username.isEmpty()) {
+        else if(TextUtils.isEmpty(username)) {
             editTextUsername.clearAnimation();
             editTextUsername.startAnimation(shake);
             editTextUsername.setError(getString(io.icode.concaregh.application.R.string.error_empty_username));
             editTextUsername.requestFocus();
         }
-        else if(password.isEmpty()){
+        else if(TextUtils.isEmpty(password)){
             editTextPassword.clearAnimation();
             editTextPassword.startAnimation(shake);
             editTextPassword.setError(getString(io.icode.concaregh.application.R.string.error_empty_password));
@@ -198,7 +200,7 @@ public class SignUpActivity extends AppCompatActivity {
             editTextPassword.setError(getString(R.string.error_password_length));
             editTextPassword.requestFocus();
         }
-        else if(phone.isEmpty()){
+        else if(TextUtils.isEmpty(phone)){
             editTextPhoneNumber.clearAnimation();
             editTextPhoneNumber.startAnimation(shake);
             editTextPhoneNumber.setError(getString(R.string.error_empty_phone));
@@ -546,12 +548,12 @@ public class SignUpActivity extends AppCompatActivity {
     //link from the Sign Up page to the Login Page
     public void onLoginLinkButtonClick(View view){
 
-        //mAuth.signOut();
-
         // starts this activity
         startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
+
         // Add a custom animation ot the activity
         CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");
+
         // finish activity
         finish();
 
@@ -565,18 +567,12 @@ public class SignUpActivity extends AppCompatActivity {
         editTextPhoneNumber.setText(null);
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-        // Add a custom animation ot the activity
-        CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");
-    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
 
-        // open the LoginActivity
+        // starts this activity
         startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
 
         // Add a custom animation ot the activity

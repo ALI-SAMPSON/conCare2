@@ -14,14 +14,13 @@
         android:layout_height="250dp"
         android:gravity="center"
         android:background="@mipmap/login_bg"
-        android:orientation="horizontal">
-    </LinearLayout>
+        android:orientation="horizontal"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/app_logo"
         android:layout_above="@+id/login_cardView"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginBottom="20dp"
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"
@@ -29,8 +28,10 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/login_cardView"
-        android:layout_width="240dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:focusable="true"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
@@ -58,8 +59,10 @@
                 android:textColorHint="@color/status_bar_back">
                 <EditText
                     android:id="@+id/editTextEmail"
-                    android:layout_width="210dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_centerHorizontal="true"
                     android:drawableLeft="@drawable/ic_email_orange"
@@ -94,8 +97,10 @@
                 android:layout_marginStart="0dp">
                 <EditText
                     android:id="@+id/editTextPassword"
-                    android:layout_width="210dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/status_bar_back"
@@ -115,11 +120,11 @@
                 android:id="@+id/forgot_password"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="15dp"
-                android:layout_width="210dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginRight="0dp"
-                android:layout_marginEnd="0dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:gravity="center"
                 android:layout_gravity="center_horizontal"
                 android:layout_below="@+id/password_container"
@@ -145,8 +150,10 @@
     <Button
         android:id="@+id/buttonLogin"
         android:layout_marginTop="25dp"
-        android:layout_width="240dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:layout_below="@+id/login_cardView"
@@ -167,8 +174,10 @@
     <Button
         android:id="@+id/buttonSignUpLink"
         android:layout_marginTop="20dp"
-        android:layout_width="240dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:layout_below="@+id/buttonLogin"
@@ -188,7 +197,6 @@
     <!--Progress Bar-->
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_below="@+id/buttonSignUpLink"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"

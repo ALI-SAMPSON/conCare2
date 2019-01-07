@@ -23,11 +23,6 @@
             android:scaleType="centerInside"
             android:contentDescription="@string/todo" />
 
-         <!-- <View
-            android:id="@+id/over_lay_bg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/TransparentWhite"/> -->
 
         <TextView
             android:id="@+id/splash_screen_text"

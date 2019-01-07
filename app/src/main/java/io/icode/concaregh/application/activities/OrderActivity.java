@@ -1,13 +1,11 @@
 package io.icode.concaregh.application.activities;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSpinner;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
@@ -18,7 +16,6 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 import io.icode.concaregh.application.R;
-import io.icode.concaregh.application.chatApp.MainActivity;
 import maes.tech.intentanim.CustomIntent;
 
 public class OrderActivity extends AppCompatActivity {
@@ -69,14 +66,12 @@ public class OrderActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                // starts the about us activity
-                startActivity(new Intent(OrderActivity.this,HomeActivity.class));
-                // Add a custom animation ot the activity
-                CustomIntent.customType(OrderActivity.this,"fadein-to-fadeout");
+
                 // finish
                 finish();
 
                 break;
+
                 default:
                     break;
         }
@@ -87,12 +82,10 @@ public class OrderActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        // starts the about us activity
-        startActivity(new Intent(OrderActivity.this,HomeActivity.class));
-        // Add a custom animation ot the activity
-        CustomIntent.customType(OrderActivity.this,"fadein-to-fadeout");
+
         // finish
         finish();
+
     }
 
     //Click Listener for proceed button on homeActivity
@@ -110,10 +103,4 @@ public class OrderActivity extends AppCompatActivity {
         CustomIntent.customType(OrderActivity.this,"fadein-to-fadeout");
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-        // Add a custom animation ot the activity
-        CustomIntent.customType(OrderActivity.this,"fadein-to-fadeout");
-    }
 }

@@ -73,6 +73,8 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(io.icode.concaregh.application.R.layout.activity_edit_profile);
 
+        relativeLayout = findViewById(R.id.relativeLayout);
+
         circleImageView = findViewById(R.id.circularImageView);
         username = findViewById(R.id.editTextUsername);
 
@@ -85,13 +87,11 @@ public class EditProfileActivity extends AppCompatActivity {
 
         users = new Users();
 
+        mAuth = FirebaseAuth.getInstance();
+
         progressBar = findViewById(R.id.progressBar);
 
         progressBar1 = findViewById(R.id.progressBar1);
-
-        relativeLayout = findViewById(R.id.relativeLayout);
-
-        mAuth = FirebaseAuth.getInstance();
 
         // a method call to the chooseImage method
         chooseImage();
@@ -155,7 +155,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 //e.printStackTrace();
             }
 
-            circleImageView.setImageURI(uriProfileImage);
+            //circleImageView.setImageURI(uriProfileImage);
         }
 
     }
@@ -207,8 +207,10 @@ public class EditProfileActivity extends AppCompatActivity {
     // method to save username and profile image
     private void saveUserInfo(){
 
+        // getting text from editText
         final String _username = username.getText().toString().trim();
 
+        // checks if the field is not left empty
         if(_username.isEmpty()) {
             YoYo.with(Techniques.Shake).playOn(username);
             username.setError(getString(R.string.error_empty_field));
@@ -256,10 +258,13 @@ public class EditProfileActivity extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    // display an error message
-                    Snackbar.make(relativeLayout,e.getMessage(),Snackbar.LENGTH_LONG).show();
+
                     // dismiss progress bar
                     progressBar1.setVisibility(View.GONE);
+
+                    // display an error message
+                    Snackbar.make(relativeLayout,e.getMessage(),Snackbar.LENGTH_LONG).show();
+
                 }
             });
         }
@@ -293,16 +298,22 @@ public class EditProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
-                //start home activity when back button is pressed
-                startActivity(new Intent(this,HomeActivity.class));
-                // Add a custom animation ot the activity
-                CustomIntent.customType(EditProfileActivity.this,"fadein-to-fadeout");
-                // finishes the activity
+
+                // finishes the current activity
                 finish();
+
                 default:
                     break;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        // finishes the current activity
+        finish();
+
+    }
 }

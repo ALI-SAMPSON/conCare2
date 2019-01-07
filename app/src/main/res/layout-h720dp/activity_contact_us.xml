@@ -10,9 +10,10 @@
     <ImageView
         android:id="@+id/about_us_imageView"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_height="320dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/about_us_bg"/>
+        android:src="@drawable/about_us_bg"
+        android:contentDescription="@string/todo"/>
 
     <TextView
         android:id="@+id/title"
@@ -22,7 +23,7 @@
         android:gravity="center"
         android:layout_gravity="center_horizontal"
         app:fontFamily="@font/nunito_extrabold"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:text="@string/who_we_are"
         android:textColor="@color/orange_light"
         android:padding="10dp"
@@ -37,7 +38,7 @@
         android:gravity="center"
         android:layout_gravity="center_horizontal"
         android:text="@string/text_about_us"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textColor="@color/colorBlack"
         app:fontFamily="@font/nunito_semibold"
         android:padding="10dp"
@@ -52,14 +53,14 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/title_about"
+            android:id="@+id/title_contact_us"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
             android:gravity="center"
             android:layout_gravity="center_horizontal"
             android:text="@string/text_contact"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:textColor="@color/orange_light"
             app:fontFamily="@font/nunito_extrabold"
             android:padding="15dp"/>
@@ -72,10 +73,10 @@
             android:gravity="center"
             android:layout_gravity="center_horizontal"
             android:text="@string/text_contact_us"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textColor="@color/colorBlack"
             app:fontFamily="@font/nunito_semibold"
-            android:padding="20dp"/>
+            android:padding="15dp"/>
 
     </LinearLayout>
 
@@ -88,7 +89,8 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-4501853719724548~4076180577">
+        ads:adUnitId="ca-app-pub-4501853719724548~4076180577"
+        android:layout_margin="2dp">
     </com.google.android.gms.ads.AdView>
 
 </RelativeLayout>

@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.view.animation.Animation;
@@ -60,24 +61,22 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        relativeLayout = findViewById(R.id.relativeLayout);
+
         app_logo = findViewById(R.id.app_logo);
 
         // initialization of the objects of the views
-        editTextEmail = findViewById(io.icode.concaregh.application.R.id.editTextEmail);
-        editTextPassword = findViewById(io.icode.concaregh.application.R.id.editTextPassword);
+        editTextEmail = findViewById(R.id.editTextEmail);
+        editTextPassword = findViewById(R.id.editTextPassword);
 
-        my_card = findViewById(io.icode.concaregh.application.R.id.login_cardView);
+        my_card = findViewById(R.id.login_cardView);
 
         // getting the ids of the views
         forgot_password = findViewById(R.id.forgot_password);
         buttonLogin = findViewById(R.id.buttonLogin);
         buttonSignUpLink = findViewById(R.id.buttonSignUpLink);
 
-        relativeLayout = findViewById(io.icode.concaregh.application.R.id.relativeLayout);
-
-        progressBar = findViewById(io.icode.concaregh.application.R.id.progressBar);
-        // sets a custom color on progressBar
-        //progressBar.getIndeterminateDrawable().setColorFilter(0xFE5722,PorterDuff.Mode.MULTIPLY);
+        progressBar = findViewById(R.id.progressBar);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -119,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // instance of the animation class
-                Animation scale_image = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_scale_imageview);
+                Animation scale_image = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.anim_scale_imageview);
                 app_logo.clearAnimation();
                 app_logo.startAnimation(scale_image);
             }
@@ -128,9 +127,6 @@ public class LoginActivity extends AppCompatActivity {
 
     // method to animate the app logo
     private void bounce_views(){
-
-        // animation to bounce image
-        //YoYo.with(Techniques.ZoomIn).repeat(2).playOn(app_logo);
 
         // bounce the Login Button
         YoYo.with(Techniques.Shake)
@@ -160,7 +156,7 @@ public class LoginActivity extends AppCompatActivity {
         String _email = editTextEmail.getText().toString().trim();
         String _password = editTextPassword.getText().toString().trim();
 
-        if(_email.isEmpty()){
+        if(TextUtils.isEmpty(_email)){
             editTextEmail.clearAnimation();
             editTextEmail.startAnimation(shake);
             editTextEmail.setError(getString(io.icode.concaregh.application.R.string.error_empty_email));
@@ -170,7 +166,7 @@ public class LoginActivity extends AppCompatActivity {
             editTextEmail.startAnimation(shake);
             editTextEmail.setError(getString(io.icode.concaregh.application.R.string.email_invalid));
         }
-        else if(_password.isEmpty()){
+        else if(TextUtils.isEmpty(_password)){
             editTextPassword.clearAnimation();
             editTextPassword.startAnimation(shake);
             editTextPassword.setError(getString(io.icode.concaregh.application.R.string.error_empty_password));
@@ -336,6 +332,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
+        // closes the app
         moveTaskToBack(true);
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(1);
@@ -343,7 +340,5 @@ public class LoginActivity extends AppCompatActivity {
         // finishes the activity
         finish();
 
-        // Add a custom animation ot the activity
-        //CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
     }
 }

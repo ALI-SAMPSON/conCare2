@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,7 +41,9 @@ public class AdminFragment extends Fragment {
 
     FirebaseUser firebaseUser;
 
-    DatabaseReference userRef;
+    DatabaseReference adminRef;
+
+    ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,13 +59,16 @@ public class AdminFragment extends Fragment {
 
         mAdmin = new ArrayList<>();
 
-        userRef = FirebaseDatabase.getInstance().getReference("Admin");
+        adminRef = FirebaseDatabase.getInstance().getReference("Admin");
 
-        // adapter initialization and RecyclerView set up
+        // adapter initialization
         adapterUser = new RecyclerViewAdapterAdmin(getContext(),mAdmin,true);
+        // setting adpater to recyclerView
         recyclerView.setAdapter(adapterUser);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        progressBar = view.findViewById(R.id.progressBar);
 
         // method call to display admin in recyclerView
         displayAdmin();
@@ -83,11 +89,15 @@ public class AdminFragment extends Fragment {
     // message to read the admin from the database
     public  void displayAdmin(){
 
-        userRef.addValueEventListener(new ValueEventListener() {
+        // display the progressBar
+        progressBar.setVisibility(View.VISIBLE);
+
+        adminRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //clears list
                 mAdmin.clear();
+
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
 
                     Admin admin = snapshot.getValue(Admin.class);
@@ -99,11 +109,18 @@ public class AdminFragment extends Fragment {
                 }
 
                 adapterUser.notifyDataSetChanged();
+
+                // dismiss progressBar
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                //Toast.makeText(getContext(),databaseError.getMessage(),Toast.LENGTH_LONG).show();
+
+                // dismiss progressBar
+                progressBar.setVisibility(View.GONE);
+
+                // display error if it occurs
                 Snackbar.make(mLayout,databaseError.getMessage(),Snackbar.LENGTH_LONG).show();
             }
         });

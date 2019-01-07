@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -102,6 +103,9 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
     private String theLastMessage;
 
+    // loading bar to load messages
+    ProgressBar progressBar;
+
     ProgressDialog progressDialog;
 
 
@@ -150,6 +154,8 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(admin_uid);
+
+        progressBar =  findViewById(R.id.progressBar);
 
         // progressDialog to display before deleting message
         progressDialog = new ProgressDialog(this);
@@ -331,6 +337,9 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
     // method to readMessages from the system
     private void readMessages(final String myid, final String userid, final String imageUrl){
 
+        // display progressBar
+        progressBar.setVisibility(View.VISIBLE);
+
         // array initialization
         mChats = new ArrayList<>();
 
@@ -356,6 +365,10 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
                         recyclerView.setAdapter(messageAdapter);
                         // notify data change in adapter
                         messageAdapter.notifyDataSetChanged();
+
+                        // dismiss progressBar
+                        progressBar.setVisibility(View.GONE);
+
                         // setting on OnItemClickListener in this activity as an interface
                         messageAdapter.setOnItemClickListener(MessageActivity.this);
 
@@ -364,6 +377,10 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                // dismiss progressBar
+                progressBar.setVisibility(View.GONE);
+
+                // display error message
                 Snackbar.make(relativeLayout,databaseError.getMessage(),Snackbar.LENGTH_LONG).show();
             }
         });

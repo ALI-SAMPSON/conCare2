@@ -6,6 +6,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.view.animation.Animation;
@@ -82,27 +83,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart(){
-        super.onStart();
-        // checks if user is not currently logged in
-        if(mAuth.getCurrentUser() == null){
-            // do nothing
-        }
-
-    }
-
     // method to send user back to login Activity
     public void goBackButton(View view) {
 
         // add an animation to anim_shake the button
         btn_back.setAnimation(shake);
-
-        // starts the activity
-        startActivity(new Intent(ResetPasswordActivity.this,LoginActivity.class));
-
-        // Add a custom animation ot the activity
-        CustomIntent.customType(ResetPasswordActivity.this,"fadein-to-fadeout");
 
         // finish the activity
         finish();
@@ -114,7 +99,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         String email = editTextEmail.getText().toString().trim();
 
-        if(email.isEmpty()){
+        if(TextUtils.isEmpty(email)){
             // set animation and error
             editTextEmail.setAnimation(shake);
             editTextEmail.setError(getString(R.string.email_registered));
@@ -133,6 +118,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
             //method call
             resetPassword();
+
         }
 
     }
@@ -165,22 +151,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 });
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-        // Add a custom animation ot the activity
-        CustomIntent.customType(ResetPasswordActivity.this,"fadein-to-fadeout");
-    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        // open the LoginActivity
-        startActivity(new Intent(ResetPasswordActivity.this,LoginActivity.class));
-
-        // Add a custom animation ot the activity
-        CustomIntent.customType(ResetPasswordActivity.this,"fadein-to-fadeout");
 
         // finishes the activity
         finish();

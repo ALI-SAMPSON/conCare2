@@ -38,8 +38,7 @@
             android:id="@+id/view"
             android:layout_marginTop="50dp"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
-        </View>
+            android:layout_height="50dp"/>
 
         <!-- AdView to display ads-->
         <com.google.android.gms.ads.AdView
@@ -51,8 +50,7 @@
             android:layout_margin="5dp"
             android:layout_centerHorizontal="true"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-4501853719724548~4076180577">
-        </com.google.android.gms.ads.AdView>
+            ads:adUnitId="ca-app-pub-4501853719724548~4076180577"/>
 
         <!--<TextView
             android:id="@+id/hint_phone"
@@ -423,7 +421,8 @@
                 android:inputType="text"
                 android:layout_marginStart="0dp"
                 android:drawableStart="@drawable/ic_hostel"
-                android:importantForAutofill="no" tools:targetApi="o"/>
+                android:importantForAutofill="no"
+                tools:targetApi="o"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- TextInputLayout and AppCompatEdiText for Hostel and room number -->

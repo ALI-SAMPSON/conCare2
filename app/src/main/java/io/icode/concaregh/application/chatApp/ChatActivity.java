@@ -36,7 +36,7 @@ import io.icode.concaregh.application.notifications.Token;
 import maes.tech.intentanim.CustomIntent;
 
 @SuppressWarnings("ALL")
-public class MainActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity {
 
     CircleImageView profile_image;
     TextView username;
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_chat);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // display error message
-                Toast.makeText(MainActivity.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(ChatActivity.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
 
@@ -153,8 +153,8 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.menu_order:
                 // navigates user to the order Activity
-                startActivity(new Intent(MainActivity.this,OrderActivity.class));
-                CustomIntent.customType(MainActivity.this,"right-to-left");
+                startActivity(new Intent(ChatActivity.this,OrderActivity.class));
+                CustomIntent.customType(ChatActivity.this,"right-to-left");
                 finish();
                 break;
         }

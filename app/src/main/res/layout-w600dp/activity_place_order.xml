@@ -27,8 +27,8 @@
             android:id="@+id/view"
             android:layout_marginTop="50dp"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
-        </View>
+            android:layout_height="50dp"/>
+
 
         <!-- AdView to display ads-->
         <com.google.android.gms.ads.AdView

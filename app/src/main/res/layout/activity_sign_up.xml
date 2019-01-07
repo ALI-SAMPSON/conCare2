@@ -30,8 +30,7 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/app_logo"
-            android:scaleType="centerCrop">
-        </de.hdodenhof.circleimageview.CircleImageView>
+            android:scaleType="centerCrop"/>
 
         <!-- <TextView
             android:layout_marginTop="30dp"

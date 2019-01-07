@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.SupportMenuInflater;
 import android.support.v7.widget.AppCompatSpinner;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -138,7 +139,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
         //spinner view campus
         spinnerCampus = findViewById(R.id.spinnerCampus);
         arrayAdapterCampus = ArrayAdapter.createFromResource(this, R.array.campus, R.layout.spinner_item);
-        arrayAdapterCampus.setDropDownViewResource(io.icode.concaregh.application.R.layout.spinner_dropdown_item);
+        arrayAdapterCampus.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinnerCampus.setAdapter(arrayAdapterCampus);
 
         spinnerLocation = findViewById(R.id.spinnerLocation);
@@ -148,7 +149,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         spinnerResidence = findViewById(R.id.spinnerResidence);
         arrayAdapterResidence = ArrayAdapter.createFromResource(this, R.array.residence, R.layout.spinner_item);
-        arrayAdapterResidence.setDropDownViewResource(io.icode.concaregh.application.R.layout.spinner_dropdown_item);
+        arrayAdapterResidence.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinnerResidence.setAdapter(arrayAdapterResidence);
 
         //reference to the spinner view and array adapter
@@ -160,19 +161,19 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
             case "Male":
                 arrayAdapterContraceptive = ArrayAdapter.createFromResource(this, R.array.con_male, R.layout.spinner_item);
-                arrayAdapterContraceptive.setDropDownViewResource(io.icode.concaregh.application.R.layout.spinner_dropdown_item);
+                arrayAdapterContraceptive.setDropDownViewResource(R.layout.spinner_dropdown_item);
                 spinnerContraceptive.setAdapter(arrayAdapterContraceptive);
                 break;
             case "Female":
                 arrayAdapterContraceptive = ArrayAdapter.createFromResource(this, R.array.con_female, R.layout.spinner_item);
-                arrayAdapterContraceptive.setDropDownViewResource(io.icode.concaregh.application.R.layout.spinner_dropdown_item);
+                arrayAdapterContraceptive.setDropDownViewResource(R.layout.spinner_dropdown_item);
                 spinnerContraceptive.setAdapter(arrayAdapterContraceptive);
                 break;
 
         }
 
         if(spinnerLocation.getSelectedItem().toString().equals("Other")){
-            textInputLayoutOtherLocation = findViewById(io.icode.concaregh.application.R.id.textInputLayoutOtherLocation);
+            textInputLayoutOtherLocation = findViewById(R.id.textInputLayoutOtherLocation);
             textInputLayoutOtherLocation.setVisibility(View.VISIBLE);
         }
 
@@ -241,7 +242,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
         String room_number = editTextRoomNumber.getText().toString().trim();
 
         // checks if the fields are not empty
-        if(phone_number.isEmpty()){
+        if(TextUtils.isEmpty(phone_number)){
             // starts animation on this view
             editTextPhoneNumber.clearAnimation();
             editTextPhoneNumber.startAnimation(shake);
@@ -255,19 +256,19 @@ public class PlaceOrderActivity extends AppCompatActivity {
             editTextPhoneNumber.setError(getString(R.string.phone_invalid));
             editTextPhoneNumber.requestFocus();
         }
-        else if(room_number.isEmpty()){
-            // starts animation on this view
-            editTextRoomNumber.clearAnimation();
-            editTextRoomNumber.startAnimation(shake);
-            editTextRoomNumber.setError(getString(R.string.error_text_room_number));
-            editTextRoomNumber.requestFocus();
-        }
-        else if(hostel_name.isEmpty()){
+        else if(TextUtils.isEmpty(hostel_name)){
             // starts animation on this view
             editTextHostelName.clearAnimation();
             editTextHostelName.startAnimation(shake);
             editTextHostelName.setError(getString(io.icode.concaregh.application.R.string.error_text_hostel));
             editTextHostelName.requestFocus();
+        }
+        else if(TextUtils.isEmpty(room_number)){
+            // starts animation on this view
+            editTextRoomNumber.clearAnimation();
+            editTextRoomNumber.startAnimation(shake);
+            editTextRoomNumber.setError(getString(R.string.error_text_room_number));
+            editTextRoomNumber.requestFocus();
         }
         else{
             placeOrder();
@@ -619,12 +620,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
        switch (item.getItemId()){
            case android.R.id.home:
 
-               //send user back to home activity
-               startActivity(new Intent(this, OrderActivity.class));
-
-               // Add a custom animation ot the activity
-               CustomIntent.customType(PlaceOrderActivity.this,"fadein-to-fadeout");
-
                // finishes this activity
                finish();
 
@@ -651,25 +646,14 @@ public class PlaceOrderActivity extends AppCompatActivity {
         startActivity(Intent.createChooser(sharingIntent, "Share with"));
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-        // Add a custom animation ot the activity
-        CustomIntent.customType(PlaceOrderActivity.this,"fadein-to-fadeout");
-    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
 
-        // starts the Home Activity
-        startActivity(new Intent(PlaceOrderActivity.this,OrderActivity.class));
-
-        // Add a custom animation ot the activity
-        CustomIntent.customType(PlaceOrderActivity.this,"fadein-to-fadeout");
-
         // finishes the activity
         finish();
+
     }
 
     public void onClearButtonClick(View view) {

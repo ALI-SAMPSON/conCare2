@@ -139,8 +139,7 @@
                 android:layout_alignParentBottom="true"
                 android:background="@drawable/round_home_button"
                 app:fontFamily="@font/nunito_semibold"
-                android:onClick="onChatUsButtonClick">
-            </Button>
+                android:onClick="onChatUsButtonClick"/>
 
             <!-- Order Button -->
             <Button
@@ -160,8 +159,7 @@
                 android:background="@drawable/round_home_button"
                 android:layout_gravity="center|end"
                 android:onClick="onOrderButtonClick"
-                android:contentDescription="@string/todo">
-            </Button>
+                android:contentDescription="@string/todo"/>
 
             <!--Floating action bar -->
             <android.support.design.widget.FloatingActionButton
@@ -174,8 +172,7 @@
                 android:layout_height="wrap_content"
                 app:rippleColor="@color/orange_light"
                 android:src="@drawable/ic_phone"
-                android:layout_margin="20dp">
-            </android.support.design.widget.FloatingActionButton>
+                android:layout_margin="20dp"/>
 
         </RelativeLayout>
 

@@ -25,7 +25,7 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
     private CardView vision_CardView;
 
     //text to populate the overview, mission and vision of the company
-    private TextView sub_Text;
+    private TextView sub_Text_1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +38,11 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        overview_CardView = findViewById(io.icode.concaregh.application.R.id.cardViewOverview);
-        mission_CardView = findViewById(io.icode.concaregh.application.R.id.cardViewMission);
-        vision_CardView = findViewById(io.icode.concaregh.application.R.id.cardViewVision);
+        overview_CardView = findViewById(R.id.cardViewOverview);
+        mission_CardView = findViewById(R.id.cardViewMission);
+        vision_CardView = findViewById(R.id.cardViewVision);
 
-        sub_Text = findViewById(io.icode.concaregh.application.R.id.sub_text_1);
+        sub_Text_1 = findViewById(R.id.sub_text_1);
 
         overview_CardView.setOnClickListener(this);
         mission_CardView.setOnClickListener(this);
@@ -77,13 +77,14 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
                 "        also ensure mass participation in contraceptive use.";
 
         switch (view.getId()){
+            // cases
             case R.id.cardViewOverview:
 
                 // Adds animation to the cardView
                 YoYo.with(Techniques.ZoomInDown).playOn(overview_CardView);
 
                 // sets text to this TextView
-                sub_Text.setText(text_overview);
+                sub_Text_1.setText(text_overview);
 
                 break;
             case R.id.cardViewMission:
@@ -91,7 +92,7 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
                 YoYo.with(Techniques.ZoomInUp).playOn(mission_CardView);
 
                 // sets text to this TextView
-                sub_Text.setText(text_mission);
+                sub_Text_1.setText(text_mission);
 
                 break;
             case R.id.cardViewVision:
@@ -99,7 +100,7 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
                 YoYo.with(Techniques.ZoomInDown).playOn(vision_CardView);
 
                 // sets text to this TextView
-                sub_Text.setText(text_vision);
+                sub_Text_1.setText(text_vision);
 
                 break;
                 default:
@@ -117,12 +118,10 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
-                //starts the home activity
-                startActivity(new Intent(this,HomeActivity.class));
-                // Add a custom animation ot the activity
-                CustomIntent.customType(AboutUsActivity.this,"fadein-to-fadeout");
-                // finishes the activity
+
+                // finishes the current activity
                 finish();
+
                 break;
                 default:
                     break;
@@ -130,21 +129,10 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-        // Add a custom animation ot the activity
-        CustomIntent.customType(AboutUsActivity.this,"fadein-to-fadeout");
-    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        // open the LoginActivity
-        startActivity(new Intent(AboutUsActivity.this,HomeActivity.class));
-
-        // Add a custom animation ot the activity
-        CustomIntent.customType(AboutUsActivity.this,"fadein-to-fadeout");
 
         // finishes the activity
         finish();

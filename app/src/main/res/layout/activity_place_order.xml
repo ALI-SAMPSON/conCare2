@@ -27,8 +27,7 @@
             android:id="@+id/view"
             android:layout_marginTop="50dp"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
-        </View>
+            android:layout_height="50dp"/>
 
         <!-- AdView to display ads-->
         <com.google.android.gms.ads.AdView
@@ -40,8 +39,7 @@
             android:layout_margin="5dp"
             android:layout_centerHorizontal="true"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-4501853719724548~4076180577">
-        </com.google.android.gms.ads.AdView>
+            ads:adUnitId="ca-app-pub-4501853719724548~4076180577"/>
 
         <!--<TextView
             android:id="@+id/hint_phone"
@@ -71,7 +69,6 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="0dp"
                 android:hint="@string/hint_contact"
                 android:drawableLeft="@drawable/ic_phone"
                 android:drawableStart="@drawable/ic_phone"
@@ -84,7 +81,6 @@
                 app:fontFamily="@font/nunito_semibold"
                 android:maxLength="15"
                 android:maxLines="1"
-                android:layout_marginStart="0dp"
                 android:importantForAutofill="no"
                 tools:targetApi="o"/>
         </android.support.design.widget.TextInputLayout>
@@ -102,10 +98,10 @@
             android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="300dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:layout_margin="2dp"
-                android:layout_height="wrap_content"
                 android:weightSum="1">
                 <!--TextView View  and Spinner View for Voter's Gender-->
                 <android.support.v7.widget.AppCompatTextView
@@ -221,10 +217,11 @@
             android:visibility="visible">
             <EditText
                 android:id="@+id/editTextOtherLocation"
-                android:layout_width="280dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
+                android:layout_marginEnd="70dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="0dp"
                 android:hint="@string/other"
                 android:drawableLeft="@drawable/ic_edit_location"
                 android:drawablePadding="@dimen/padding_normal"
@@ -233,7 +230,6 @@
                 android:textSize="16sp"
                 android:inputType="text"
                 android:fontFamily="@font/nunito_semibold"
-                android:layout_marginStart="0dp"
                 android:drawableStart="@drawable/ic_edit_location"
                 tools:targetApi="o"
                 android:importantForAutofill="no" />
@@ -357,7 +353,6 @@
             </LinearLayout>
         </android.support.design.widget.TextInputLayout>
 
-
         <!-- TextInputLayout and AppCompatEdiText for other contraceptive -->
         <android.support.design.widget.TextInputLayout
             android:layout_below="@+id/textInputLayoutContraceptive"
@@ -371,8 +366,10 @@
             android:visibility="visible">
             <EditText
                 android:id="@+id/editTextOtherContraceptive"
-                android:layout_width="280dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
+                android:layout_marginEnd="70dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="0dp"
                 android:hint="@string/other"
@@ -384,7 +381,6 @@
                 android:textSize="16sp"
                 android:inputType="text"
                 app:fontFamily="@font/nunito_semibold"
-                android:layout_marginStart="0dp"
                 android:importantForAutofill="no"
                 tools:targetApi="o"/>
         </android.support.design.widget.TextInputLayout>

@@ -74,8 +74,7 @@
             android:alpha="0.5"
             android:scaleType="fitCenter"
             android:src="@drawable/splash_bg"
-            android:contentDescription="@string/todo">
-        </ImageView>
+            android:contentDescription="@string/todo"/>
 
         <!-- AdView to display ads-->
         <com.google.android.gms.ads.AdView
@@ -86,8 +85,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-4501853719724548~4076180577">
-        </com.google.android.gms.ads.AdView>
+            ads:adUnitId="ca-app-pub-4501853719724548~4076180577"/>
 
         <!-- AdView to display ads-->
         <com.google.android.gms.ads.AdView
@@ -99,8 +97,7 @@
             android:layout_above="@+id/textInputLayoutGender"
             android:layout_centerInParent="false"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-4501853719724548~4076180577">
-        </com.google.android.gms.ads.AdView>
+            ads:adUnitId="ca-app-pub-4501853719724548~4076180577"/>
 
         <!--TextInputLayout and LinearLayout
         and spinner View for contraceptive type-->
@@ -177,8 +174,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/ic_send"
             android:onClick="onProceedButtonClick"
-            android:contentDescription="@string/todo">
-        </ImageView>
+            android:contentDescription="@string/todo"/>
 
     </RelativeLayout>
 

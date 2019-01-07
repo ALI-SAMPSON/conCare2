@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/about_us_imageView"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
         android:scaleType="centerCrop"
         android:src="@drawable/about_us_bg"/>
 
@@ -52,7 +52,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/title_about"
+            android:id="@+id/title_contact_us"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
@@ -88,7 +88,8 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-4501853719724548~4076180577">
+        ads:adUnitId="ca-app-pub-4501853719724548~4076180577"
+        android:layout_margin="2dp">
     </com.google.android.gms.ads.AdView>
 
 </RelativeLayout>
