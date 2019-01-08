@@ -25,7 +25,7 @@
     <string name="update" translatable="false">UPDATE</string>
     <string name="splash_text" translatable="false">powered by iCODE Studios</string>
     <string name="sub_text" translatable="false">...a convenient place to purchase all contraceptives</string>
-    <string name="title_edit_profile" translatable="false">EDIT PROFILE</string>
+    <string name="title_edit_profile" translatable="false">Edit Profile</string>
     <string name="text_forgot_password" translatable="false">Forgot Password?</string>
     <string name="lbl_forgot_password" translatable="false">Forgot Password?</string>
     <string name="msg_forgot_password" translatable="false">Please enter your email address to reset password</string>

@@ -10,8 +10,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circleImageView"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_marginTop="0dp"
         android:layout_gravity="center_horizontal"
         android:scaleType="centerCrop"
@@ -26,11 +26,11 @@
         android:gravity="center"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        app:fontFamily="@font/nunito_semibold"
+        app:fontFamily="@font/lato"
         android:text="@string/dummy_username"
         android:textColor="@color/colorWhite"
-        android:textSize="16sp"
-        android:textStyle="bold"/>
+        android:textSize="14sp"
+        android:textStyle="normal"/>
 
     <TextView
         android:id="@+id/email"
@@ -39,10 +39,10 @@
         android:gravity="center"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
-        app:fontFamily="@font/nunito_semibold"
+        app:fontFamily="@font/lato"
         android:text="@string/dummy_email"
         android:textColor="@color/colorWhite"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="normal"/>
 
 </LinearLayout>

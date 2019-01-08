@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relativeLayout"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
@@ -18,13 +18,15 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/app_logo"
-        android:layout_above="@+id/login_cardView"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginBottom="20dp"
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/app_logo"/>
+        android:src="@drawable/app_logo"
+        app:layout_constraintBottom_toTopOf="@id/login_cardView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <android.support.v7.widget.CardView
         android:id="@+id/login_cardView"
@@ -38,7 +40,11 @@
         android:layout_centerInParent="true"
         app:cardBackgroundColor="@color/white_greyish"
         app:cardCornerRadius="@dimen/round_corner_radius"
-        app:cardElevation="@dimen/activity_horizontal_margin">
+        app:cardElevation="@dimen/activity_horizontal_margin"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -51,7 +57,7 @@
             android:id="@+id/email_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:orientation="vertical"
             android:gravity="center_horizontal"
             android:layout_centerHorizontal="true"
@@ -119,7 +125,7 @@
         <Button
             android:id="@+id/forgot_password"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
@@ -149,7 +155,7 @@
     <!--Login Button-->
     <Button
         android:id="@+id/buttonLogin"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -168,7 +174,8 @@
         android:textStyle="normal"
         android:textAlignment="center"
         android:background="@drawable/round_corner_button_login"
-        android:onClick="onLoginButtonClick"/>
+        android:onClick="onLoginButtonClick"
+        app:layout_constraintTop_toBottomOf="@id/login_cardView"/>
 
     <!-- Link to the user sign up page -->
     <Button
@@ -192,16 +199,18 @@
         android:textStyle="normal"
         android:textAlignment="center"
         android:background="@drawable/round_corner_button_with_stroke"
-        android:onClick="onSignUpLinkClick"/>
+        android:onClick="onSignUpLinkClick"
+        app:layout_constraintTop_toBottomOf="@id/buttonLogin"/>
 
     <!--Progress Bar-->
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

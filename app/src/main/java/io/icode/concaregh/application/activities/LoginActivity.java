@@ -2,6 +2,7 @@ package io.icode.concaregh.application.activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -50,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
 
-    private RelativeLayout relativeLayout;
+    private ConstraintLayout constraintLayout;
 
     private Animation shake;
 
@@ -61,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        relativeLayout = findViewById(R.id.relativeLayout);
+        constraintLayout = findViewById(R.id.constraintLayout);
 
         app_logo = findViewById(R.id.app_logo);
 
@@ -226,7 +227,7 @@ public class LoginActivity extends AppCompatActivity {
                       else{
 
                           // display a message if there is an error
-                          Snackbar.make(relativeLayout,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
+                          Snackbar.make(constraintLayout,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
 
                           // sign out user
                           mAuth.signOut();

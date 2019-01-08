@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -19,7 +19,7 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
         app:fontFamily="@font/nunito_extrabold"
@@ -27,10 +27,11 @@
         android:text="@string/who_we_are"
         android:textColor="@color/orange_light"
         android:padding="5dp"
-        android:layout_centerHorizontal="true"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:layout_below="@+id/title"
         android:id="@+id/sub_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,15 +43,16 @@
         android:textColor="@color/colorBlack"
         app:fontFamily="@font/nunito_semibold"
         android:padding="5dp"
-        android:layout_centerHorizontal="true"/>
+        app:layout_constraintTop_toBottomOf="@+id/title"/>
 
     <LinearLayout
+        android:id="@+id/bottom_layout"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/about_us_imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="0dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/about_us_imageView">
 
         <TextView
             android:id="@+id/title_contact_us"
@@ -86,11 +88,11 @@
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
         ads:adUnitId="ca-app-pub-4501853719724548~4076180577"
-        android:layout_margin="2dp">
-    </com.google.android.gms.ads.AdView>
+        android:layout_margin="2dp"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"/>
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

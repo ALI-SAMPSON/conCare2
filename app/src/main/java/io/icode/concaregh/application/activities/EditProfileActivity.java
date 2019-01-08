@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -58,7 +59,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     ProgressBar progressBar1;
 
-    RelativeLayout relativeLayout;
+    ConstraintLayout constraintLayout;
 
     FirebaseAuth mAuth;
 
@@ -73,13 +74,13 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(io.icode.concaregh.application.R.layout.activity_edit_profile);
 
-        relativeLayout = findViewById(R.id.relativeLayout);
+        constraintLayout = findViewById(R.id.constraintLayout);
 
         circleImageView = findViewById(R.id.circularImageView);
         username = findViewById(R.id.editTextUsername);
 
         if(getSupportActionBar() != null){
-            getSupportActionBar().setTitle(getString(io.icode.concaregh.application.R.string.title_edit_profile));
+            getSupportActionBar().setTitle(getString(R.string.title_edit_profile));
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -151,7 +152,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 uploadImage();
 
             } catch (IOException e) {
-                Snackbar.make(relativeLayout,e.getMessage(),Snackbar.LENGTH_LONG).show();
+                Snackbar.make(constraintLayout,e.getMessage(),Snackbar.LENGTH_LONG).show();
                 //e.printStackTrace();
             }
 
@@ -192,7 +193,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     progressBar.setVisibility(View.GONE);
-                    Snackbar.make(relativeLayout,e.getMessage(),Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(constraintLayout,e.getMessage(),Snackbar.LENGTH_LONG).show();
                 }
             });
         }
@@ -249,7 +250,7 @@ public class EditProfileActivity extends AppCompatActivity {
                             }
                             else{
                                 // display an error message
-                                Snackbar.make(relativeLayout,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(constraintLayout,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
                             }
 
                             // dismiss progress bar
@@ -263,7 +264,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     progressBar1.setVisibility(View.GONE);
 
                     // display an error message
-                    Snackbar.make(relativeLayout,e.getMessage(),Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(constraintLayout,e.getMessage(),Snackbar.LENGTH_LONG).show();
 
                 }
             });

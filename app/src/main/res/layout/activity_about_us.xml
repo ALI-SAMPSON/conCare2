@@ -172,7 +172,7 @@
     </LinearLayout>
 
 
-    <LinearLayout
+    <ScrollView
         android:layout_marginTop="10dp"
         android:layout_below="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -194,7 +194,7 @@
             app:fontFamily="@font/nunito_semibold"
             android:padding="20dp"/>
 
-    </LinearLayout>
+    </ScrollView>
 
     <!-- AdView to display ads-->
     <com.google.android.gms.ads.AdView
