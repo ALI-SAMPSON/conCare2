@@ -153,7 +153,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
             } catch (IOException e) {
                 Snackbar.make(constraintLayout,e.getMessage(),Snackbar.LENGTH_LONG).show();
-                //e.printStackTrace();
             }
 
             //circleImageView.setImageURI(uriProfileImage);
@@ -170,11 +169,11 @@ public class EditProfileActivity extends AppCompatActivity {
         if(uriProfileImage != null){
             // displays the progressBar
             progressBar.setVisibility(View.VISIBLE);
+
             profileImageRef.putFile(uriProfileImage)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressBar.setVisibility(View.GONE);
 
                             profileImageRef.getDownloadUrl()
                                     .addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -188,11 +187,16 @@ public class EditProfileActivity extends AppCompatActivity {
                                         }
                                     });
 
+                            // hides progressBar
+                            progressBar.setVisibility(View.GONE);
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
+                    // hides progressBar
                     progressBar.setVisibility(View.GONE);
+                    // display error message
                     Snackbar.make(constraintLayout,e.getMessage(),Snackbar.LENGTH_LONG).show();
                 }
             });
