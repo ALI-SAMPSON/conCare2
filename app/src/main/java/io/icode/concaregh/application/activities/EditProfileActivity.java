@@ -1,8 +1,11 @@
 package io.icode.concaregh.application.activities;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -40,12 +43,16 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.icode.concaregh.application.models.Users;
 import maes.tech.intentanim.CustomIntent;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 
-public class EditProfileActivity extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity
+        implements EasyPermissions.PermissionCallbacks{
 
     // class variables
     private CircleImageView circleImageView;
@@ -66,6 +73,8 @@ public class EditProfileActivity extends AppCompatActivity {
     DatabaseReference userRef;
 
     Users users;
+
+    private static final int PERMISSION_CODE = 124;
 
     private static final int  REQUEST_CODE = 1;
 
@@ -126,15 +135,30 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     // another method to create a gallery intent to choose image from gallery
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void openGallery(){
-        // create an intent object to open user gallery for image
-        Intent pickImage = new Intent();
-        pickImage.setType("image/*");
-        pickImage.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(pickImage,"Select Profile Picture"),REQUEST_CODE);
 
-        // Add a custom animation ot the activity
-        CustomIntent.customType(EditProfileActivity.this,"fadein-to-fadeout");
+        String[] perms = {
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+        };
+
+        // checks if permission is already enabled
+        if(EasyPermissions.hasPermissions(EditProfileActivity.this,perms)){
+            // opens camera if permission has been granted already
+            Intent intentPick = new Intent();
+            intentPick.setType("image/*");
+            intentPick.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intentPick,"Select Profile Picture"), REQUEST_CODE);
+
+            // add a fading animation when opening gallery
+            CustomIntent.customType(EditProfileActivity.this,"fadein-to-fadeout");
+        }
+        else{
+            EasyPermissions.requestPermissions(EditProfileActivity.this,
+                    getString(R.string.text_permission_select_profile), PERMISSION_CODE,perms);
+        }
+
     }
 
 
@@ -155,7 +179,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 Snackbar.make(constraintLayout,e.getMessage(),Snackbar.LENGTH_LONG).show();
             }
 
-            //circleImageView.setImageURI(uriProfileImage);
         }
 
     }
@@ -276,28 +299,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
     }
 
-    // method to load user information
-    private void loadUserInfo(){
-
-        FirebaseUser user  = mAuth.getCurrentUser();
-
-        String _photoUrl = user.getPhotoUrl().toString();
-        String _username = user.getDisplayName();
-
-        if(user != null){
-
-            if(user.getPhotoUrl() != null){
-                Glide.with(this)
-                        .load(_photoUrl)
-                        .into(circleImageView);
-            }
-            if(user.getDisplayName() != null){
-                username.setText(_username);
-            }
-
-        }
-
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
@@ -320,5 +321,23 @@ public class EditProfileActivity extends AppCompatActivity {
         // finishes the current activity
         finish();
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        if(EasyPermissions.somePermissionPermanentlyDenied(this,perms)){
+            new AppSettingsDialog.Builder(this).build().show();
+        }
     }
 }

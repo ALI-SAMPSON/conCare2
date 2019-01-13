@@ -297,4 +297,9 @@
          Are you sure you want to delete this message?
     </string>
 
+    <!-- Permission Rationale string -->
+    <string name="text_permission_select_profile" translatable="false">
+        Permissions are required in order to use the upload images to this application
+    </string>
+
 </resources>
