@@ -7,26 +7,25 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+// ViewPager Adapter Class
+public class ViewPagerAdapterChat extends FragmentPagerAdapter {
 
-    // Class Variables (Fragments and Titles)
-    private ArrayList<Fragment> fragments;
-    private ArrayList<String> titles;
+    ArrayList<Fragment> fragments;
+    ArrayList<String> titles;
 
-    // Parameterized Constructor for class
-    public ViewPagerAdapter(FragmentManager fm){
+    public ViewPagerAdapterChat(FragmentManager fm){
         super(fm);
         this.fragments = new ArrayList<>();
         this.titles = new ArrayList<>();
     }
 
-    // returns each position of fragment
+    // get the positions of the fragments
     @Override
     public Fragment getItem(int position) {
         return fragments.get(position);
     }
 
-    // returns size of fragment
+    // get Count of fragments
     @Override
     public int getCount() {
         return fragments.size();
@@ -38,7 +37,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         titles.add(title);
     }
 
-    // Ctrl + O
+    // Press Ctrl + 0
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {

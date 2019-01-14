@@ -219,139 +219,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    // method to select image from gallery
-
-    /*
-    public void chooseImage(){
-
-        circleImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                // Adds a custom animation to the view using Library
-                YoYo.with(Techniques.FlipInX).playOn(circleImageView);
-
-                // method to open user's phone gallery
-                openGallery();
-            }
-        });
-
-    }
-    */
-
-    // another method to create a gallery intent to choose image from gallery
-
-    /*
-    private void openGallery(){
-        // create an intent object to open user gallery for image
-        Intent pickImage = new Intent();
-        pickImage.setType("image/*");
-        pickImage.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(pickImage,"Select Profile Picture"),REQUEST_CODE);
-        // Add a custom animation ot the activity
-        CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");
-    }
-    */
-
-    /*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null){
-            uriProfileImage = data.getData();
-            try {
-                // sets the picked image to the imageView
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uriProfileImage);
-                circleImageView.setImageBitmap(bitmap);
-                uploadImage();
-
-            }
-            catch(IOException e){
-                Snackbar.make(nestedScrollView,e.getMessage(),Snackbar.LENGTH_LONG).show();
-            }
-
-            circleImageView.setImageURI(uriProfileImage);
-        }
-
-    }
-    */
-
-    /*
-    private void uploadImage(){
-
-        final StorageReference profileImageRef = FirebaseStorage.getInstance()
-                .getReference("Profile Pic/" + System.currentTimeMillis() + ".jpg");
-
-        if(uriProfileImage != null){
-            // displays the progressBar
-            progressBar.setVisibility(View.VISIBLE);
-            profileImageRef.putFile(uriProfileImage)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressBar.setVisibility(View.GONE);
-                            //profileImageUrl = taskSnapshot.getDownloadUrl().toString();
-                            // gets the download Url of the image
-                            profileImageRef.getDownloadUrl()
-                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Uri downloadUrl = uri;
-                                    profileImageUrl = downloadUrl.toString();
-                                    users.setImageUrl(downloadUrl.toString());
-                                }
-                            });
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    progressBar.setVisibility(View.GONE);
-                    Snackbar.make(nestedScrollView,e.getMessage(),Snackbar.LENGTH_LONG).show();
-                }
-            });
-        }
-
-    }
-
-    */
-
-
-    // method to save username and profile image
-    /*private void saveUserInfo(){
-
-        String _username = editTextUsername.getText().toString().trim();
-
-        FirebaseUser user = mAuth.getCurrentUser();
-
-        if(user != null && profileImageUrl != null){
-            UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder()
-                    .setDisplayName(_username)
-                    .setPhotoUri(Uri.parse(profileImageUrl))
-                    .build();
-
-            // updates user info with the passed username and image
-            user.updateProfile(userProfileChangeRequest)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                // dismiss progress bar
-                                progressBar1.setVisibility(View.GONE);
-                            }
-                            else{
-                                // dismiss progress dialog
-                                progressBar1.setVisibility(View.GONE);
-                                // display an error message
-                                Snackbar.make(nestedScrollView,task.getException().getMessage(),Snackbar.LENGTH_LONG).show();
-                            }
-                        }
-                    });
-            }
-
-    }
-    */
-
     // method to save username and profile image
     private void saveUsername(){
 
@@ -382,8 +249,6 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
     }
-
-
 
     // signUp method
     public void signUp(){
@@ -432,7 +297,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                                         // Sends a notification to the user after signing up successfully
                                         // Creating an explicit intent for the activity in the app
-                                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                        Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         PendingIntent pendingIntent = PendingIntent.getActivity(SignUpActivity.this, 0, intent, 0);
 
@@ -469,7 +334,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         clearTextFields();
 
                                         // start the login Activity after Sign Up is successful
-                                        startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                                        startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
 
                                         // Add a custom animation ot the activity
                                         CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");
@@ -549,7 +414,7 @@ public class SignUpActivity extends AppCompatActivity {
     public void onLoginLinkButtonClick(View view){
 
         // starts this activity
-        startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
+        startActivity(new Intent(SignUpActivity.this,SignInActivity.class));
 
         // Add a custom animation ot the activity
         CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");
@@ -573,7 +438,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onBackPressed();
 
         // starts this activity
-        startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
+        startActivity(new Intent(SignUpActivity.this,SignInActivity.class));
 
         // Add a custom animation ot the activity
         CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");

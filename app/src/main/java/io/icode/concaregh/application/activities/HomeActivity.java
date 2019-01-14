@@ -40,9 +40,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.icode.concaregh.application.chatApp.ChatActivity;
 import io.icode.concaregh.application.models.Admin;
@@ -170,7 +167,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if(mAuth.getCurrentUser() == null){
 
             // starts the login activity currently logged in user is null(login_bg_1 logged in user)
-            startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+            startActivity(new Intent(HomeActivity.this,SignInActivity.class));
 
             // Add a custom animation ot the activity
             CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
@@ -534,7 +531,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         mAuth.signOut();
 
                         // starts the activity
-                        startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+                        startActivity(new Intent(HomeActivity.this,SignInActivity.class));
 
                         // Add a custom animation ot the activity
                         CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");

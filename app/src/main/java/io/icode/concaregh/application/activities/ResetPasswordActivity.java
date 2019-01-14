@@ -90,7 +90,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         btn_back.setAnimation(shake);
 
         // starts the Login activity
-        startActivity(new Intent(ResetPasswordActivity.this,LoginActivity.class));
+        startActivity(new Intent(ResetPasswordActivity.this,SignInActivity.class));
 
         // Add a custom animation ot the activity
         CustomIntent.customType(ResetPasswordActivity.this,"fadein-to-fadeout");
@@ -163,7 +163,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         super.onBackPressed();
 
         // starts the Login activity
-        startActivity(new Intent(ResetPasswordActivity.this,LoginActivity.class));
+        startActivity(new Intent(ResetPasswordActivity.this,SignInActivity.class));
 
         // Add a custom animation ot the activity
         CustomIntent.customType(ResetPasswordActivity.this,"fadein-to-fadeout");

@@ -32,61 +32,6 @@
             android:src="@drawable/app_logo"
             android:scaleType="centerCrop"/>
 
-        <!-- <TextView
-            android:layout_marginTop="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/text_upload_pic"
-            android:textColor="@color/colorWhite"
-            android:textSize="16sp"
-            android:gravity="center_horizontal"
-            android:padding="0dp"
-            app:fontFamily="@font/nunito_semibold"/>
-
-        <TextView
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/text_picture"
-            android:textColor="@color/colorWhite"
-            android:textSize="14sp"
-            android:gravity="center_horizontal"
-            android:padding="0dp"
-            app:fontFamily="@font/nunito_semibold"/>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/circularImageView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="10dp"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:scaleType="centerCrop"
-                android:src="@drawable/profile_icon"
-                app:civ_border_width="2dp"
-                app:civ_border_color="@color/white_ghost">
-            </de.hdodenhof.circleimageview.CircleImageView> -->
-
-            <!--Progress Bar-->
-            <!-- <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyleSmall"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="5dp"
-                android:layout_centerInParent="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:visibility="gone"/>
-
-        </RelativeLayout> -->
-
-
         <!-- TextInputLayout and AppCompatEdiText for Email -->
         <android.support.design.widget.TextInputLayout
             android:id="@+id/email_container"
@@ -190,7 +135,7 @@
                 android:importantForAutofill="no" />
         </android.support.design.widget.TextInputLayout>
 
-        <!--TextInputLayout and LinearLayout and spinner View for Voter's Gender-->
+        <!--TextInputLayout and LinearLayout and spinner View for user's Gender-->
         <android.support.design.widget.TextInputLayout
             android:id="@+id/textInputLayoutGender"
             android:layout_width="match_parent"

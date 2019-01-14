@@ -15,16 +15,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import io.icode.concaregh.application.R;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -34,7 +30,7 @@ import com.google.firebase.auth.FirebaseUser;
 import de.hdodenhof.circleimageview.CircleImageView;
 import maes.tech.intentanim.CustomIntent;
 
-public class LoginActivity extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity {
 
     ProgressBar progressBar;
 
@@ -60,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_sign_in);
 
         constraintLayout = findViewById(R.id.constraintLayout);
 
@@ -82,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // animation to anim_shake button
-        shake = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.anim_shake);
+        shake = AnimationUtils.loadAnimation(SignInActivity.this, R.anim.anim_shake);
 
         // animation to bounce  App logo on Login screen
         bounce_views();
@@ -102,10 +98,10 @@ public class LoginActivity extends AppCompatActivity {
         if(mAuth.getCurrentUser() != null){
 
             // start the activity
-            startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+            startActivity(new Intent(SignInActivity.this,HomeActivity.class));
 
             // Add a custom animation ot the activity
-            CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
+            CustomIntent.customType(SignInActivity.this,"fadein-to-fadeout");
 
             // finish the activity
             finish();
@@ -119,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // instance of the animation class
-                Animation scale_image = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.anim_scale_imageview);
+                Animation scale_image = AnimationUtils.loadAnimation(SignInActivity.this, R.anim.anim_scale_imageview);
                 app_logo.clearAnimation();
                 app_logo.startAnimation(scale_image);
             }
@@ -209,16 +205,16 @@ public class LoginActivity extends AppCompatActivity {
                           //checkIfEmailIsVerified();
 
                           // display a successful login message
-                          Toast.makeText(LoginActivity.this,getString(R.string.login_successful),Toast.LENGTH_SHORT).show();
+                          Toast.makeText(SignInActivity.this,getString(R.string.login_successful),Toast.LENGTH_SHORT).show();
 
                           // clear the text fields
                           clearTextFields();
 
                           // start the home activity
-                          startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                          startActivity(new Intent(SignInActivity.this,HomeActivity.class));
 
                           // Add a custom animation ot the activity
-                          CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
+                          CustomIntent.customType(SignInActivity.this,"fadein-to-fadeout");
 
                           // finishes this activity(prevents user from going back to this activity when back button is pressed)
                           finish();
@@ -251,16 +247,16 @@ public class LoginActivity extends AppCompatActivity {
         if(isEmailVerified){
 
             // display a successful login message
-            Toast.makeText(LoginActivity.this,getString(R.string.login_successful),Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignInActivity.this,getString(R.string.login_successful),Toast.LENGTH_SHORT).show();
 
             // clear the text fields
             clearTextFields();
 
             // start the home activity
-            startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+            startActivity(new Intent(SignInActivity.this,HomeActivity.class));
 
             // Add a custom animation ot the activity
-            CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
+            CustomIntent.customType(SignInActivity.this,"fadein-to-fadeout");
 
             // finishes this activity(prevents user from going back to this activity when back button is pressed)
             finish();
@@ -269,16 +265,16 @@ public class LoginActivity extends AppCompatActivity {
         else {
 
             // display a message to the user to verify email
-            Toast.makeText(LoginActivity.this,getString(R.string.text_email_not_verified),Toast.LENGTH_LONG).show();
+            Toast.makeText(SignInActivity.this,getString(R.string.text_email_not_verified),Toast.LENGTH_LONG).show();
 
             // signs user out and restarts the Login Activity
             mAuth.signOut();
 
             // restarts the activity
-            startActivity(new Intent (LoginActivity.this,LoginActivity.class));
+            startActivity(new Intent (SignInActivity.this,SignInActivity.class));
 
             // Add a custom animation ot the activity
-            CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
+            CustomIntent.customType(SignInActivity.this,"fadein-to-fadeout");
 
             // finish the activity
             finish();
@@ -291,10 +287,10 @@ public class LoginActivity extends AppCompatActivity {
     public void onSignUpLinkClick(View view){
 
         // creates an instance of the intent class and opens the signUpActivity
-        startActivity(new Intent(LoginActivity.this,SignUpActivity.class));
+        startActivity(new Intent(SignInActivity.this,SignUpActivity.class));
 
         // Add a custom animation ot the activity
-        CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
+        CustomIntent.customType(SignInActivity.this,"fadein-to-fadeout");
 
         // finish the activity
         finish();
@@ -313,10 +309,10 @@ public class LoginActivity extends AppCompatActivity {
         YoYo.with(Techniques.FlipOutX).playOn(forgot_password);
 
         // start the ResetPassword Activity
-        startActivity(new Intent(LoginActivity.this,ResetPasswordActivity.class));
+        startActivity(new Intent(SignInActivity.this,ResetPasswordActivity.class));
 
         // Add a custom animation ot the activity
-        CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
+        CustomIntent.customType(SignInActivity.this,"fadein-to-fadeout");
 
         // finish the activity
         finish();
@@ -326,7 +322,7 @@ public class LoginActivity extends AppCompatActivity {
     public void finish() {
         super.finish();
         // Add a custom animation ot the activity
-        CustomIntent.customType(LoginActivity.this,"fadein-to-fadeout");
+        CustomIntent.customType(SignInActivity.this,"fadein-to-fadeout");
     }
 
     @Override

@@ -15,7 +15,6 @@ import io.icode.concaregh.application.R;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.firebase.auth.FirebaseAuth;
@@ -125,7 +124,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     sleep(SPLASH_SCREEN_DISPLAY_TIME);
 
                     //Creates and start the intent of the next activity
-                    startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
+                    startActivity(new Intent(SplashScreenActivity.this, SignInActivity.class));
 
                     // Add a custom animation ot the activity
                     CustomIntent.customType(SplashScreenActivity.this,"fadein-to-fadeout");

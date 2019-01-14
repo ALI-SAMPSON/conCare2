@@ -193,8 +193,7 @@
 
     <string name="type_message" translatable="false">Type a message...</string>
 
-    <string name="text_reproductive_health"
-        translatable="false">
+    <string name="text_reproductive_health" translatable="false">
 
         Reproductive health is a crucial part of general health and a central feature of human development.
         It is a reflection of health during childhood, and crucial during adolescence and adulthood,
@@ -212,39 +211,33 @@
 
     </string>
 
-    <string name="text_1"
-        translatable="false">
+    <string name="text_1" translatable="false">
         Reproductive health is a crucial part of general health and a central feature of human development.
         It is a reflection of health during childhood, and crucial during adolescence and adulthood,
         sets the stage for health beyond the reproductive years for both men and women and affects the
         health of the next generation.
     </string>
 
-    <string name="text_2"
-        translatable="false">
+    <string name="text_2" translatable="false">
         Reproductive health does not start out from a list of diseases or problems- STIs, maternal mortality.
         Instead, it must be understood in the context of relationship- fulfillment and risk; the availability
         to avoid unwanted or unsafe pregnancy.
     </string>
 
-    <string name="text_3"
-        translatable="false">
+    <string name="text_3" translatable="false">
         Do you have any problem with your reproductive health, or perhaps, you want to acquire knowledge on
         how to put on good, healthy reproductive lifestyles, feel free to chat our consortium of professionals.
     </string>
 
-    <string name="text_4"
-        translatable="false">
+    <string name="text_4" translatable="false">
         A healthy reproductive system is a key to good health!
     </string>
 
-    <string name="text_welcome"
-        translatable="false">
+    <string name="text_welcome" translatable="false">
         Welcome
     </string>
 
-    <string name="text_hello"
-        translatable="false">
+    <string name="text_hello" translatable="false">
         Hello
     </string>
 
@@ -300,6 +293,14 @@
     <!-- Permission Rationale string -->
     <string name="text_permission_select_profile" translatable="false">
         Permissions are required in order to use the upload images to this application
+    </string>
+
+    <string name="text_sign_in" translatable="false">
+         Sign In
+    </string>
+
+    <string name="text_sign_up" translatable="false">
+         Sign Up
     </string>
 
 </resources>
