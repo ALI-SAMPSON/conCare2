@@ -143,6 +143,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
+                            // display successful message along with instructions to reset password
                             Snackbar.make(coordinatorLayout,getString(R.string.reset_password_instruction)
                                     ,Snackbar.LENGTH_LONG).show();
                         }

@@ -171,6 +171,7 @@
     <string name="title_share" translatable="false">Share</string>
     <string name="text_chat_us" translatable="false">Chat Us</string>
     <string name="text_chats" translatable="false">Chats</string>
+    <string name="text_groups" translatable="false">Groups</string>
     <string name="text_users" translatable="false">Users</string>
     <string name="text_admin" translatable="false">Admin</string>
     <string name="text_chat_with_us" translatable="false">Chat with Us</string>
@@ -289,6 +290,14 @@
     <string name="text_delete_message" translatable="false">
          Are you sure you want to delete this message?
     </string>
+
+    <string name="no_group_yet" translatable="false">You are not added to any group yet</string>
+
+    <string name="no_recent_chats" translatable="false">No Recent Chats</string>
+
+    <string name="no_internet" translatable="false">No Internet</string>
+
+    <string name="text_no_internet" translatable="false">check Internet Connection and Try Again!</string>
 
     <!-- Permission Rationale string -->
     <string name="text_permission_select_profile" translatable="false">

@@ -48,8 +48,7 @@
             android:name=".activities.SignInActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".activities.AboutUsActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
@@ -107,8 +106,7 @@
             android:name=".activities.OrderActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/homeTheme.order">
-        </activity>
+            android:theme="@style/homeTheme.order"></activity>
 
         <!-- Adding FirebaseIdService and FirebaseMessaging service -->
         <service
@@ -128,11 +126,12 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".activities.Sign_In_Sign_Up_Activity"
+        <activity
+            android:name=".activities.Sign_In_Sign_Up_Activity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"></activity>
+        <activity android:name=".chatApp.GroupMessageActivity"></activity>
     </application>
 
 </manifest>

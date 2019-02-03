@@ -26,7 +26,6 @@
                 android:id="@+id/profile_image"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:visibility="visible"
                 android:background="@drawable/avatar_placeholder"
                 android:scaleType="centerCrop"/>
 
@@ -57,20 +56,65 @@
     </android.support.design.widget.AppBarLayout>
 
     <!-- Adding a View Pager-->
-    <!--<android.support.v4.view.ViewPager
+    <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/appBarLayout"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
     </android.support.v4.view.ViewPager>
-    -->
 
-    <FrameLayout
+    <RelativeLayout
+        android:id="@+id/no_internet_connection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/appBarLayout"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/no_internet_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@mipmap/no_internet_img">
+        </ImageView>
+
+        <TextView
+            android:id="@+id/no_internet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/no_internet"
+            android:layout_below="@+id/no_internet_image"
+            android:textSize="18sp"
+            android:layout_margin="0dp"
+            android:textColor="@color/orange_light"
+            app:fontFamily="@font/lato">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/text_no_internet"
+            android:layout_below="@+id/no_internet"
+            android:textSize="18sp"
+            android:layout_margin="3dp"
+            android:textColor="@color/orange_light"
+            app:fontFamily="@font/lato">
+        </TextView>
+
+    </RelativeLayout>
+
+    <!--<FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_admin"
         android:name="io.icode.concaregh.application.fragments.AdminFragment"
         android:layout_below="@+id/appBarLayout"/>
+    -->
 
 </RelativeLayout>

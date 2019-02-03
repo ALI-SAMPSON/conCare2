@@ -1,10 +1,16 @@
 package io.icode.concaregh.application.chatApp;
 
 //import android.app.FragmentManager;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +37,13 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.icode.concaregh.application.activities.OrderActivity;
 import io.icode.concaregh.application.R;
+import io.icode.concaregh.application.adapters.ViewPagerAdapter;
+import io.icode.concaregh.application.constants.Constants;
 import io.icode.concaregh.application.fragments.AdminFragment;
+import io.icode.concaregh.application.fragments.GroupsFragment;
+import io.icode.concaregh.application.models.Admin;
+import io.icode.concaregh.application.models.GroupChats;
+import io.icode.concaregh.application.models.Groups;
 import io.icode.concaregh.application.models.Users;
 import io.icode.concaregh.application.notifications.Token;
 import maes.tech.intentanim.CustomIntent;
@@ -38,13 +51,40 @@ import maes.tech.intentanim.CustomIntent;
 @SuppressWarnings("ALL")
 public class ChatActivity extends AppCompatActivity {
 
+    RelativeLayout relativeLayout;
+
+    RelativeLayout internetConnection;
+
     CircleImageView profile_image;
     TextView username;
 
 
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
-    DatabaseReference chatDbRef;
+
+    DatabaseReference userRef;
+
+    Users users;
+
+    Admin admin;
+
+    Groups groups;
+
+    //check if internet is available or not on phone
+    boolean isConnected = false;
+
+    ProgressDialog progressDialog;
+
+    DatabaseReference adminRef;
+
+    DatabaseReference chatRef;
+
+    DatabaseReference groupRef;
+
+    // variable for duration of snackbar and toast
+    private static final int DURATION_LONG = 5000;
+
+    private static final int DURATION_SHORT = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +110,28 @@ public class ChatActivity extends AppCompatActivity {
             getSupportActionBar().setHomeButtonEnabled(true);
         }
 
+        internetConnection = findViewById(R.id.no_internet_connection);
+
+        relativeLayout = findViewById(R.id.relativeLayout);
+
+        toolbar = findViewById(R.id.toolbar);
+
+        toolbar.setTitle("");
+        //toolbar.setNavigationIcon(R.drawable.ic_menu);
+        setSupportActionBar(toolbar);
+
+        profile_image = findViewById(R.id.profile_image);
+
+        username =  findViewById(R.id.username);
+
+        admin = new Admin();
+
+        users = new Users();
+
+        groups = new Groups();
+
+        groupRef = FirebaseDatabase.getInstance().getReference("Groups");
+
         profile_image = findViewById(R.id.profile_image);
 
         username =  findViewById(R.id.username);
@@ -78,11 +140,40 @@ public class ChatActivity extends AppCompatActivity {
 
         currentUser = mAuth.getCurrentUser();
 
-        chatDbRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
+        userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
 
-        chatDbRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        // method to display fragments and check for internet connection
+        isInternetConnnectionEnabled();
+
+        // method call to update token
+        updateToken(FirebaseInstanceId.getInstance().getToken());
+    }
+
+    // Update currentAdmin's token
+    private void updateToken(String token){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token token1 = new Token(token);
+        reference.child(currentUser.getUid()).setValue(token1);
+    }
+
+
+    // method to check if internet connection is enabled
+    private void isInternetConnnectionEnabled(){
+
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+
+            //we are connected to a network
+            isConnected = true;
+
+            // sets visibility to visible if there is  no internet connection
+            internetConnection.setVisibility(View.GONE);
+
+            // get user details
+            userRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                     Users users = dataSnapshot.getValue(Users.class);
 
@@ -97,32 +188,76 @@ public class ChatActivity extends AppCompatActivity {
                         Glide.with(getApplicationContext()).load(currentUser.getPhotoUrl()).into(profile_image);
                     }
 
-            }
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // display error message
-                Toast.makeText(ChatActivity.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    // display error message
+                    Toast.makeText(ChatActivity.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
+                }
+            });
 
-        // method to display fragment
-        displayFragment();
+            // getting reference to the views
+            final TabLayout tabLayout =  findViewById(R.id.tab_layout);
+            final ViewPager viewPager = findViewById(R.id.view_pager);
 
-        // method call to update token
-        updateToken(FirebaseInstanceId.getInstance().getToken());
+            // Checks for incoming messages and counts them to be displays together in the chats fragments
+            chatRef = FirebaseDatabase.getInstance().getReference(Constants.GROUP_CHAT_REF);
+
+            chatRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+                    // variable to count the number of unread messages
+                    int unreadMessages = 0;
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        GroupChats groupChats = snapshot.getValue(GroupChats.class);
+                        assert groupChats != null;
+                        if(groupChats.getReceivers().equals(admin.getAdminUid()) && !groupChats.isSeen()){
+                            unreadMessages++;
+                        }
+                    }
+
+                    if(unreadMessages == 0){
+                        // adds ChatsFragment and AdminFragment to the viewPager
+                        viewPagerAdapter.addFragment(new AdminFragment(), getString(R.string.text_admin));
+                    }
+                    else{
+                        // adds ChatsFragment and AdminFragment to the viewPager + count of unread messages
+                        viewPagerAdapter.addFragment(new AdminFragment(), "("+unreadMessages+") Chats");
+                    }
+
+                    // adds UsersFragment and GroupsFragment to the viewPager
+                    viewPagerAdapter.addFragment(new GroupsFragment(),getString(R.string.text_groups));
+                    //viewPagerAdapter.addFragment(new UsersFragment(), getString(R.string.text_users));
+                    //Sets Adapter view of the ViewPager
+                    viewPager.setAdapter(viewPagerAdapter);
+
+                    //sets tablayout with viewPager
+                    tabLayout.setupWithViewPager(viewPager);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(ChatActivity.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
+                }
+            });
+
+
+        }
+        // else condition
+        else{
+
+            isConnected = false;
+
+            // sets visibility to visible if there is  no internet connection
+            internetConnection.setVisibility(View.VISIBLE);
+        }
+
     }
-
-    // Update currentAdmin's token
-    private void updateToken(String token){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
-        Token token1 = new Token(token);
-        reference.child(currentUser.getUid()).setValue(token1);
-    }
-
 
     // method to displayy fragment
-    private void displayFragment(){
+    /*private void displayFragment(){
 
         // creating an instance of the adminFragment
         AdminFragment adminFragment = new AdminFragment();
@@ -138,8 +273,9 @@ public class ChatActivity extends AppCompatActivity {
                 adminFragment).addToBackStack(null)
                 .commit();
 
-
     }
+    */
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -163,11 +299,12 @@ public class ChatActivity extends AppCompatActivity {
 
     // method to set user status to "online" or "offline"
     private void status(String status){
-        chatDbRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
+
+        userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
 
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("status",status);
-        chatDbRef.updateChildren(hashMap);
+        userRef.updateChildren(hashMap);
 
     }
 
@@ -179,6 +316,12 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        super.onPause();
+        status("online");
+    }
+
+    @Override
+    protected void onDestroy() {
         super.onPause();
         status("offline");
     }

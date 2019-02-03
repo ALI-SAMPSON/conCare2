@@ -139,11 +139,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // method call for on click listener for imageView
         onClickCircularImageView();
 
+        //
         onTextViewClick();
 
         // method call to change ProgressDialog style based on the android version of user's phone
         changeProgressDialogBackground();
-
 
         // Initializing Google Ads
         MobileAds.initialize(this,"ca-app-pub-4501853719724548~4076180577");
@@ -485,7 +485,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
 
-        if(doublePressBackToExitApp){
+        // check if drawer is opened
+        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)){
+            // closes the drawer
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        }else {
+            super.onBackPressed();
+        }
+
+        /*if(doublePressBackToExitApp){
             super.onBackPressed();
             return;
         }
@@ -501,6 +509,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 System.exit(1);
             }
         },2000);
+        */
 
     }
 

@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -45,6 +46,7 @@ import io.icode.concaregh.application.adapters.GroupMessageAdapter;
 import io.icode.concaregh.application.adapters.MessageAdapter;
 import io.icode.concaregh.application.constants.Constants;
 import io.icode.concaregh.application.interfaces.APIService;
+import io.icode.concaregh.application.interfaces.APIServiceGroup;
 import io.icode.concaregh.application.models.Admin;
 import io.icode.concaregh.application.models.Chats;
 import io.icode.concaregh.application.models.GroupChats;
@@ -58,15 +60,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-@SuppressWarnings("ALL")
-public class MessageActivity extends AppCompatActivity implements MessageAdapter.OnItemClickListener {
+public class GroupMessageActivity extends AppCompatActivity {
 
     RelativeLayout relativeLayout;
+
+    Toolbar toolbar;
 
     // fields to contain admin details
     CircleImageView profile_image;
     TextView username;
     TextView admin_status;
+
+    TextView tv_no_recnt_chats;
 
     FirebaseUser currentUser;
     DatabaseReference adminRef;
@@ -116,13 +121,12 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
     ProgressDialog progressDialog;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message);
+        setContentView(R.layout.activity_group_message);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -136,6 +140,8 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
         relativeLayout = findViewById(R.id.relativeLayout);
+
+        tv_no_recnt_chats = findViewById(R.id.tv_no_recnt_chats);
 
         profile_image =  findViewById(R.id.profile_image);
         username =  findViewById(R.id.username);
@@ -201,12 +207,14 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
                 // method call
                 readMessages(currentUser.getUid(),admin_uid,admin.getImageUrl());
+
+                readGroupMessages(currentUser.getUid(),admin_uid,admin.getImageUrl());
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // display error message
-                Toast.makeText(MessageActivity.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(GroupMessageActivity.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
 
@@ -226,7 +234,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
             sendMessage(currentUser.getUid(),admin_uid,message);
         }
         else{
-            Toast.makeText(MessageActivity.this,
+            Toast.makeText(GroupMessageActivity.this,
                     "No message to send",Toast.LENGTH_LONG).show();
         }
         // clear the field after message is sent
@@ -269,6 +277,41 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
     }
 
+    private void sendGroupMessage(String sender, final String receiver, final String message){
+
+        DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference();
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("sender",sender);
+        hashMap.put("receivers", receiver);
+        hashMap.put("message",message);
+        hashMap.put("isseen", false);
+
+        chatRef.child(Constants.GROUP_CHAT_REF).push().setValue(hashMap);
+
+        // variable to hold the message to be sent
+        final String msg = message;
+
+        userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Users users = dataSnapshot.getValue(Users.class);
+                assert users != null;
+                if(notify) {
+                    // method call to send notification to admin as soon as message is sent
+                    sendNotification(receiver, users.getUsername(), msg);
+                }
+                notify = false;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Snackbar.make(relativeLayout,databaseError.getMessage(),Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+    }
 
     // sends notification to admin as soon as message is sent
     private void sendNotification(String receiver, final String username, final String message){
@@ -365,22 +408,22 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
                     assert chats != null;
                     if(chats.getReceiver().equals(myid) && chats.getSender().equals(userid) ||
-                                chats.getReceiver().equals(userid) && chats.getSender().equals(myid)){
-                            mChats.add(chats);
-                        }
+                            chats.getReceiver().equals(userid) && chats.getSender().equals(myid)){
+                        mChats.add(chats);
+                    }
 
-                        // initializing the messageAdapter and setting adapter to recyclerView
-                        messageAdapter = new MessageAdapter(MessageActivity.this,mChats,imageUrl);
-                        // setting adapter
-                        recyclerView.setAdapter(messageAdapter);
-                        // notify data change in adapter
-                        messageAdapter.notifyDataSetChanged();
+                    // initializing the messageAdapter and setting adapter to recyclerView
+                    messageAdapter = new MessageAdapter(GroupMessageActivity.this,mChats,imageUrl);
+                    // setting adapter
+                    recyclerView.setAdapter(messageAdapter);
+                    // notify data change in adapter
+                    messageAdapter.notifyDataSetChanged();
 
-                        // dismiss progressBar
-                        progressBar.setVisibility(View.GONE);
+                    // dismiss progressBar
+                    progressBar.setVisibility(View.GONE);
 
-                        // setting on OnItemClickListener in this activity as an interface
-                        messageAdapter.setOnItemClickListener(MessageActivity.this);
+                    // setting on OnItemClickListener in this activity as an interface
+                    //messageAdapter.setOnItemClickListener(GroupMessageActivity.this);
 
                 }
             }
@@ -397,11 +440,65 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
     }
 
+    // method to readMessages from the system
+    private void readGroupMessages(final String myid, final String userid, final String imageUrl){
+
+        // display progressBar
+        progressBar.setVisibility(View.VISIBLE);
+
+        // array initialization
+        mGroupChats = new ArrayList<>();
+
+        chatRef = FirebaseDatabase.getInstance().getReference(Constants.GROUP_CHAT_REF);
+
+        mDBListener = chatRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // clears the chats to avoid reading duplicate message
+                mGroupChats.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    GroupChats groupChats = snapshot.getValue(GroupChats.class);
+                    // gets the unique keys of the chats
+                    groupChats.setKey(snapshot.getKey());
+
+                    assert groupChats != null;
+                    if(groupChats.getReceivers().contains(myid) && groupChats.getSender().equals(userid) ||
+                            groupChats.getReceivers().contains(userid) && groupChats.getSender().equals(myid)){
+                        mGroupChats.add(groupChats);
+                    }
+
+                    // initializing the messageAdapter and setting adapter to recyclerView
+                    groupMessageAdapter = new GroupMessageAdapter(GroupMessageActivity.this,mGroupChats,imageUrl);
+                    // setting adapter
+                    recyclerView.setAdapter(groupMessageAdapter);
+                    // notify data change in adapter
+                    groupMessageAdapter.notifyDataSetChanged();
+
+                    // dismiss progressBar
+                    progressBar.setVisibility(View.GONE);
+
+                    // setting on OnItemClickListener in this activity as an interface
+                    //groupMessageAdapter.setOnItemClickListener(MessageActivity.this);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // dismiss progressBar
+                progressBar.setVisibility(View.GONE);
+
+                // display error message
+                Snackbar.make(relativeLayout,databaseError.getMessage(),Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+    }
 
     /**handling ContextMenu
      Click Listeners in activity
      */
-    @Override
+    /*@Override
     public void onItemClick(int position) {
         Toast.makeText(this," please long click on a message to delete ",Toast.LENGTH_LONG).show();
     }
@@ -477,6 +574,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         editor.putString("currentadmin",adminUid);
         editor.apply();
     }
+    */
 
     // method to set user status to "online" or "offline"
     private void status(String status){

@@ -33,11 +33,11 @@ import io.icode.concaregh.application.notifications.Token;
 @SuppressWarnings("ALL")
 public class AdminFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private RecyclerViewAdapterAdmin adapterUser;
-    private List<Admin> mAdmin;
-
     ConstraintLayout mLayout;
+
+    private RecyclerView recyclerView;
+    private RecyclerViewAdapterAdmin adapterAdmin;
+    private List<Admin> mAdmin;
 
     FirebaseUser firebaseUser;
 
@@ -62,9 +62,9 @@ public class AdminFragment extends Fragment {
         adminRef = FirebaseDatabase.getInstance().getReference("Admin");
 
         // adapter initialization
-        adapterUser = new RecyclerViewAdapterAdmin(getContext(),mAdmin,true);
+        adapterAdmin = new RecyclerViewAdapterAdmin(getContext(),mAdmin,true);
         // setting adpater to recyclerView
-        recyclerView.setAdapter(adapterUser);
+        recyclerView.setAdapter(adapterAdmin);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -108,7 +108,7 @@ public class AdminFragment extends Fragment {
 
                 }
 
-                adapterUser.notifyDataSetChanged();
+                adapterAdmin.notifyDataSetChanged();
 
                 // dismiss progressBar
                 progressBar.setVisibility(View.GONE);
