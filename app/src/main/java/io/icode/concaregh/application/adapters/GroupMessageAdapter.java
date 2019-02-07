@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -29,6 +31,9 @@ public class GroupMessageAdapter extends RecyclerView.Adapter<GroupMessageAdapte
     private Context mCtx;
     private List<GroupChats> mChats;
     private String imageUrl;
+
+    // object of the FirebaseUser Class
+    private FirebaseUser currentUser;
 
     // Global variable to handle OnItemClickListener
     public static OnItemClickListener mListener;
@@ -166,11 +171,10 @@ public class GroupMessageAdapter extends RecyclerView.Adapter<GroupMessageAdapte
 
     @Override
     public int getItemViewType(int position) {
-        // getting the uid of the admin stored in shared preference
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mCtx);
-        final String admin_uid = preferences.getString("uid","");
 
-        if(mChats.get(position).getSender().equals(admin_uid)){
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(mChats.get(position).getSender().equals(currentUser.getUid())){
             return MSG_TYPE_RIGHT;
         }
         else{

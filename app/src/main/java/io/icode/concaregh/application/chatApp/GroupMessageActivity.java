@@ -3,7 +3,6 @@ package io.icode.concaregh.application.chatApp;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -12,10 +11,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,13 +42,11 @@ import java.util.TimerTask;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.icode.concaregh.application.R;
 import io.icode.concaregh.application.adapters.GroupMessageAdapter;
-import io.icode.concaregh.application.adapters.MessageAdapter;
 import io.icode.concaregh.application.constants.Constants;
 import io.icode.concaregh.application.interfaces.APIService;
-import io.icode.concaregh.application.interfaces.APIServiceGroup;
 import io.icode.concaregh.application.models.Admin;
-import io.icode.concaregh.application.models.Chats;
 import io.icode.concaregh.application.models.GroupChats;
+import io.icode.concaregh.application.models.Groups;
 import io.icode.concaregh.application.models.Users;
 import io.icode.concaregh.application.notifications.Client;
 import io.icode.concaregh.application.notifications.Data;
@@ -60,50 +57,58 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GroupMessageActivity extends AppCompatActivity {
+public class GroupMessageActivity extends AppCompatActivity implements GroupMessageAdapter.OnItemClickListener{
 
     RelativeLayout relativeLayout;
 
     Toolbar toolbar;
 
-    // fields to contain admin details
-    CircleImageView profile_image;
-    TextView username;
-    TextView admin_status;
+    CircleImageView groupIcon;
+    TextView groupName;
 
-    TextView tv_no_recnt_chats;
-
-    FirebaseUser currentUser;
-    DatabaseReference adminRef;
-
-    DatabaseReference chatRef;
-
-    DatabaseReference userRef;
-
-    // editText and Button to send Message
-    EditText msg_to_send;
-    ImageView btn_send;
-
-    Intent intent;
-
-    // string to get intentExtras
-    String admin_uid;
-
-    String admin_username;
-
-    String status;
-
-    // variable for MessageAdapter class
-    MessageAdapter messageAdapter;
-
-    GroupMessageAdapter groupMessageAdapter;
-
-    List<Chats> mChats;
-
-    List<GroupChats> mGroupChats;
+    TextView tv_no_recent_chats;
 
     RecyclerView recyclerView;
 
+    // loading bar to load messages
+    ProgressBar progressBar;
+
+    ProgressDialog progressDialog;
+
+    // instance of Admin Class
+    Admin admin;
+
+    GroupChats groupChats;
+
+    FirebaseUser currentUser;
+
+    String group_name;
+    String group_image_url;
+    String date_created;
+    String time_created;
+
+    String admin_uid;
+
+    DatabaseReference groupRef;
+    DatabaseReference userRef;
+    DatabaseReference adminRef;
+    DatabaseReference groupChatRef;
+
+    // editText and Button to send Message
+    EditText msg_to_send;
+    ImageButton btn_send;
+
+    // variable for MessageAdapter class
+    GroupMessageAdapter groupMessageAdapter;
+
+    private List<GroupChats> mGroupChats;
+
+    private List<Groups> mGroups;
+
+    // list to get the ids of selected users from group creating
+    private List<String> usersIds;
+
+    // Listener to listener for messages seen
     ValueEventListener seenListener;
 
     ValueEventListener mDBListener;
@@ -112,112 +117,145 @@ public class GroupMessageActivity extends AppCompatActivity {
 
     boolean notify = false;
 
-    private boolean isChat;
-
-    private String theLastMessage;
-
-    // loading bar to load messages
-    ProgressBar progressBar;
-
-    ProgressDialog progressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_message);
 
+        relativeLayout = findViewById(R.id.relativeLayout);
+
+        // getting reference to ids
         toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 finish();
             }
         });
 
+        // creates APIService using Google API from the APIService Class
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
-        relativeLayout = findViewById(R.id.relativeLayout);
-
-        tv_no_recnt_chats = findViewById(R.id.tv_no_recnt_chats);
-
-        profile_image =  findViewById(R.id.profile_image);
-        username =  findViewById(R.id.username);
-        admin_status =  findViewById(R.id.admin_status);
-        msg_to_send =  findViewById(R.id.editText_send);
+        groupName =  findViewById(R.id.tv_group_name);
+        groupIcon =  findViewById(R.id.ci_group_icon);
+        msg_to_send =  findViewById(R.id.editTextMessage);
         btn_send =  findViewById(R.id.btn_send);
 
-        //getting reference to the recyclerview and setting it up
+        tv_no_recent_chats = findViewById(R.id.tv_no_recent_chats);
+
+        //getting reference to the recycler view and setting it up
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        intent = getIntent();
-        admin_uid = intent.getStringExtra("uid");
-        admin_username = intent.getStringExtra("username");
-        // get the current status of admin
-        status = intent.getStringExtra("status");
-
-        // set status of the admin on toolbar below the username in the message activity
-        admin_status.setText(status);
-
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(admin_uid);
-
-        progressBar =  findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.progressBar);
 
         // progressDialog to display before deleting message
         progressDialog = new ProgressDialog(this);
-
+        // setting message on progressDialog
         progressDialog.setMessage("Deleting message...");
 
-        // method to load admin details into the imageView
-        // and TextView in the toolbar section of this activity's layout resource file
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        admin = new Admin();
+
+        groupChats = new GroupChats();
+
+        mGroupChats = new ArrayList<>();
+
+        mGroups = new ArrayList<>();
+
+        // getting strings passed from recyclerView adapter
+        group_name = getIntent().getStringExtra("group_name");
+        group_image_url = getIntent().getStringExtra("group_icon");
+        date_created = getIntent().getStringExtra("date_created");
+        time_created = getIntent().getStringExtra("time_created");
+        usersIds = getIntent().getStringArrayListExtra("usersIds");
+
+        //groupMessageAdapter = new GroupMessageAdapter(this,mGroupChats,true);
+
+        groupRef = FirebaseDatabase.getInstance().getReference(Constants.GROUP_REF).child(group_name);
+
+        groupChatRef = FirebaseDatabase.getInstance().getReference(Constants.GROUP_CHAT_REF);
+
+        adminRef = FirebaseDatabase.getInstance().getReference(Constants.ADMIN_REF);
+
+        // getAdmin details
         getAdminDetails();
 
-        //method call to seen message
-        seenMessage(admin_uid);
+        getGroupDetails();
 
+        //seenMessage(admin_uid);
     }
 
-    private void getAdminDetails(){
+    private void getGroupDetails(){
 
-        adminRef.addValueEventListener(new ValueEventListener() {
+        groupRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                Admin admin = dataSnapshot.getValue(Admin.class);
+                Groups groups = dataSnapshot.getValue(Groups.class);
 
-                username.setText(admin.getUsername());
+                assert groups != null;
 
-                if(admin.getImageUrl() == null){
-                    // sets a default placeholder into imageView if url is null
-                    profile_image.setImageResource(R.drawable.app_logo);
+                // setting group name
+                groupName.setText(groups.getGroupName());
+
+                // setting group icon
+                if(group_image_url == null){
+                    // loading default icon as image icon
+                    Glide.with(getApplicationContext()).load(R.mipmap.group_icon).into(groupIcon);
                 }
                 else{
-                    // loads imageUrl into imageView if url is not null
-                    Glide.with(getApplicationContext())
-                            .load(admin.getImageUrl()).into(profile_image);
+                    // loading default icon as image icon
+                    Glide.with(getApplicationContext()).load(group_image_url).into(groupIcon);
                 }
 
                 // method call
-                readMessages(currentUser.getUid(),admin_uid,admin.getImageUrl());
-
-                readGroupMessages(currentUser.getUid(),admin_uid,admin.getImageUrl());
+                readGroupMessages(currentUser.getUid(),admin_uid, groups.getGroupIcon());
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // display error message
+                // display error message if exception occurs
                 Toast.makeText(GroupMessageActivity.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
 
+    }
+
+    // gets admin details immediately activity is launched
+    private void getAdminDetails(){
+        // getting uid of admin to send message to
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+
+        DatabaseReference adminRef = rootRef.child(Constants.ADMIN_REF);
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+
+                    // getting admin uid
+                    admin_uid = snapshot.child("adminUid").getValue(String.class);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // display message if error occurs
+                Snackbar.make(relativeLayout,databaseError.getMessage(),Snackbar.LENGTH_LONG).show();
+            }
+        };
+
+        adminRef.addListenerForSingleValueEvent(eventListener);
     }
 
     // ImageView OnClickListener to send Message
@@ -226,68 +264,34 @@ public class GroupMessageActivity extends AppCompatActivity {
         // sets notify to true
         notify = true;
 
-        String message  = msg_to_send.getText().toString();
+        final String message  = msg_to_send.getText().toString();
 
         if(!message.equals("")){
-            // call to method to sendMessage and
-            // set the editText field to null afterwards
-            sendMessage(currentUser.getUid(),admin_uid,message);
+
+            // sending message to admin
+            sendGroupMessage(currentUser.getUid(),admin_uid,message);
+
         }
         else{
             Toast.makeText(GroupMessageActivity.this,
-                    "No message to send",Toast.LENGTH_LONG).show();
+                    getString(R.string.error_type_message),Toast.LENGTH_LONG).show();
         }
         // clear the field after message is sent
         msg_to_send.setText("");
     }
 
-    private void sendMessage(String sender, final String receiver, final String message){
-
-        DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference();
-
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("sender",sender);
-        hashMap.put("receiver", receiver);
-        hashMap.put("message",message);
-        hashMap.put("isseen", false);
-
-        chatRef.child(Constants.CHAT_REF).push().setValue(hashMap);
-
-        // variable to hold the message to be sent
-        final String msg = message;
-
-        userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
-        userRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Users users = dataSnapshot.getValue(Users.class);
-                assert users != null;
-                if(notify) {
-                    // method call to send notification to admin as soon as message is sent
-                    sendNotification(receiver, users.getUsername(), msg);
-                }
-                notify = false;
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Snackbar.make(relativeLayout,databaseError.getMessage(),Snackbar.LENGTH_LONG).show();
-            }
-        });
-
-    }
-
     private void sendGroupMessage(String sender, final String receiver, final String message){
 
-        DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference groupChatRef = FirebaseDatabase.getInstance().getReference(Constants.GROUP_CHAT_REF);
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("sender",sender);
-        hashMap.put("receivers", receiver);
+        hashMap.put("receivers", new ArrayList<String>(){{add(receiver);}});
         hashMap.put("message",message);
         hashMap.put("isseen", false);
 
-        chatRef.child(Constants.GROUP_CHAT_REF).push().setValue(hashMap);
+        groupChatRef.push().setValue(hashMap);
+
 
         // variable to hold the message to be sent
         final String msg = message;
@@ -307,6 +311,7 @@ public class GroupMessageActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                // display message if error occurs
                 Snackbar.make(relativeLayout,databaseError.getMessage(),Snackbar.LENGTH_LONG).show();
             }
         });
@@ -325,7 +330,7 @@ public class GroupMessageActivity extends AppCompatActivity {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Token token = snapshot.getValue(Token.class);
                     Data data = new Data(currentUser.getUid(),R.mipmap.app_logo_round,
-                            username+": "+message,getString(R.string.app_name),admin_uid);
+                            username+": "+message,getString(R.string.app_name) + "GROUP MESSAGE",admin_uid);
 
                     assert token != null;
                     Sender sender = new Sender(data, token.getToken());
@@ -351,35 +356,7 @@ public class GroupMessageActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Snackbar.make(relativeLayout,databaseError.getMessage(),Snackbar.LENGTH_LONG).show();
-            }
-        });
-
-    }
-
-    // methopd to check if user or admin has seen the message
-    private void seenMessage(final String admin_uid){
-
-        chatRef = FirebaseDatabase.getInstance().getReference(Constants.CHAT_REF);
-
-        seenListener = chatRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Chats chats = snapshot.getValue(Chats.class);
-                    assert chats != null;
-                    if(chats.getReceiver().equals(currentUser.getUid()) && chats.getSender().equals(admin_uid)){
-                        HashMap<String, Object> hashMap = new HashMap<>();
-                        hashMap.put("isseen",true);
-                        snapshot.getRef().updateChildren(hashMap);
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // display message if error occurs
                 Snackbar.make(relativeLayout,databaseError.getMessage(),Snackbar.LENGTH_LONG).show();
             }
         });
@@ -387,61 +364,7 @@ public class GroupMessageActivity extends AppCompatActivity {
     }
 
     // method to readMessages from the system
-    private void readMessages(final String myid, final String userid, final String imageUrl){
-
-        // display progressBar
-        progressBar.setVisibility(View.VISIBLE);
-
-        // array initialization
-        mChats = new ArrayList<>();
-
-        chatRef = FirebaseDatabase.getInstance().getReference(Constants.CHAT_REF);
-        mDBListener = chatRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // clears the chats to avoid reading duplicate message
-                mChats.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Chats chats = snapshot.getValue(Chats.class);
-                    // gets the unique keys of the chats
-                    chats.setKey(snapshot.getKey());
-
-                    assert chats != null;
-                    if(chats.getReceiver().equals(myid) && chats.getSender().equals(userid) ||
-                            chats.getReceiver().equals(userid) && chats.getSender().equals(myid)){
-                        mChats.add(chats);
-                    }
-
-                    // initializing the messageAdapter and setting adapter to recyclerView
-                    messageAdapter = new MessageAdapter(GroupMessageActivity.this,mChats,imageUrl);
-                    // setting adapter
-                    recyclerView.setAdapter(messageAdapter);
-                    // notify data change in adapter
-                    messageAdapter.notifyDataSetChanged();
-
-                    // dismiss progressBar
-                    progressBar.setVisibility(View.GONE);
-
-                    // setting on OnItemClickListener in this activity as an interface
-                    //messageAdapter.setOnItemClickListener(GroupMessageActivity.this);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // dismiss progressBar
-                progressBar.setVisibility(View.GONE);
-
-                // display error message
-                Snackbar.make(relativeLayout,databaseError.getMessage(),Snackbar.LENGTH_LONG).show();
-            }
-        });
-
-    }
-
-    // method to readMessages from the system
-    private void readGroupMessages(final String myid, final String userid, final String imageUrl){
+    private void readGroupMessages(final String myId, final String adminId, final String imageUrl){
 
         // display progressBar
         progressBar.setVisibility(View.VISIBLE);
@@ -449,9 +372,7 @@ public class GroupMessageActivity extends AppCompatActivity {
         // array initialization
         mGroupChats = new ArrayList<>();
 
-        chatRef = FirebaseDatabase.getInstance().getReference(Constants.GROUP_CHAT_REF);
-
-        mDBListener = chatRef.addValueEventListener(new ValueEventListener() {
+        mDBListener = groupChatRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // clears the chats to avoid reading duplicate message
@@ -462,8 +383,8 @@ public class GroupMessageActivity extends AppCompatActivity {
                     groupChats.setKey(snapshot.getKey());
 
                     assert groupChats != null;
-                    if(groupChats.getReceivers().contains(myid) && groupChats.getSender().equals(userid) ||
-                            groupChats.getReceivers().contains(userid) && groupChats.getSender().equals(myid)){
+                    if(groupChats.getReceivers().contains(myId) && groupChats.getSender().equals(adminId)
+                            || groupChats.getReceivers().contains(adminId) && groupChats.getSender().equals(myId)){
                         mGroupChats.add(groupChats);
                     }
 
@@ -473,12 +394,11 @@ public class GroupMessageActivity extends AppCompatActivity {
                     recyclerView.setAdapter(groupMessageAdapter);
                     // notify data change in adapter
                     groupMessageAdapter.notifyDataSetChanged();
-
                     // dismiss progressBar
                     progressBar.setVisibility(View.GONE);
 
                     // setting on OnItemClickListener in this activity as an interface
-                    //groupMessageAdapter.setOnItemClickListener(MessageActivity.this);
+                    groupMessageAdapter.setOnItemClickListener(GroupMessageActivity.this);
 
                 }
             }
@@ -495,10 +415,40 @@ public class GroupMessageActivity extends AppCompatActivity {
 
     }
 
+    // method to check if user or admin has seen the message
+    private void seenMessage(final String admin_uid){
+
+        seenListener = groupChatRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    GroupChats groupChats = snapshot.getValue(GroupChats.class);
+                    assert groupChats != null;
+                    if(groupChats.getReceivers().contains(currentUser.getUid()) && groupChats.getSender().equals(admin_uid)
+                            || groupChats.getReceivers().contains(admin_uid) && groupChats.getSender().equals(currentUser.getUid())){
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("isseen",true);
+                        snapshot.getRef().updateChildren(hashMap);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // display message if error occurs
+                Snackbar.make(relativeLayout,databaseError.getMessage(),Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+
     /**handling ContextMenu
      Click Listeners in activity
      */
-    /*@Override
+    @Override
     public void onItemClick(int position) {
         Toast.makeText(this," please long click on a message to delete ",Toast.LENGTH_LONG).show();
     }
@@ -506,7 +456,7 @@ public class GroupMessageActivity extends AppCompatActivity {
     @Override
     public void onDeleteClick(final int position) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MessageActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(GroupMessageActivity.this);
         builder.setTitle(getString(R.string.title_delete_message));
         builder.setMessage(getString(R.string.text_delete_message));
 
@@ -525,22 +475,22 @@ public class GroupMessageActivity extends AppCompatActivity {
                         progressDialog.dismiss();
 
                         // gets the position of the selected message
-                        Chats selectedMessage = mChats.get(position);
+                        GroupChats selectedMessage = mGroupChats.get(position);
 
                         //gets the key at the selected position
                         String selectedKey = selectedMessage.getKey();
 
-                        chatRef.child(selectedKey).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        groupChatRef.child(selectedKey).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){
-                                    Toast.makeText(MessageActivity.this," Message deleted ",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(GroupMessageActivity.this," Message deleted ",Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(MessageActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                                Toast.makeText(GroupMessageActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
                             }
                         });
 
@@ -574,12 +524,12 @@ public class GroupMessageActivity extends AppCompatActivity {
         editor.putString("currentadmin",adminUid);
         editor.apply();
     }
-    */
+
 
     // method to set user status to "online" or "offline"
     private void status(String status){
 
-        adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(admin_uid);
+        adminRef = FirebaseDatabase.getInstance().getReference(Constants.USER_REF).child(currentUser.getUid());
         //.child(adminUid);
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("status", status);
@@ -608,8 +558,8 @@ public class GroupMessageActivity extends AppCompatActivity {
         // set status to offline if activity is destroyed
         status("offline");
         // removes eventListeners when activity is destroyed
-        chatRef.removeEventListener(seenListener);
-        chatRef.removeEventListener(mDBListener);
+        groupChatRef.removeEventListener(seenListener);
+        groupChatRef.removeEventListener(mDBListener);
 
     }
 }

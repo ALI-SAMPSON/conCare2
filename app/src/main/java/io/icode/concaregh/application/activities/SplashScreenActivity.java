@@ -2,6 +2,7 @@ package io.icode.concaregh.application.activities;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,8 +18,12 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 
+import io.icode.concaregh.application.constants.Constants;
 import maes.tech.intentanim.CustomIntent;
 
 import static java.lang.Thread.sleep;
@@ -93,10 +98,29 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
 
+    private void subScribeToReceiveBroadcast(){
+        FirebaseMessaging.getInstance().subscribeToTopic(Constants.GROUP_CHAT_REF)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = getString(R.string.msg_subscribe);
+                        if(!task.isSuccessful()){
+                            msg = getString(R.string.msg_subscription_failed);
+                        }
+
+                        //Toast.makeText(HomeActivity.this, msg, Toast.LENGTH_LONG).show();
+                    }
+                });
+
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
         if(mAuth.getCurrentUser() != null){
+
+            // subscribe user to receive broadcast message from admin
+            subScribeToReceiveBroadcast();
 
             // starts the activity
             startActivity(new Intent(SplashScreenActivity.this,HomeActivity.class));
@@ -108,6 +132,10 @@ public class SplashScreenActivity extends AppCompatActivity {
             finish();
         }
         else{
+
+            // subscribe user to receive broadcast message from admin
+            subScribeToReceiveBroadcast();
+
             // open splash screen first
             splashScreen();
         }

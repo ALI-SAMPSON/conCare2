@@ -17,6 +17,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import io.icode.concaregh.application.R;
+import io.icode.concaregh.application.activities.HomeActivity;
 import io.icode.concaregh.application.chatApp.ChatActivity;
 import io.icode.concaregh.application.chatApp.MessageActivity;
 
@@ -47,7 +48,6 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
     }
 
-
     // sending notification to devices with versions below Oreo(android 8.0)
     private void sendNotification(RemoteMessage remoteMessage) {
 
@@ -58,7 +58,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
         RemoteMessage.Notification notification = remoteMessage.getNotification();
         int j = Integer.parseInt(user.replaceAll("[\\D]",""));
-        Intent intent = new Intent(this,ChatActivity.class);
+        Intent intent = new Intent(this,HomeActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("userid",user);
         intent.putExtras(bundle);

@@ -39,16 +39,23 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-4501853719724548~4076180577" />
 
-        <!--
-            <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_notification" />
-        -->
+        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
+     See README(https://goo.gl/l4GJaQ) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_stat_ic_notification" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/orange_light" />
+
 
         <activity
             android:name=".activities.SignInActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".activities.AboutUsActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
@@ -106,7 +113,7 @@
             android:name=".activities.OrderActivity"
             android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/homeTheme.order"></activity>
+            android:theme="@style/homeTheme.order"/>
 
         <!-- Adding FirebaseIdService and FirebaseMessaging service -->
         <service
@@ -117,6 +124,7 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
         <service
             android:name=".notifications.MyFirebaseMessaging"
             android:enabled="true"
@@ -126,12 +134,22 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".activities.Sign_In_Sign_Up_Activity"
-            android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"></activity>
-        <activity android:name=".chatApp.GroupMessageActivity"></activity>
-    </application>
+
+        <!--enable receiving of push notifications -->
+        <!--
+       <service android:name=".notifications.FirebaseBroadCastMessagingService">
+           <intent-filter>
+               <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+           </intent-filter>
+       </service>
+       -->
+
+       <activity
+           android:name=".activities.Sign_In_Sign_Up_Activity"
+           android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
+           android:screenOrientation="portrait"
+           android:theme="@style/AppTheme"/>
+       <activity android:name=".chatApp.GroupMessageActivity"></activity>
+   </application>
 
 </manifest>

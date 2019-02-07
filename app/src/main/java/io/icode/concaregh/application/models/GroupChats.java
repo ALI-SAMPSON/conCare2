@@ -2,6 +2,7 @@ package io.icode.concaregh.application.models;
 
 import com.google.firebase.database.Exclude;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GroupChats {
@@ -52,7 +53,7 @@ public class GroupChats {
     }
 
     public void setSeen(boolean isseen) {
-        isseen = isseen;
+        this.isseen = isseen;
     }
 
     //getters and setters to store && retrieve the unique key of each message

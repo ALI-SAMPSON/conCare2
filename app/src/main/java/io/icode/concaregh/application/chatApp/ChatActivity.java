@@ -6,10 +6,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,7 +40,6 @@ import io.icode.concaregh.application.constants.Constants;
 import io.icode.concaregh.application.fragments.AdminFragment;
 import io.icode.concaregh.application.fragments.GroupsFragment;
 import io.icode.concaregh.application.models.Admin;
-import io.icode.concaregh.application.models.GroupChats;
 import io.icode.concaregh.application.models.Groups;
 import io.icode.concaregh.application.models.Users;
 import io.icode.concaregh.application.notifications.Token;
@@ -92,6 +89,7 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -101,14 +99,6 @@ public class ChatActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        //checks of there is support actionBar
-        if(getSupportActionBar() != null){
-            getSupportActionBar().setTitle("");
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
-        }
 
         internetConnection = findViewById(R.id.no_internet_connection);
 
@@ -204,45 +194,25 @@ public class ChatActivity extends AppCompatActivity {
             // Checks for incoming messages and counts them to be displays together in the chats fragments
             chatRef = FirebaseDatabase.getInstance().getReference(Constants.GROUP_CHAT_REF);
 
-            chatRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-                    // variable to count the number of unread messages
-                    int unreadMessages = 0;
-                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                        GroupChats groupChats = snapshot.getValue(GroupChats.class);
-                        assert groupChats != null;
-                        if(groupChats.getReceivers().equals(admin.getAdminUid()) && !groupChats.isSeen()){
-                            unreadMessages++;
-                        }
-                    }
 
-                    if(unreadMessages == 0){
-                        // adds ChatsFragment and AdminFragment to the viewPager
-                        viewPagerAdapter.addFragment(new AdminFragment(), getString(R.string.text_admin));
-                    }
-                    else{
-                        // adds ChatsFragment and AdminFragment to the viewPager + count of unread messages
-                        viewPagerAdapter.addFragment(new AdminFragment(), "("+unreadMessages+") Chats");
-                    }
+            ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-                    // adds UsersFragment and GroupsFragment to the viewPager
-                    viewPagerAdapter.addFragment(new GroupsFragment(),getString(R.string.text_groups));
-                    //viewPagerAdapter.addFragment(new UsersFragment(), getString(R.string.text_users));
-                    //Sets Adapter view of the ViewPager
-                    viewPager.setAdapter(viewPagerAdapter);
 
-                    //sets tablayout with viewPager
-                    tabLayout.setupWithViewPager(viewPager);
-                }
+            // adds ChatsFragment and AdminFragment to the viewPager
+            viewPagerAdapter.addFragment(new AdminFragment(), getString(R.string.text_admin));
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(ChatActivity.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
-                }
-            });
+            // adds ChatsFragment and AdminFragment to the viewPager + count of unread messages
+            //viewPagerAdapter.addFragment(new AdminFragment(), "("+unreadMessages+") Chats");
 
+
+            // adds UsersFragment and GroupsFragment to the viewPager
+            viewPagerAdapter.addFragment(new GroupsFragment(),getString(R.string.text_groups));
+            //viewPagerAdapter.addFragment(new UsersFragment(), getString(R.string.text_users));
+            //Sets Adapter view of the ViewPager
+            viewPager.setAdapter(viewPagerAdapter);
+
+            //sets tablayout with viewPager
+            tabLayout.setupWithViewPager(viewPager);
 
         }
         // else condition
@@ -255,26 +225,6 @@ public class ChatActivity extends AppCompatActivity {
         }
 
     }
-
-    // method to displayy fragment
-    /*private void displayFragment(){
-
-        // creating an instance of the adminFragment
-        AdminFragment adminFragment = new AdminFragment();
-
-        // getting support fragment
-        FragmentManager fm = getSupportFragmentManager();
-
-        // creating fragment transaction to start
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-
-        // adds fragment to this activities layout file
-        fragmentTransaction.add(R.id.fragment_container,
-                adminFragment).addToBackStack(null)
-                .commit();
-
-    }
-    */
 
 
     @Override

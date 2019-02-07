@@ -166,8 +166,8 @@ public class RecyclerViewAdapterGroups extends RecyclerView.Adapter<RecyclerView
                     assert groupChats != null;
 
                     // compares the uid of the admin and user and return the last message
-                    if(groupChats.getReceivers().equals(admin_uid) && groupChats.getSender().equals(user_id)
-                            || groupChats.getReceivers().equals(user_id) && groupChats.getSender().equals(admin_uid)){
+                    if(groupChats.getReceivers().contains(admin_uid) && groupChats.getSender().equals(user_id)
+                            || groupChats.getReceivers().contains(user_id) && groupChats.getSender().equals(admin_uid)){
                         theLastMessage = groupChats.getMessage();
                     }
 

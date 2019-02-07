@@ -32,6 +32,8 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,11 +41,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.icode.concaregh.application.chatApp.ChatActivity;
+import io.icode.concaregh.application.chatApp.MessageActivity;
+import io.icode.concaregh.application.constants.Constants;
 import io.icode.concaregh.application.models.Admin;
 import io.icode.concaregh.application.models.Users;
+import io.icode.concaregh.application.notifications.Data;
 import maes.tech.intentanim.CustomIntent;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -51,7 +57,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     // global  or class variables
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
-
 
     private Animation shake;
 
@@ -576,10 +581,40 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     //open the message activity to start a chat conversation with admin (ConCare GH)
     public void onChatUsButtonClick(View view) {
-        // starts the about us activity
-        startActivity(new Intent(HomeActivity.this,ChatActivity.class));
-        // Add a custom animation ot the activity
-        CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference adminRef = rootRef.child(Constants.ADMIN_REF);
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+
+                    String uid = snapshot.child("adminUid").getValue(String.class);
+                    String username = snapshot.child("username").getValue(String.class);
+                    String status = snapshot.child("status").getValue(String.class);
+
+                    // starts the chat activity
+                    Intent intentChat = new Intent(HomeActivity.this,MessageActivity.class);
+                        intentChat.putExtra("uid",uid);
+                        intentChat.putExtra("username",username);
+                        intentChat.putExtra("status",status);
+                    startActivity(intentChat);
+                    // Add a custom animation ot the activity
+                    //CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+
+        adminRef.addListenerForSingleValueEvent(eventListener);
+
     }
 
     public void onOrderButtonClick(View view) {

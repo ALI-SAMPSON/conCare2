@@ -1,5 +1,6 @@
 package io.icode.concaregh.application.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -26,6 +27,7 @@ import java.util.List;
 
 import io.icode.concaregh.application.R;
 import io.icode.concaregh.application.adapters.RecyclerViewAdapterAdmin;
+import io.icode.concaregh.application.chatApp.ChatActivity;
 import io.icode.concaregh.application.models.Admin;
 import io.icode.concaregh.application.notifications.Token;
 
@@ -36,7 +38,9 @@ public class AdminFragment extends Fragment {
     ConstraintLayout mLayout;
 
     private RecyclerView recyclerView;
+
     private RecyclerViewAdapterAdmin adapterAdmin;
+
     private List<Admin> mAdmin;
 
     FirebaseUser firebaseUser;
@@ -44,6 +48,16 @@ public class AdminFragment extends Fragment {
     DatabaseReference adminRef;
 
     ProgressBar progressBar;
+
+    ValueEventListener dbListener;
+
+    ChatActivity applicationContext;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        applicationContext = (ChatActivity)context;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,14 +69,14 @@ public class AdminFragment extends Fragment {
 
         recyclerView =  view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(applicationContext));
 
         mAdmin = new ArrayList<>();
 
         adminRef = FirebaseDatabase.getInstance().getReference("Admin");
 
         // adapter initialization
-        adapterAdmin = new RecyclerViewAdapterAdmin(getContext(),mAdmin,true);
+        adapterAdmin = new RecyclerViewAdapterAdmin(applicationContext,mAdmin,false);
         // setting adpater to recyclerView
         recyclerView.setAdapter(adapterAdmin);
 
@@ -92,9 +106,10 @@ public class AdminFragment extends Fragment {
         // display the progressBar
         progressBar.setVisibility(View.VISIBLE);
 
-        adminRef.addValueEventListener(new ValueEventListener() {
+         dbListener = adminRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 //clears list
                 mAdmin.clear();
 
@@ -127,4 +142,10 @@ public class AdminFragment extends Fragment {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // remove listener
+        adminRef.removeEventListener(dbListener);
+    }
 }

@@ -293,6 +293,12 @@
 
     <string name="no_group_yet" translatable="false">You are not added to any group yet</string>
 
+    <string name="error_type_message" translatable="false">Type a message to send</string>
+
+    <string name="msg_subscribe" translatable="false">You have been subscribed to receive notifications from ConCare GH</string>
+
+    <string name="msg_subscription_failed" translatable="false">Subscription failed</string>
+
     <string name="no_recent_chats" translatable="false">No Recent Chats</string>
 
     <string name="no_internet" translatable="false">No Internet</string>

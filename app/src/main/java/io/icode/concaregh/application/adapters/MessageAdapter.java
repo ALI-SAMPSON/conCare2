@@ -31,7 +31,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     private List<Chats> mChats;
     private String imageUrl;
 
-    private FirebaseUser user;
+    // object of the FirebaseUser Class
+    private FirebaseUser currentUser;
 
     // Global variable to handle OnItemClickListener
     public static OnItemClickListener mListener;
@@ -170,9 +171,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     public int getItemViewType(int position) {
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        if(mChats.get(position).getSender().equals(user.getUid())){
+        if(mChats.get(position).getSender().equals(currentUser.getUid())){
             return MSG_TYPE_RIGHT;
         }
         else{

@@ -47,7 +47,6 @@ import io.icode.concaregh.application.constants.Constants;
 import io.icode.concaregh.application.interfaces.APIService;
 import io.icode.concaregh.application.models.Admin;
 import io.icode.concaregh.application.models.Chats;
-import io.icode.concaregh.application.models.GroupChats;
 import io.icode.concaregh.application.models.Users;
 import io.icode.concaregh.application.notifications.Client;
 import io.icode.concaregh.application.notifications.Data;
@@ -62,6 +61,8 @@ import retrofit2.Response;
 public class MessageActivity extends AppCompatActivity implements MessageAdapter.OnItemClickListener {
 
     RelativeLayout relativeLayout;
+
+    Toolbar toolbar;
 
     // fields to contain admin details
     CircleImageView profile_image;
@@ -95,8 +96,6 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
     List<Chats> mChats;
 
-    List<GroupChats> mGroupChats;
-
     RecyclerView recyclerView;
 
     ValueEventListener seenListener;
@@ -122,7 +121,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -222,7 +221,6 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
         if(!message.equals("")){
             // call to method to sendMessage and
-            // set the editText field to null afterwards
             sendMessage(currentUser.getUid(),admin_uid,message);
         }
         else{
