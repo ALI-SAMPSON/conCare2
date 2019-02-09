@@ -32,11 +32,20 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.icode.concaregh.application.constants.Constants;
 import io.icode.concaregh.application.models.Admin;
+import io.icode.concaregh.application.models.Groups;
 import io.icode.concaregh.application.models.Users;
 import maes.tech.intentanim.CustomIntent;
 
@@ -68,6 +77,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     DatabaseReference adminRef;
 
+    DatabaseReference groupRef;
+
     //FirebaseStorage storage;
 
     // progressBar to load image uploading to database
@@ -87,6 +98,8 @@ public class SignUpActivity extends AppCompatActivity {
     Users users;
 
     Admin admin;
+
+    Groups groups;
 
     private static final int  REQUEST_CODE = 1;
 
@@ -123,6 +136,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         admin = new Admin();
 
+        groups = new Groups();
 
         userdB = FirebaseDatabase.getInstance();
 
@@ -295,6 +309,9 @@ public class SignUpActivity extends AppCompatActivity {
 
                                         saveUsername();
 
+                                        // method to add user to male or female broadcast group based on gender
+                                        addUserToBroadCastGroup();
+
                                         // Sends a notification to the user after signing up successfully
                                         // Creating an explicit intent for the activity in the app
                                         Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
@@ -333,14 +350,22 @@ public class SignUpActivity extends AppCompatActivity {
                                         //clears text Fields
                                         clearTextFields();
 
-                                        // start the login Activity after Sign Up is successful
-                                        startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
+                                        // schedules to navigate user back to login page in 3 secs
+                                        Timer timer = new Timer();
+                                        timer.schedule(new TimerTask() {
+                                            @Override
+                                            public void run() {
+                                                // start the login Activity after Sign Up is successful
+                                                startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
 
-                                        // Add a custom animation ot the activity
-                                        CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");
+                                                // Add a custom animation ot the activity
+                                                CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");
 
-                                        // finish the activity
-                                        finish();
+                                                // finish the activity
+                                                finish();
+                                            }
+                                        },3000);
+
 
                                     }
                                     else {
@@ -371,6 +396,47 @@ public class SignUpActivity extends AppCompatActivity {
 
                     }
                 });
+
+
+    }
+
+    private void addUserToBroadCastGroup(){
+
+        final String gender = spinnerGender.getSelectedItem().toString().trim();
+
+        final FirebaseUser user = mAuth.getCurrentUser();
+
+        // adding user to group based on gender
+        // adding user to group if user is a male
+        groupRef = FirebaseDatabase.getInstance().getReference(Constants.GROUP_REF);
+
+        groupRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+
+                    Groups groups = snapshot.getValue(Groups.class);
+
+                    assert groups != null;
+
+                    if(gender.equals(Constants.GENDER_MALE) && groups.getGroupName().equals(Constants.GROUP_MALES)){
+
+                        groups.getGroupMembersIds().add(user.getUid());
+
+                    }
+                    else if(gender.equals(Constants.GENDER_FEMALE) && groups.getGroupName().equals(Constants.GROUP_FEMALES)){
+                        groups.getGroupMembersIds().add(user.getUid());
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // display error message
+                Snackbar.make(nestedScrollView,databaseError.getMessage(),Snackbar.LENGTH_LONG).show();
+            }
+        });
 
 
     }
