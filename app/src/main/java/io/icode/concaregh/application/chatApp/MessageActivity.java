@@ -72,6 +72,8 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
     FirebaseUser currentUser;
     DatabaseReference adminRef;
 
+    TextView tv_no_messages;
+
     DatabaseReference chatRef;
 
     DatabaseReference userRef;
@@ -141,6 +143,8 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         admin_status =  findViewById(R.id.admin_status);
         msg_to_send =  findViewById(R.id.editText_send);
         btn_send =  findViewById(R.id.btn_send);
+
+        tv_no_messages = findViewById(R.id.tv_no_messages);
 
         //getting reference to the recyclerview and setting it up
         recyclerView = findViewById(R.id.recyclerView);
@@ -238,6 +242,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("sender",sender);
         hashMap.put("receiver", receiver);
+        hashMap.put("receivers", new ArrayList<String>(){{add(receiver);}});
         hashMap.put("message",message);
         hashMap.put("isseen", false);
 
@@ -324,7 +329,10 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Chats chats = snapshot.getValue(Chats.class);
                     assert chats != null;
-                    if(chats.getReceiver().equals(currentUser.getUid()) && chats.getSender().equals(admin_uid)){
+                    if(chats.getReceiver().equals(currentUser.getUid()) && chats.getSender().equals(admin_uid)
+                            || chats.getReceiver().equals(admin_uid) && chats.getSender().equals(currentUser.getUid())
+                            || chats.getReceivers().contains(admin_uid) && chats.getSender().equals(currentUser.getUid())
+                            || chats.getReceivers().contains(currentUser.getUid()) && chats.getSender().equals(admin_uid)){
                         HashMap<String, Object> hashMap = new HashMap<>();
                         hashMap.put("isseen",true);
                         snapshot.getRef().updateChildren(hashMap);
@@ -342,7 +350,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
     }
 
     // method to readMessages from the system
-    private void readMessages(final String myid, final String userid, final String imageUrl){
+    private void readMessages(final String myId, final String adminId, final String imageUrl){
 
         // display progressBar
         progressBar.setVisibility(View.VISIBLE);
@@ -354,16 +362,33 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         mDBListener = chatRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // clears the chats to avoid reading duplicate message
-                mChats.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Chats chats = snapshot.getValue(Chats.class);
-                    // gets the unique keys of the chats
-                    chats.setKey(snapshot.getKey());
 
-                    assert chats != null;
-                    if(chats.getReceiver().equals(myid) && chats.getSender().equals(userid) ||
-                                chats.getReceiver().equals(userid) && chats.getSender().equals(myid)){
+                if(!dataSnapshot.exists()){
+
+                    // displays a message to the user
+                    tv_no_messages.setVisibility(View.VISIBLE);
+
+                    // hides progressBar
+                    progressBar.setVisibility(View.GONE);
+
+                }
+
+                else{
+
+                    // clears the chats to avoid reading duplicate message
+                    mChats.clear();
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        Chats chats = snapshot.getValue(Chats.class);
+                        // gets the unique keys of the chats
+                        chats.setKey(snapshot.getKey());
+
+                        assert chats != null;
+                        if(chats.getReceiver().equals(myId) && chats.getSender().equals(adminId)
+                                || chats.getReceiver().equals(adminId) && chats.getSender().equals(myId)
+                                || chats.getReceiver().equals("") && chats.getReceivers().contains(myId)
+                                && chats.getSender().equals(adminId)
+                                || chats.getReceivers().contains(adminId)
+                                && chats.getSender().equals(myId)){
                             mChats.add(chats);
                         }
 
@@ -380,7 +405,11 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
                         // setting on OnItemClickListener in this activity as an interface
                         messageAdapter.setOnItemClickListener(MessageActivity.this);
 
+                    }
+
+
                 }
+
             }
 
             @Override

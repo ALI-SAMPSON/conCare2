@@ -242,6 +242,10 @@
         Hello
     </string>
 
+    <string name="text_no_messages" translatable="false">
+        No New Messages
+    </string>
+
     <string name="text_search" translatable="false">
         Search...
     </string>

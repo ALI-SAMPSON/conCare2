@@ -149,7 +149,7 @@
            android:configChanges="screenLayout|screenSize|keyboardHidden|orientation"
            android:screenOrientation="portrait"
            android:theme="@style/AppTheme"/>
-       <activity android:name=".chatApp.GroupMessageActivity"></activity>
+       <activity android:name=".chatApp.GroupMessageActivity"/>
    </application>
 
 </manifest>

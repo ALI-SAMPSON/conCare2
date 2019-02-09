@@ -2,10 +2,13 @@ package io.icode.concaregh.application.models;
 
 import com.google.firebase.database.Exclude;
 
+import java.util.List;
+
 public class Chats {
 
     private String sender;
     private String receiver;
+    private List<String> receivers;
     private String message;
     private boolean isseen;
 
@@ -14,9 +17,10 @@ public class Chats {
 
     public Chats(){}
 
-    public Chats(String sender, String receiver, String message, boolean isseen) {
+    public Chats(String sender, String receiver, List<String> receivers, String message, boolean isseen) {
         this.sender = sender;
         this.receiver = receiver;
+        this.receivers = receivers;
         this.message = message;
         this.isseen = isseen;
     }
@@ -35,6 +39,14 @@ public class Chats {
 
     public void setReceiver(String receiver) {
         this.receiver = receiver;
+    }
+
+    public List<String> getReceivers() {
+        return receivers;
+    }
+
+    public void setReceivers(List<String> receivers) {
+        this.receivers = receivers;
     }
 
     public String getMessage() {
