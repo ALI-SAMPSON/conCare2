@@ -303,10 +303,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
 
-                                        // method call to save
-                                        // username and profile picture
-                                        //saveUserInfo();
-
+                                        // save username
                                         saveUsername();
 
                                         // method to add user to male or female broadcast group based on gender
@@ -406,6 +403,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         final FirebaseUser user = mAuth.getCurrentUser();
 
+        assert user != null;
+
         // adding user to group based on gender
         // adding user to group if user is a male
         groupRef = FirebaseDatabase.getInstance().getReference(Constants.GROUP_REF);
@@ -419,12 +418,12 @@ public class SignUpActivity extends AppCompatActivity {
 
                     assert groups != null;
 
-                    if(gender.equals(Constants.GENDER_MALE) && groups.getGroupName().equals(Constants.GROUP_MALES)){
+                    if(gender.equals("Male") && groups.getGroupName().equals("Males")){
 
                         groups.getGroupMembersIds().add(user.getUid());
 
                     }
-                    else if(gender.equals(Constants.GENDER_FEMALE) && groups.getGroupName().equals(Constants.GROUP_FEMALES)){
+                    else if(gender.equals("Female") && groups.getGroupName().equals("Females")){
                         groups.getGroupMembersIds().add(user.getUid());
                     }
 

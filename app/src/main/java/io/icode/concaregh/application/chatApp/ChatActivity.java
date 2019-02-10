@@ -38,7 +38,6 @@ import io.icode.concaregh.application.R;
 import io.icode.concaregh.application.adapters.ViewPagerAdapter;
 import io.icode.concaregh.application.constants.Constants;
 import io.icode.concaregh.application.fragments.AdminFragment;
-import io.icode.concaregh.application.fragments.GroupsFragment;
 import io.icode.concaregh.application.models.Admin;
 import io.icode.concaregh.application.models.Groups;
 import io.icode.concaregh.application.models.Users;
@@ -206,7 +205,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
             // adds UsersFragment and GroupsFragment to the viewPager
-            viewPagerAdapter.addFragment(new GroupsFragment(),getString(R.string.text_groups));
+            //viewPagerAdapter.addFragment(new GroupsFragment(),getString(R.string.text_groups));
             //viewPagerAdapter.addFragment(new UsersFragment(), getString(R.string.text_users));
             //Sets Adapter view of the ViewPager
             viewPager.setAdapter(viewPagerAdapter);

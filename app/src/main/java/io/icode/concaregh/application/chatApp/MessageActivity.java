@@ -41,7 +41,6 @@ import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.icode.concaregh.application.R;
-import io.icode.concaregh.application.adapters.GroupMessageAdapter;
 import io.icode.concaregh.application.adapters.MessageAdapter;
 import io.icode.concaregh.application.constants.Constants;
 import io.icode.concaregh.application.interfaces.APIService;
@@ -93,8 +92,6 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
     // variable for MessageAdapter class
     MessageAdapter messageAdapter;
-
-    GroupMessageAdapter groupMessageAdapter;
 
     List<Chats> mChats;
 
