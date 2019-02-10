@@ -43,6 +43,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
     private Button btn_reset_password;
     private Button btn_back;
 
+    AdView adView, adView1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,14 +70,14 @@ public class ResetPasswordActivity extends AppCompatActivity {
         // Initializing Google Ads
         MobileAds.initialize(this,"ca-app-pub-4501853719724548~4076180577");
         // getting reference to AdView
-        AdView adView = findViewById(R.id.adView);
+        adView = findViewById(R.id.adView);
         //AdRequest object contains runtime information about a single ad request
         AdRequest adRequest = new AdRequest.Builder().build();
         // Load ads into Banner Ads
         adView.loadAd(adRequest);
 
         // getting reference to AdView
-        AdView adView1 = findViewById(R.id.adView1);
+        adView1 = findViewById(R.id.adView1);
         //AdRequest object contains runtime information about a single ad request
         AdRequest adRequest1 = new AdRequest.Builder().build();
         // Load ads into Banner Ads

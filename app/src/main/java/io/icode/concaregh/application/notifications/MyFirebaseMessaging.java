@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,6 +45,20 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
             }
 
         }
+
+        /*** Code for push notification from firebase console */
+        /*Log.d("Service", "From: " + remoteMessage.getFrom());
+
+        //if(sent.equals(firebaseUser.getUid()))
+
+        if (remoteMessage.getData().size() > 0) {
+            Log.d("Service", "Message data payload: " + remoteMessage.getData());
+        }
+
+        if (remoteMessage.getNotification() != null) {
+            Log.d("Service", "Message notification: " + remoteMessage.getNotification().getBody());
+        }
+        */
 
 
     }

@@ -98,8 +98,9 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
 
+    // subscribe users of the app to a topic for push notification from firebase console
     private void subScribeToReceiveBroadcast(){
-        FirebaseMessaging.getInstance().subscribeToTopic(Constants.GROUP_CHAT_REF)
+        FirebaseMessaging.getInstance().subscribeToTopic(Constants.CHAT_REF)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
