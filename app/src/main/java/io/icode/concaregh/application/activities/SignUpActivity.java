@@ -99,7 +99,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     Admin admin;
 
-    Groups groups;
+    Groups my_groups;
 
     private static final int  REQUEST_CODE = 1;
 
@@ -136,7 +136,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         admin = new Admin();
 
-        groups = new Groups();
+        my_groups = new Groups();
 
         userdB = FirebaseDatabase.getInstance();
 
@@ -418,14 +418,23 @@ public class SignUpActivity extends AppCompatActivity {
 
                     assert groups != null;
 
-                    if(gender.equals("Male") && groups.getGroupName().equals("Males")){
+                    if(gender.equals("Male") && groups.getGroupName().equals("Males")
+                            && !groups.getGroupMembersIds().contains(user.getUid())){
 
                         groups.getGroupMembersIds().add(user.getUid());
 
                     }
-                    else if(gender.equals("Female") && groups.getGroupName().equals("Females")){
+
+                    else if(gender.equals("Female") && groups.getGroupName().equals("Females")
+                     && !groups.getGroupMembersIds().contains(user.getUid())){
                         groups.getGroupMembersIds().add(user.getUid());
                     }
+
+                    else if(groups.getGroupName().equals("All Users")){
+                        groups.getGroupMembersIds().add(user.getUid());
+                    }
+
+
 
                 }
             }
