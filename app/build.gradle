@@ -57,12 +57,12 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     // FireBase dependencies
     implementation 'com.google.firebase:firebase-auth:16.1.0'
-    implementation 'com.google.firebase:firebase-database:16.0.5'
-    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.google.firebase:firebase-database:16.0.6'
+    implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.google.firebase:firebase-storage:16.0.5'
     implementation 'com.google.firebase:firebase-crash:16.2.1'
-    implementation 'com.google.firebase:firebase-perf:16.2.2'
-    implementation 'com.google.firebase:firebase-invites:16.0.6'
+    implementation 'com.google.firebase:firebase-perf:16.2.3'
+    implementation 'com.google.firebase:firebase-invites:16.1.0'
     // Intent animation dependency
     implementation 'com.github.hajiyevelnur92:intentanimation:1.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
@@ -86,7 +86,7 @@ dependencies {
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
 
     // Firebase Crashlytics dependency
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.8'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
 
     // library to add enable sending of notification using firebase messageing service
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
@@ -101,7 +101,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 
     //Google Admob dependency
-    implementation 'com.google.android.gms:play-services-ads:17.1.2'
+    implementation 'com.google.android.gms:play-services-ads:17.1.3'
 
     // material edittext
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'

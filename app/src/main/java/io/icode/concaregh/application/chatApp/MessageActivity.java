@@ -273,16 +273,15 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
     // sends notification to admin as soon as message is sent
     private void sendNotification(String receiver, final String username, final String message){
 
-        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
+        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference(Constants.TOKENS_REF);
         Query query = tokens.orderByKey().equalTo(receiver);
-
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Token token = snapshot.getValue(Token.class);
-                    Data data = new Data(currentUser.getUid(),R.mipmap.app_logo_round,
-                            username+": "+message,getString(R.string.app_name),admin_uid);
+                    Data data = new Data(currentUser.getUid(),R.mipmap.app_logo_round, username+": "+message,
+                            getString(R.string.app_name),admin_uid);
 
                     assert token != null;
                     Sender sender = new Sender(data, token.getToken());
@@ -395,6 +394,9 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
                         recyclerView.setAdapter(messageAdapter);
                         // notify data change in adapter
                         messageAdapter.notifyDataSetChanged();
+
+                        // hides the text
+                        tv_no_messages.setVisibility(View.GONE);
 
                         // dismiss progressBar
                         progressBar.setVisibility(View.GONE);

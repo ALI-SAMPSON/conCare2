@@ -41,6 +41,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -50,8 +51,10 @@ import io.icode.concaregh.application.constants.Constants;
 import io.icode.concaregh.application.models.Admin;
 import io.icode.concaregh.application.models.Users;
 import io.icode.concaregh.application.notifications.Data;
+import io.icode.concaregh.application.notifications.Token;
 import maes.tech.intentanim.CustomIntent;
 
+@SuppressWarnings("ALL")
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     // global  or class variables
@@ -164,6 +167,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         AdRequest adRequest1 = new AdRequest.Builder().build();
         adView1.loadAd(adRequest1);
 
+        // update user's device token
+        updateToken(FirebaseInstanceId.getInstance().getToken());
+
     }
 
     @Override
@@ -182,6 +188,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         }
 
+    }
+
+    // Update currentUser's  device token
+    private void updateToken(String token){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(Constants.TOKENS_REF);
+        Token token1 = new Token(token);
+        reference.child(mAuth.getCurrentUser().getUid()).setValue(token1);
     }
 
     // Onclick Listener method for floating button
