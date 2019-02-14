@@ -39,6 +39,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -414,26 +417,31 @@ public class SignUpActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()){
 
-                    Groups groups = snapshot.getValue(Groups.class);
+                    //Groups groups = snapshot.getValue(Groups.class);
 
-                    assert groups != null;
+                    String group_name = snapshot.child("groupName").getValue(String.class);
+                    //String username = snapshot.child("username").getValue(String.class);
+                    //String status = snapshot.child("status").getValue(String.class);
 
-                    if(gender.equals("Male") && groups.getGroupName().equals("Males")
-                            && !groups.getGroupMembersIds().contains(user.getUid())){
+                    if(gender.equals("Male")){
 
-                        groups.getGroupMembersIds().add(user.getUid());
+                        HashMap<String,Object> hashMap = new HashMap<>();
+                        hashMap.put("groupMembersIds",new ArrayList<String>(){{add(user.getUid());}});
+                        groupRef.child("Male").updateChildren(hashMap);
 
                     }
 
-                    else if(gender.equals("Female") && groups.getGroupName().equals("Females")
-                     && !groups.getGroupMembersIds().contains(user.getUid())){
-                        groups.getGroupMembersIds().add(user.getUid());
+                    else if(gender.equals("Female")){
+
+                        HashMap<String,Object> hashMap = new HashMap<>();
+                        hashMap.put("groupMembersIds",new ArrayList<String>(){{add(user.getUid());}});
+                        groupRef.child("Female").updateChildren(hashMap);
                     }
 
-                    else if(groups.getGroupName().equals("All Users")){
-                        groups.getGroupMembersIds().add(user.getUid());
-                    }
-
+                    // adds new user to all users group
+                    /*HashMap<String,Object> hashMap = new HashMap<>();
+                    hashMap.put("groupMembersIds",new ArrayList<String>(){{add(user.getUid());}});
+                    groupRef.child("All Users").updateChildren(hashMap);*/
 
 
                 }

@@ -600,6 +600,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     // method to navigate user to the message activity to begin chatting
     private void navigateUserToMessageActivity(){
+
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference adminRef = rootRef.child(Constants.ADMIN_REF);
 
