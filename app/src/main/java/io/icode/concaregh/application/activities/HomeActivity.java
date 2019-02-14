@@ -429,10 +429,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 shareIntent();
                 break;
             case R.id.menu_chat:
-                // starts the about us activity
-                startActivity(new Intent(HomeActivity.this,ChatActivity.class));
-                // Add a custom animation ot the activity
-                CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+                // navigate user to the message activity
+                navigateUserToMessageActivity();
                 break;
             case R.id.menu_about:
                 // starts the about us activity
@@ -595,6 +593,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     //open the message activity to start a chat conversation with admin (ConCare GH)
     public void onChatUsButtonClick(View view) {
 
+        // method call
+        navigateUserToMessageActivity();
+
+    }
+
+    // method to navigate user to the message activity to begin chatting
+    private void navigateUserToMessageActivity(){
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference adminRef = rootRef.child(Constants.ADMIN_REF);
 
@@ -610,9 +615,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                     // starts the chat activity
                     Intent intentChat = new Intent(HomeActivity.this,MessageActivity.class);
-                        intentChat.putExtra("uid",uid);
-                        intentChat.putExtra("username",username);
-                        intentChat.putExtra("status",status);
+                    intentChat.putExtra("uid",uid);
+                    intentChat.putExtra("username",username);
+                    intentChat.putExtra("status",status);
                     startActivity(intentChat);
                     // Add a custom animation ot the activity
                     //CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
@@ -627,7 +632,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         };
 
         adminRef.addListenerForSingleValueEvent(eventListener);
-
     }
 
     public void onOrderButtonClick(View view) {
