@@ -73,9 +73,9 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
         RemoteMessage.Notification notification = remoteMessage.getNotification();
         int j = Integer.parseInt(user.replaceAll("[\\D]",""));
-        Intent intent = new Intent(this,HomeActivity.class);
+        Intent intent = new Intent(this,MessageActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("userid",user);
+        bundle.putString("uid",user);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,j,intent,PendingIntent.FLAG_ONE_SHOT);
@@ -113,9 +113,9 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
 
         RemoteMessage.Notification notification = remoteMessage.getNotification();
         int j = Integer.parseInt(user.replaceAll("[\\D]",""));
-        Intent intent = new Intent(this,HomeActivity.class);
+        Intent intent = new Intent(this,MessageActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("userid",user);
+        bundle.putString("uid",user);
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,j,intent,PendingIntent.FLAG_ONE_SHOT);
