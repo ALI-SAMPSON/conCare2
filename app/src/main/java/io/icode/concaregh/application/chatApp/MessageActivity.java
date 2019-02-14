@@ -88,6 +88,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
     String admin_username;
 
+    //Variable to store status of the current user
     String status;
 
     // variable for MessageAdapter class
