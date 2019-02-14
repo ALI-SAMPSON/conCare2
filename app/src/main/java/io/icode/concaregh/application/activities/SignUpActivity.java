@@ -443,6 +443,8 @@ public class SignUpActivity extends AppCompatActivity {
                     hashMap.put("groupMembersIds",new ArrayList<String>(){{add(user.getUid());}});
                     groupRef.child("All Users").updateChildren(hashMap);*/
 
+                    // sign out user
+                    mAuth.signOut();
 
                 }
             }
