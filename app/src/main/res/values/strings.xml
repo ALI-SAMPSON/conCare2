@@ -322,4 +322,8 @@
          Sign Up
     </string>
 
+    <string name="admob_app_id" translatable="false">
+       ca-app-pub-4501853719724548~4076180577
+    </string>
+
 </resources>

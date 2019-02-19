@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import com.bumptech.glide.Glide;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,6 +50,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import io.icode.concaregh.application.chatApp.ChatActivity;
 import io.icode.concaregh.application.chatApp.MessageActivity;
 import io.icode.concaregh.application.constants.Constants;
+import io.icode.concaregh.application.constants.TextJustification;
 import io.icode.concaregh.application.models.Admin;
 import io.icode.concaregh.application.models.Users;
 import io.icode.concaregh.application.notifications.Data;
@@ -56,6 +59,15 @@ import maes.tech.intentanim.CustomIntent;
 
 @SuppressWarnings("ALL")
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+
+    // ads unitId
+    private static final String AD_UNIT_ID = "ca-app-pub-4501853719724548~4076180577";
+
+    LinearLayout layout_displayBanner;
+
+    AdView adView;
+
+    AdView adView1;
 
     // global  or class variables
     private DrawerLayout mDrawerLayout;
@@ -79,6 +91,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     TextView username;
     TextView email;
 
+    TextView welcome_msg,text_1,text_2,text_3,text_4;
+
     ProgressDialog progressDialog;
 
     FloatingActionButton fab;
@@ -97,6 +111,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(io.icode.concaregh.application.R.layout.activity_home);
 
+        //layout_displayBanner = findViewById(R.id.layout_displayBanner);
+
         mDrawerLayout = findViewById(R.id.drawer);
 
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
@@ -110,6 +126,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         circleImageView = navigationView.getHeaderView(0).findViewById(R.id.circleImageView);
         username = navigationView.getHeaderView(0).findViewById(R.id.username);
         email = navigationView.getHeaderView(0).findViewById(R.id.email);
+
+        welcome_msg = findViewById(R.id.welcome_msg);
+        text_1 = findViewById(R.id.text_1);
+        text_2 = findViewById(R.id.text_2);
+        text_3 = findViewById(R.id.text_3);
+        text_4 = findViewById(R.id.text_4);
+
+        // code to justify text
+        TextJustification.justify(welcome_msg);
+        TextJustification.justify(text_1);
+        TextJustification.justify(text_2);
+        TextJustification.justify(text_3);
+        TextJustification.justify(text_4);
 
         //checks of there is support actionBar
         if(getSupportActionBar() != null){
@@ -145,48 +174,34 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         onClickFab();
 
         // method call for on click listener for imageView
-        onClickCircularImageView();
+        //onClickCircularImageView();
+
+
+        MobileAds.initialize(this,AD_UNIT_ID);
+
+        // getting reference to AdView
+        AdView adView = findViewById(R.id.adView);
+        /*
+         * Create an ad request.
+         */
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        /*
+         * Start loading the ad in the background.
+         */
+        adView.loadAd(adRequest);
 
         //
-        onTextViewClick();
+        //onTextViewClick();
 
         // method call to change ProgressDialog style based on the android version of user's phone
         changeProgressDialogBackground();
 
-        // Initializing Google Ads
-        MobileAds.initialize(this,"ca-app-pub-4501853719724548~4076180577");
-        // getting reference to AdView
-        AdView adView = findViewById(R.id.adView);
-        //AdRequest object contains runtime information about a single ad request
-        AdRequest adRequest = new AdRequest.Builder().build();
-        // Load ads into Banner Ads
-        adView.loadAd(adRequest);
-
-        //AdView 1
-        AdView adView1 = findViewById(R.id.adView1);
-        AdRequest adRequest1 = new AdRequest.Builder().build();
-        adView1.loadAd(adRequest1);
-
         // update user's device token
         updateToken(FirebaseInstanceId.getInstance().getToken());
 
-    }
-
-    @Override
-    protected void onStart(){
-        super.onStart();
-        if(mAuth.getCurrentUser() == null){
-
-            // starts the login activity currently logged in user is null(login_bg_1 logged in user)
-            startActivity(new Intent(HomeActivity.this,SignInActivity.class));
-
-            // Add a custom animation ot the activity
-            CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
-
-            // finishes the activity
-            finish();
-
-        }
+        // method call to create ads
+        //createBanner();
 
     }
 
@@ -253,6 +268,53 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 YoYo.with(Techniques.Shake).playOn(email);
             }
         });
+    }
+
+    // ******************************** For Admob
+
+    private void createBanner() {
+
+        //MobileAds.initialize(this,AD_UNIT_ID);
+
+        // getting reference to AdView
+        adView = findViewById(R.id.adView);
+        adView1 = findViewById(R.id.adView1);
+
+        // Create an ad.
+        //adView = new AdView(this);
+        /*
+         * Ad unit name : MobilePASystemBanner in the AdMob Website. App Name :
+         * MobilePASystem .
+         */
+        adView.setAdSize(AdSize.BANNER);
+        adView.setAdUnitId(AD_UNIT_ID);
+
+        adView1.setAdSize(AdSize.BANNER);
+        adView1.setAdUnitId(AD_UNIT_ID);
+
+        /*
+         * Add the AdView to the view hierarchy. The view will have no size
+         * until the ad is loaded.
+         */
+        // a linear layout at the bottom to display an add (make it in your xml also)
+        //layout_displayBanner.addView(adView);
+
+        /*
+         * Create an ad request.
+         */
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+
+        AdRequest adRequest1 = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+
+        /*
+         * Start loading the ad in the background.
+         */
+        try {
+            adView.loadAd(adRequest);
+            adView1.loadAd(adRequest1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Method to display a welcome  message to user when he or she logs in

@@ -28,14 +28,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/welcome_msg_home"
-                android:layout_margin="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
                 android:textAlignment="center"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 app:fontFamily="@font/nunito_extrabold"
-                android:padding="5dp"
                 android:textColor="@color/orange_light"/>
 
             <!--  Reproductive Health Text 1 -->
@@ -46,12 +46,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/text_1"
                 android:layout_margin="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_centerHorizontal="true"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 app:fontFamily="@font/nunito_semibold"
-                android:padding="5dp"
                 android:textColor="@color/orange_light"/>
 
             <!--  Reproductive Health Text 2 -->
@@ -62,11 +59,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/text_2"
                 android:layout_margin="5dp"
-                android:layout_centerHorizontal="true"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 app:fontFamily="@font/nunito_semibold"
-                android:padding="5dp"
                 android:textColor="@color/background_super_dark"/>
 
             <!--  Reproductive Health Text 3 -->
@@ -77,11 +72,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/text_3"
                 android:layout_margin="5dp"
-                android:layout_centerHorizontal="true"
-                android:textSize="20sp"
+                android:textSize="21.5sp"
                 app:fontFamily="@font/nunito_semibold"
                 android:textStyle="bold"
-                android:padding="5dp"
                 android:textColor="@color/orange_light"/>
 
             <!--  Reproductive Health Text 4 -->
@@ -92,10 +85,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/text_4"
                 android:layout_margin="5dp"
-                android:layout_centerHorizontal="true"
-                android:textSize="20sp"
+                android:gravity="center"
+                android:textSize="21.5sp"
                 app:fontFamily="@font/nunito_semibold"
-                android:padding="5dp"
                 android:textColor="@color/background_super_dark"/>
 
             <!-- AdView to display ads-->

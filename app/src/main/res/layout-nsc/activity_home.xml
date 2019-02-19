@@ -31,10 +31,10 @@
                 android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true"
                 android:textAlignment="center"
+                android:gravity="center"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:fontFamily="@font/nunito_extrabold"
-                android:padding="5dp"
                 android:textColor="@color/orange_light"/>
 
             <!--  Reproductive Health Text 1 -->
@@ -45,12 +45,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/text_1"
                 android:layout_margin="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_centerHorizontal="true"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="17sp"
                 app:fontFamily="@font/nunito_semibold"
-                android:padding="5dp"
                 android:textColor="@color/orange_light"/>
 
             <!--  Reproductive Health Text 2 -->
@@ -61,11 +58,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/text_2"
                 android:layout_margin="5dp"
-                android:layout_centerHorizontal="true"
-                android:textSize="16sp"
+                android:textSize="17sp"
                 android:textStyle="bold"
                 app:fontFamily="@font/nunito_semibold"
-                android:padding="5dp"
                 android:textColor="@color/background_super_dark"/>
 
             <!--  Reproductive Health Text 3 -->
@@ -76,11 +71,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/text_3"
                 android:layout_margin="5dp"
-                android:layout_centerHorizontal="true"
-                android:textSize="16sp"
+                android:textSize="16.5sp"
                 app:fontFamily="@font/nunito_semibold"
                 android:textStyle="bold"
-                android:padding="5dp"
                 android:textColor="@color/orange_light"/>
 
             <!--  Reproductive Health Text 4 -->
@@ -92,9 +85,9 @@
                 android:text="@string/text_4"
                 android:layout_margin="5dp"
                 android:layout_centerHorizontal="true"
-                android:textSize="16sp"
+                android:textSize="16.5sp"
+                android:textStyle="bold"
                 app:fontFamily="@font/nunito_semibold"
-                android:padding="5dp"
                 android:textColor="@color/background_super_dark"/>
 
             <!-- AdView to display ads-->
