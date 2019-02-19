@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import io.icode.concaregh.application.R;
 
@@ -54,6 +55,7 @@ import maes.tech.intentanim.CustomIntent;
 
 public class SignUpActivity extends AppCompatActivity {
 
+
     // instance variables
     //private CircleImageView circleImageView;
     private EditText editTextEmail;
@@ -81,6 +83,10 @@ public class SignUpActivity extends AppCompatActivity {
     DatabaseReference adminRef;
 
     DatabaseReference groupRef;
+
+    DatabaseReference genderGroupRef;
+
+    DatabaseReference allUsersGroupRef;
 
     //FirebaseStorage storage;
 
@@ -147,6 +153,10 @@ public class SignUpActivity extends AppCompatActivity {
 
         adminRef = FirebaseDatabase.getInstance().getReference("Admin");
 
+        genderGroupRef = FirebaseDatabase.getInstance().getReference(Constants.GROUP_REF);
+
+        allUsersGroupRef = FirebaseDatabase.getInstance().getReference(Constants.GROUP_REF);
+
         //progressBar = findViewById(R.id.progressBar);
         // sets a custom color on progressBar
         //progressBar.getIndeterminateDrawable().setColorFilter(0xFE5722,PorterDuff.Mode.MULTIPLY);
@@ -163,6 +173,7 @@ public class SignUpActivity extends AppCompatActivity {
         //chooseImage();
 
         animateLogo();
+
 
     }
 
@@ -310,7 +321,10 @@ public class SignUpActivity extends AppCompatActivity {
                                         saveUsername();
 
                                         // method to add user to male or female broadcast group based on gender
-                                        addUserToBroadCastGroup();
+                                        addUserToGenderGroups();
+
+                                        // method to add user to "All Users" broadcast group
+                                        addUserToAllUsersGroup();
 
                                         // Sends a notification to the user after signing up successfully
                                         // Creating an explicit intent for the activity in the app
@@ -400,7 +414,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    private void addUserToBroadCastGroup(){
+    // Method to add new user to male or female group based on the gender of the user
+    private void addUserToGenderGroups(){
 
         final String gender = spinnerGender.getSelectedItem().toString().trim();
 
@@ -410,43 +425,30 @@ public class SignUpActivity extends AppCompatActivity {
 
         // adding user to group based on gender
         // adding user to group if user is a male
-        groupRef = FirebaseDatabase.getInstance().getReference(Constants.GROUP_REF);
+        groupRef = FirebaseDatabase.getInstance()
+                .getReference(Constants.GROUP_REF).child(gender)
+                .child("groupMembersIds");
 
-        groupRef.addValueEventListener(new ValueEventListener() {
+        groupRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
 
-                    //Groups groups = snapshot.getValue(Groups.class);
+                Long my_num = dataSnapshot.getChildrenCount();
 
-                    String group_name = snapshot.child("groupName").getValue(String.class);
-                    //String username = snapshot.child("username").getValue(String.class);
-                    //String status = snapshot.child("status").getValue(String.class);
+                int my_id = Integer.parseInt(my_num.toString());
 
-                    if(gender.equals("Male")){
+                String userPositionId = String.valueOf(my_id);
 
-                        HashMap<String,Object> hashMap = new HashMap<>();
-                        hashMap.put("groupMembersIds",new ArrayList<String>(){{add(user.getUid());}});
-                        groupRef.child("Male").updateChildren(hashMap);
+                // code to add user to respective gender type group
+                genderGroupRef.child(gender)
+                        .child("groupMembersIds").child(userPositionId)
+                        .setValue(user.getUid());
 
-                    }
+                // sign out user
+                mAuth.signOut();
 
-                    else if(gender.equals("Female")){
+                return;
 
-                        HashMap<String,Object> hashMap = new HashMap<>();
-                        hashMap.put("groupMembersIds",new ArrayList<String>(){{add(user.getUid());}});
-                        groupRef.child("Female").updateChildren(hashMap);
-                    }
-
-                    // adds new user to all users group
-                    /*HashMap<String,Object> hashMap = new HashMap<>();
-                    hashMap.put("groupMembersIds",new ArrayList<String>(){{add(user.getUid());}});
-                    groupRef.child("All Users").updateChildren(hashMap);*/
-
-                    // sign out user
-                    mAuth.signOut();
-
-                }
             }
 
             @Override
@@ -457,6 +459,48 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    // Method to add new user to all users group irrespective of the gender of the user
+    private void addUserToAllUsersGroup(){
+
+        final FirebaseUser user = mAuth.getCurrentUser();
+
+        assert user != null;
+
+        // code to add user to "All Users" group
+        groupRef =  FirebaseDatabase.getInstance()
+                .getReference(Constants.GROUP_REF).child(Constants.GROUP_ALL_USERS)
+                .child("groupMembersIds");
+
+        groupRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // get total count of uids in list of groupMembers
+                Long _my_num = dataSnapshot.getChildrenCount();
+
+                int _my_id = Integer.parseInt(_my_num.toString());
+
+                String _userPositionId = String.valueOf(_my_id);
+
+                // code to add user to "All Users" group
+                allUsersGroupRef.child(Constants.GROUP_ALL_USERS)
+                        .child("groupMembersIds").child(_userPositionId)
+                        .setValue(user.getUid());
+
+                // sign out user
+                mAuth.signOut();
+
+                return;
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // display error message
+                Snackbar.make(nestedScrollView,databaseError.getMessage(),Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
     // Method to send verification link to email to user after sign Up

@@ -4,8 +4,9 @@ public class Constants {
 
     public static final String GENDER_MALE = "Male";
     public static final String GENDER_FEMALE = "Female";
-    public static final String GROUP_MALE = "Male";
-    public static final String GROUP_FEMALE = "Female";
+    public static final String GROUP_ALL_USERS = "All Users";
+    public static final String GROUP_MALE = "male";
+    public static final String GROUP_FEMALE = "female";
     public static final String USER_REF = "Users";
     public static final String ADMIN_REF = "Admin";
     public static final String TOKENS_REF = "Tokens";
