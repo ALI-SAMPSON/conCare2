@@ -114,7 +114,6 @@
                     ads:adSize="BANNER"
                     ads:adUnitId="ca-app-pub-4501853719724548~4076180577"/>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
