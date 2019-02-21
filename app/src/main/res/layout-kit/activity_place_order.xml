@@ -50,7 +50,7 @@
             android:layout_margin="5dp"
             android:layout_centerHorizontal="true"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-4501853719724548~4076180577"/>
+            ads:adUnitId="@string/admob_banner_id"/>
 
         <!--<TextView
             android:id="@+id/hint_phone"

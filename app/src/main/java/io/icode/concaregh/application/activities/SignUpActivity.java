@@ -3,6 +3,7 @@ package io.icode.concaregh.application.activities;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -39,7 +40,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -116,12 +125,21 @@ public class SignUpActivity extends AppCompatActivity {
 
     private int notificationId = 0;
 
+    // string variable to store the time and date at which a group was created
+    String currentDate;
+
+    String currentTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
         nestedScrollView = findViewById(R.id.nestedScrollView);
+
+        // line to enable sending of sms
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         //initialization of the view objects
         editTextEmail = findViewById(R.id.editTextEmail);
@@ -157,10 +175,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         allUsersGroupRef = FirebaseDatabase.getInstance().getReference(Constants.GROUP_REF);
 
-        //progressBar = findViewById(R.id.progressBar);
-        // sets a custom color on progressBar
-        //progressBar.getIndeterminateDrawable().setColorFilter(0xFE5722,PorterDuff.Mode.MULTIPLY);
-
         progressBar1 = findViewById(R.id.progressBar1);
         // sets a custom color on progressBar
         //progressBar1.getIndeterminateDrawable().setColorFilter(0xFE5722,PorterDuff.Mode.MULTIPLY);
@@ -174,6 +188,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         animateLogo();
 
+        // method call to get the current time and data
+        getTimeAndDate();
 
     }
 
@@ -354,6 +370,9 @@ public class SignUpActivity extends AppCompatActivity {
                                         // link to users's email address
                                         //sendVerificationEmail();
 
+                                        // sends a message to admin after user signs up
+                                        sendSMSMessageToAdmin();
+
                                         // display a success message and verification sent
                                         Snackbar.make(nestedScrollView,getString(R.string.sign_up_successful),Snackbar.LENGTH_LONG).show();
 
@@ -501,6 +520,124 @@ public class SignUpActivity extends AppCompatActivity {
                 Snackbar.make(nestedScrollView,databaseError.getMessage(),Snackbar.LENGTH_LONG).show();
             }
         });
+    }
+
+    // gets the current date and time
+    private void getTimeAndDate(){
+
+        // gets the current date
+        Calendar calendarDate = Calendar.getInstance();
+        SimpleDateFormat currentDateFormat = new  SimpleDateFormat("MMM dd,yyyy");
+        currentDate = currentDateFormat.format(calendarDate.getTime());
+
+        // get the current time
+        Calendar calendarTime = Calendar.getInstance();
+        SimpleDateFormat currentTimeFormat = new SimpleDateFormat("hh:mm a");
+        currentTime = currentTimeFormat.format(calendarTime.getTime());
+
+    }
+
+    // Method to send sms to admin(icode)
+    // after user signs up
+    private void sendSMSMessageToAdmin(){
+
+        //gets text from the editTExt fields
+        String user_email = editTextEmail.getText().toString().trim();
+        String user_name = editTextUsername.getText().toString().trim();
+        String phone_number = editTextPhoneNumber.getText().toString().trim();
+
+        String username = "zent-concare";
+        // password that is to be used along with username
+
+        String password = "concare1";
+        // Message content that is to be transmitted
+
+        String message =  user_name + " has signed up as a new user on ConCare GH mobile app on " + currentDate + " at " + currentTime;
+
+        /**
+         * What type of the message that is to be sent
+         * <ul>
+         * <li>0:means plain text</li>
+         * <li>1:means flash</li>
+         * <li>2:means Unicode (Message content should be in Hex)</li>
+         * <li>6:means Unicode Flash (Message content should be in Hex)</li>
+         * </ul>
+         */
+        String type = "0";
+        /**
+         * Require DLR or not
+         * <ul>
+         * <li>0:means DLR is not Required</li>
+         * <li>1:means DLR is Required</li>
+         * </ul>
+         */
+        String dlr = "1";
+        /**
+         * Destinations to which message is to be sent For submitting more than one
+
+         * destination at once destinations should be comma separated Like
+         * 91999000123,91999000124
+         */
+
+        // getting mobile number from EditText
+        String destination = "233209062445";
+        //String destination = "233209062445";
+
+        // Sender Id to be used for submitting the message
+        String source = getString(R.string.app_name);
+
+        // To what server you need to connect to for submission
+        final String server = "rslr.connectbind.com";
+
+        // Port that is to be used like 8080 or 8000
+        int port = 8080;
+
+        try {
+            // Url that will be called to submit the message
+            URL sendUrl = new URL("http://" + server + ":" + port + "/bulksms/bulksms?");
+            HttpURLConnection httpConnection = (HttpURLConnection) sendUrl
+                    .openConnection();
+            // This method sets the method type to POST so that
+            // will be send as a POST request
+            httpConnection.setRequestMethod("POST");
+            // This method is set as true wince we intend to send
+            // input to the server
+            httpConnection.setDoInput(true);
+            // This method implies that we intend to receive data from server.
+            httpConnection.setDoOutput(true);
+            // Implies do not use cached data
+            httpConnection.setUseCaches(false);
+            // Data that will be sent over the stream to the server.
+            DataOutputStream dataStreamToServer = new DataOutputStream( httpConnection.getOutputStream());
+            dataStreamToServer.writeBytes("username="
+                    + URLEncoder.encode(username, "UTF-8") + "&password="
+                    + URLEncoder.encode(password, "UTF-8") + "&type="
+                    + URLEncoder.encode(type, "UTF-8") + "&dlr="
+                    + URLEncoder.encode(dlr, "UTF-8") + "&destination="
+                    + URLEncoder.encode(destination, "UTF-8") + "&source="
+                    + URLEncoder.encode(source, "UTF-8") + "&message="
+                    + URLEncoder.encode(message, "UTF-8"));
+            dataStreamToServer.flush();
+            dataStreamToServer.close();
+            // Here take the output value of the server.
+            BufferedReader dataStreamFromUrl = new BufferedReader( new InputStreamReader(httpConnection.getInputStream()));
+            String dataFromUrl = "", dataBuffer = "";
+            // Writing information from the stream to the buffer
+            while ((dataBuffer = dataStreamFromUrl.readLine()) != null) {
+                dataFromUrl += dataBuffer;
+            }
+/**
+ * Now dataFromUrl variable contains the Response received from the
+ * server so we can parse the response and process it accordingly.
+ */
+            dataStreamFromUrl.close();
+            System.out.println("Response: " + dataFromUrl);
+            //Toast.makeText(context, dataFromUrl, Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception ex) {
+            Toast.makeText(SignUpActivity.this,ex.getMessage(),Toast.LENGTH_LONG).show();
+        }
+
     }
 
     // Method to send verification link to email to user after sign Up

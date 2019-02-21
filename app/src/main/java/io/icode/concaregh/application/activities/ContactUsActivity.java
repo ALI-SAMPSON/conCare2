@@ -18,8 +18,6 @@ public class ContactUsActivity extends AppCompatActivity {
     // variables for adView
     AdView adView;
 
-    AdRequest adRequest;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,15 +30,32 @@ public class ContactUsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        // Initializing Google Ads
-        MobileAds.initialize(this,"ca-app-pub-4501853719724548~4076180577");
+        // method call to create ads
+        createBanner();
+
+    }
+
+    // ******************************** For Admob
+
+    private void createBanner() {
+
+        MobileAds.initialize(this,getString(R.string.admob_app_id));
+
         // getting reference to AdView
         adView = findViewById(R.id.adView);
-        //AdRequest object contains runtime information about a single ad request
-        adRequest = new AdRequest.Builder().build();
-        // Load ads into Banner Ads
-        adView.loadAd(adRequest);
+        /*
+         * Create an ad request.
+         */
+        AdRequest adRequest = new AdRequest.Builder().build();
 
+        /*
+         * Start loading the ad in the background.
+         */
+        try {
+            adView.loadAd(adRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

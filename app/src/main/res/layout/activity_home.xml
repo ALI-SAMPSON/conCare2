@@ -18,8 +18,7 @@
             android:background="@color/white_ghost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:padding="5dp">
+            android:layout_marginTop="0dp">
 
             <!-- Welcome title -->
             <TextView
@@ -27,8 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/welcome_msg_home"
-                android:layout_margin="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:textAlignment="center"
@@ -44,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/text_1"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:textStyle="bold"
                 android:textSize="17sp"
                 app:fontFamily="@font/nunito_semibold"
@@ -57,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/text_2"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:textSize="17sp"
                 android:textStyle="bold"
                 app:fontFamily="@font/nunito_semibold"
@@ -70,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/text_3"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:textSize="16.5sp"
                 app:fontFamily="@font/nunito_semibold"
                 android:textStyle="bold"
@@ -83,15 +81,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/text_4"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:layout_centerHorizontal="true"
                 android:textSize="16.5sp"
                 android:textStyle="bold"
                 app:fontFamily="@font/nunito_semibold"
                 android:textColor="@color/background_super_dark"/>
 
+            <LinearLayout
+                android:id="@+id/layout_ads"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true">
                 <!-- AdView to display ads-->
                 <com.google.android.gms.ads.AdView
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/adView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="50dp"
+                    android:layout_gravity="center"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="@string/admob_banner_id"/>
+                <com.google.android.gms.ads.AdView
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/adView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="@string/admob_banner_id"/>
+            </LinearLayout>
+
+                <!-- AdView to display ads-->
+                <!--<com.google.android.gms.ads.AdView
                     xmlns:ads="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/adView"
                     android:layout_width="wrap_content"
@@ -100,26 +126,16 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     ads:adSize="BANNER"
+                    android:visibility="gone"
                     ads:adUnitId="ca-app-pub-4501853719724548~4076180577"/>
-
-                <!-- AdView to display ads-->
-                <com.google.android.gms.ads.AdView
-                    xmlns:ads="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/adView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/text_2"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    ads:adSize="BANNER"
-                    ads:adUnitId="ca-app-pub-4501853719724548~4076180577"/>
+                    -->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_below="@+id/text_4"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:layout_alignParentBottom="true"
                 android:gravity="center"
                 android:weightSum="3">

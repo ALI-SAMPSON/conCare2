@@ -76,28 +76,33 @@
             android:src="@drawable/splash_bg"
             android:contentDescription="@string/todo"/>
 
-        <!-- AdView to display ads-->
-        <com.google.android.gms.ads.AdView
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/adView"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/layout_ads"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:orientation="vertical"
+            android:gravity="center"
             android:layout_centerInParent="true"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-4501853719724548~4076180577"/>
-
-        <!-- AdView to display ads-->
-        <com.google.android.gms.ads.AdView
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/adView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_above="@+id/textInputLayoutGender"
-            android:layout_centerInParent="false"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-4501853719724548~4076180577"/>
+            android:layout_centerHorizontal="true">
+            <!-- AdView to display ads-->
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
+                android:layout_gravity="center"
+                ads:adSize="BANNER"
+                ads:adUnitId="@string/admob_banner_id"/>
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                ads:adSize="BANNER"
+                ads:adUnitId="@string/admob_banner_id"/>
+        </LinearLayout>
 
         <!--TextInputLayout and LinearLayout
         and spinner View for contraceptive type-->

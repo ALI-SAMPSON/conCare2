@@ -111,7 +111,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(io.icode.concaregh.application.R.layout.activity_home);
 
-        //layout_displayBanner = findViewById(R.id.layout_displayBanner);
+        layout_displayBanner = findViewById(R.id.layout_ads);
 
         mDrawerLayout = findViewById(R.id.drawer);
 
@@ -174,25 +174,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         onClickFab();
 
         // method call for on click listener for imageView
-        //onClickCircularImageView();
+        onClickCircularImageView();
 
-
-        MobileAds.initialize(this,AD_UNIT_ID);
-
-        // getting reference to AdView
-        AdView adView = findViewById(R.id.adView);
-        /*
-         * Create an ad request.
-         */
-        AdRequest adRequest = new AdRequest.Builder().build();
-
-        /*
-         * Start loading the ad in the background.
-         */
-        adView.loadAd(adRequest);
-
-        //
-        //onTextViewClick();
+        // method call
+        onTextViewClick();
 
         // method call to change ProgressDialog style based on the android version of user's phone
         changeProgressDialogBackground();
@@ -201,7 +186,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         updateToken(FirebaseInstanceId.getInstance().getToken());
 
         // method call to create ads
-        //createBanner();
+        createBanner();
 
     }
 
@@ -274,44 +259,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void createBanner() {
 
-        //MobileAds.initialize(this,AD_UNIT_ID);
+        MobileAds.initialize(this,getString(R.string.admob_app_id));
 
         // getting reference to AdView
         adView = findViewById(R.id.adView);
         adView1 = findViewById(R.id.adView1);
-
-        // Create an ad.
-        //adView = new AdView(this);
-        /*
-         * Ad unit name : MobilePASystemBanner in the AdMob Website. App Name :
-         * MobilePASystem .
-         */
-        adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId(AD_UNIT_ID);
-
-        adView1.setAdSize(AdSize.BANNER);
-        adView1.setAdUnitId(AD_UNIT_ID);
-
-        /*
-         * Add the AdView to the view hierarchy. The view will have no size
-         * until the ad is loaded.
-         */
-        // a linear layout at the bottom to display an add (make it in your xml also)
-        //layout_displayBanner.addView(adView);
-
         /*
          * Create an ad request.
          */
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-
-        AdRequest adRequest1 = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        AdRequest adRequest = new AdRequest.Builder().build();
 
         /*
          * Start loading the ad in the background.
          */
         try {
             adView.loadAd(adRequest);
-            adView1.loadAd(adRequest1);
+            adView1.loadAd(adRequest);
         } catch (Exception e) {
             e.printStackTrace();
         }

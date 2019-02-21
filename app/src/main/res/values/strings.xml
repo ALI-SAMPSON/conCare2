@@ -322,8 +322,15 @@
          Sign Up
     </string>
 
+    <string name="admob_banner_id" translatable="false">
+        ca-app-pub-4501853719724548/3841980194
+    </string>
     <string name="admob_app_id" translatable="false">
        ca-app-pub-4501853719724548~4076180577
+    </string>
+
+    <string name="test_banner_id" translatable="false">
+        ca-app-pub-3940256099942544/6300978111
     </string>
 
 </resources>

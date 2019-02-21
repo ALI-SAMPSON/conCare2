@@ -19,8 +19,7 @@
             android:background="@color/white_ghost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="5dp">
+            android:layout_gravity="center">
 
             <!-- Welcome title -->
             <TextView
@@ -45,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/text_1"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:textStyle="bold"
                 android:textSize="22sp"
                 app:fontFamily="@font/nunito_semibold"
@@ -58,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/text_2"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 app:fontFamily="@font/nunito_semibold"
@@ -71,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/text_3"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:textSize="21.5sp"
                 app:fontFamily="@font/nunito_semibold"
                 android:textStyle="bold"
@@ -84,14 +83,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/text_4"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:gravity="center"
                 android:textSize="21.5sp"
                 app:fontFamily="@font/nunito_semibold"
                 android:textColor="@color/background_super_dark"/>
 
             <!-- AdView to display ads-->
-            <com.google.android.gms.ads.AdView
+           <!-- <com.google.android.gms.ads.AdView
                 xmlns:ads="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/adView"
                 android:layout_width="wrap_content"
@@ -102,7 +101,6 @@
                 ads:adUnitId="ca-app-pub-4501853719724548~4076180577">
             </com.google.android.gms.ads.AdView>
 
-            <!-- AdView to display ads-->
             <com.google.android.gms.ads.AdView
                 xmlns:ads="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/adView1"
@@ -113,13 +111,42 @@
                 ads:adSize="BANNER"
                 ads:adUnitId="ca-app-pub-4501853719724548~4076180577">
             </com.google.android.gms.ads.AdView>
+            -->
+
+            <LinearLayout
+                android:id="@+id/layout_ads"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true">
+                <!-- AdView to display ads-->
+                <com.google.android.gms.ads.AdView
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/adView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="50dp"
+                    android:layout_gravity="center"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="@string/admob_banner_id"/>
+                <com.google.android.gms.ads.AdView
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/adView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="@string/admob_banner_id"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_below="@+id/text_4"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:gravity="center"
                 android:layout_alignParentBottom="true"
                 android:weightSum="3">
@@ -128,7 +155,7 @@
                     android:id="@+id/chat_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:text="@string/text_chat_us"
                     android:textColor="@color/colorWhite"
@@ -145,7 +172,7 @@
                     android:layout_height="wrap_content"
                     app:rippleColor="@color/orange_light"
                     android:src="@drawable/ic_phone"
-                    android:layout_margin="5dp"
+                    android:layout_margin="10dp"
                     android:padding="5dp"
                     android:layout_weight="1"/>
                 <!-- Order Button -->
@@ -153,7 +180,7 @@
                     android:id="@+id/order_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:text="@string/text_order"
                     android:textColor="@color/colorWhite"

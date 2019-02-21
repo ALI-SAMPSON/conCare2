@@ -23,16 +23,6 @@
             android:visibility="gone"
             android:layout_centerInParent="true"/>-->
 
-        <!--<de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/home_imageView"
-            android:layout_centerHorizontal="true"
-            android:padding="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/splash_bg"
-            android:contentDescription="@string/todo" /> -->
         <View
             android:id="@+id/view"
             android:layout_marginTop="50dp"
@@ -49,8 +39,7 @@
             android:layout_margin="5dp"
             android:layout_centerHorizontal="true"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-4501853719724548~4076180577">
-        </com.google.android.gms.ads.AdView>
+            ads:adUnitId="@string/admob_banner_id"/>
 
         <!--<TextView
             android:id="@+id/hint_phone"

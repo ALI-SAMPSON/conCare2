@@ -20,6 +20,10 @@ import maes.tech.intentanim.CustomIntent;
 
 public class OrderActivity extends AppCompatActivity {
 
+    AdView adView;
+
+    AdView adView1;
+
     private AppCompatSpinner spinnerGender;
     private ArrayAdapter<CharSequence> arrayAdapterGender;
 
@@ -45,21 +49,33 @@ public class OrderActivity extends AppCompatActivity {
 
         btn_proceed = findViewById(R.id.proceed_Image);
 
-        // Initializing Google Ads
-        MobileAds.initialize(this,"ca-app-pub-4501853719724548~4076180577");
+        // method call to create banner
+        createBanner();
+
+    }
+
+    // method to create banner ad in app
+    private void createBanner() {
+
+        MobileAds.initialize(this,getString(R.string.admob_app_id));
+
         // getting reference to AdView
-        AdView adView = findViewById(R.id.adView);
-        //AdRequest object contains runtime information about a single ad request
+        adView = findViewById(R.id.adView);
+        adView1 = findViewById(R.id.adView1);
+        /*
+         * Create an ad request.
+         */
         AdRequest adRequest = new AdRequest.Builder().build();
-        // Load ads into Banner Ads
-        adView.loadAd(adRequest);
 
-        //AdView 1
-        AdView adView1 = findViewById(R.id.adView1);
-        AdRequest adRequest1 = new AdRequest.Builder().build();
-        adView1.loadAd(adRequest1);
-
-
+        /*
+         * Start loading the ad in the background.
+         */
+        try {
+            adView.loadAd(adRequest);
+            adView1.loadAd(adRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

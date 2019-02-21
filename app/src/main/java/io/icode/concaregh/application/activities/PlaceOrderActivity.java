@@ -55,6 +55,10 @@ import maes.tech.intentanim.CustomIntent;
 @SuppressWarnings("ALL")
 public class PlaceOrderActivity extends AppCompatActivity {
 
+    AdView adView;
+
+    AdView adView1;
+
     // animation class
     Animation shake;
 
@@ -193,15 +197,31 @@ public class PlaceOrderActivity extends AppCompatActivity {
         // method call to change ProgressDialog Background
         changeProgressDialogBg();
 
-        // Initializing Google Ads
-        MobileAds.initialize(this,"ca-app-pub-4501853719724548~4076180577");
-        // getting reference to AdView
-        AdView adView = findViewById(R.id.adView);
-        //AdRequest object contains runtime information about a single ad request
-        AdRequest adRequest = new AdRequest.Builder().build();
-        // Load ads into Banner Ads
-        adView.loadAd(adRequest);
+        // method call to create banner
+        createBanner();
 
+    }
+
+    // method to create banner ad in app
+    private void createBanner() {
+
+        MobileAds.initialize(this,getString(R.string.admob_app_id));
+
+        // getting reference to AdView
+        adView = findViewById(R.id.adView);
+        /*
+         * Create an ad request.
+         */
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        /*
+         * Start loading the ad in the background.
+         */
+        try {
+            adView.loadAd(adRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Adds a sliding animation to the buttons

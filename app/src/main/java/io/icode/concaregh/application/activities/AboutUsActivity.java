@@ -20,6 +20,8 @@ import maes.tech.intentanim.CustomIntent;
 
 public class AboutUsActivity extends AppCompatActivity implements View.OnClickListener {
 
+    AdView adView;
+
     private CardView overview_CardView;
     private CardView mission_CardView;
     private CardView vision_CardView;
@@ -48,15 +50,32 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
         mission_CardView.setOnClickListener(this);
         vision_CardView.setOnClickListener(this);
 
-        // Initializing Google Ads
-        MobileAds.initialize(this,"ca-app-pub-4501853719724548~4076180577");
-        // getting reference to AdView
-        AdView adView = findViewById(R.id.adView);
-        //AdRequest object contains runtime information about a single ad request
-        AdRequest adRequest = new AdRequest.Builder().build();
-        // Load ads into Banner Ads
-        adView.loadAd(adRequest);
+        // method call to create ads
+        createBanner();
 
+    }
+
+    // ******************************** For Admob
+
+    private void createBanner() {
+
+        MobileAds.initialize(this,getString(R.string.admob_app_id));
+
+        // getting reference to AdView
+        adView = findViewById(R.id.adView);
+        /*
+         * Create an ad request.
+         */
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        /*
+         * Start loading the ad in the background.
+         */
+        try {
+            adView.loadAd(adRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
