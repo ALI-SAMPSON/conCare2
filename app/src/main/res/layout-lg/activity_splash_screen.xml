@@ -12,7 +12,6 @@
     android:paddingTop="@dimen/spacing_small"
     tools:context=".activities.SplashScreenActivity">
 
-
         <ImageView
             android:id="@+id/splash_image"
             android:layout_width="match_parent"
@@ -22,7 +21,6 @@
             android:alpha="0.5"
             android:scaleType="centerInside"
             android:contentDescription="@string/todo" />
-
 
         <TextView
             android:id="@+id/splash_screen_text"
