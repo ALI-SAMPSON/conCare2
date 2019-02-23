@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -79,7 +80,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
     // editText and Button to send Message
     EditText msg_to_send;
-    ImageView btn_send;
+    ImageButton btn_send;
 
     Intent intent;
 
@@ -139,7 +140,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         profile_image =  findViewById(R.id.profile_image);
         username =  findViewById(R.id.username);
         admin_status =  findViewById(R.id.admin_status);
-        msg_to_send =  findViewById(R.id.editText_send);
+        msg_to_send =  findViewById(R.id.editTextMessage);
         btn_send =  findViewById(R.id.btn_send);
 
         tv_no_messages = findViewById(R.id.tv_no_messages);

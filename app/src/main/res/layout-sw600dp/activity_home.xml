@@ -89,66 +89,14 @@
                 app:fontFamily="@font/nunito_semibold"
                 android:textColor="@color/background_super_dark"/>
 
-            <!-- AdView to display ads-->
-           <!-- <com.google.android.gms.ads.AdView
-                xmlns:ads="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/adView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerInParent="true"
-                ads:adSize="BANNER"
-                ads:adUnitId="ca-app-pub-4501853719724548~4076180577">
-            </com.google.android.gms.ads.AdView>
-
-            <com.google.android.gms.ads.AdView
-                xmlns:ads="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/adView1"
-                android:layout_below="@+id/text_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                ads:adSize="BANNER"
-                ads:adUnitId="ca-app-pub-4501853719724548~4076180577">
-            </com.google.android.gms.ads.AdView>
-            -->
-
             <LinearLayout
-                android:id="@+id/layout_ads"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_centerInParent="true"
-                android:layout_centerHorizontal="true">
-                <!-- AdView to display ads-->
-                <com.google.android.gms.ads.AdView
-                    xmlns:ads="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/adView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="50dp"
-                    android:layout_gravity="center"
-                    ads:adSize="BANNER"
-                    ads:adUnitId="@string/admob_banner_id"/>
-                <com.google.android.gms.ads.AdView
-                    xmlns:ads="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/adView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    ads:adSize="BANNER"
-                    ads:adUnitId="@string/admob_banner_id"/>
-            </LinearLayout>
-
-            <LinearLayout
+                android:id="@+id/button_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_below="@+id/text_4"
                 android:layout_margin="10dp"
                 android:gravity="center"
-                android:layout_alignParentBottom="true"
                 android:weightSum="3">
                 <!--  Chat Us Button -->
                 <Button
@@ -159,9 +107,6 @@
                     android:layout_weight="1"
                     android:text="@string/text_chat_us"
                     android:textColor="@color/colorWhite"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
                     android:background="@drawable/round_home_button"
                     app:fontFamily="@font/nunito_semibold"
                     android:onClick="onChatUsButtonClick"/>
@@ -184,14 +129,31 @@
                     android:layout_weight="1"
                     android:text="@string/text_order"
                     android:textColor="@color/colorWhite"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
                     android:background="@drawable/round_home_button"
                     app:fontFamily="@font/nunito_semibold"
                     android:layout_gravity="center|end"
                     android:onClick="onOrderButtonClick"
                     android:contentDescription="@string/todo"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_ads"
+                android:layout_below="@+id/button_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true">
+                <!-- AdView to display ads-->
+                <com.google.android.gms.ads.AdView
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/adView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_gravity="center"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="@string/admob_banner_id"/>
             </LinearLayout>
 
         </RelativeLayout>

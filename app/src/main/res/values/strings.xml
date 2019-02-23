@@ -135,12 +135,10 @@
     </string>
 
     <string name="welcome_message" translatable="false">
-        CONCARE GH has a lot to offer you.
-        Just open the drawer on the left of
-        the screen to update your profile,
-        know more about us and freely place
-        order for any contraceptive of your choice.
-        Enjoy and feel free to contact us if need arises!
+        CONCARE GH has a lot to offer you. Just open the drawer on the left
+        of the screen to update your profile. CONCARE GH provides education on reproductive health
+        and how to keep a healthy reproductive system. You may also feel free to chat our consortium
+        of professionals on any issue or problem relating to your reproductive health...
     </string>
 
     <!-- text used in PhoneLoginActivity-->
@@ -169,7 +167,7 @@
     </string>
 
     <string name="title_share" translatable="false">Share</string>
-    <string name="text_chat_us" translatable="false">Chat Us</string>
+    <string name="text_chat_us" translatable="false">Chat</string>
     <string name="text_chats" translatable="false">Chats</string>
     <string name="text_groups" translatable="false">Groups</string>
     <string name="text_users" translatable="false">Users</string>

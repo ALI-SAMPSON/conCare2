@@ -72,6 +72,8 @@ public class EditProfileActivity extends AppCompatActivity
 
     FirebaseAuth mAuth;
 
+    FirebaseUser currentUser;
+
     DatabaseReference userRef;
 
     Users users;
@@ -100,6 +102,8 @@ public class EditProfileActivity extends AppCompatActivity
         users = new Users();
 
         mAuth = FirebaseAuth.getInstance();
+
+        currentUser = mAuth.getCurrentUser();
 
         progressBar = findViewById(R.id.progressBar);
 
@@ -205,7 +209,8 @@ public class EditProfileActivity extends AppCompatActivity
     private void uploadImage(){
 
         final StorageReference profileImageRef = FirebaseStorage.getInstance()
-                .getReference("Profile Pic/" + System.currentTimeMillis() + ".jpg");
+                .getReference("Users Profile Pictures/" + currentUser.getDisplayName()
+                        + "/" + System.currentTimeMillis() + ".jpg");
 
         if(uriProfileImage != null){
             // displays the progressBar
@@ -264,26 +269,23 @@ public class EditProfileActivity extends AppCompatActivity
             return;
         }
 
-
         // progressBar for update Button
         progressBar1.setVisibility(View.VISIBLE);
 
-        final FirebaseUser user = mAuth.getCurrentUser();
-
-        if(user != null && profileImageUrl != null){
+        if(currentUser != null && profileImageUrl != null){
             UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder()
                     .setDisplayName(_username)
                     .setPhotoUri(Uri.parse(profileImageUrl))
                     .build();
 
             // updates user info with the passed username and image
-            user.updateProfile(userProfileChangeRequest)
+            currentUser.updateProfile(userProfileChangeRequest)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
 
-                                userRef = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+                                userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
                                 // updating these fields if task is successful
                                 HashMap<String, Object> updateInfo = new HashMap<>();
                                 updateInfo.put("imageUrl",profileImageUrl);

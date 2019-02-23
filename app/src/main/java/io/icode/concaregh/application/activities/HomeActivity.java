@@ -106,6 +106,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     Uri url_no_image;
 
+    // strings to store the details of admin to pass
+    String uid;
+    String admin_username;
+    String status;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -263,7 +268,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // getting reference to AdView
         adView = findViewById(R.id.adView);
-        adView1 = findViewById(R.id.adView1);
         /*
          * Create an ad request.
          */
@@ -274,7 +278,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
          */
         try {
             adView.loadAd(adRequest);
-            adView1.loadAd(adRequest);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -534,24 +537,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
 
-        /*if(doublePressBackToExitApp){
-            super.onBackPressed();
-            return;
-        }
-        doublePressBackToExitApp = true;
-        // display a toast message to user
-        Toast.makeText(HomeActivity.this,getString(R.string.exit_app_message),Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                moveTaskToBack(true);
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(1);
-            }
-        },2000);
-        */
-
     }
 
     // method to log user out of the system
@@ -635,25 +620,26 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
 
-                    String uid = snapshot.child("adminUid").getValue(String.class);
-                    String username = snapshot.child("username").getValue(String.class);
-                    String status = snapshot.child("status").getValue(String.class);
-
-                    // starts the chat activity
-                    Intent intentChat = new Intent(HomeActivity.this,MessageActivity.class);
-                    intentChat.putExtra("uid",uid);
-                    intentChat.putExtra("username",username);
-                    intentChat.putExtra("status",status);
-                    startActivity(intentChat);
-                    // Add a custom animation ot the activity
-                    //CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+                    uid = snapshot.child("adminUid").getValue(String.class);
+                    admin_username = snapshot.child("username").getValue(String.class);
+                    status = snapshot.child("status").getValue(String.class);
 
                 }
+
+                // starts the chat activity
+                Intent intentChat = new Intent(HomeActivity.this,MessageActivity.class);
+                intentChat.putExtra("uid",uid);
+                intentChat.putExtra("username",admin_username);
+                intentChat.putExtra("status",status);
+                startActivity(intentChat);
+                // Add a custom animation ot the activity
+                //CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                // display error message
+                Toast.makeText(HomeActivity.this,databaseError.getMessage(),Toast.LENGTH_LONG).show();
             }
         };
 
