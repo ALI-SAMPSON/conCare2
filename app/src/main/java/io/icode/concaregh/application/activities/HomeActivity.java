@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -167,7 +169,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         admin = new Admin();
 
         // reference to the admin class
-        adminRef = FirebaseDatabase.getInstance().getReference("Admin");
+        adminRef = FirebaseDatabase.getInstance().getReference(Constants.ADMIN_REF);
 
         // Calling method to display a welcome message
         displayWelcomeMessage();
@@ -193,6 +195,35 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // method call to create ads
         createBanner();
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // update user's device token
+        updateToken(FirebaseInstanceId.getInstance().getToken());
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        // update user's device token
+        updateToken(FirebaseInstanceId.getInstance().getToken());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // update user's device token
+        updateToken(FirebaseInstanceId.getInstance().getToken());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // update user's device token
+        updateToken(FirebaseInstanceId.getInstance().getToken());
     }
 
     // Update currentUser's  device token
@@ -385,6 +416,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     circleImageView.setImageResource(R.drawable.profile_icon);
 
                 }
+
+                // method call to getAdmin details
+                getAdminDetails();
+
             }
 
             @Override
@@ -457,8 +492,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 shareIntent();
                 break;
             case R.id.menu_chat:
+
                 // navigate user to the message activity
-                navigateUserToMessageActivity();
+                startActivity(new Intent(HomeActivity.this,MessageActivity.class));
+
                 break;
             case R.id.menu_about:
                 // starts the about us activity
@@ -565,6 +602,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         // logs current user out of the system
                         mAuth.signOut();
 
+                        // clear data stored in sharepreference
+                        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                        editor.clear();
+                        editor.apply();
+
                         // starts the activity
                         startActivity(new Intent(HomeActivity.this,SignInActivity.class));
 
@@ -603,13 +645,18 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     //open the message activity to start a chat conversation with admin (ConCare GH)
     public void onChatUsButtonClick(View view) {
 
-        // method call
-        navigateUserToMessageActivity();
+        // starts the chat activity
+        Intent intentChat = new Intent(HomeActivity.this,MessageActivity.class);
+        //intentChat.putExtra("uid",uid);
+        //intentChat.putExtra("username",admin_username);
+        //intentChat.putExtra("status",status);
+        startActivity(intentChat);
+
 
     }
 
     // method to navigate user to the message activity to begin chatting
-    private void navigateUserToMessageActivity(){
+    private void getAdminDetails(){
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference adminRef = rootRef.child(Constants.ADMIN_REF);
@@ -620,18 +667,25 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
 
-                    uid = snapshot.child("adminUid").getValue(String.class);
-                    admin_username = snapshot.child("username").getValue(String.class);
-                    status = snapshot.child("status").getValue(String.class);
+                    String uid = snapshot.child("adminUid").getValue(String.class);
+                    String admin_username = snapshot.child("username").getValue(String.class);
+                    String status = snapshot.child("status").getValue(String.class);
+
+                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                    editor.putString("uid",uid);
+                    editor.putString("username",admin_username);
+                    editor.putString("status",status);
+                    editor.apply();
+
 
                 }
 
                 // starts the chat activity
-                Intent intentChat = new Intent(HomeActivity.this,MessageActivity.class);
-                intentChat.putExtra("uid",uid);
-                intentChat.putExtra("username",admin_username);
-                intentChat.putExtra("status",status);
-                startActivity(intentChat);
+                //Intent intentChat = new Intent(HomeActivity.this,MessageActivity.class);
+                //intentChat.putExtra("uid",uid);
+                //intentChat.putExtra("username",admin_username);
+                //intentChat.putExtra("status",status);
+                //startActivity(intentChat);
                 // Add a custom animation ot the activity
                 //CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
             }

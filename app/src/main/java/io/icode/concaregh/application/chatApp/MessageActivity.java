@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -152,11 +154,17 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        intent = getIntent();
+        /*intent = getIntent();
         admin_uid = intent.getStringExtra("uid");
         admin_username = intent.getStringExtra("username");
         // get the current status of admin
         status = intent.getStringExtra("status");
+        */
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        admin_uid = preferences.getString("uid","");
+        admin_username = preferences.getString("username","");
+        status = preferences.getString("status","");
 
         // set status of the admin on toolbar below the username in the message activity
         admin_status.setText(status);
@@ -178,6 +186,8 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
         //method call to seen message
         seenMessage(admin_uid);
+
+        updateToken(FirebaseInstanceId.getInstance().getToken());
 
     }
 
@@ -522,6 +532,8 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         //method calls
         status("online");
         //currentAdmin(adminUid);
+        // update user's device token
+        updateToken(FirebaseInstanceId.getInstance().getToken());
     }
 
     @Override
@@ -530,6 +542,8 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         // method calls
         status("online");
         //currentAdmin("none");
+        // update user's device token
+        updateToken(FirebaseInstanceId.getInstance().getToken());
     }
 
     @Override
@@ -540,6 +554,15 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         // removes eventListeners when activity is destroyed
         chatRef.removeEventListener(seenListener);
         chatRef.removeEventListener(mDBListener);
+        // update user's device token
+        updateToken(FirebaseInstanceId.getInstance().getToken());
 
+    }
+
+    // Update currentUser's  device token
+    private void updateToken(String token){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(Constants.TOKENS_REF);
+        Token token1 = new Token(token);
+        reference.child(currentUser.getUid()).setValue(token1);
     }
 }

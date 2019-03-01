@@ -21,13 +21,18 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import io.icode.concaregh.application.constants.Constants;
+import io.icode.concaregh.application.notifications.Token;
 import maes.tech.intentanim.CustomIntent;
 
 import static java.lang.Thread.sleep;
 
+@SuppressWarnings("ALL")
 public class SplashScreenActivity extends AppCompatActivity {
 
     private TextView app_title;
@@ -75,6 +80,16 @@ public class SplashScreenActivity extends AppCompatActivity {
         // method call
         runAnimation();
 
+        // update user's device token
+        updateToken(FirebaseInstanceId.getInstance().getToken());
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // update user's device token
+        updateToken(FirebaseInstanceId.getInstance().getToken());
     }
 
     // checks for availability of Google Play Services
@@ -97,6 +112,17 @@ public class SplashScreenActivity extends AppCompatActivity {
         return true;
     }
 
+    // Update currentUser's  device token
+    private void updateToken(String token){
+
+        if(mAuth.getCurrentUser() != null){
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference(Constants.TOKENS_REF);
+            Token token1 = new Token(token);
+            reference.child(mAuth.getCurrentUser().getUid()).setValue(token1);
+        }
+
+
+    }
 
     // subscribe users of the app to a topic for push notification from firebase console
     private void subScribeToReceiveBroadcast(){
@@ -120,9 +146,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onStart();
         if(mAuth.getCurrentUser() != null){
 
-            // subscribe user to receive broadcast message from admin
-            subScribeToReceiveBroadcast();
-
             // starts the activity
             startActivity(new Intent(SplashScreenActivity.this,HomeActivity.class));
 
@@ -133,10 +156,6 @@ public class SplashScreenActivity extends AppCompatActivity {
             finish();
         }
         else{
-
-            // subscribe user to receive broadcast message from admin
-            subScribeToReceiveBroadcast();
-
             // open splash screen first
             splashScreen();
         }
