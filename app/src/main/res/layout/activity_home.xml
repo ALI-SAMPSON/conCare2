@@ -103,10 +103,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1.0"
                     android:text="@string/text_chat_us"
-                    android:textColor="@color/colorWhite"
-                    android:background="@drawable/round_home_button"
+                    android:textColor="@color/orange_light"
+                    android:background="@drawable/round_holo_home_button_left"
                     app:fontFamily="@font/nunito_semibold"
                     android:onClick="onChatUsButtonClick"/>
                 <!-- Floating action bar -->
@@ -115,6 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:rippleColor="@color/orange_light"
+                    android:background="@drawable/round_holo_home_button_right"
                     android:src="@drawable/ic_phone"
                     android:layout_margin="10dp"
                     android:padding="5dp"
@@ -125,13 +126,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1.0"
                     android:text="@string/text_order"
-                    android:textColor="@color/colorWhite"
-                    android:background="@drawable/round_home_button"
+                    android:textColor="@color/orange_light"
+                    android:background="@drawable/round_holo_home_button_right"
                     app:fontFamily="@font/nunito_semibold"
                     android:layout_gravity="center|end"
                     android:onClick="onOrderButtonClick"
+                    android:visibility="gone"
                     android:contentDescription="@string/todo"/>
             </LinearLayout>
 
