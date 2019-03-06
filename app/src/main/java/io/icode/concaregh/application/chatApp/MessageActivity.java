@@ -72,6 +72,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
     TextView admin_status;
 
     FirebaseUser currentUser;
+
     DatabaseReference adminRef;
 
     TextView tv_no_messages;
@@ -161,7 +162,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         status = intent.getStringExtra("status");
         */
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MessageActivity.this);
         admin_uid = preferences.getString("uid","");
         admin_username = preferences.getString("username","");
         status = preferences.getString("status","");
@@ -171,7 +172,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(admin_uid);
+        adminRef = FirebaseDatabase.getInstance().getReference(Constants.ADMIN_REF).child(admin_uid);
 
         progressBar =  findViewById(R.id.progressBar);
 
@@ -193,13 +194,15 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
     private void getAdminDetails(){
 
-        adminRef.addValueEventListener(new ValueEventListener() {
+        adminRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 Admin admin = dataSnapshot.getValue(Admin.class);
 
                 username.setText(admin.getUsername());
+                // set status of the admin on toolbar below the username in the message activity
+                admin_status.setText(admin.getStatus());
 
                 if(admin.getImageUrl() == null){
                     // sets a default placeholder into imageView if url is null
@@ -367,6 +370,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         mChats = new ArrayList<>();
 
         chatRef = FirebaseDatabase.getInstance().getReference(Constants.CHAT_REF);
+
         mDBListener = chatRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -519,11 +523,24 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
     // method to set user status to "online" or "offline"
     private void status(String status){
 
-        adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(admin_uid);
+        userRef = FirebaseDatabase.getInstance().getReference(Constants.USER_REF)
+                .child(currentUser.getUid());
         //.child(adminUid);
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("status", status);
-        adminRef.updateChildren(hashMap);
+        userRef.updateChildren(hashMap);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        status("online");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        status("online");
     }
 
     @Override
@@ -531,9 +548,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         super.onResume();
         //method calls
         status("online");
-        //currentAdmin(adminUid);
-        // update user's device token
-        updateToken(FirebaseInstanceId.getInstance().getToken());
+
     }
 
     @Override
@@ -541,9 +556,14 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         super.onPause();
         // method calls
         status("online");
-        //currentAdmin("none");
         // update user's device token
         updateToken(FirebaseInstanceId.getInstance().getToken());
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        status("offline");
     }
 
     @Override
@@ -552,10 +572,10 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         // set status to offline if activity is destroyed
         status("offline");
         // removes eventListeners when activity is destroyed
-        chatRef.removeEventListener(seenListener);
-        chatRef.removeEventListener(mDBListener);
-        // update user's device token
-        updateToken(FirebaseInstanceId.getInstance().getToken());
+        if(seenListener != null && mDBListener != null){
+            chatRef.removeEventListener(seenListener);
+            chatRef.removeEventListener(mDBListener);
+        }
 
     }
 

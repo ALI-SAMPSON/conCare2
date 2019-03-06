@@ -8,7 +8,7 @@ android {
         applicationId "io.icode.concaregh.application"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 7
+        versionCode 8
         versionName "1.11"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true

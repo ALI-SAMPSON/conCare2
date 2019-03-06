@@ -48,6 +48,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.HashMap;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.icode.concaregh.application.chatApp.ChatActivity;
 import io.icode.concaregh.application.chatApp.MessageActivity;
@@ -83,9 +85,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     Admin admin;
 
+    DatabaseReference userRef;
+
     DatabaseReference userInfoRef;
 
     DatabaseReference adminRef;
+
+    ValueEventListener eventListener;
 
     NavigationView navigationView;
 
@@ -169,7 +175,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         admin = new Admin();
 
         // reference to the admin class
-        adminRef = FirebaseDatabase.getInstance().getReference(Constants.ADMIN_REF);
+        //adminRef = FirebaseDatabase.getInstance().getReference(Constants.ADMIN_REF);
 
         // Calling method to display a welcome message
         displayWelcomeMessage();
@@ -190,7 +196,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         changeProgressDialogBackground();
 
         // update user's device token
-        updateToken(FirebaseInstanceId.getInstance().getToken());
+        //updateToken(FirebaseInstanceId.getInstance().getToken());
 
         // method call to create ads
         createBanner();
@@ -200,30 +206,47 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
+        status("online");
         // update user's device token
         updateToken(FirebaseInstanceId.getInstance().getToken());
-
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        // update user's device token
-        updateToken(FirebaseInstanceId.getInstance().getToken());
+        status("online");
+        //currentUser(users_id);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //method calls
+        status("online");
+        //currentAdmin(adminUid);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        status("online");
         // update user's device token
         updateToken(FirebaseInstanceId.getInstance().getToken());
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        status("offline");
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        // update user's device token
-        updateToken(FirebaseInstanceId.getInstance().getToken());
+        status("offline");
+        if(adminRef != null){
+            adminRef.removeEventListener(eventListener);
+        }
     }
 
     // Update currentUser's  device token
@@ -659,9 +682,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private void getAdminDetails(){
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference adminRef = rootRef.child(Constants.ADMIN_REF);
+        adminRef = rootRef.child(Constants.ADMIN_REF);
 
-        ValueEventListener eventListener = new ValueEventListener() {
+        eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -671,23 +694,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     String admin_username = snapshot.child("username").getValue(String.class);
                     String status = snapshot.child("status").getValue(String.class);
 
-                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this).edit();
                     editor.putString("uid",uid);
                     editor.putString("username",admin_username);
                     editor.putString("status",status);
                     editor.apply();
 
-
                 }
 
-                // starts the chat activity
-                //Intent intentChat = new Intent(HomeActivity.this,MessageActivity.class);
-                //intentChat.putExtra("uid",uid);
-                //intentChat.putExtra("username",admin_username);
-                //intentChat.putExtra("status",status);
-                //startActivity(intentChat);
-                // Add a custom animation ot the activity
-                //CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
             }
 
             @Override
@@ -728,4 +742,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
 
     }
+
+    // method to set user status to "online" or "offline"
+    private void status(String status){
+
+        userRef = FirebaseDatabase.getInstance().getReference(Constants.USER_REF)
+                .child(mAuth.getCurrentUser().getUid());
+        //.child(adminUid);
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("status", status);
+        userRef.updateChildren(hashMap);
+    }
+
+
 }
