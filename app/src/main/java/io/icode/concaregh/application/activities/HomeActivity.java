@@ -227,23 +227,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        status("online");
-        // update user's device token
-        updateToken(FirebaseInstanceId.getInstance().getToken());
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        status("offline");
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
-        status("offline");
         if(adminRef != null){
             adminRef.removeEventListener(eventListener);
         }
