@@ -338,6 +338,20 @@
 
     <string name="text_dismiss" translatable="false">Dismiss</string>
 
+    <string name="title_deleting_msg" translatable="false">Deleting message...</string>
+
+    <string name="text_failed" translatable="false">Failed!</string>
+
+    <string name="delete_msg_instruct" translatable="false">please long click on a message to delete</string>
+
+    <string name="msg_deleted" translatable="false">Message deleted</string>
+
+    <string name="status_online" translatable="false">online</string>
+
+    <string name="status_offline" translatable="false">offline</string>
+
+    <string name="no_msg_to_send" translatable="false">Please type a message to send</string>
+
     <string name="text_share_with" translatable="false">Share with</string>
 
     <string name="text_exit_application" translatable="false">Exit Application</string>

@@ -59,6 +59,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static io.icode.concaregh.application.constants.Constants.USER_REF;
+
 @SuppressWarnings("ALL")
 public class MessageActivity extends AppCompatActivity implements MessageAdapter.OnItemClickListener {
 
@@ -178,7 +180,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         // progressDialog to display before deleting message
         progressDialog = new ProgressDialog(this);
 
-        progressDialog.setMessage("Deleting message...");
+        progressDialog.setMessage(getString(R.string.title_deleting_msg));
 
         // method to load admin details into the imageView
         // and TextView in the toolbar section of this activity's layout resource file
@@ -242,7 +244,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         }
         else{
             Toast.makeText(MessageActivity.this,
-                    "No message to send",Toast.LENGTH_LONG).show();
+                    getString(R.string.no_msg_to_send),Toast.LENGTH_LONG).show();
         }
         // clear the field after message is sent
         msg_to_send.setText("");
@@ -264,7 +266,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         // variable to hold the message to be sent
         final String msg = message;
 
-        userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
+        userRef = FirebaseDatabase.getInstance().getReference(USER_REF).child(currentUser.getUid());
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -308,7 +310,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
                                 public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
                                     if(response.code() == 200){
                                         if(response.body().success != 1){
-                                            Snackbar.make(relativeLayout,"Failed!",Snackbar.LENGTH_LONG).show();
+                                            Snackbar.make(relativeLayout,getString(R.string.text_failed),Snackbar.LENGTH_LONG).show();
                                         }
                                     }
                                 }
@@ -446,7 +448,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
      */
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(this," please long click on a message to delete ",Toast.LENGTH_LONG).show();
+        Toast.makeText(this,getString(R.string.delete_msg_instruct),Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -456,7 +458,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         builder.setTitle(getString(R.string.title_delete_message));
         builder.setMessage(getString(R.string.text_delete_message));
 
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.text_yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -480,7 +482,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){
-                                    Toast.makeText(MessageActivity.this," Message deleted ",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MessageActivity.this,getString(R.string.msg_deleted),Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -497,7 +499,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
             }
         });
 
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.text_no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -524,7 +526,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
     // method to set user status to "online" or "offline"
     private void status(String status){
 
-        userRef = FirebaseDatabase.getInstance().getReference(Constants.USER_REF)
+        userRef = FirebaseDatabase.getInstance().getReference(USER_REF)
                 .child(currentUser.getUid());
         //.child(adminUid);
         HashMap<String,Object> hashMap = new HashMap<>();
@@ -535,41 +537,43 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
     @Override
     protected void onStart() {
         super.onStart();
-        status("online");
+        status(getString(R.string.status_online));
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        status("online");
+        // set status to online
+        status(getString(R.string.status_online));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //method calls
-        status("online");
+        // set status to online
+        status(getString(R.string.status_online));
 
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        // method calls
-        status("offline");
+        // set status to offline
+        status(getString(R.string.status_offline));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        status("offline");
+        // set status to offline
+        status(getString(R.string.status_offline));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         // set status to offline if activity is destroyed
-        status("offline");
+        status(getString(R.string.status_offline));
         // removes eventListeners when activity is destroyed
         if(seenListener != null && mDBListener != null){
             chatRef.removeEventListener(seenListener);

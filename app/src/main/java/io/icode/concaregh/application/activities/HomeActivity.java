@@ -175,9 +175,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         admin = new Admin();
 
-        // reference to the admin class
-        //adminRef = FirebaseDatabase.getInstance().getReference(Constants.ADMIN_REF);
-
         // Calling method to display a welcome message
         displayWelcomeMessage();
 
@@ -207,33 +204,24 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
-        status("online");
-        // update user's device token
-        updateToken(FirebaseInstanceId.getInstance().getToken());
+        // set status to online
+        status(getString(R.string.status_online));
     }
     @Override
     protected void onResume() {
         super.onResume();
-        //method calls
-        status("online");
+        // set status to online
+        status(getString(R.string.status_online));
         //currentAdmin(adminUid);
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onRestart();
-        status("offline");
-        //currentUser(users_id);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        /*if(adminRef != null){
+        if(adminRef != null){
             adminRef.removeEventListener(eventListener);
         }
-        */
+
     }
 
     // Update currentUser's  device token
