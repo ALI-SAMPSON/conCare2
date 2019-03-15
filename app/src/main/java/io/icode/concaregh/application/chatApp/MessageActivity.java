@@ -85,8 +85,6 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
     EditText msg_to_send;
     ImageButton btn_send;
 
-    Intent intent;
-
     // string to get intentExtras
     String admin_uid;
 
@@ -155,24 +153,25 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        /*intent = getIntent();
-        admin_uid = intent.getStringExtra("uid");
-        admin_username = intent.getStringExtra("username");
+        admin_uid = getIntent().getStringExtra("uid");
+        //admin_username = getIntent().getStringExtra("username");
         // get the current status of admin
-        status = intent.getStringExtra("status");
-        */
+        //status = getIntent().getStringExtra("status");
 
+        /*
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MessageActivity.this);
         admin_uid = preferences.getString("uid","");
         admin_username = preferences.getString("username","");
         status = preferences.getString("status","");
+        */
 
         // set status of the admin on toolbar below the username in the message activity
-        admin_status.setText(status);
+        //admin_status.setText(status);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        adminRef = FirebaseDatabase.getInstance().getReference(Constants.ADMIN_REF).child(admin_uid);
+        adminRef = FirebaseDatabase.getInstance().getReference(Constants.ADMIN_REF)
+                .child(admin_uid);
 
         progressBar =  findViewById(R.id.progressBar);
 
@@ -188,10 +187,12 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         //method call to seen message
         seenMessage(admin_uid);
 
+        // update registration token
         updateToken(FirebaseInstanceId.getInstance().getToken());
 
     }
 
+    // methpod to load admin details
     private void getAdminDetails(){
 
         adminRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -555,9 +556,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
     protected void onPause() {
         super.onPause();
         // method calls
-        status("online");
-        // update user's device token
-        updateToken(FirebaseInstanceId.getInstance().getToken());
+        status("offline");
     }
 
     @Override

@@ -61,6 +61,8 @@ import io.icode.concaregh.application.notifications.Data;
 import io.icode.concaregh.application.notifications.Token;
 import maes.tech.intentanim.CustomIntent;
 
+import static io.icode.concaregh.application.constants.Constants.USER_REF;
+
 @SuppressWarnings("ALL")
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -161,7 +163,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             getSupportActionBar().setHomeButtonEnabled(true);
         }
 
-
         shake = AnimationUtils.loadAnimation(this, R.anim.anim_scale_out);
 
         // floating action button onclick Listener and initialization
@@ -196,7 +197,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         changeProgressDialogBackground();
 
         // update user's device token
-        //updateToken(FirebaseInstanceId.getInstance().getToken());
+        updateToken(FirebaseInstanceId.getInstance().getToken());
 
         // method call to create ads
         createBanner();
@@ -210,14 +211,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // update user's device token
         updateToken(FirebaseInstanceId.getInstance().getToken());
     }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        status("online");
-        //currentUser(users_id);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -226,12 +219,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         //currentAdmin(adminUid);
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onRestart();
+        status("offline");
+        //currentUser(users_id);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(adminRef != null){
+        /*if(adminRef != null){
             adminRef.removeEventListener(eventListener);
         }
+        */
     }
 
     // Update currentUser's  device token
@@ -251,7 +253,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(HomeActivity.this,ContactUsActivity.class));
 
                 // Add a custom animation ot the activity
-                CustomIntent.customType(HomeActivity.this,"up-to-bottom");
+                CustomIntent.customType(HomeActivity.this,getString(R.string.up_to_bottom));
 
             }
         });
@@ -272,7 +274,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
 
                 // Add a custom animation ot the activity
-                CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+                CustomIntent.customType(HomeActivity.this,getString(R.string.fadein_to_fadeout));
 
             }
         });
@@ -350,7 +352,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     builder.setCancelable(false);
                     builder.setIcon(R.mipmap.app_logo_round);
 
-                    builder.setPositiveButton("DISMISS", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton(getString(R.string.text_dismiss), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             // closes the Alert dialog
@@ -369,7 +371,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     builder.setCancelable(false);
                     builder.setIcon(R.mipmap.app_logo_round);
 
-                    builder.setPositiveButton("DISMISS", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton(getString(R.string.text_dismiss), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             // closes the Alert dialog
@@ -394,36 +396,28 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private void loadUserInfo(){
 
         // get current logged in user
-        final FirebaseUser user = mAuth.getCurrentUser();
+        final FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        userInfoRef = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid());
+        userInfoRef = FirebaseDatabase.getInstance().getReference(USER_REF)
+                .child(currentUser.getUid());
 
-        userInfoRef.addValueEventListener(new ValueEventListener() {
+        userInfoRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                Users users = dataSnapshot.getValue(Users.class);
+                Users user = dataSnapshot.getValue(Users.class);
 
-                if(user != null) {
-                    // sets username and email
-                    username.setText(" Username : " + user.getDisplayName());
+                    username.setText(" Username : " + user.getUsername());
+
                     email.setText(" Email : " + user.getEmail());
+
                     // checks if imageUrl is not null
-                    if (user.getPhotoUrl() == null) {
+                    if (user.getImageUrl() == null) {
                         circleImageView.setImageResource(R.drawable.profile_icon);
                     }
                     else {
-                        Glide.with(getApplicationContext()).load(user.getPhotoUrl()).into(circleImageView);
+                        Glide.with(getApplicationContext()).load(user.getImageUrl()).into(circleImageView);
                     }
-                }
-                else{
-
-                    // sets username, email and image of user
-                    username.setText(" Username : " + getString(R.string.dummy_username));
-                    email.setText(" Email : " + getString(R.string.dummy_email));
-                    circleImageView.setImageResource(R.drawable.profile_icon);
-
-                }
 
                 // method call to getAdmin details
                 getAdminDetails();
@@ -452,7 +446,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 // start EditProfile activity
                 startActivity(new Intent(HomeActivity.this,EditProfileActivity.class));
                 // Add a custom animation ot the activity
-                CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+                CustomIntent.customType(HomeActivity.this,getString(R.string.fadein_to_fadeout));
                 break;
             /*case R.id.orders:
                 // start orders fragment
@@ -461,13 +455,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 // start About Us Activity
                  startActivity(new Intent(HomeActivity.this,AboutUsActivity.class));
                  // Add a custom animation ot the activity
-                 CustomIntent.customType(HomeActivity.this,"bottom-to-up");
+                 CustomIntent.customType(HomeActivity.this,getString(R.string.bottom_to_up));
                 break;
             case R.id.menu_contact:
                 // starts the Contact us activity
                 startActivity(new Intent(HomeActivity.this,ContactUsActivity.class));
                 // Add a custom animation ot the activity
-                CustomIntent.customType(HomeActivity.this,"up-to-bottom");
+                CustomIntent.customType(HomeActivity.this,getString(R.string.up_to_bottom));
             case R.id.menu_sign_out:
                 // a call to logout method
                signOut();
@@ -509,13 +503,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 // starts the about us activity
                 startActivity(new Intent(HomeActivity.this,AboutUsActivity.class));
                 // Add a custom animation ot the activity
-                CustomIntent.customType(HomeActivity.this,"bottom-to-up");
+                CustomIntent.customType(HomeActivity.this,getString(R.string.bottom_to_up));
                 break;
             case R.id.menu_contact:
                 // starts the Contact us activity
                 startActivity(new Intent(HomeActivity.this,ContactUsActivity.class));
                 // Add a custom animation ot the activity
-                CustomIntent.customType(HomeActivity.this,"up-to-bottom");
+                CustomIntent.customType(HomeActivity.this,getString(R.string.up_to_bottom));
                 break;
             case R.id.menu_exit:
 
@@ -534,11 +528,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void shareIntent(){
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        String sharingSubject = "CONCARE GH";
+        String sharingSubject = getString(R.string.app_name);
         String sharingText = "https://play.google.com/store/apps/details?id=io.icode.concaregh.application";
         sharingIntent.putExtra(Intent.EXTRA_SUBJECT,sharingSubject);
         sharingIntent.putExtra(Intent.EXTRA_TEXT,sharingText);
-        startActivity(Intent.createChooser(sharingIntent,"Share with"));
+        startActivity(Intent.createChooser(sharingIntent,getString(R.string.text_share_with)));
     }
 
 
@@ -546,11 +540,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private void exitApplication(){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-        builder.setTitle("Exit Application");
-        builder.setMessage("Are you sure you want to exit application?");
+        builder.setTitle(getString(R.string.text_exit_application));
+        builder.setMessage(getString(R.string.text_confirm_exit_application));
         builder.setCancelable(false);
 
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.text_yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 moveTaskToBack(true);
@@ -559,7 +553,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.text_no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -591,7 +585,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         builder.setTitle(getString(io.icode.concaregh.application.R.string.logout));
         builder.setMessage(getString(R.string.logout_msg));
 
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.text_yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -610,16 +604,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         // logs current user out of the system
                         mAuth.signOut();
 
-                        // clear data stored in sharepreference
-                        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
-                        editor.clear();
-                        editor.apply();
-
                         // starts the activity
                         startActivity(new Intent(HomeActivity.this,SignInActivity.class));
 
                         // Add a custom animation ot the activity
-                        CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+                        CustomIntent.customType(HomeActivity.this,getString(R.string.fadein_to_fadeout));
 
                         // finishes the activity
                         finish();
@@ -630,7 +619,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.text_no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -647,20 +636,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void finish() {
         super.finish();
         // Add a custom animation ot the activity
-        CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+        CustomIntent.customType(HomeActivity.this,getString(R.string.fadein_to_fadeout));
     }
 
     //open the message activity to start a chat conversation with admin (ConCare GH)
     public void onChatUsButtonClick(View view) {
 
-        // starts the chat activity
-        Intent intentChat = new Intent(HomeActivity.this,MessageActivity.class);
-        //intentChat.putExtra("uid",uid);
-        //intentChat.putExtra("username",admin_username);
-        //intentChat.putExtra("status",status);
-        startActivity(intentChat);
-
-
+        if(uid != null && admin_username != null && status != null){
+            // starts the chat activity
+            Intent intentChat = new Intent(HomeActivity.this,MessageActivity.class);
+            intentChat.putExtra("uid",uid);
+            //intentChat.putExtra("username",admin_username);
+            //intentChat.putExtra("status",status);
+            startActivity(intentChat);
+        }
     }
 
     // method to navigate user to the message activity to begin chatting
@@ -675,15 +664,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
 
-                    String uid = snapshot.child("adminUid").getValue(String.class);
-                    String admin_username = snapshot.child("username").getValue(String.class);
-                    String status = snapshot.child("status").getValue(String.class);
+                    uid = snapshot.child("adminUid").getValue(String.class);
+                    admin_username = snapshot.child("username").getValue(String.class);
+                    status = snapshot.child("status").getValue(String.class);
 
-                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this).edit();
+                    /*SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this).edit();
                     editor.putString("uid",uid);
                     editor.putString("username",admin_username);
                     editor.putString("status",status);
                     editor.apply();
+                    */
 
                 }
 
@@ -703,7 +693,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // starts the about us activity
         startActivity(new Intent(HomeActivity.this,OrderActivity.class));
         // Add a custom animation ot the activity
-        CustomIntent.customType(HomeActivity.this,"fadein-to-fadeout");
+        CustomIntent.customType(HomeActivity.this,getString(R.string.fadein_to_fadeout));
     }
 
     // method to change ProgressDialog style based on the android version of user's phone
@@ -731,7 +721,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     // method to set user status to "online" or "offline"
     private void status(String status){
 
-        userRef = FirebaseDatabase.getInstance().getReference(Constants.USER_REF)
+        userRef = FirebaseDatabase.getInstance().getReference(USER_REF)
                 .child(mAuth.getCurrentUser().getUid());
         //.child(adminUid);
         HashMap<String,Object> hashMap = new HashMap<>();

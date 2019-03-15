@@ -332,4 +332,29 @@
         ca-app-pub-3940256099942544/6300978111
     </string>
 
+    <string name="text_yes" translatable="false">Yes</string>
+
+    <string name="text_no" translatable="false">No</string>
+
+    <string name="text_dismiss" translatable="false">Dismiss</string>
+
+    <string name="text_share_with" translatable="false">Share with</string>
+
+    <string name="text_exit_application" translatable="false">Exit Application</string>
+
+    <string name="text_confirm_exit_application" translatable="false">Are you sure you want to exit application?</string>
+
+
+    <!-- Intent animation string -->
+    <string name="fadein_to_fadeout" translatable="false">fadein-to-fadeout</string>
+
+    <string name="left_to_right" translatable="false">left-to-right</string>
+
+    <string name="right_to_left" translatable="false">right-to-left</string>
+
+    <string name="up_to_bottom" translatable="false">up-to-bottom</string>
+
+    <string name="bottom_to_up" translatable="false">bottom-to-up</string>
+
+
 </resources>
