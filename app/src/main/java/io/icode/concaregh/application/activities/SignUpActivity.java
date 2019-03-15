@@ -366,10 +366,6 @@ public class SignUpActivity extends AppCompatActivity {
                                         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(SignUpActivity.this);
                                         notificationManager.notify(notificationId,mBuilder.build());
 
-                                        // Method call to sendVerification
-                                        // link to users's email address
-                                        //sendVerificationEmail();
-
                                         // sends a message to admin after user signs up
                                         sendSMSMessageToAdmin();
 
@@ -392,10 +388,11 @@ public class SignUpActivity extends AppCompatActivity {
                                                 startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
 
                                                 // Add a custom animation ot the activity
-                                                CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");
+                                                CustomIntent.customType(SignUpActivity.this,getString(R.string.fadein_to_fadeout));
 
                                                 // finish the activity
                                                 finish();
+
                                             }
                                         },3000);
 
@@ -552,7 +549,7 @@ public class SignUpActivity extends AppCompatActivity {
         String password = "concare1";
         // Message content that is to be transmitted
 
-        String message =  user_name + " has signed up as a new user on ConCare GH mobile app on " + currentDate + " at " + currentTime;
+        String message =  user_name + " has signed up as a new user on ConCare GH app on " + currentDate + " at " + currentTime;
 
         /**
          * What type of the message that is to be sent
@@ -706,7 +703,7 @@ public class SignUpActivity extends AppCompatActivity {
         startActivity(new Intent(SignUpActivity.this,SignInActivity.class));
 
         // Add a custom animation ot the activity
-        CustomIntent.customType(SignUpActivity.this,"fadein-to-fadeout");
+        CustomIntent.customType(SignUpActivity.this,getString(R.string.fadein_to_fadeout));
 
         // finishes the activity
         finish();
