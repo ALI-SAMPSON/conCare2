@@ -483,21 +483,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_chat:
 
-                // navigate user to the message activity
-                startActivity(new Intent(HomeActivity.this,MessageActivity.class));
+                if(uid != null && admin_username != null && status != null){
+                    // starts the chat activity
+                    Intent intentChat = new Intent(HomeActivity.this,MessageActivity.class);
+                    intentChat.putExtra("uid",uid);
+                    //intentChat.putExtra("username",admin_username);
+                    //intentChat.putExtra("status",status);
+                    startActivity(intentChat);
+                }
 
-                break;
-            case R.id.menu_about:
-                // starts the about us activity
-                startActivity(new Intent(HomeActivity.this,AboutUsActivity.class));
-                // Add a custom animation ot the activity
-                CustomIntent.customType(HomeActivity.this,getString(R.string.bottom_to_up));
-                break;
-            case R.id.menu_contact:
-                // starts the Contact us activity
-                startActivity(new Intent(HomeActivity.this,ContactUsActivity.class));
-                // Add a custom animation ot the activity
-                CustomIntent.customType(HomeActivity.this,getString(R.string.up_to_bottom));
                 break;
             case R.id.menu_exit:
 

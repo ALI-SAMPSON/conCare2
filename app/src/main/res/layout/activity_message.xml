@@ -6,7 +6,7 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/chat_bg"
+    android:background="@drawable/chat_bg"
     tools:context=".chatApp.MessageActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -98,12 +98,12 @@
         android:layout_toLeftOf="@+id/layout_send"
         android:layout_centerVertical="true"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginEnd="2dp"
         android:layout_marginRight="2dp"
-        android:padding="5dp"
+        android:padding="3dp"
         android:background="@drawable/circular_edittext"
         android:layout_alignParentBottom="true">
         <EditText
@@ -127,7 +127,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="2dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginStart="2dp"
         android:layout_marginLeft="2dp"
         android:layout_marginEnd="5dp"
