@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -36,7 +37,9 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
@@ -60,9 +63,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static io.icode.concaregh.application.constants.Constants.USER_REF;
+import static io.icode.concaregh.application.constants.Constants.client_url;
 
 @SuppressWarnings("ALL")
-public class MessageActivity extends AppCompatActivity implements MessageAdapter.OnItemClickListener {
+public class MessageActivity extends AppCompatActivity implements View.OnClickListener,
+        MessageAdapter.OnItemClickListener {
 
     RelativeLayout relativeLayout;
 
@@ -85,7 +90,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
     // editText and Button to send Message
     EditText msg_to_send;
-    ImageButton btn_send;
+    ImageButton btn_send,img_emoji;
 
     // string to get intentExtras
     String admin_uid;
@@ -114,6 +119,9 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
     private String theLastMessage;
 
+    // variable to store the current time
+    String currentTime;
+
     // loading bar to load messages
     ProgressBar progressBar;
 
@@ -128,7 +136,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,7 +144,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
             }
         });
 
-        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+        apiService = Client.getClient(client_url).create(APIService.class);
 
         relativeLayout = findViewById(R.id.relativeLayout);
 
@@ -145,6 +153,10 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         admin_status =  findViewById(R.id.admin_status);
         msg_to_send =  findViewById(R.id.editTextMessage);
         btn_send =  findViewById(R.id.btn_send);
+        img_emoji =  findViewById(R.id.img_emoji);
+
+        btn_send.setOnClickListener(this);
+        img_emoji.setOnClickListener(this);
 
         tv_no_messages = findViewById(R.id.tv_no_messages);
 
@@ -189,8 +201,20 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         //method call to seen message
         seenMessage(admin_uid);
 
+        // mehtod call to get current time
+        getCurrentTime();
+
         // update registration token
         updateToken(FirebaseInstanceId.getInstance().getToken());
+
+    }
+
+    // gets the current time
+    private void getCurrentTime(){
+
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
+        currentTime = timeFormat.format(calendar.getTime());
 
     }
 
@@ -205,7 +229,15 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
                 username.setText(admin.getUsername());
                 // set status of the admin on toolbar below the username in the message activity
-                admin_status.setText(admin.getStatus());
+
+                // making sure status of admin is always online
+                if(admin.getStatus().equals(getString(R.string.text_offline))){
+                    admin_status.setText(getString(R.string.text_online));
+                }
+                else{
+                    admin_status.setText(admin.getStatus());
+                }
+
 
                 if(admin.getImageUrl() == null){
                     // sets a default placeholder into imageView if url is null
@@ -230,24 +262,40 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
 
     }
 
-    // ImageView OnClickListener to send Message
-    public void btnSend(View view) {
+    @Override
+    public void onClick(View v) {
 
-        // sets notify to true
-        notify = true;
+        switch (v.getId()){
+            case R.id.img_emoji:{
 
-        String message  = msg_to_send.getText().toString();
+                Toast.makeText(MessageActivity.this,
+                        getString(R.string.text_hi),Toast.LENGTH_LONG).show();
 
-        if(!message.equals("")){
-            // call to method to sendMessage and
-            sendMessage(currentUser.getUid(),admin_uid,message);
+                break;
+            }
+
+            case R.id.btn_send:{
+
+                // sets notify to true
+                notify = true;
+
+                String message  = msg_to_send.getText().toString();
+
+                if(!message.equals("")){
+                    // call to method to sendMessage and
+                    sendMessage(currentUser.getUid(),admin_uid,message);
+                }
+                else{
+                    Toast.makeText(MessageActivity.this,
+                            getString(R.string.no_text_message),Toast.LENGTH_LONG).show();
+                }
+                // clear the field after message is sent
+                msg_to_send.setText("");
+
+                break;
+            }
         }
-        else{
-            Toast.makeText(MessageActivity.this,
-                    getString(R.string.no_msg_to_send),Toast.LENGTH_LONG).show();
-        }
-        // clear the field after message is sent
-        msg_to_send.setText("");
+
     }
 
     private void sendMessage(String sender, final String receiver, final String message){
@@ -259,6 +307,7 @@ public class MessageActivity extends AppCompatActivity implements MessageAdapter
         hashMap.put("receiver", receiver);
         hashMap.put("receivers", new ArrayList<String>(){{add(receiver);}});
         hashMap.put("message",message);
+        hashMap.put("timeStamp",currentTime);
         hashMap.put("isseen", false);
 
         chatRef.child(Constants.CHAT_REF).push().setValue(hashMap);

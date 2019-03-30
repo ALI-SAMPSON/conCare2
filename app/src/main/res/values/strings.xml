@@ -191,8 +191,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 
-    <string name="type_message" translatable="false">Type a message...</string>
-
     <string name="text_reproductive_health" translatable="false">
 
         Reproductive health is a crucial part of general health and a central feature of human development.
@@ -350,13 +348,21 @@
 
     <string name="status_offline" translatable="false">offline</string>
 
-    <string name="no_msg_to_send" translatable="false">Please type a message to send</string>
-
     <string name="text_share_with" translatable="false">Share with</string>
 
     <string name="text_exit_application" translatable="false">Exit Application</string>
 
     <string name="text_confirm_exit_application" translatable="false">Are you sure you want to exit application?</string>
+
+    <string name="type_message" translatable="false">Type a message</string>
+
+    <string name="no_text_message" translatable="false">Type a message to send</string>
+
+    <string name="text_msg_deleted" translatable="false">Message deleted</string>
+
+    <string name="text_hi" translatable="false">Hi, there!</string>
+
+    <string name="deleted_msg_alert" translatable="false">please long click on a message to delete </string>
 
     <!-- Intent animation string -->
     <string name="fadein_to_fadeout" translatable="false">fadein-to-fadeout</string>

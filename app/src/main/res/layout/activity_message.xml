@@ -6,7 +6,8 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/chat_bg"
+    android:background="@mipmap/chat_bg"
+    android:focusableInTouchMode="true"
     tools:context=".chatApp.MessageActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -51,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     app:fontFamily="@font/nunito_semibold"
-                    android:text="@string/text_hello"
+                    android:text="@string/text_online"
                     android:textColor="@color/colorWhite"
                     android:textSize="12sp"/>
 
@@ -89,13 +90,16 @@
         android:visibility="gone"
         android:layout_centerInParent="true"/>
 
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:id="@+id/button_send_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_toStartOf="@+id/layout_send"
         android:layout_toLeftOf="@+id/layout_send"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0.5dp"
+        app:cardBackgroundColor="@color/white_ghost"
         android:layout_centerVertical="true"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="8dp"
@@ -103,24 +107,42 @@
         android:layout_marginLeft="5dp"
         android:layout_marginEnd="2dp"
         android:layout_marginRight="2dp"
-        android:padding="3dp"
+        android:padding="5dp"
         android:background="@drawable/circular_edittext"
         android:layout_alignParentBottom="true">
-        <EditText
-            android:id="@+id/editTextMessage"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/type_message"
-            app:fontFamily="@font/lato"
-            android:padding="7dp"
-            android:layout_gravity="center_vertical"
-            android:background="@android:color/transparent"
-            android:inputType="textMultiLine|textAutoComplete|textAutoCorrect"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp" />
-    </LinearLayout>
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/img_emoji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="@drawable/ic_face"/>
+            <EditText
+                android:id="@+id/editTextMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/type_message"
+                android:fontFamily="@font/lato"
+                android:padding="10dp"
+                android:gravity="center_vertical"
+                style="?android:attr/textAppearanceMedium"
+                android:layout_gravity="center_vertical"
+                android:background="@android:color/transparent"
+                android:inputType="textMultiLine|textAutoComplete|textAutoCorrect"
+                android:layout_toRightOf="@+id/img_emoji"
+                android:layout_toEndOf="@+id/img_emoji"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
     <LinearLayout
         android:id="@+id/layout_send"
@@ -133,6 +155,7 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:padding="5dp"
+        app:elevation="1dp"
         android:gravity="center_vertical"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -146,8 +169,7 @@
             android:padding="7dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_send"
-            android:background="@drawable/circular_button"
-            android:onClick="btnSend"/>
+            android:background="@drawable/circular_button"/>
     </LinearLayout>
 
 

@@ -10,6 +10,7 @@ public class Chats {
     private String receiver;
     private List<String> receivers;
     private String message;
+    private String timeStamp;
     private boolean isseen;
 
     // unique to identify message to be deleted
@@ -17,11 +18,12 @@ public class Chats {
 
     public Chats(){}
 
-    public Chats(String sender, String receiver, List<String> receivers, String message, boolean isseen) {
+    public Chats(String sender, String receiver, List<String> receivers, String message,String timeStamp, boolean isseen) {
         this.sender = sender;
         this.receiver = receiver;
         this.receivers = receivers;
         this.message = message;
+        this.timeStamp = timeStamp;
         this.isseen = isseen;
     }
 
@@ -57,14 +59,21 @@ public class Chats {
         this.message = message;
     }
 
-    public boolean isSeen() {
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public boolean isIsseen() {
         return isseen;
     }
 
-    public void setSeen(boolean isseen) {
-        isseen = isseen;
+    public void setIsseen(boolean isseen) {
+        this.isseen = isseen;
     }
-
 
     //getters and setters to store && retrieve the unique key of each message
     // excluding from database field

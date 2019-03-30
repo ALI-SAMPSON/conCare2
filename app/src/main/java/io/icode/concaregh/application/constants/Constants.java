@@ -14,6 +14,8 @@ public class Constants {
     public static final String CHAT_REF = "Chats";
     public static final String GROUP_CHAT_REF = "GroupChats";
 
+    public static final String client_url = "https://fcm.googleapis.com/";
+
     public static final int REQUEST_CODE = 1;
 
 }

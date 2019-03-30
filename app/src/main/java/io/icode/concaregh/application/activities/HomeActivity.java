@@ -395,9 +395,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 Users user = dataSnapshot.getValue(Users.class);
 
-                    username.setText(" Username : " + user.getUsername());
+                    username.setText(user.getUsername());
 
-                    email.setText(" Email : " + user.getEmail());
+                    email.setText("Email Id: " + user.getEmail());
 
                     // checks if imageUrl is not null
                     if (user.getImageUrl() == null) {
@@ -628,8 +628,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             // starts the chat activity
             Intent intentChat = new Intent(HomeActivity.this,MessageActivity.class);
             intentChat.putExtra("uid",uid);
-            //intentChat.putExtra("username",admin_username);
-            //intentChat.putExtra("status",status);
             startActivity(intentChat);
         }
     }
@@ -649,13 +647,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     uid = snapshot.child("adminUid").getValue(String.class);
                     admin_username = snapshot.child("username").getValue(String.class);
                     status = snapshot.child("status").getValue(String.class);
-
-                    /*SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this).edit();
-                    editor.putString("uid",uid);
-                    editor.putString("username",admin_username);
-                    editor.putString("status",status);
-                    editor.apply();
-                    */
 
                 }
 
